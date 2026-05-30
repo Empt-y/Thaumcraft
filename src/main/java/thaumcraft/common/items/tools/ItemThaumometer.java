@@ -52,7 +52,7 @@ public class ItemThaumometer extends ItemTCBase
     }
     
     public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @javax.annotation.Nullable net.minecraft.world.entity.EquipmentSlot itemSlot) {
-        boolean held = isSelected || itemSlot == 0;
+        boolean held = isSelected || itemSlot == null;
         if (held && !world.isClientSide() && entity.tickCount % 20 == 0 && entity instanceof net.minecraft.server.level.ServerPlayer) {
             updateAura(stack, world, (net.minecraft.server.level.ServerPlayer)entity);
         }
@@ -84,7 +84,7 @@ public class ItemThaumometer extends ItemTCBase
         float f8 = f3 * f5;
         double d4 = 16.0;
         Vec3 vec4 = vec3.add(f7 * d4, f6 * d4, f8 * d4);
-        return worldIn.clip(new net.minecraft.world.level.ClipContext(vec3, vec4, useLiquids, !useLiquids, false, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()));
+        return worldIn.clip(new net.minecraft.world.level.ClipContext(vec3, vec4, net.minecraft.world.level.ClipContext.Block.COLLIDER, useLiquids ? net.minecraft.world.level.ClipContext.Fluid.SOURCE_ONLY : net.minecraft.world.level.ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()));
     }
     
     private void updateAura(ItemStack stack, Level world, net.minecraft.server.level.ServerPlayer player) {
@@ -106,7 +106,7 @@ public class ItemThaumometer extends ItemTCBase
             }
         }
         else {
-            HitResult mop = rayTrace(worldIn, playerIn, true);
+            HitResult mop = getHitResultFromPlayerWild(worldIn, playerIn, true);
             if (mop != null && ((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos() != null) {
                 for (int a2 = 0; a2 < 10; ++a2) {
                     FXDispatcher.INSTANCE.blockRunes(((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos().getX(), ((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos().getY() + 0.25, ((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos().getZ(), 0.3f + worldIn.getRandom().nextFloat() * 0.7f, 0.0f, 0.3f + worldIn.getRandom().nextFloat() * 0.7f, 15, 0.03f);
@@ -122,7 +122,7 @@ public class ItemThaumometer extends ItemTCBase
                 ScanningManager.scanTheThing(playerIn, target);
             }
             else {
-                HitResult mop = rayTrace(worldIn, playerIn, true);
+                HitResult mop = getHitResultFromPlayerWild(worldIn, playerIn, true);
                 if (mop != null && ((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos() != null) {
                     ScanningManager.scanTheThing(playerIn, ((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos());
                 }

@@ -31,7 +31,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe
         if (fc > 0) {
             components.clear();
             ArrayList<ItemStack> com = new ArrayList<ItemStack>();
-            components.add(Ingredient.fromItem(ItemsTC.salisMundus));
+            components.add(Ingredient.of(ItemsTC.salisMundus));
             components.add(ThaumcraftApiHelper.getIngredient("gemAmber"));
             int c = 0;
             while (c < fc) {
@@ -43,7 +43,17 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe
     
     @Override
     public boolean matches(List<ItemStack> input, ItemStack central, Level world, Player player) {
-        return getRecipeInput() != null && ThaumcraftCapabilities.getKnowledge(player).isResearchKnown(research) && (central.getItem() instanceof Item /* ItemArmor removed */ || central.getItem() instanceof Object /* IBauble removed */) && (getRecipeInput() == Ingredient.of(net.minecraft.world.item.Items.AIR) || getRecipeInput().apply(central)) && RecipeMatcher.findMatches((List)input, (List) getComponents(central)) != null;
+        if (!ThaumcraftCapabilities.getKnowledge(player).isResearchKnown(research)) return false;
+        if (getRecipeInput() != null && !getRecipeInput().items().isEmpty() && !getRecipeInput().test(central)) return false;
+        List<ItemStack> comps = new java.util.ArrayList<>(input);
+        for (Ingredient comp : getComponents(central)) {
+            boolean found = false;
+            for (java.util.Iterator<ItemStack> it = comps.iterator(); it.hasNext(); ) {
+                if (comp.test(it.next())) { it.remove(); found = true; break; }
+            }
+            if (!found) return false;
+        }
+        return true;
     }
     
     @Override
@@ -77,7 +87,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe
     
     public NonNullList<Ingredient> getComponents(ItemStack input) {
         NonNullList<Ingredient> com = NonNullList.create();
-        com.add(Ingredient.fromItem(ItemsTC.salisMundus));
+        com.add(Ingredient.of(ItemsTC.salisMundus));
         com.add(ThaumcraftApiHelper.getIngredient("gemAmber"));
         int fc = PlayerEvents.getRunicCharge(input);
         if (fc > 0) {

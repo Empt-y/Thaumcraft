@@ -26,6 +26,23 @@ import thaumcraft.common.tiles.TileThaumcraft;
 
 public class TileMirror extends TileThaumcraft implements Container
 {
+    @Override
+    public boolean stillValid(net.minecraft.world.entity.player.Player player) { return true; }
+    @Override
+    public int getContainerSize() { return 0; }
+    @Override
+    public boolean isEmpty() { return true; }
+    @Override
+    public net.minecraft.world.item.ItemStack getItem(int slot) { return net.minecraft.world.item.ItemStack.EMPTY; }
+    @Override
+    public net.minecraft.world.item.ItemStack removeItem(int slot, int count) { return net.minecraft.world.item.ItemStack.EMPTY; }
+    @Override
+    public net.minecraft.world.item.ItemStack removeItemNoUpdate(int slot) { return net.minecraft.world.item.ItemStack.EMPTY; }
+    @Override
+    public void setItem(int slot, net.minecraft.world.item.ItemStack itemStack) {}
+    @Override
+    public void clearContent() {}
+
     public boolean linked;
     public int linkX;
     public int linkY;
@@ -161,7 +178,7 @@ public class TileMirror extends TileThaumcraft implements Container
             ie.discard();
             setChanged();
             target.setChanged();
-            getLevel().blockEvent(getBlockPos(), blockType, 1, 0);
+            getLevel().blockEvent(getBlockPos(), getBlockState().getBlock(), 1, 0);
             return true;
         }
         return false;
@@ -185,7 +202,7 @@ public class TileMirror extends TileThaumcraft implements Container
                 if (spawnItem(outItem)) {
                     outputStacks.get(i).shrink(1);
                     addInstability(null, 1);
-                    getLevel().blockEvent(getBlockPos(), blockType, 1, 0);
+                    getLevel().blockEvent(getBlockPos(), getBlockState().getBlock(), 1, 0);
                     if (outputStacks.get(i).getCount() <= 0) {
                         outputStacks.remove(i);
                     }
@@ -205,7 +222,7 @@ public class TileMirror extends TileThaumcraft implements Container
             ie2.setDeltaMovement(face.getStepX() * 0.15f, ie2.getDeltaMovement().y, ie2.getDeltaMovement().z);
             ie2.setDeltaMovement(ie2.getDeltaMovement().x, face.getStepY() * 0.15f, ie2.getDeltaMovement().z);
             ie2.setDeltaMovement(ie2.getDeltaMovement().x, ie2.getDeltaMovement().y, face.getStepZ() * 0.15f);
-            ie2.timeUntilPortal = 20;
+            
             getLevel().addFreshEntity(ie2);
             return true;
         }
@@ -349,7 +366,7 @@ public class TileMirror extends TileThaumcraft implements Container
         if (target != null && target instanceof TileMirror) {
             ((TileMirror)target).addStack(stack2.copy());
             addInstability(null, stack2.getCount());
-            this.level.blockEvent(getBlockPos(), blockType, 1, 0);
+            level().blockEvent(getBlockPos(), getBlockState().getBlock(), 1, 0);
         }
         else {
             spawnItem(stack2.copy());
@@ -399,10 +416,5 @@ public class TileMirror extends TileThaumcraft implements Container
         return 0;
     }
     
-    public void clear() {
-    }
-    
-    public boolean isEmpty() {
-        return false;
-    }
 }
+

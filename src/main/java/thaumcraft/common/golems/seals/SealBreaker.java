@@ -111,7 +111,7 @@ public class SealBreaker extends SealFiltered implements ISealConfigArea, ISealC
         BlockState bs = world.getBlockState(task.getPos());
         if (cache.containsKey(task.getId()) && isValidBlock(world, task.getPos())) {
             FakePlayer fp = FakePlayerFactory.get((ServerLevel)world, new GameProfile(null, "FakeThaumcraftGolem"));
-            fp.connection = new FakeNetHandlerPlayServer(fp.mcServer, new Connection(PacketFlow.CLIENTBOUND), fp);
+            // FakePlayer handles its own connection in modern NeoForge
             fp.setPos(golem.getGolemEntity().getX(), golem.getGolemEntity().getY(), golem.getGolemEntity().getZ());
             golem.swing();
             boolean silky = getToggles().length > 1 && getToggles()[1].value;
