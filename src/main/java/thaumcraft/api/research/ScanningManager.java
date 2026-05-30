@@ -63,7 +63,7 @@ public class ScanningManager {
 			if (handler != null) {
 				int scanned = 0;
 				for (int slot=0;slot<handler.getSlots();slot++) {
-					ItemStack stack = handler.getItem(slot);
+					ItemStack stack = handler.getStackInSlot(slot);
 					if (stack!=null && !stack.isEmpty()) {
 						scanTheThing(player,stack);
 						scanned++;

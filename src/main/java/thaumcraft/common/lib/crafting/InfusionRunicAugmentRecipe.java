@@ -22,7 +22,7 @@ import thaumcraft.common.lib.events.PlayerEvents;
 public class InfusionRunicAugmentRecipe extends InfusionRecipe
 {
     public InfusionRunicAugmentRecipe() {
-        super("RUNICSHIELDING", null, 0, null, Ingredient.EMPTY, "gemAmber", ItemsTC.salisMundus);
+        super("RUNICSHIELDING", null, 0, null, Ingredient.of(net.minecraft.world.item.Items.AIR), "gemAmber", ItemsTC.salisMundus);
     }
     
     public InfusionRunicAugmentRecipe(ItemStack in) {
@@ -43,7 +43,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe
     
     @Override
     public boolean matches(List<ItemStack> input, ItemStack central, Level world, Player player) {
-        return getRecipeInput() != null && ThaumcraftCapabilities.getKnowledge(player).isResearchKnown(research) && (central.getItem() instanceof Item /* ItemArmor removed */ || central.getItem() instanceof Object /* IBauble removed */) && (getRecipeInput() == Ingredient.EMPTY || getRecipeInput().apply(central)) && RecipeMatcher.findMatches((List)input, (List) getComponents(central)) != null;
+        return getRecipeInput() != null && ThaumcraftCapabilities.getKnowledge(player).isResearchKnown(research) && (central.getItem() instanceof Item /* ItemArmor removed */ || central.getItem() instanceof Object /* IBauble removed */) && (getRecipeInput() == Ingredient.of(net.minecraft.world.item.Items.AIR) || getRecipeInput().apply(central)) && RecipeMatcher.findMatches((List)input, (List) getComponents(central)) != null;
     }
     
     @Override

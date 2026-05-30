@@ -152,7 +152,7 @@ public class BlockTaintFibre extends Block implements ITaintBlock
     }
 
     private boolean drawAt(BlockGetter world, BlockPos neighbor, Direction sidePointingAtNeighbor) {
-        BlockState bs = level().getBlockState(neighbor);
+        BlockState bs = world.getBlockState(neighbor);
         return bs.getBlock() != BlocksTC.taintFibre
                 && bs.getBlock() != BlocksTC.taintFeature
                 && bs.isFaceSturdy(world, neighbor, sidePointingAtNeighbor.getOpposite());

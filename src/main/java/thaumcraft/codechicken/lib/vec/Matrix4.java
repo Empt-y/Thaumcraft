@@ -306,7 +306,7 @@ public class Matrix4 extends Transformation implements Copyable<Matrix4>
     @Override
     public void apply(Vector3 vec) {
         mult3x3(vec);
-        vec.offset(m03, m13, m23);
+        vec.add(m03, m13, m23);
     }
     
     @Override

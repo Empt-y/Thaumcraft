@@ -138,7 +138,7 @@ public class TileGolemBuilder extends TileThaumcraftInventory implements IEssent
                                net.minecraft.world.item.component.CustomData.of(propsTag));
                     ItemStack current = getItem(0);
                     if (current.isEmpty() || (current.getCount() < current.getMaxStackSize()
-                            && ItemStack.isSameItem(ItemStack, current, placer) && ItemStack.isSameItemSameComponents(current, placer))) {
+                            && ItemStack.isSameItem(current, placer) && ItemStack.isSameItemSameComponents(current, placer))) {
                         if (current.isEmpty()) {
                             setItem(0, placer.copy());
                         } else {
@@ -204,7 +204,7 @@ public class TileGolemBuilder extends TileThaumcraftInventory implements IEssent
         ItemStack placer = new ItemStack(ItemsTC.golemPlacer);
         ItemStack current = getItem(0);
         if (!current.isEmpty() && (current.getCount() >= current.getMaxStackSize()
-                || !ItemStack.isSameItem(ItemStack, current, placer) || !ItemStack.isSameItemSameComponents(current, placer))) {
+                || !ItemStack.isSameItem(current, placer) || !ItemStack.isSameItemSameComponents(current, placer))) {
             cost = 0;
             props = null;
             components = null;

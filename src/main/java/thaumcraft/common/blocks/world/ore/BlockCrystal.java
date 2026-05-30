@@ -90,7 +90,7 @@ public class BlockCrystal extends Block
 
     /** Crystal connects to a face when the adjacent block has a sturdy surface facing inward. */
     private boolean drawAt(BlockGetter world, BlockPos neighborPos, Direction sidePointingAtNeighbor) {
-        BlockState fbs = level().getBlockState(neighborPos);
+        BlockState fbs = world.getBlockState(neighborPos);
         return !fbs.isAir() && fbs.isFaceSturdy(world, neighborPos, sidePointingAtNeighbor.getOpposite());
     }
 

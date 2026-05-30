@@ -108,7 +108,7 @@ public class BlockTube extends BlockTCDevice
 
     private Boolean[] makeConnections(BlockState state, BlockGetter world, BlockPos pos) {
         Boolean[] cons = { false, false, false, false, false, false };
-        BlockEntity t = level().getBlockEntity(pos);
+        BlockEntity t = world instanceof net.minecraft.world.level.Level ? ((net.minecraft.world.level.Level)world).getBlockEntity(pos) : null;
         if (t != null && t instanceof IEssentiaTransport) {
             IEssentiaTransport tube = (IEssentiaTransport)t;
             int a = 0;

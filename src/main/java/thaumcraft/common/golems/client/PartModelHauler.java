@@ -29,7 +29,7 @@ public class PartModelHauler extends PartModel
                 if (!(item instanceof BlockItem)) {
                     /* TODO: use PoseStack */ // RenderSystem.translate(0.0f, 0.0f, -0.25f);
                 }
-                minecraft.getItemRenderer().renderItem(golem.getGolemEntity(), itemstack.TransformType.HEAD);
+                /* TODO: renderItem with ItemDisplayContext */ // minecraft.getItemRenderer().renderItem(...);
                 RenderSystem.popMatrix();
             }
         }

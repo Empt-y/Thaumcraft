@@ -63,9 +63,9 @@ public class BlockFluxGoo extends Block
         entity.setDeltaMovement(
                 entity.getDeltaMovement().multiply(1.0 - quanta, 1.0, 1.0 - quanta));
 
-        if (!level().isClientSide()) {
+        if (!world.isClientSide()) {
             if (entity instanceof EntityThaumicSlime slime) {
-                if (slime.getSize() < meta && level().getRandom().nextBoolean()) {
+                if (slime.getSize() < meta && world.getRandom().nextBoolean()) {
                     slime.setSize(slime.getSize() + 1, true);
                     if (meta > 1) {
                         world.setBlock(pos, state.setValue(LEVEL, meta - 1), 2);

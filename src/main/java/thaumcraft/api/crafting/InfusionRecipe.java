@@ -25,7 +25,7 @@ public class InfusionRecipe implements IThaumcraftRecipe
 	public String research;
 	private String name;
 	protected NonNullList<Ingredient> components = NonNullList.create();
-	public Ingredient sourceInput; //Use Ingredient.EMPTY of the source item can be anything
+	public Ingredient sourceInput; //Use Ingredient.of(net.minecraft.world.item.Items.AIR) of the source item can be anything
 	public Object recipeOutput;
 	public int instability;
 	

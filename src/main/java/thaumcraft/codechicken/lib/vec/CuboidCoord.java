@@ -36,17 +36,17 @@ public class CuboidCoord implements Iterable<BlockCoord>, Copyable<CuboidCoord>
     }
     
     public CuboidCoord expand(int x, int y, int z) {
-        max.offset(x, y, z);
+        max.add(x, y, z);
         min.sub(x, y, z);
         return this;
     }
     
     public CuboidCoord expand(int side, int amount) {
         if (side % 2 == 0) {
-            min = min.relative(side, amount);
+            min = min.offset(side, amount);
         }
         else {
-            max = max.relative(side, amount);
+            max = max.offset(side, amount);
         }
         return this;
     }

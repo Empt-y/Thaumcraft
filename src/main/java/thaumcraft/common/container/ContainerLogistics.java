@@ -70,7 +70,7 @@ public class ContainerLogistics extends AbstractContainerMenu
                 if (seal.getSeal() instanceof SealProvide && seal.getOwner().equals(player.getUUID().toString())) {
                     IItemHandler handler = ThaumcraftInvHelper.getItemHandlerAt(worldObj, seal.getSealPos().pos, seal.getSealPos().face);
                     for (int slot = 0; slot < handler.getSlots(); ++slot) {
-                        ItemStack stack = handler.getItem(slot).copy();
+                        ItemStack stack = handler.getStackInSlot(slot).copy();
                         if (((SealProvide)seal.getSeal()).matchesFilters(stack)) {
                             String displayName = stack.getHoverName().getString();
                             if (searchText.isEmpty() || displayName.toLowerCase().contains(searchText.toLowerCase())) {

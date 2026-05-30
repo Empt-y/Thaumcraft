@@ -98,7 +98,7 @@ public class ThaumcraftInvHelper {
 		if (in instanceof ItemStack target) {
 			boolean t1 = !stack0.has(DataComponents.CUSTOM_DATA) || areItemStackTagsEqualForCrafting(stack0, target);
 			if (!t1) return false;
-			return ItemStack.isSameItem(ItemStack, target, stack0);
+			return ItemStack.isSameItem(target, stack0);
 		}
 
 		return false;
@@ -107,7 +107,7 @@ public class ThaumcraftInvHelper {
 	public static boolean containsMatch(boolean strict, ItemStack[] inputs, List<ItemStack> targets) {
 		for (ItemStack input : inputs) {
 			for (ItemStack target : targets) {
-				if (ItemStack.isSameItem(ItemStack, target, input) &&
+				if (ItemStack.isSameItem(target, input) &&
 					(!strict || ItemStack.isSameItemSameComponents(target, input))) {
 					return true;
 				}
@@ -170,8 +170,8 @@ public class ThaumcraftInvHelper {
 		int count = 0;
 		if (inventory != null) {
 			for (int a = 0; a < inventory.getSlots(); a++) {
-				if (InventoryUtils.areItemStacksEqual(stack, inventory.getItem(a), filter)) {
-					count += inventory.getItem(a).getCount();
+				if (InventoryUtils.areItemStacksEqual(stack, inventory.getStackInSlot(a), filter)) {
+					count += inventory.getStackInSlot(a).getCount();
 				}
 			}
 		}

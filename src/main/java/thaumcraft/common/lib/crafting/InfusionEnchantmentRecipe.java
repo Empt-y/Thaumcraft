@@ -29,7 +29,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
     EnumInfusionEnchantment enchantment;
     
     public InfusionEnchantmentRecipe(EnumInfusionEnchantment ench, AspectList as, Object... components) {
-        super(ench.research, null, 4, as, Ingredient.EMPTY, components);
+        super(ench.research, null, 4, as, Ingredient.of(net.minecraft.world.item.Items.AIR), components);
         enchantment = ench;
     }
     
@@ -113,7 +113,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
                 return false;
             }
         }
-        return (getRecipeInput() == Ingredient.EMPTY || getRecipeInput().apply(central)) && RecipeMatcher.findMatches((List)input, (List) getComponents()) != null;
+        return (getRecipeInput() == Ingredient.of(net.minecraft.world.item.Items.AIR) || getRecipeInput().apply(central)) && RecipeMatcher.findMatches((List)input, (List) getComponents()) != null;
     }
     
     @Override
