@@ -35,7 +35,9 @@ public class ItemPrimordialPearl extends ItemTCBase
         if (!hasContainerItem(itemStack)) {
             return ItemStack.EMPTY;
         }
-        return new ItemStack(itemStack.getItem(), itemStack.getCount(), itemStack.getDamageValue() + 1);
+        ItemStack result = new ItemStack(itemStack.getItem(), itemStack.getCount());
+        result.setDamageValue(itemStack.getDamageValue() + 1);
+        return result;
     }
     
     public boolean hasContainerItem(ItemStack stack) {

@@ -131,7 +131,7 @@ public class EntityRiftBlast extends ThrowableProjectile
     }
     
     public boolean attackEntityFrom(DamageSource source, float damage) {
-        if (isInvulnerableTo(source)) {
+        if (isInvulnerableToBase(source)) {
             return false;
         }
         if (source.getEntity() != null) {

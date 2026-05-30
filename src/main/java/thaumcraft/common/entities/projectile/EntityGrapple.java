@@ -75,7 +75,8 @@ public class EntityGrapple extends ThrowableProjectile
         if (cthrower != null) {
             return cthrower;
         }
-        return super.getOwner();
+        net.minecraft.world.entity.Entity owner = super.getOwner();
+        return (owner instanceof LivingEntity le) ? le : null;
     }
     
     protected float getGravityVelocity() {

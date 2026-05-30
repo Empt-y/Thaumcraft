@@ -27,7 +27,7 @@ public class ItemBottleTaint extends ItemTCBase
         player.playSound(SoundEvents.EGG_THROW, 0.5f, 0.4f / (net.minecraft.util.RandomSource.create().nextFloat() * 0.4f + 0.8f));
         if (!world.isClientSide()) {
             EntityBottleTaint entityBottle = new EntityBottleTaint(world, player);
-            entityBottle.shoot(player, player.getXRot(), player.getYRot(), -5.0f, 0.66f, 1.0f);
+            entityBottle.shootFromRotation(player, player.getXRot(), player.getYRot(), -5.0f, 0.66f, 1.0f);
             world.addFreshEntity(entityBottle);
         }
         return InteractionResult.SUCCESS;

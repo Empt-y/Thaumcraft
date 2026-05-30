@@ -74,7 +74,7 @@ public class BlockWaterJug extends BlockTCDevice
                         player.setItemInHand(hand, itemstack2);
                     }
                     else if (!player.getInventory().add(itemstack2)) {
-                        player.drop(itemstack2);
+                        player.drop(itemstack2, false);
                     }
                     tile.drain(new FluidStack(Fluids.WATER, 333), IFluidHandler.FluidAction.EXECUTE);
                     world.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.33f, 1.0f + (world.getRandom().nextFloat() - world.getRandom().nextFloat()) * 0.3f);

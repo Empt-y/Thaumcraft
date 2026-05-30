@@ -79,7 +79,7 @@ public class ItemElementalHoe extends HoeItem implements IThaumcraftItems
         if (!did) {
             did = Utils.useBonemealAtLoc(world, player, pos);
             if (did) {
-                player.getItemInHand(hand).hurtAndBreak(3, player, null, (i) -> {});
+                player.getItemInHand(hand).hurtAndBreak(3, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
                 if (!world.isClientSide()) {
                     world.levelEvent(2005, pos, 0);
                 }

@@ -10,9 +10,8 @@ public class AILongRangeAttack extends RangedAttackGoal
     private Mob wielder;
     double minDistance;
     
-    public AILongRangeAttack(RangedAttackMob par1IRangedAttackMob, double min, double p_i1650_2_, int p_i1650_4_, int p_i1650_5_, float p_i1650_6_) {
-        super(new net.minecraft.world.item.Item.Properties());
-        minDistance = 0.0;
+    public AILongRangeAttack(RangedAttackMob par1IRangedAttackMob, double min, double speedMod, int intervalMin, int intervalMax, float attackRadius) {
+        super(par1IRangedAttackMob, speedMod, intervalMin, intervalMax, attackRadius);
         minDistance = min;
         wielder = (Mob)par1IRangedAttackMob;
     }

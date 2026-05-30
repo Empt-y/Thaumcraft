@@ -73,7 +73,7 @@ public class FocusEffectFrost extends FocusEffect
         else if (target.getType() == HitResult.Type.BLOCK) {
             float f = Math.min(16.0f, 2 * getSettingValue("power") * finalPower);
             int fi = (int) f;
-            for (BlockPos.MutableBlockPos blockpos$mutableblockpos1 : BlockPos.betweenClosed(((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset(-fi, -fi, -fi), ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset(fi, fi, fi))) {
+            for (BlockPos blockpos$mutableblockpos1 : BlockPos.betweenClosed(((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset(-fi, -fi, -fi), ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset(fi, fi, fi))) {
                 net.minecraft.world.phys.Vec3 hitVec = target.getLocation();
                 if (blockpos$mutableblockpos1.distToCenterSqr(hitVec.x, hitVec.y, hitVec.z) <= f * f) {
                     BlockState iblockstate1 = getPackage().world.getBlockState(blockpos$mutableblockpos1);

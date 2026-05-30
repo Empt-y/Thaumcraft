@@ -139,7 +139,7 @@ public class PacketFXScanSource implements CustomPacketPayload
         if (bi.getBlock() == Blocks.AIR || bi.getBlock() == Blocks.BEDROCK) {
             return 12632256;
         }
-        Identifier blockId = net.neoforged.neoforge.registries.ForgeRegistries.BLOCKS.getKey(bi.getBlock());
+        Identifier blockId = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(bi.getBlock());
         if (blockId == null) return 12632256;
         String path = blockId.getPath().toLowerCase();
         if (path.contains("iron"))     return 14200723;

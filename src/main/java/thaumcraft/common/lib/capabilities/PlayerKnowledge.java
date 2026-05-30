@@ -74,7 +74,9 @@ public class PlayerKnowledge
                 return true;
             }
             String[] ss = res.split("@");
-            return (ss.length <= 1 || getResearchStage(ss[0]) >= Mth.floor(ss[1], 0)) && research.contains(ss[0]);
+            int stage = 0;
+            try { stage = Integer.parseInt(ss[1]); } catch (Exception e2) {}
+            return (ss.length <= 1 || getResearchStage(ss[0]) >= stage) && research.contains(ss[0]);
         }
         
         @Override

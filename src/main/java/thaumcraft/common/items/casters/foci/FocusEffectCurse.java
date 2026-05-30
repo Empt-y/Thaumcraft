@@ -91,7 +91,7 @@ public class FocusEffectCurse extends FocusEffect
         }
         else if (target.getType() == HitResult.Type.BLOCK) {
             float f = (float)Math.min(8.0, 1.5 * getSettingValue("power") * finalPower);
-            for (BlockPos.MutableBlockPos blockpos$mutableblockpos1 : BlockPos.betweenClosed(((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset((int)(-f), (int)(-f), (int)(-f)), ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset((int)f, (int)f, (int)f))) {
+            for (BlockPos blockpos$mutableblockpos1 : BlockPos.betweenClosed(((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset((int)(-f), (int)(-f), (int)(-f)), ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset((int)f, (int)f, (int)f))) {
                 if (blockpos$mutableblockpos1.distToCenterSqr(target.getLocation().x, target.getLocation().y, target.getLocation().z) <= f * f && getPackage().world.isEmptyBlock(blockpos$mutableblockpos1.above())) {
                     getPackage().world.setBlockAndUpdate(blockpos$mutableblockpos1.above(), BlocksTC.effectSap.defaultBlockState());
                 }

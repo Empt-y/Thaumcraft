@@ -136,7 +136,9 @@ public class EntityFocusMine extends ThrowableProjectile
                             @Override
                             public void run() {
                                 net.minecraft.world.phys.EntityHitResult ray = new net.minecraft.world.phys.EntityHitResult(targetEntity);
-                                FocusEngine.runFocusPackage(focusPackage.copy(getOwner()), new Trajectory[] { new Trajectory(position(), epv.subtract(position()).normalize()) }, new HitResult[] { ray });
+                                net.minecraft.world.entity.Entity owner = getOwner();
+                                net.minecraft.world.entity.LivingEntity livingOwner = (owner instanceof net.minecraft.world.entity.LivingEntity le) ? le : null;
+                                FocusEngine.runFocusPackage(focusPackage.copy(livingOwner), new Trajectory[] { new Trajectory(position(), epv.subtract(position()).normalize()) }, new HitResult[] { ray });
                             }
                         }, d++);
                     }
