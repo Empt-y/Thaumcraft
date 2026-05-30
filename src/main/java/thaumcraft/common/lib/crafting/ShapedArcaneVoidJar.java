@@ -12,20 +12,22 @@ import thaumcraft.api.crafting.ShapedArcaneRecipe;
 public class ShapedArcaneVoidJar extends ShapedArcaneRecipe
 {
     public ShapedArcaneVoidJar(Identifier group, String res, int vis, AspectList crystals, ItemStack result, Object... recipe) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(group, res, vis, crystals, result, recipe);
     }
     
     @Override
     public ItemStack getCraftingResult(CraftingContainer var1) {
-        CompoundTag nbt = null;
+        net.minecraft.world.item.component.CustomData nbt = null;
         for (int a = 0; a < var1.getContainerSize(); ++a) {
             if (Block.byItem(var1.getItem(a).getItem()) == BlocksTC.jarNormal) {
-                nbt = var1.getItem(a).get();
+                nbt = var1.getItem(a).get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
                 break;
             }
         }
         ItemStack res = super.getCraftingResult(var1);
-        res.put(nbt);
+        if (nbt != null) {
+            res.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, nbt);
+        }
         return res;
     }
 }

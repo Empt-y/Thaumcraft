@@ -76,7 +76,7 @@ public class FocusMediumPlan extends FocusMedium implements IArchitect
             Vec3 end = sT.direction.normalize();
             end = end.scale(16.0);
             end = end.add(sT.source);
-            HitResult target = getPackage().world.clip(new net.minecraft.world.level.ClipContext(sT.source, end, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, null));
+            HitResult target = getPackage().world.clip(new net.minecraft.world.level.ClipContext(sT.source, end, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()));
             if (target != null && target.getType() == HitResult.Type.BLOCK) {
                 ArrayList<BlockPos> usl = getArchitectBlocks(casterStack, getPackage().world, ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos(), ((net.minecraft.world.phys.BlockHitResult)target).getDirection(), (Player) getPackage().getCaster());
                 ArrayList<BlockPos> sl = usl.stream().sorted(new BlockUtils.BlockPosComparator(((net.minecraft.world.phys.BlockHitResult)target).getBlockPos())).collect(Collectors.toCollection(ArrayList::new));
@@ -95,7 +95,7 @@ public class FocusMediumPlan extends FocusMedium implements IArchitect
         Vec3 end = player.getLookAngle();
         end = end.scale(16.0);
         end = end.add(start);
-        return world.clip(new net.minecraft.world.level.ClipContext(start, end, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, null));
+        return world.clip(new net.minecraft.world.level.ClipContext(start, end, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()));
     }
     
     @Override

@@ -260,7 +260,7 @@ public class TileMirror extends TileThaumcraft implements Container
                 double xx = getBlockPos().getX() + 0.33 + net.minecraft.util.RandomSource.create().nextFloat() * 0.33f - face.getStepX() / 2.0;
                 double yy = getBlockPos().getY() + 0.33 + net.minecraft.util.RandomSource.create().nextFloat() * 0.33f - face.getStepY() / 2.0;
                 double zz = getBlockPos().getZ() + 0.33 + net.minecraft.util.RandomSource.create().nextFloat() * 0.33f - face.getStepZ() / 2.0;
-                FXDispatcher.INSTANCE.drawWispyMotes(xx, yy, zz, face.getStepX() / 50.0 + this.level.getRandom().nextGaussian() * 0.01, face.getStepY() / 50.0 + this.level.getRandom().nextGaussian() * 0.01, face.getStepZ() / 50.0 + this.level.getRandom().nextGaussian() * 0.01, Mth.floor(this.level.getRandom(), 10, 30), net.minecraft.util.RandomSource.create().nextFloat() / 3.0f, 0.0f, net.minecraft.util.RandomSource.create().nextFloat() / 2.0f, (float)(this.level.getRandom().nextGaussian() * 0.01));
+                FXDispatcher.INSTANCE.drawWispyMotes(xx, yy, zz, face.getStepX() / 50.0 + this.level.getRandom().nextGaussian() * 0.01, face.getStepY() / 50.0 + this.level.getRandom().nextGaussian() * 0.01, face.getStepZ() / 50.0 + this.level.getRandom().nextGaussian() * 0.01, (this.level.getRandom().nextInt(21) + 10), net.minecraft.util.RandomSource.create().nextFloat() / 3.0f, 0.0f, net.minecraft.util.RandomSource.create().nextFloat() / 2.0f, (float)(this.level.getRandom().nextGaussian() * 0.01));
             }
             return true;
         }

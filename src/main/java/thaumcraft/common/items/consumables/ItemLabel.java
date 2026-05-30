@@ -31,8 +31,14 @@ public class ItemLabel extends ItemTCEssentiaContainer
         }
     }
     
-    public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
-        if (world.isClientSide()) {
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, net.minecraft.world.item.context.UseOnContext context) {
+        Player player = context.getPlayer();
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Direction side = context.getClickedFace();
+        InteractionHand hand = context.getHand();
+        if (player == null || world.isClientSide()) {
             return InteractionResult.PASS;
         }
         BlockState bs = world.getBlockState(pos);
@@ -51,15 +57,7 @@ public class ItemLabel extends ItemTCEssentiaContainer
             }
             return InteractionResult.SUCCESS;
         }
-        return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
-    }
-    
-    @Override
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int par4, boolean par5) {
-    }
-    
-    @Override
-    public void onCreated(ItemStack stack, Level world, Player player) {
+        return InteractionResult.PASS;
     }
     
     @Override

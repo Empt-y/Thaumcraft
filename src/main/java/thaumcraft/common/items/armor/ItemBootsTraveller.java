@@ -77,25 +77,17 @@ public class ItemBootsTraveller extends net.minecraft.world.item.Item implements
             }
             net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, itemStack, t -> t.putInt("energy", e));
         }
-        if (hasCharge && !player.capabilities.isFlying && player.moveForward > 0.0f) {
-            if (player.level().isClientSide() && !player.isCrouching()) {
-                if (!PlayerEvents.prevStep.containsKey(player.getId())) {
-                    PlayerEvents.prevStep.put(player.getId(), player.stepHeight);
-                }
-                /* player.stepHeight removed */ /* stepHeight = 1.0f; */ // TODO: override maxUpStep()
-            }
+        if (hasCharge && !player.getAbilities().flying) {
             if (player.onGround()) {
                 float bonus = 0.05f;
                 if (player.isInWater()) {
                     bonus /= 4.0f;
                 }
-                player.moveRelative(0.0f, 0.0f, bonus, 1.0f);
-            }
-            else {
+                player.moveRelative(1.0f, new net.minecraft.world.phys.Vec3(0.0f, 0.0f, bonus));
+            } else {
                 if (player.isInWater()) {
-                    player.moveRelative(0.0f, 0.0f, 0.025f, 1.0f);
+                    player.moveRelative(1.0f, new net.minecraft.world.phys.Vec3(0.0f, 0.0f, 0.025f));
                 }
-                player.jumpMovementFactor = 0.05f;
             }
         }
     }

@@ -53,10 +53,10 @@ public class CardCelestial extends TheorycraftCard
             return false;
         }
         Random r = new Random(getSeed());
-        md1 = Mth.floor(r, 0, 12);
+        md1 = r.nextInt(13);
         md2 = md1;
         while (md1 == md2) {
-            md2 = Mth.floor(r, 0, 12);
+            md2 = r.nextInt(13);
         }
         int hVal = 0;
         String hKey = "";

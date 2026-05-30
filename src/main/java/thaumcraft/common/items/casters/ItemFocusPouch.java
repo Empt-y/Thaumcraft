@@ -45,16 +45,16 @@ public class ItemFocusPouch extends ItemTCBase
     public NonNullList<ItemStack> getInventory(ItemStack item) {
         NonNullList<ItemStack> stackList = NonNullList.withSize(18, ItemStack.EMPTY);
         if (!item.isEmpty()) {
-            net.minecraft.world.ContainerHelper.loadAllItems(item.get(), stackList);
+            net.minecraft.world.item.component.ItemContainerContents contents = item.get(net.minecraft.core.component.DataComponents.CONTAINER);
+            if (contents != null) {
+                contents.copyInto(stackList);
+            }
         }
         return stackList;
     }
-    
+
     public void setInventory(ItemStack item, NonNullList<ItemStack> stackList) {
-        if (item.get() == null) {
-            item.put(new CompoundTag());
-        }
-        net.minecraft.world.ContainerHelper.saveAllItems(item.get(), stackList);
+        item.set(net.minecraft.core.component.DataComponents.CONTAINER, net.minecraft.world.item.component.ItemContainerContents.fromItems(stackList));
     }
     
     public Object /* BaubleType removed */ getBaubleType(ItemStack itemstack) {

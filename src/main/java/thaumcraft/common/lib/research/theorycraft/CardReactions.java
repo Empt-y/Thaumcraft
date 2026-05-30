@@ -35,10 +35,10 @@ public class CardReactions extends TheorycraftCard
     @Override
     public boolean initialize(Player player, ResearchTableData data) {
         Random r = new Random(getSeed());
-        int num = Mth.floor(r, 0, Aspect.getCompoundAspects().size() - 1);
+        int num = r.nextInt(Aspect.getCompoundAspects().size());
         aspect1 = Aspect.getCompoundAspects().get(num);
         int num2;
-        for (num2 = num; num2 == num; num2 = Mth.floor(r, 0, Aspect.getCompoundAspects().size() - 1)) {}
+        for (num2 = num; num2 == num; num2 = r.nextInt(Aspect.getCompoundAspects().size())) {}
         aspect2 = Aspect.getCompoundAspects().get(num2);
         return true;
     }

@@ -41,6 +41,10 @@ public class RecipeTripleMeatTreat implements CraftingRecipe {
     }
 
     @Override
+    public net.minecraft.world.item.crafting.PlacementInfo placementInfo() {
+        return net.minecraft.world.item.crafting.PlacementInfo.NOT_PLACEABLE;
+    }
+
     public boolean canCraftInDimensions(int width, int height) {
         return width * height >= 4;
     }

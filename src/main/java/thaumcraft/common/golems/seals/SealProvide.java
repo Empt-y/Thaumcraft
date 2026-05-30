@@ -165,7 +165,7 @@ public class SealProvide extends SealFiltered implements ISealConfigToggles
                     InventoryUtils.dropItemAtEntity(world, s2, pr3.getEntity());
                 }
                 else {
-                    ItemStack back = InventoryUtils.ejectStackAt(world, pr3.getPos().offset(pr3.getSide()), pr3.getSide().getOpposite(), s2, true);
+                    ItemStack back = InventoryUtils.ejectStackAt(world, pr3.getPos().relative(pr3.getSide()), pr3.getSide().getOpposite(), s2, true);
                     if (!back.isEmpty()) {
                         golem.holdItem(back);
                     }

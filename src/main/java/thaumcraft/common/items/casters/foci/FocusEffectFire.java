@@ -53,7 +53,7 @@ public class FocusEffectFire extends FocusEffect
         if (target.getType() != HitResult.Type.ENTITY || ((net.minecraft.world.phys.EntityHitResult)target).getEntity() == null) {
             if (target.getType() == HitResult.Type.BLOCK && getSettingValue("duration") > 0) {
                 BlockPos pos = ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos();
-                pos = pos.offset(((net.minecraft.world.phys.BlockHitResult)target).getDirection());
+                pos = pos.relative(((net.minecraft.world.phys.BlockHitResult)target).getDirection());
                 if (getPackage().world.isEmptyBlock(pos) && getPackage().world.getRandom().nextFloat() < finalPower) {
                     getPackage().world.playSound(null, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0f, getPackage().world.getRandom().nextFloat() * 0.4f + 0.8f);
                     getPackage().world.setBlock(pos, Blocks.FIRE.defaultBlockState(), 11);

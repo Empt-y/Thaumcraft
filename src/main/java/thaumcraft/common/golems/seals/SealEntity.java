@@ -77,7 +77,7 @@ public class SealEntity implements ISealEntity
     
     @Override
     public boolean isStoppedByRedstone(Level world) {
-        return isRedstoneSensitive() && (world.hasNeighborSignal(getSealPos().pos) || world.hasNeighborSignal(getSealPos().pos.offset(getSealPos().face)));
+        return isRedstoneSensitive() && (world.hasNeighborSignal(getSealPos().pos) || world.hasNeighborSignal(getSealPos().pos.relative(getSealPos().face)));
     }
     
     @Override

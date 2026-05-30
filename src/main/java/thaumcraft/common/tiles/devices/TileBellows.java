@@ -60,7 +60,7 @@ public class TileBellows extends TileThaumcraft
             ++delay;
             if (delay >= 2) {
                 delay = 0;
-                BlockEntity tile = getLevel().getBlockEntity(getBlockPos().offset(getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING)));
+                BlockEntity tile = getLevel().getBlockEntity(getBlockPos().relative(getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING)));
                 if (tile != null && tile instanceof AbstractFurnaceBlockEntity) {
                     AbstractFurnaceBlockEntity tf = (AbstractFurnaceBlockEntity)tile;
                     int ct = getCooktime(tf);

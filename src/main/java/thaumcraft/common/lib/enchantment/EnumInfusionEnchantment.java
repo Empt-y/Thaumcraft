@@ -35,8 +35,12 @@ public enum EnumInfusionEnchantment
         this.research = research;
     }
     
-    public static ListTag getInfusionEnchantmentTagList(ItemStack stack) {
-        return (stack == null || stack.isEmpty() || stack.get() == null) ? null : stack.get().getListOrEmpty("infench");
+    public static net.minecraft.nbt.ListTag getInfusionEnchantmentTagList(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return null;
+        net.minecraft.world.item.component.CustomData data = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        if (data == null || data.isEmpty()) return null;
+        net.minecraft.nbt.CompoundTag tag = data.copyTag();
+        return tag.contains("infench") ? tag.getListOrEmpty("infench") : null;
     }
     
     public static List<EnumInfusionEnchantment> getInfusionEnchantments(ItemStack stack) {

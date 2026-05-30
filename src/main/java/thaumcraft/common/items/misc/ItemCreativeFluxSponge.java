@@ -40,7 +40,7 @@ public class ItemCreativeFluxSponge extends ItemTCBase {
         tooltip.accept(Component.literal(ChatFormatting.DARK_PURPLE + "Creative only"));
     }
 
-    @Override
+    
     public Rarity getRarity(ItemStack itemstack) {
         return Rarity.EPIC;
     }

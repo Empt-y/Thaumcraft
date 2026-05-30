@@ -84,7 +84,7 @@ public class ItemThaumometer extends ItemTCBase
         float f8 = f3 * f5;
         double d4 = 16.0;
         Vec3 vec4 = vec3.add(f7 * d4, f6 * d4, f8 * d4);
-        return worldIn.clip(new net.minecraft.world.level.ClipContext(vec3, vec4, useLiquids, !useLiquids, false, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, null));
+        return worldIn.clip(new net.minecraft.world.level.ClipContext(vec3, vec4, useLiquids, !useLiquids, false, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()));
     }
     
     private void updateAura(ItemStack stack, Level world, net.minecraft.server.level.ServerPlayer player) {

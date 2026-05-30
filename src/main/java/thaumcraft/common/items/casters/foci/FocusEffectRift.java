@@ -70,7 +70,7 @@ public class FocusEffectRift extends FocusEffect
             if (bi.getDestroySpeed(null, net.minecraft.core.BlockPos.ZERO) == -1.0f) {
                 break;
             }
-            pos = pos.offset(((net.minecraft.world.phys.BlockHitResult)target).getDirection().getOpposite());
+            pos = pos.relative(((net.minecraft.world.phys.BlockHitResult)target).getDirection().getOpposite());
         }
         createHole(getPackage().world, ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos(), ((net.minecraft.world.phys.BlockHitResult)target).getDirection(), (byte)Math.round((float)(distance + 1)), dur);
         return true;

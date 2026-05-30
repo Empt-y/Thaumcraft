@@ -38,7 +38,7 @@ public class CardSynthesis extends TheorycraftCard
     @Override
     public boolean initialize(Player player, ResearchTableData data) {
         Random r = new Random(getSeed());
-        int num = Mth.floor(r, 0, Aspect.getCompoundAspects().size() - 1);
+        int num = r.nextInt(Aspect.getCompoundAspects().size());
         aspect3 = Aspect.getCompoundAspects().get(num);
         aspect1 = aspect3.getComponents()[0];
         aspect2 = aspect3.getComponents()[1];

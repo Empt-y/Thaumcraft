@@ -56,7 +56,7 @@ public class FocusMediumTouch extends FocusMedium
             if (ray == null) {
                 end = end.scale(range);
                 end = end.add(sT.source);
-                ray = getPackage().world.clip(new net.minecraft.world.level.ClipContext(sT.source, end, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, null));
+                ray = getPackage().world.clip(new net.minecraft.world.level.ClipContext(sT.source, end, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()));
                 if (ray != null) {
                     end = ray.getLocation();
                 }
@@ -83,7 +83,7 @@ public class FocusMediumTouch extends FocusMedium
             if (ray == null) {
                 end = end.scale(range);
                 end = end.add(sT.source);
-                ray = getPackage().world.clip(new net.minecraft.world.level.ClipContext(sT.source, end, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, null));
+                ray = getPackage().world.clip(new net.minecraft.world.level.ClipContext(sT.source, end, net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, net.minecraft.world.phys.shapes.CollisionContext.empty()));
             }
             if (ray != null) {
                 targets.add(ray);

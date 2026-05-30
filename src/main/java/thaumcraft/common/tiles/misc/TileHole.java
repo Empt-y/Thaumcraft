@@ -23,24 +23,6 @@ public class TileHole extends TileMemory
         direction = null;
     }
     
-    public TileHole(BlockState bi, short max, byte count, Direction direction) {
-        // Entity requires EntityType; use factory method
-        countdown = 0;
-        countdownmax = 120;
-        this.count = 0;
-        this.direction = null;
-        this.count = count;
-        countdownmax = max;
-        this.direction = direction;
-    }
-    
-    public TileHole(byte count) {
-        countdown = 0;
-        countdownmax = 120;
-        this.count = 0;
-        direction = null;
-        this.count = count;
-    }
     
     public void update() {
         if (getLevel().isClientSide()) {
@@ -92,10 +74,10 @@ public class TileHole extends TileMemory
     
     private void surroundwithsparkles() {
         for (Direction d1 : Direction.values()) {
-            BlockState b1 = getLevel().getBlockState(getBlockPos().offset(d1));
-            if (b1.getBlock() != BlocksTC.hole && !b1.isOpaqueCube()) {
+            BlockState b1 = getLevel().getBlockState(getBlockPos().relative(d1));
+            if (b1.getBlock() != BlocksTC.hole && !b1.canOcclude()) {
                 for (Direction d2 : Direction.values()) {
-                    if (d1.getAxis() != d2.getAxis() && (getLevel().getBlockState(getBlockPos().offset(d2)).isOpaqueCube() || getLevel().getBlockState(getBlockPos().offset(d1).offset(d2)).isOpaqueCube())) {
+                    if (d1.getAxis() != d2.getAxis() && (getLevel().getBlockState(getBlockPos().relative(d2)).canOcclude() || getLevel().getBlockState(getBlockPos().relative(d1).relative(d2)).canOcclude())) {
                         float sx = 0.5f * d1.getStepX();
                         float sy = 0.5f * d1.getStepY();
                         float sz = 0.5f * d1.getStepZ();

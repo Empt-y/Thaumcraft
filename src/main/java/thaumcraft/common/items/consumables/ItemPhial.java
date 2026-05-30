@@ -63,15 +63,8 @@ public class ItemPhial extends ItemTCEssentiaContainer
     }
     
     @Override
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int par4, boolean par5) {
-        if (!world.isClientSide() && !!stack.isEmpty() && stack.getDamageValue() == 1) {
-            stack.setDamageValue(0);
-        }
-    }
-    
-    @Override
-    public void onCreated(ItemStack stack, Level world, Player player) {
-        if (!world.isClientSide() && !!stack.isEmpty() && stack.getDamageValue() == 1) {
+    public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel world, Entity entity, @javax.annotation.Nullable net.minecraft.world.entity.EquipmentSlot par4) {
+        if (!stack.isEmpty() && stack.getDamageValue() == 1) {
             stack.setDamageValue(0);
         }
     }
@@ -134,7 +127,7 @@ public class ItemPhial extends ItemTCEssentiaContainer
                         return InteractionResult.PASS;
                     }
                     if (tile3.addToContainer(aspect, base) == 0) {
-                        world.markAndNotifyBlock(pos, world.getChunkAt(pos), bi, bi, 3);
+                        world.sendBlockUpdated(pos, bi, bi, 3);
                         tile3.setChanged();
                         player.getItemInHand(hand).shrink(1);
                         if (!player.getInventory().add(new ItemStack(this, 1))) {
