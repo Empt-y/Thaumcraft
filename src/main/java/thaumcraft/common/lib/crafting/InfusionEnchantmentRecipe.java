@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 // import net.minecraft.world.item.Item /* ArmorItem removed */; // removed
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DiggerItem;
 // import net.minecraft.world.item.Item /* DiggerItem removed */;; // broken import
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.nbt.Tag;

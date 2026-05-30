@@ -45,19 +45,19 @@ public class ItemGolemPlacer extends ItemTCBase implements ISealDisplayer
             IGolemProperties props = new GolemProperties();
             props.setHead(GolemHead.getHeads()[1]);
             props.setArms(GolemArm.getArms()[1]);
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props.asLong()));
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props.toLong()));
             items.add(is.copy());
             props = new GolemProperties();
             props.setMaterial(GolemMaterial.getMaterials()[1]);
             props.setHead(GolemHead.getHeads()[1]);
             props.setArms(GolemArm.getArms()[2]);
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props.asLong()));
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props.toLong()));
             items.add(is.copy());
             props = new GolemProperties();
             props.setMaterial(GolemMaterial.getMaterials()[4]);
             props.setHead(GolemHead.getHeads()[1]);
             props.setArms(GolemArm.getArms()[3]);
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props.asLong()));
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props.toLong()));
             items.add(is.copy());
         }
     }
@@ -95,7 +95,7 @@ public class ItemGolemPlacer extends ItemTCBase implements ISealDisplayer
         }
         pos = pos.relative(side);
         bs = world.getBlockState(pos);
-        if (!player.canPlayerEdit(pos, side, player.getItemInHand(hand))) {
+        if (!player.mayUseItemAt(pos, side, player.getItemInHand(hand))) {
             return InteractionResult.FAIL;
         }
         EntityThaumcraftGolem golem = new EntityThaumcraftGolem(null, world);

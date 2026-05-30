@@ -71,7 +71,7 @@ public class ItemSealPlacer extends ItemTCBase implements ISealDisplayer
         if (world.isClientSide() || player.getItemInHand(hand).getDamageValue() == 0 || player.isCrouching()) {
             return InteractionResult.PASS;
         }
-        if (!player.canPlayerEdit(pos, side, player.getItemInHand(hand))) {
+        if (!player.mayUseItemAt(pos, side, player.getItemInHand(hand))) {
             return InteractionResult.FAIL;
         }
         String[] rs = SealHandler.getRegisteredSeals();

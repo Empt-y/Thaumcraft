@@ -83,7 +83,7 @@ public class ItemElementalAxe extends Item /* ItemAxe removed */ implements ITha
         List<ItemEntity> stuff = EntityUtils.getEntitiesInRange(player.level(), player.getX(), player.getY(), player.getZ(), player, ItemEntity.class, 10.0);
         if (stuff != null && stuff.size() > 0) {
             for (ItemEntity e : stuff) {
-                if (!e.isDeadOrDying()) {
+                if (e.isAlive()) {
                     double d6 = e.getX() - player.getX();
                     double d7 = e.getY() - player.getY() + player.getBbHeight() / 2.0f;
                     double d8 = e.getZ() - player.getZ();

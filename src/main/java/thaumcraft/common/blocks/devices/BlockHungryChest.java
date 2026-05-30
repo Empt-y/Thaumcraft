@@ -126,7 +126,7 @@ public class BlockHungryChest extends BlockTCTile
     public boolean rotateBlock(Level world, BlockPos pos, Direction axis) {
         BlockState state = world.getBlockState(pos);
         for (Property<?> prop : state.getProperties()) {
-            if (prop.getName().getString().equals("facing")) {
+            if (prop.getName().equals("facing")) {
                 world.setBlock(pos, state.cycle((Property)prop), 3);
                 return true;
             }

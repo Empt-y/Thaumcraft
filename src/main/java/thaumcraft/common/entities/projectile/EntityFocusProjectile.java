@@ -179,7 +179,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
         if (target == null && tickCount % 5 == 0 && getSpecial() > 1) {
             List<LivingEntity> list = EntityUtils.getEntitiesInRangeSorted(level(), this, LivingEntity.class, 16.0);
             for (LivingEntity pt : list) {
-                if (!pt.isDeadOrDying() && EntityUtils.isVisibleTo(1.75f, this, pt, 16.0f)) {
+                if (!!pt.isAlive() && EntityUtils.isVisibleTo(1.75f, this, pt, 16.0f)) {
                     if (!EntityUtils.getSensing().hasLineOfSight(this, pt)) {
                         continue;
                     }
@@ -210,7 +210,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
             setDeltaMovement(mv.x, getDeltaMovement().y, getDeltaMovement().z);
             setDeltaMovement(getDeltaMovement().x, mv.y, getDeltaMovement().z);
             setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, mv.z);
-            if (tickCount % 5 == 0 && (target.isDeadOrDying() || !EntityUtils.isVisibleTo(1.75f, this, target, 16.0f) || !EntityUtils.getSensing().hasLineOfSight(this, target))) {
+            if (tickCount % 5 == 0 && (!target.isAlive() || !EntityUtils.isVisibleTo(1.75f, this, target, 16.0f) || !EntityUtils.getSensing().hasLineOfSight(this, target))) {
                 target = null;
             }
         }

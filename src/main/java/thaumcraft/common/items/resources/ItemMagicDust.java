@@ -32,7 +32,7 @@ public class ItemMagicDust extends ItemTCBase
     }
     
     public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
-        if (!player.canPlayerEdit(pos, side, player.getItemInHand(hand))) {
+        if (!player.mayUseItemAt(pos, side, player.getItemInHand(hand))) {
             return InteractionResult.FAIL;
         }
         if (player.isCrouching()) {

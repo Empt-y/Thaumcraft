@@ -91,7 +91,7 @@ public class TaskHandler
                 if (uuid != null && ticket.getGolemUUID() != null && !uuid.equals(ticket.getGolemUUID())) {
                     continue;
                 }
-                if (ticket.getEntity() == null || ticket.getEntity().isDeadOrDying()) {
+                if (ticket.getEntity() == null || !ticket.getEntity().isAlive()) {
                     ticket.setSuspended(true);
                 }
                 else if (out.size() == 0) {

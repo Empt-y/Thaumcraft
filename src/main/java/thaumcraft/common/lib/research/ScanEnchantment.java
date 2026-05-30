@@ -40,6 +40,6 @@ public class ScanEnchantment implements IScanThing
     
     @Override
     public String getResearchKey(Player player, Object obj) {
-        return "!" + enchantment.getName();
+        return "!" + enchantment.getDescriptionId();
     }
 }

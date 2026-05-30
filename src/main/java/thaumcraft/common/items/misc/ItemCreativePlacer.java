@@ -39,7 +39,7 @@ public class ItemCreativePlacer extends ItemTCBase
         }
         pos = pos.relative(side);
         bs = world.getBlockState(pos);
-        if (!player.canPlayerEdit(pos, side, player.getItemInHand(hand))) {
+        if (!player.mayUseItemAt(pos, side, player.getItemInHand(hand))) {
             return InteractionResult.FAIL;
         }
         if (!bs.getBlock().canBeReplaced()) {

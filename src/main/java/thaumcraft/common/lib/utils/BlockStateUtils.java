@@ -44,7 +44,7 @@ public class BlockStateUtils
     
     public static Property getPropertyByName(BlockState blockState, String propertyName) {
         for (Property property : blockState.getProperties()) {
-            if (property.getName().getString().equals(propertyName)) {
+            if (property.getName().equals(propertyName)) {
                 return property;
             }
         }

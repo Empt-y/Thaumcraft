@@ -37,7 +37,7 @@ public class ItemFocus extends ItemTCBase
     }
     
     public int getFocusColor(ItemStack focusstack) {
-        if (focusstack == null || focusstack.isEmpty() || focusstack.get() == null) {
+        if (focusstack == null || focusstack.isEmpty() || focusstack.isEmpty()) {
             return 16777215;
         }
         int color = 16777215;

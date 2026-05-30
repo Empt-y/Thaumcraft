@@ -50,6 +50,6 @@ public class ScanPotion implements IScanThing
     
     @Override
     public String getResearchKey(Player player, Object obj) {
-        return "!" + potion.getName();
+        return "!" + potion.getDescriptionId();
     }
 }
