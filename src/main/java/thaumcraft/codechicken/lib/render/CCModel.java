@@ -785,7 +785,7 @@ public class CCModel implements CCRenderState.IVertexSource, Copyable<CCModel>
             switch (findSide(normal)) {
                 case 0: {
                     Vector3 vec = vert.vec;
-                    vec.getY() += offsets.min.y;
+                    vec.y += offsets.min.y;
                     break;
                 }
                 case 1: {

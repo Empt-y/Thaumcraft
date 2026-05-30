@@ -20,8 +20,10 @@ public class FXSwarm extends Particle
     private float speed;
     int deathtimer;
     private static ArrayList<Long> buzzcount;
-    float getXRot();
-    float getYRot();
+    protected float xRot;
+    protected float yRot;
+    public float getXRot() { return xRot; }
+    public float getYRot() { return yRot; }
     public int particle;
     protected float rCol;
     protected float gCol;

@@ -24,7 +24,7 @@ public class TileTubeFilter extends TileTube implements IAspectContainer
     public CompoundTag writeSyncNBT(CompoundTag nbttagcompound) {
         nbttagcompound = super.writeSyncNBT(nbttagcompound);
         if (aspectFilter != null) {
-            nbttagcompound.putString("AspectFilter", aspectFilter.get());
+            nbttagcompound.putString("AspectFilter", aspectFilter.getTag());
         }
         return nbttagcompound;
     }

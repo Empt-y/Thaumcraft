@@ -79,7 +79,7 @@ public class TileEssentiaInput extends TileThaumcraft implements IEssentiaTransp
     }
     
     void fillJar() {
-        BlockEntity te = ThaumcraftApiHelper.getConnectableTile(world, getBlockPos(), getFacing().getOpposite());
+        BlockEntity te = ThaumcraftApiHelper.getConnectableTile(level, getBlockPos(), getFacing().getOpposite());
         if (te != null) {
             IEssentiaTransport ic = (IEssentiaTransport)te;
             if (!ic.canOutputTo(getFacing())) {

@@ -59,7 +59,7 @@ public class ItemMagicDust extends ItemTCBase
     private void doSparkles(Player player, Level world, BlockPos pos, float hitX, float hitY, float hitZ, InteractionHand hand, IDustTrigger trigger, IDustTrigger.Placement place) {
         Vec3 v1 = EntityUtils.posToHand(player, hand);
         Vec3 v2 = new Vec3(pos);
-        v2 = v2.offset(0.5, 0.5, 0.5);
+        v2 = v2.add(0.5, 0.5, 0.5);
         v2 = v2.subtract(v1);
         for (int cnt = 50, a = 0; a < cnt; ++a) {
             boolean floaty = a < cnt / 3;
@@ -71,7 +71,7 @@ public class ItemMagicDust extends ItemTCBase
         world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundsTC.dust, SoundSource.PLAYERS, 0.33f, 1.0f + (float)random.nextGaussian() * 0.05f, false);
         List<BlockPos> sparkles = trigger.sparkle(world, player, pos, place);
         if (sparkles != null) {
-            Vec3 v3 = new Vec3(pos).offset(hitX, hitY, hitZ);
+            Vec3 v3 = new Vec3(pos).add(hitX, hitY, hitZ);
             for (BlockPos p : sparkles) {
                 FXDispatcher.INSTANCE.drawBlockSparkles(p, v3);
             }

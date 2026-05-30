@@ -45,14 +45,14 @@ public class PacketFXShield implements CustomPacketPayload
     public static void handle(PacketFXShield msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             var level = Minecraft.getInstance().level;
-            Entity p = level().getEntity(msg.source);
+            Entity p = level.getEntity(msg.source);
             if (p == null) {
                 return;
             }
             float pitch = 0.0f;
             float yaw = 0.0f;
             if (msg.target >= 0) {
-                Entity t = level().getEntity(msg.target);
+                Entity t = level.getEntity(msg.target);
                 if (t != null) {
                     double d0 = p.getX() - t.getX();
                     double d2 = (p.getBoundingBox().minY + p.getBoundingBox().maxY) / 2.0 - (t.getBoundingBox().minY + t.getBoundingBox().maxY) / 2.0;

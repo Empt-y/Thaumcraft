@@ -69,7 +69,7 @@ public class EntityFallingTaint extends Entity
     }
     
     public boolean isPickable() {
-        return !isDeadOrDying();
+        return !isRemoved();
     }
     
     public void tick() {
@@ -100,7 +100,7 @@ public class EntityFallingTaint extends Entity
                     setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z * 0.699999988079071);
                     setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y * -0.5, getDeltaMovement().z);
                     if (level().getBlockState(bp).getBlock() != Blocks.PISTON && level().getBlockState(bp).getBlock() != Blocks.PISTON && level().getBlockState(bp).getBlock() != Blocks.PISTON_HEAD) {
-                        playSound(SoundsTC.gore, 0.5f, ((random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f) * 0.8f);
+                        playSound(SoundsTC.gore, 0.5f, ((getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f + 1.0f) * 0.8f);
                         discard();
                         if (canPlace(bp) && !BlockTaint.canFallBelow(level(), bp.below()) && level().setBlockAndUpdate(bp, fallTile)) {}
                     }
@@ -148,7 +148,7 @@ public class EntityFallingTaint extends Entity
         }
         fallTime = (par1CompoundTag.getByteOr("Time", (byte)0) & 0xFF);
         oldPos = BlockPos.of(par1CompoundTag.getLongOr("Old", 0L));
-        if (par1CompoundTag.contains("HurtEntities")) {
+        if (par1CompoundTag.child("HurtEntities").isPresent()) {
             fallHurtAmount = par1CompoundTag.getFloatOr("FallHurtAmount", 0.0f);
             fallHurtMax = par1CompoundTag.getIntOr("FallHurtMax", 0);
         }
@@ -169,7 +169,7 @@ public class EntityFallingTaint extends Entity
     
     @OnlyIn(Dist.CLIENT)
     public Level getLevel() {
-        return world;
+        return level();
     }
     
     @OnlyIn(Dist.CLIENT)

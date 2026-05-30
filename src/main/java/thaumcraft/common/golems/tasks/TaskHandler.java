@@ -62,10 +62,10 @@ public class TaskHandler
                     out.add(ticket);
                 }
                 else {
-                    double d = ticket.getPos().distanceTo(new net.minecraft.world.phys.Vec3(golem.getX(), golem.getY(), golem.getZ()));
+                    double d = ticket.getPos().getCenter().distanceTo(golem.position());
                     d -= ticket.getPriority() * 256;
                     for (int a = 0; a < out.size(); ++a) {
-                        double d2 = out.get(a).getPos().distanceTo(new net.minecraft.world.phys.Vec3(golem.getX(), golem.getY(), golem.getZ()));
+                        double d2 = out.get(a).getPos().getCenter().distanceTo(golem.position());
                         d2 -= out.get(a).getPriority() * 256;
                         if (d < d2) {
                             out.add(a, ticket);
@@ -98,10 +98,10 @@ public class TaskHandler
                     out.add(ticket);
                 }
                 else {
-                    double d = ticket.getPos().distanceTo(new net.minecraft.world.phys.Vec3(golem.getX(), golem.getY(), golem.getZ()));
+                    double d = ticket.getPos().getCenter().distanceTo(golem.position());
                     d -= ticket.getPriority() * 256;
                     for (int a = 0; a < out.size(); ++a) {
-                        double d2 = out.get(a).getPos().distanceTo(new net.minecraft.world.phys.Vec3(golem.getX(), golem.getY(), golem.getZ()));
+                        double d2 = out.get(a).getPos().getCenter().distanceTo(golem.position());
                         d2 -= out.get(a).getPriority() * 256;
                         if (d < d2) {
                             out.add(a, ticket);

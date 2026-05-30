@@ -48,10 +48,10 @@ public class ItemVoidAxe extends Item /* ItemAxe removed */ implements IWarpingG
         return ImmutableSet.of("axe");
     }
     
-    public void onUpdate(ItemStack stack, Level world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
-        super.onUpdate(stack, world, entity, p_77663_4_, p_77663_5_);
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
+        super.inventoryTick(stack, world, entity, p_77663_4_, p_77663_5_);
         if ((stack.getDamageValue() > 0) && entity != null && entity.tickCount % 20 == 0 && entity instanceof LivingEntity) {
-            stack.damageItem(-1, (LivingEntity)entity);
+            if (stack.isDamageableItem()) stack.setDamageValue(Math.max(0, stack.getDamageValue() - 1));
         }
     }
     

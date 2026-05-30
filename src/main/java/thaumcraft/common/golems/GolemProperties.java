@@ -187,7 +187,7 @@ public class GolemProperties implements IGolemProperties
     private static void addToList(ArrayList<ItemStack> comps, ItemStack newItem, int mult) {
         for (ItemStack stack : comps) {
             if (ItemStack.isSameItem(stack, newItem) && ItemStack.isSameItemSameComponents(stack, newItem)) {
-                stack.inflate(newItem.getCount() * mult);
+                stack.grow(newItem.getCount() * mult);
                 return;
             }
         }

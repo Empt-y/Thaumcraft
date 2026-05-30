@@ -92,7 +92,7 @@ public class FocusEffectCurse extends FocusEffect
         else if (target.getType() == HitResult.Type.BLOCK) {
             float f = (float)Math.min(8.0, 1.5 * getSettingValue("power") * finalPower);
             for (BlockPos.MutableBlockPos blockpos$mutableblockpos1 : BlockPos.betweenClosed(((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset((int)(-f), (int)(-f), (int)(-f)), ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset((int)f, (int)f, (int)f))) {
-                if (blockpos$mutableblockpos1.distanceTo(new net.minecraft.world.phys.Vec3(target.getLocation().x, target.getLocation().y, target.getLocation().z)) <= f * f && getPackage().world.isEmptyBlock(blockpos$mutableblockpos1.above())) {
+                if (blockpos$mutableblockpos1.distToCenterSqr(target.getLocation().x, target.getLocation().y, target.getLocation().z) <= f * f && getPackage().world.isEmptyBlock(blockpos$mutableblockpos1.above())) {
                     getPackage().world.setBlockAndUpdate(blockpos$mutableblockpos1.above(), BlocksTC.effectSap.defaultBlockState());
                 }
             }
@@ -108,7 +108,7 @@ public class FocusEffectCurse extends FocusEffect
     @OnlyIn(Dist.CLIENT)
     @Override
     public void renderParticleFX(Level world, double x, double y, double z, double vx, double vy, double vz) {
-        FXGeneric fb = new FXGeneric(world, getX(), getY(), getZ(), vx, vy, vz);
+        FXGeneric fb = new FXGeneric(world, x, y, z, vx, vy, vz);
         fb.setMaxAge(8);
         fb.setRBGColorF(0.41f + getPackage().world.getRandom().nextFloat() * 0.2f, 0.0f, 0.019f + getPackage().world.getRandom().nextFloat() * 0.2f);
         fb.setAlphaF(0.0f, getPackage().world.getRandom().nextFloat(), getPackage().world.getRandom().nextFloat(), getPackage().world.getRandom().nextFloat(), 0.0f);

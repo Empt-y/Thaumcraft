@@ -71,7 +71,7 @@ public class FocusEffectBreak extends FocusEffect
     @OnlyIn(Dist.CLIENT)
     @Override
     public void renderParticleFX(Level world, double x, double y, double z, double vx, double vy, double vz) {
-        FXGeneric fb = new FXGeneric(world, getX(), getY(), getZ(), vx, vy, vz);
+        FXGeneric fb = new FXGeneric(world, x, y, z, vx, vy, vz);
         fb.setMaxAge(6 + getPackage().world.getRandom().nextInt(6));
         int q = getPackage().world.getRandom().nextInt(4);
         fb.setParticles(704 + q * 3, 3, 1);

@@ -148,10 +148,10 @@ public class EntityTaintSeed extends Monster implements ITaintedMob
             if (attackAnim < 0.001) attackAnim = 0.0f;
             float xx = Mth.sin(tickCount * 0.05f - 0.5f) / 5.0f;
             float zz = Mth.sin(tickCount * 0.06f - 0.5f) / 5.0f + hurtTime / 200.0f + attackAnim;
-            if (random.nextFloat() < 0.033) {
-                FXDispatcher.INSTANCE.drawLightningFlash((float) getX() + xx, (float) getY() + getBbHeight() + 0.25f, (float) getZ() + zz, 0.7f, 0.1f, 0.9f, 0.5f, 1.5f + random.nextFloat());
+            if (getRandom().nextFloat() < 0.033) {
+                FXDispatcher.INSTANCE.drawLightningFlash((float) getX() + xx, (float) getY() + getBbHeight() + 0.25f, (float) getZ() + zz, 0.7f, 0.1f, 0.9f, 0.5f, 1.5f + getRandom().nextFloat());
             } else {
-                FXDispatcher.INSTANCE.drawTaintParticles((float) getX() + xx, (float) getY() + getBbHeight() + 0.25f, (float) getZ() + zz, (float) random.nextGaussian() * 0.05f, 0.1f + 0.01f * random.nextFloat(), (float) random.nextGaussian() * 0.05f, 2.0f);
+                FXDispatcher.INSTANCE.drawTaintParticles((float) getX() + xx, (float) getY() + getBbHeight() + 0.25f, (float) getZ() + zz, (float) getRandom().nextGaussian() * 0.05f, 0.1f + 0.01f * getRandom().nextFloat(), (float) getRandom().nextGaussian() * 0.05f, 2.0f);
             }
         }
     }

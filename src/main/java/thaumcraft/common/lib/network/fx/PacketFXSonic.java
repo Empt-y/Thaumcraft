@@ -40,7 +40,7 @@ public class PacketFXSonic implements CustomPacketPayload
     public static void handle(PacketFXSonic msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             var level = Minecraft.getInstance().level;
-            Entity p = level().getEntity(msg.source);
+            Entity p = level.getEntity(msg.source);
             if (p != null) {
                 FXSonic fb = new FXSonic(level, p.getX(), p.getY(), p.getZ(), p, 10);
                 Minecraft.getInstance().particleEngine.add(fb);

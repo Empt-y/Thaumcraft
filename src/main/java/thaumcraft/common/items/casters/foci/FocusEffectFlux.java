@@ -52,7 +52,7 @@ public class FocusEffectFlux extends FocusEffect
         /* sendToAllAround stub */
         if (target.getType() == HitResult.Type.ENTITY && ((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) {
             float damage = getDamageForDisplay(finalPower);
-            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(world.damageSources().indirectMagic((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
+            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(getPackage().world.damageSources().indirectMagic((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
         }
         return false;
     }

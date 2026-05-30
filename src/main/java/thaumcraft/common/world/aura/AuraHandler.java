@@ -163,18 +163,17 @@ public class AuraHandler
         return false;
     }
     
-    public static void generateAura(LevelChunk chunk, Random rand) {
-        net.minecraft.world.level.Level level = chunk.level();
+    public static void generateAura(LevelChunk chunk, net.minecraft.world.level.Level level, Random rand) {
         int cx = chunk.getPos().getX();
         int cz = chunk.getPos().getZ();
-        Biome bgb = world.getBiome(new BlockPos(cx * 16 + 8, 50, cz * 16 + 8)).value();
+        Biome bgb = level.getBiome(new BlockPos(cx * 16 + 8, 50, cz * 16 + 8)).value();
         if (BiomeHandler.getBiomeBlacklist(0) != -1) {
             return;
         }
         float life = BiomeHandler.getBiomeAuraModifier(bgb);
         for (int a = 0; a < 4; ++a) {
             Direction dir = Direction.from2DDataValue(a);
-            Biome bgb2 = world.getBiome(new BlockPos((cx + dir.getStepX()) * 16 + 8, 50, (cz + dir.getStepZ()) * 16 + 8)).value();
+            Biome bgb2 = level.getBiome(new BlockPos((cx + dir.getStepX()) * 16 + 8, 50, (cz + dir.getStepZ()) * 16 + 8)).value();
             life += BiomeHandler.getBiomeAuraModifier(bgb2);
         }
         life /= 5.0f;

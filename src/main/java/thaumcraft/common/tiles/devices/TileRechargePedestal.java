@@ -72,7 +72,7 @@ public class TileRechargePedestal extends TileThaumcraftInventory implements IAs
     
     @Override
     public AspectList getAspects() {
-        ItemStack s = (world == null || getLevel().isClientSide()) ? getSyncedStackInSlot(0) : getStackInSlot(0);
+        ItemStack s = (level == null || getLevel().isClientSide()) ? getSyncedStackInSlot(0) : getStackInSlot(0);
         if (s != null && s.getItem() instanceof IRechargable) {
             float c = (float)RechargeHelper.getCharge(s);
             return new AspectList().add(Aspect.ENERGY, Math.round(c));
@@ -119,14 +119,14 @@ public class TileRechargePedestal extends TileThaumcraftInventory implements IAs
         return true;
     }
     
-    public boolean receiveClientEvent(int i, int j) {
+    public boolean triggerEvent(int i, int j) {
         if (i == 5) {
             if (getLevel().isClientSide()) {
                 FXDispatcher.INSTANCE.visSparkle(getBlockPos().getX() + getLevel().getRandom().nextInt(3) - getLevel().getRandom().nextInt(3), getBlockPos().above().getY() + getLevel().getRandom().nextInt(3), getBlockPos().getZ() + getLevel().getRandom().nextInt(3) - getLevel().getRandom().nextInt(3), getBlockPos().getX(), getBlockPos().above().getY(), getBlockPos().getZ(), j);
             }
             return true;
         }
-        return super.receiveClientEvent(i, j);
+        return super.triggerEvent(i, j);
     }
     
     static {

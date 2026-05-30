@@ -1,43 +1,34 @@
 package thaumcraft.common.lib.potions;
-import net.minecraft.client.Minecraft;
+
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.effect.MobEffectCategory;
 
+public class PotionWarpWard extends MobEffect {
 
-public class PotionWarpWard extends MobEffect
-{
     public static MobEffect instance;
-    private int statusIconIndex;
-    static Identifier rl;
-    
-    public PotionWarpWard(boolean par2, int par3) {
-        super(net.minecraft.world.effect.MobEffectCategory.HARMFUL, par3);
-        statusIconIndex = -1;
-        setIconIndex(0, 0);
-        setPotionName("potion.warpward");
-        setIconIndex(3, 2, par2);
-        setEffectiveness(0.25);
+
+    public PotionWarpWard(int color) {
+        super(MobEffectCategory.NEUTRAL, color);
     }
-    
-    public boolean isBadEffect() {
-        return false;
+
+    @Override
+    public boolean isBeneficial() {
+        return true;
     }
-    
-    @OnlyIn(Dist.CLIENT)
-    public int getStatusIconIndex() {
-        Minecraft.getInstance().renderEngine.bindTexture(PotionWarpWard.rl);
-        return super.getStatusIconIndex();
+
+    @Override
+    public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
+        return true;
     }
-    
-    public void performEffect(LivingEntity target, int par2) {
+
+    @Override
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+        return true;
     }
-    
+
     static {
         PotionWarpWard.instance = null;
-        rl = Identifier.fromNamespaceAndPath("thaumcraft", "textures/misc/potions.png");
     }
 }

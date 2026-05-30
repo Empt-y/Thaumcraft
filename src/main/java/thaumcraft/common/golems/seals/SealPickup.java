@@ -76,7 +76,7 @@ public class SealPickup extends SealFiltered implements ISealConfigArea
             while (it.hasNext()) {
                 Entity e2 = world.getEntity(it.next());
                 if (e2 != null) {
-                    if (!e2.isDeadOrDying()) {
+                    if (!!e2.isAlive()) {
                         continue;
                     }
                 }
@@ -139,7 +139,7 @@ public class SealPickup extends SealFiltered implements ISealConfigArea
         if (ei == null || ei.isEmpty()) {
             return false;
         }
-        if (ei.isDeadOrDying()) {
+        if (!ei.isAlive()) {
             task.setSuspended(true);
             return false;
         }

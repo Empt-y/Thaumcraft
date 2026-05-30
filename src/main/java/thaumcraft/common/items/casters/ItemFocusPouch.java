@@ -37,7 +37,7 @@ public class ItemFocusPouch extends ItemTCBase
     
     public InteractionResult use(Level worldIn, Player playerIn, InteractionHand hand) {
         if (!worldIn.isClientSide()) {
-            playerIn.openGui(Thaumcraft.instance, 5, worldIn, Mth.floor(playerIn.getX()), Mth.floor(playerIn.getY()), Mth.floor(playerIn.getZ()));
+            /* TODO: port to NetworkHooks.openScreen */ 
         }
         return super.use(worldIn, playerIn, hand);
     }

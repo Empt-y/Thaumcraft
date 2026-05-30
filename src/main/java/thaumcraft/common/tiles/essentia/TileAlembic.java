@@ -66,7 +66,7 @@ public class TileAlembic extends TileThaumcraft implements IAspectContainer, IEs
             nbttagcompound.putString("aspect", aspect.getTag());
         }
         if (aspectFilter != null) {
-            nbttagcompound.putString("AspectFilter", aspectFilter.get());
+            nbttagcompound.putString("AspectFilter", aspectFilter.getTag());
         }
         nbttagcompound.putShort("amount", (short) amount);
         nbttagcompound.putByte("facing", (byte) facing);
@@ -190,7 +190,7 @@ public class TileAlembic extends TileThaumcraft implements IAspectContainer, IEs
     protected static boolean processAlembics(Level world, BlockPos pos, Aspect aspect) {
         int deep = 1;
         while (true) {
-            BlockEntity te = world.getBlockEntity(getBlockPos().up(deep));
+            BlockEntity te = world.getBlockEntity(pos.above(deep));
             if (te != null && te instanceof TileAlembic) {
                 TileAlembic alembic = (TileAlembic)te;
                 if (alembic.amount > 0 && alembic.aspect == aspect && alembic.addToContainer(aspect, 1) == 0) {
@@ -201,7 +201,7 @@ public class TileAlembic extends TileThaumcraft implements IAspectContainer, IEs
             else {
                 deep = 1;
                 while (true) {
-                    te = world.getBlockEntity(getBlockPos().up(deep));
+                    te = world.getBlockEntity(pos.above(deep));
                     if (te == null || !(te instanceof TileAlembic)) {
                         return false;
                     }

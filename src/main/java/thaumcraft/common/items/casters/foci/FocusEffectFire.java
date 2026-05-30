@@ -92,7 +92,7 @@ public class FocusEffectFire extends FocusEffect
         pp.partNum = 10;
         pp.slowDown = 0.75;
         pp.scale = new float[] { (float)(1.5 + getPackage().world.getRandom().nextGaussian() * 0.20000000298023224) };
-        FXDispatcher.INSTANCE.drawGenericParticles(getX(), getY(), getZ(), getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z, pp);
+        FXDispatcher.INSTANCE.drawGenericParticles(x, y, z, vx, vy, vz, pp);
     }
     
     @Override

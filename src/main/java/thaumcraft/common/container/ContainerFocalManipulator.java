@@ -35,7 +35,7 @@ public class ContainerFocalManipulator extends AbstractContainerMenu
     @Override
     public boolean clickMenuButton(Player p, int button) {
         if (button == 0 && !table.startCraft(button, p)) {
-            net.minecraft.world.level.Level level = table.level();
+            net.minecraft.world.level.Level level = table.getLevel();
             if (level != null) {
                 level.playSound(p, table.getBlockPos(), SoundsTC.craftfail, SoundSource.BLOCKS, 0.33f, 1.0f);
             }
@@ -45,7 +45,7 @@ public class ContainerFocalManipulator extends AbstractContainerMenu
 
     @Override
     public boolean stillValid(Player par1Player) {
-        net.minecraft.world.level.Level level = table.level();
+        net.minecraft.world.level.Level level = table.getLevel();
         if (level == null) return false;
         return level.getBlockEntity(table.getBlockPos()) == table &&
                par1Player.distanceToSqr(table.getBlockPos().getCenter()) <= 64.0;

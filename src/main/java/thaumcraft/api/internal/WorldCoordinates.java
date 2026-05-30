@@ -21,7 +21,7 @@ public class WorldCoordinates implements Comparable
     public WorldCoordinates(BlockEntity tile)
     {
         pos = tile.getBlockPos();
-        dim = tile.level() != null ? tile.level().dimension().identifier().hashCode() : 0;
+        dim = tile.getLevel() != null ? tile.getLevel().dimension().identifier().hashCode() : 0;
     }
 
     public WorldCoordinates(WorldCoordinates par1ChunkCoordinates)

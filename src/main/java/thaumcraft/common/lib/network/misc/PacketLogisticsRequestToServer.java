@@ -70,7 +70,7 @@ public class PacketLogisticsRequestToServer implements CustomPacketPayload
     public static void handle(PacketLogisticsRequestToServer msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             ServerPlayer serverPlayer = (ServerPlayer) ctx.player();
-            var level = serverPlayer.serverLevel();
+            var level = (ServerLevel) serverPlayer.level();
             int ui = 0;
             int remaining = msg.stacksize;
             while (remaining > 0) {

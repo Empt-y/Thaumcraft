@@ -183,8 +183,8 @@ public class SealBaseContainer extends AbstractContainerMenu
         crafting.sendWindowProperty(this, 4, seal.getColor());
     }
 
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
+    public void broadcastChanges() {
+        super.broadcastChanges();
         for (int i = 0; i < listeners.size(); ++i) {
             ContainerListener icrafting = listeners.get(i);
             if (lastPriority != seal.getPriority()) {

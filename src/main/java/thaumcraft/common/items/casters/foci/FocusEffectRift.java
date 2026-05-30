@@ -102,12 +102,12 @@ public class FocusEffectRift extends FocusEffect
     @OnlyIn(Dist.CLIENT)
     @Override
     public void renderParticleFX(Level world, double x, double y, double z, double vx, double vy, double vz) {
-        FXGeneric fb = new FXGeneric(world, getX(), getY(), getZ(), vx, vy, vz);
+        FXGeneric fb = new FXGeneric(world, x, y, z, vx, vy, vz);
         fb.setMaxAge(16 + net.minecraft.util.RandomSource.create().nextInt(16));
         fb.setParticles(384 + net.minecraft.util.RandomSource.create().nextInt(16), 1, 1);
         fb.setSlowDown(0.75);
         fb.setAlphaF(1.0f, 0.0f);
-        fb.setScale((float)(0.699999988079071 + random.nextGaussian() * 0.30000001192092896));
+        fb.setScale((float)(0.699999988079071 + net.minecraft.util.RandomSource.create().nextGaussian() * 0.30000001192092896));
         fb.setRBGColorF(0.25f, 0.25f, 1.0f);
         fb.setRandomMovementScale(0.01f, 0.01f, 0.01f);
         ParticleEngine.addEffectWithDelay(world, fb, 0);

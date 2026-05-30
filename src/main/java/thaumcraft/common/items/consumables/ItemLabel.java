@@ -42,7 +42,7 @@ public class ItemLabel extends ItemTCEssentiaContainer
         if (bs.getBlock() instanceof ILabelable) {
             if (((ILabelable)bs.getBlock()).applyLabel(player, pos, side, player.getItemInHand(hand))) {
                 player.getItemInHand(hand).shrink(1);
-                player.containerMenu.detectAndSendChanges();
+                player.containerMenu.broadcastChanges();
             }
             return InteractionResult.SUCCESS;
         }
@@ -50,7 +50,7 @@ public class ItemLabel extends ItemTCEssentiaContainer
         if (te instanceof ILabelable) {
             if (((ILabelable)te).applyLabel(player, pos, side, player.getItemInHand(hand))) {
                 player.getItemInHand(hand).shrink(1);
-                player.containerMenu.detectAndSendChanges();
+                player.containerMenu.broadcastChanges();
             }
             return InteractionResult.SUCCESS;
         }
@@ -58,7 +58,7 @@ public class ItemLabel extends ItemTCEssentiaContainer
     }
     
     @Override
-    public void onUpdate(ItemStack stack, Level world, Entity entity, int par4, boolean par5) {
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int par4, boolean par5) {
     }
     
     @Override

@@ -53,8 +53,8 @@ public class ContainerArcaneWorkbench extends AbstractContainerMenu
             }
         }
         for (ShardType st : ShardType.values()) {
-            if (st.getMetadata() < 6) {
-                addSlot(new SlotCrystal(st.getAspect(), tileEntity.inventoryCraft, st.getMetadata() + 9, ContainerArcaneWorkbench.xx[st.getMetadata()], ContainerArcaneWorkbench.yy[st.getMetadata()]));
+            if (st.ordinal() < 6) {
+                addSlot(new SlotCrystal(st.getAspect(), tileEntity.inventoryCraft, st.ordinal() + 9, ContainerArcaneWorkbench.xx[st.ordinal()], ContainerArcaneWorkbench.yy[st.ordinal()]));
             }
         }
         for (int var6 = 0; var6 < 3; ++var6) {
@@ -106,7 +106,7 @@ public class ContainerArcaneWorkbench extends AbstractContainerMenu
             vis *= (int)(1.0f - CasterManager.getTotalVisDiscount(ip.player));
             AspectList crystals = recipe.getCrystals();
             tileEntity.getAura();
-            Level level = tileEntity.level();
+            Level level = tileEntity.getLevel();
             hasVis = (level != null && level.isClientSide() ? (tileEntity.auraVisClient >= vis) : (tileEntity.auraVisServer >= vis));
             if (crystals != null && crystals.size() > 0) {
                 for (Aspect aspect : crystals.getAspects()) {
@@ -118,7 +118,7 @@ public class ContainerArcaneWorkbench extends AbstractContainerMenu
             }
         }
         if (hasVis && hasCrystals) {
-            Level level = tileEntity.level();
+            Level level = tileEntity.getLevel();
             if (level != null) {
                 slotChangedCraftingGrid(level, ip.player, tileEntity.inventoryCraft, craftResult);
             }
@@ -140,7 +140,7 @@ public class ContainerArcaneWorkbench extends AbstractContainerMenu
     @Override
     public void removed(Player par1Player) {
         super.removed(par1Player);
-        Level level = tileEntity.level();
+        Level level = tileEntity.getLevel();
         if (level != null && !level.isClientSide()) {
             tileEntity.inventoryCraft.eventHandler = new ContainerDummy();
         }
@@ -148,7 +148,7 @@ public class ContainerArcaneWorkbench extends AbstractContainerMenu
 
     @Override
     public boolean stillValid(Player par1Player) {
-        Level level = tileEntity.level();
+        Level level = tileEntity.getLevel();
         if (level == null) return false;
         return level.getBlockEntity(tileEntity.getBlockPos()) == tileEntity &&
                par1Player.distanceToSqr(tileEntity.getBlockPos().getCenter()) <= 64.0;
@@ -168,9 +168,9 @@ public class ContainerArcaneWorkbench extends AbstractContainerMenu
                 var3.onQuickCraft(var4, var2);
             } else if (par1 >= 16 && par1 < 52) {
                 for (ShardType st : ShardType.values()) {
-                    if (st.getMetadata() < 6) {
+                    if (st.ordinal() < 6) {
                         if (SlotCrystal.isValidCrystal(var4, st.getAspect())) {
-                            if (!moveItemStackTo(var4, 10 + st.getMetadata(), 11 + st.getMetadata(), false)) {
+                            if (!moveItemStackTo(var4, 10 + st.ordinal(), 11 + st.ordinal(), false)) {
                                 return ItemStack.EMPTY;
                             }
                             if (var4.getCount() == 0) break;

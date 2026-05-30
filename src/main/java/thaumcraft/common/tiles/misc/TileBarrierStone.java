@@ -15,7 +15,7 @@ public class TileBarrierStone extends BlockEntity
     int count;
     
     public TileBarrierStone(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(type, this.worldPosition, state);
+        super(type, pos, state);
         count = 0;
     }
     

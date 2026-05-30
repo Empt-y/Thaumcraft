@@ -9,9 +9,9 @@ public class SwapYZ extends VariableTransformation
     
     @Override
     public void apply(Vector3 vec) {
-        double vz = vec.getZ();
-        vec.getZ() = vec.getY();
-        vec.getY() = vz;
+        double vz = vec.z;
+        vec.z = vec.y;
+        vec.y = vz;
     }
     
     @Override

@@ -58,7 +58,7 @@ public class EntityMindSpider extends Spider implements IEldritchMob
     @Override
     public void tick() {
         super.tick();
-        if (!world.isClientSide() && tickCount > lifeSpan) {
+        if (!level().isClientSide() && tickCount > lifeSpan) {
             discard();
         }
     }

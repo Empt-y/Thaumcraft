@@ -55,7 +55,7 @@ public class FXArc extends Particle
         double l = Utils.distanceSquared3d(new Vec3(0.0, 0.0, 0.0), vv);
         points.add(vs);
         for (int c = 0; Utils.distanceSquared3d(ve, vc) > l && c < 50; ++c) {
-            Vec3 vt = vc.offset(vv.x, vv.y, vv.z);
+            Vec3 vt = vc.add(vv.x, vv.y, vv.z);
             vc = new Vec3(vt.x, vt.y, vt.z);
             vt = vt.add((random.nextDouble() - random.nextDouble()) * noise,
                         (random.nextDouble() - random.nextDouble()) * noise,

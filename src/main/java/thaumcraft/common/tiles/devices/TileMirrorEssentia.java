@@ -277,7 +277,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource
     
     public void checkInstability() {
         if (instability > 64) {
-            AuraHelper.polluteAura(world, getBlockPos(), 1.0f, true);
+            AuraHelper.polluteAura(level, getBlockPos(), 1.0f, true);
             instability -= 64;
             setChanged();
         }

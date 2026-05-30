@@ -54,7 +54,7 @@ public class EntityBottleTaint extends ThrowableProjectile
             if (ents.size() > 0) {
                 for (Object ent : ents) {
                     LivingEntity el = (LivingEntity)ent;
-                    if (!(el instanceof ITaintedMob) && !el.isUndead()) {
+                    if (!(el instanceof ITaintedMob) && !el.getType() == net.minecraft.world.entity.MobType.UNDEAD) {
                         el.addEffect(new MobEffectInstance(net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.wrapAsHolder(PotionFluxTaint.instance), 100, 0, false, true));
                     }
                 }

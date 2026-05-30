@@ -50,7 +50,7 @@ public class ItemThaumometer extends ItemTCBase
         return InteractionResult.SUCCESS;
     }
     
-    public void onUpdate(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
         boolean held = isSelected || itemSlot == 0;
         if (held && !world.isClientSide() && entity.tickCount % 20 == 0 && entity instanceof net.minecraft.server.level.ServerPlayer) {
             updateAura(stack, world, (net.minecraft.server.level.ServerPlayer)entity);

@@ -146,7 +146,7 @@ public class TileWaterJug extends TileThaumcraft implements IFluidHandler
         }
     }
 
-    public boolean receiveClientEvent(int i, int j) {
+    public boolean triggerEvent(int i, int j) {
         if (i == 1) {
             if (getLevel().isClientSide()) {
                 zc = j;
@@ -154,7 +154,7 @@ public class TileWaterJug extends TileThaumcraft implements IFluidHandler
             }
             return true;
         }
-        return super.receiveClientEvent(i, j);
+        return super.triggerEvent(i, j);
     }
 
     @Override

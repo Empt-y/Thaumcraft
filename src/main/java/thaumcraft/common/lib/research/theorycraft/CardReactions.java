@@ -20,8 +20,8 @@ public class CardReactions extends TheorycraftCard
     @Override
     public CompoundTag serialize() {
         CompoundTag nbt = super.serialize();
-        nbt.putString("aspect1", aspect1.get());
-        nbt.putString("aspect2", aspect2.get());
+        nbt.putString("aspect1", aspect1.getTag());
+        nbt.putString("aspect2", aspect2.getTag());
         return nbt;
     }
     

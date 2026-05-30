@@ -57,7 +57,7 @@ public class TileLevitator extends TileThaumcraft
         }
         ++counter;
         if (!getLevel().isClientSide() && vis < 10) {
-            vis += (int)(AuraHelper.drainVis(world, getBlockPos(), 1.0f, false) * 1200.0f);
+            vis += (int)(AuraHelper.drainVis(level, getBlockPos(), 1.0f, false) * 1200.0f);
             setChanged();
             syncTile(false);
         }
@@ -174,7 +174,7 @@ public class TileLevitator extends TileThaumcraft
         }
     }
     
-    public HitResult rayTrace(Level world, Vec3 vec3d, Vec3 vec3d1, HitResult fullblock) {
+    public HitResult rayTrace(Level level, Vec3 vec3d, Vec3 vec3d1, HitResult fullblock) {
         return fullblock;
     }
     

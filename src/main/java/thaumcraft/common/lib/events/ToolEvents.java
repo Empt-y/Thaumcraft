@@ -63,7 +63,7 @@ public class ToolEvents
                 int rank = EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldItem, EnumInfusionEnchantment.ARCING);
                 List<Entity> targets = player.level().getEntitiesOfClass(
                     Entity.class,
-                    event.getTarget().getBoundingBox().inflate(1.5 + rank, 1.0f + rank / 2.0f, 1.5 + rank),
+                    event.getTarget().getBoundingBox().grow(1.5 + rank, 1.0f + rank / 2.0f, 1.5 + rank),
                     e -> true
                 );
                 int count = 0;

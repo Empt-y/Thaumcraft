@@ -52,7 +52,7 @@ public class TileCrucible extends TileThaumcraft implements IFluidHandler, IAspe
     public static BlockEntityType<TileCrucible> TYPE;
 
     public TileCrucible(BlockPos pos, BlockState state) {
-        super(TileCrucible.TYPE, getBlockPos(), state);
+        super(TileCrucible.TYPE, pos, state);
         aspects = new AspectList();
         bellows = -1;
         delay = 0;

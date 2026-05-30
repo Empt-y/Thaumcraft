@@ -57,7 +57,7 @@ public class TilePedestal extends TileThaumcraftInventory
     private BlockPos seekSourceRecursive(BlockPos pos, int lastCharge) {
         for (Direction face : Direction.Plane.HORIZONTAL) {
             BlockPos pp = getBlockPos().relative(face);
-            int ss = BlockInlay.getSourceStrengthAt(world, pp);
+            int ss = BlockInlay.getSourceStrengthAt(level, pp);
             if (ss >= 5) {
                 return pp;
             }
@@ -75,7 +75,7 @@ public class TilePedestal extends TileThaumcraftInventory
         return null;
     }
     
-    public boolean receiveClientEvent(int i, int j) {
+    public boolean triggerEvent(int i, int j) {
         if (i == 11) {
             if (getLevel().isClientSide()) {
                 FXDispatcher.INSTANCE.drawBamf(getBlockPos().above(), 0.75f, 0.0f, 0.5f, true, true, null);
@@ -94,6 +94,6 @@ public class TilePedestal extends TileThaumcraftInventory
             }
             return true;
         }
-        return super.receiveClientEvent(i, j);
+        return super.triggerEvent(i, j);
     }
 }

@@ -38,7 +38,7 @@ public class TileLampFertility extends TileThaumcraft implements IEssentiaTransp
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
-        if (world != null && getLevel().isClientSide()) {
+        if (level != null && getLevel().isClientSide()) {
             this.level.checkLightFor(LightLayer.BLOCK, getBlockPos());
         }
     }
@@ -121,7 +121,7 @@ public class TileLampFertility extends TileThaumcraft implements IEssentiaTransp
         if (++drawDelay % 5 != 0) {
             return false;
         }
-        BlockEntity te = ThaumcraftApiHelper.getConnectableTile(world, getBlockPos(), getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING));
+        BlockEntity te = ThaumcraftApiHelper.getConnectableTile(level, getBlockPos(), getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING));
         if (te != null) {
             IEssentiaTransport ic = (IEssentiaTransport)te;
             if (!ic.canOutputTo(getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING).getOpposite())) {

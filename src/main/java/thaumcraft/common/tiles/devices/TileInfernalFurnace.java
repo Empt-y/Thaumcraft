@@ -222,7 +222,7 @@ public class TileInfernalFurnace extends TileThaumcraftInventory
         facingZ = face.getStepZ();
     }
     
-    public boolean receiveClientEvent(int i, int j) {
+    public boolean triggerEvent(int i, int j) {
         if (i == 3) {
             if (getLevel().isClientSide()) {
                 for (int a = 0; a < 5; ++a) {
@@ -232,6 +232,6 @@ public class TileInfernalFurnace extends TileThaumcraftInventory
             }
             return true;
         }
-        return super.receiveClientEvent(i, j);
+        return super.triggerEvent(i, j);
     }
 }

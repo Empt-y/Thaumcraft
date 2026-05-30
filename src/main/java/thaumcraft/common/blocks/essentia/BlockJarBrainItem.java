@@ -29,14 +29,14 @@ public class BlockJarBrainItem extends BlockItem
     @Override
     public InteractionResult place(BlockPlaceContext context) {
         InteractionResult result = super.place(context);
-        if (result.consumesAction() && !context.level().isClientSide()) {
+        if (result.consumesAction() && !context.getLevel().isClientSide()) {
             BlockPos pos = context.getClickedPos();
-            Level world = context.level();
+            Level world = context.getLevel();
             BlockState newState = world.getBlockState(pos);
             BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof TileJarBrain) {
                 te.setChanged();
-                world.sendBlockUpdated(pos, newState, newState, 3, getBlock());
+                world.sendBlockUpdated(pos, newState, newState, 3);
             }
         }
         return result;

@@ -71,11 +71,11 @@ public class PacketFXBoreDig implements CustomPacketPayload
         try {
             var level = Minecraft.getInstance().level;
             BlockPos pos = new BlockPos(message.getX(), message.y, message.z);
-            Entity entity = level().getEntity(message.bore);
+            Entity entity = level.getEntity(message.bore);
             if (entity == null) {
                 return;
             }
-            BlockState ts = level().getBlockState(pos);
+            BlockState ts = level.getBlockState(pos);
             if (ts.getBlock() == Blocks.AIR) {
                 return;
             }

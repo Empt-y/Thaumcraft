@@ -45,7 +45,7 @@ public class EntityEldritchOrb extends ThrowableProjectile
             List<Entity> list = level().getEntitiesOfClass(net.minecraft.world.entity.Entity.class, getOwner(), getBoundingBox().inflate(2.0, 2.0, 2.0));
             for (int i = 0; i < list.size(); ++i) {
                 Entity entity1 = list.get(i);
-                if (entity1 != null && entity1 instanceof LivingEntity && !((LivingEntity)entity1).isUndead()) {
+                if (entity1 != null && entity1 instanceof LivingEntity && !((LivingEntity)entity1).getType() == net.minecraft.world.entity.MobType.UNDEAD) {
                     entity1.hurt(level().damageSources().indirectMagic(this, getOwner()), (float) getOwner().getAttribute(Attributes.ATTACK_DAMAGE).getValue() * 0.666f);
                     try {
                         ((LivingEntity)entity1).addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 160, 0));

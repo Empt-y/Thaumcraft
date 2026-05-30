@@ -52,7 +52,7 @@ public class FocusEffectEarth extends FocusEffect
         /* sendToAllAround stub */
         if (target.getType() == HitResult.Type.ENTITY && ((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) {
             float damage = getDamageForDisplay(finalPower);
-            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(level().damageSources().thrown((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
+            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(getPackage().world.damageSources().thrown((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
             return true;
         }
         if (target.getType() == HitResult.Type.BLOCK) {
@@ -84,7 +84,7 @@ public class FocusEffectEarth extends FocusEffect
         pp.rot = (float)getPackage().world.getRandom().nextGaussian();
         float s = (float)(1.0 + getPackage().world.getRandom().nextGaussian() * 0.20000000298023224);
         pp.scale = new float[] { s, s / 2.0f };
-        FXDispatcher.INSTANCE.drawGenericParticles(getX(), getY(), getZ(), getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z, pp);
+        FXDispatcher.INSTANCE.drawGenericParticles(x, y, z, vx, vy, vz, pp);
     }
     
     @Override

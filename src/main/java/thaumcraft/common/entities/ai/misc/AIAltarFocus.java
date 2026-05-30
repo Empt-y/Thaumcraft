@@ -17,7 +17,7 @@ public class AIAltarFocus extends Goal
 
     @Override
     public boolean canUse() {
-        return entity.getIsRitualist() && entity.getRestrictCenter() != null;
+        return entity.getIsRitualist() && entity.getHomePosition() != null;
     }
 
     @Override
@@ -28,14 +28,14 @@ public class AIAltarFocus extends Goal
 
     @Override
     public boolean canContinueToUse() {
-        return entity.getIsRitualist() && entity.getRestrictCenter() != null;
+        return entity.getIsRitualist() && entity.getHomePosition() != null;
     }
 
     @Override
     public void tick() {
-        if (entity.getRestrictCenter() != null && entity.tickCount % 40 == 0
-                && (entity.getRestrictCenter().distSqr(entity.blockPosition()) > 16.0
-                        || entity.level().getBlockState(entity.getRestrictCenter()).getBlock() != BlocksTC.eldritch)) {
+        if (entity.getHomePosition() != null && entity.tickCount % 40 == 0
+                && (entity.getHomePosition().distSqr(entity.blockPosition()) > 16.0
+                        || entity.level().getBlockState(entity.getHomePosition()).getBlock() != BlocksTC.eldritch)) {
             entity.setIsRitualist(false);
         }
     }

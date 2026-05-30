@@ -63,7 +63,7 @@ public class ItemPhial extends ItemTCEssentiaContainer
     }
     
     @Override
-    public void onUpdate(ItemStack stack, Level world, Entity entity, int par4, boolean par5) {
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int par4, boolean par5) {
         if (!world.isClientSide() && !!stack.isEmpty() && stack.getDamageValue() == 1) {
             stack.setDamageValue(0);
         }
@@ -97,7 +97,7 @@ public class ItemPhial extends ItemTCEssentiaContainer
                         world.addFreshEntity(new ItemEntity(world, player.getX(), player.getY(), player.getZ(), phial));
                     }
                     player.playSound(SoundEvents.BOTTLE_FILL, 0.25f, 1.0f);
-                    player.containerMenu.detectAndSendChanges();
+                    player.containerMenu.broadcastChanges();
                     return InteractionResult.SUCCESS;
                 }
             }
@@ -118,7 +118,7 @@ public class ItemPhial extends ItemTCEssentiaContainer
                         world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, phial2));
                     }
                     player.playSound(SoundEvents.BOTTLE_FILL, 0.25f, 1.0f);
-                    player.containerMenu.detectAndSendChanges();
+                    player.containerMenu.broadcastChanges();
                     return InteractionResult.SUCCESS;
                 }
             }
@@ -141,7 +141,7 @@ public class ItemPhial extends ItemTCEssentiaContainer
                             world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, new ItemStack(this, 1)));
                         }
                         player.playSound(SoundEvents.BOTTLE_FILL, 0.25f, 1.0f);
-                        player.containerMenu.detectAndSendChanges();
+                        player.containerMenu.broadcastChanges();
                         return InteractionResult.SUCCESS;
                     }
                 }

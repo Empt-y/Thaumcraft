@@ -54,7 +54,7 @@ public class FocusEffectAir extends FocusEffect
         getPackage().world.playSound(null, target.getLocation().x, target.getLocation().y, target.getLocation().z, SoundEvents.ENDER_DRAGON_FLAP, SoundSource.PLAYERS, 0.5f, 0.66f);
         if (target.getType() == HitResult.Type.ENTITY && ((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) {
             float damage = getDamageForDisplay(finalPower);
-            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(level().damageSources().thrown((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
+            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(getPackage().world.damageSources().thrown((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
             if (((net.minecraft.world.phys.EntityHitResult)target).getEntity() instanceof LivingEntity) {
                 if (trajectory != null) {
                     ((LivingEntity)((net.minecraft.world.phys.EntityHitResult)target).getEntity()).knockback(damage * 0.25f, -trajectory.direction.x, -trajectory.direction.z);
@@ -85,10 +85,10 @@ public class FocusEffectAir extends FocusEffect
         pp.partInc = 1;
         pp.partNum = 5;
         pp.slowDown = 0.75;
-        pp.rot = (float)random.nextGaussian() / 2.0f;
-        float s = (float)(2.0 + random.nextGaussian() * 0.5);
+        pp.rot = (float)net.minecraft.util.RandomSource.create().nextGaussian() / 2.0f;
+        float s = (float)(2.0 + net.minecraft.util.RandomSource.create().nextGaussian() * 0.5);
         pp.scale = new float[] { s, s * 2.0f };
-        FXDispatcher.INSTANCE.drawGenericParticles(getX(), getY(), getZ(), getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z, pp);
+        FXDispatcher.INSTANCE.drawGenericParticles(x, y, z, vx, vy, vz, pp);
     }
     
     @Override

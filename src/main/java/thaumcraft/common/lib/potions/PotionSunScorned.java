@@ -1,58 +1,40 @@
 package thaumcraft.common.lib.potions;
-import net.minecraft.client.Minecraft;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.resources.Identifier;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.effect.MobEffectCategory;
 
+public class PotionSunScorned extends MobEffect {
 
-public class PotionSunScorned extends MobEffect
-{
     public static MobEffect instance;
-    private int statusIconIndex;
-    static Identifier rl;
-    
-    public PotionSunScorned(boolean par2, int par3) {
-        super(net.minecraft.world.effect.MobEffectCategory.HARMFUL, par3);
-        statusIconIndex = -1;
-        setIconIndex(0, 0);
-        setPotionName("potion.sunscorned");
-        setIconIndex(6, 2, par2);
-        setEffectiveness(0.25);
+
+    public PotionSunScorned(int color) {
+        super(MobEffectCategory.HARMFUL, color);
     }
-    
-    public boolean isBadEffect() {
+
+    @Override
+    public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
+        float brightness = entity.getBrightness();
+        BlockPos eyePos = BlockPos.containing(entity.getX(), entity.getEyeY(), entity.getZ());
+        if (brightness > 0.5f
+                && entity.getRandom().nextFloat() * 30.0f < (brightness - 0.4f) * 2.0f
+                && level.canSeeSky(eyePos)) {
+            entity.setRemainingFireTicks(4 * 20);
+        } else if (brightness < 0.25f && entity.getRandom().nextFloat() > brightness * 2.0f) {
+            entity.heal(1.0f);
+        }
         return true;
     }
-    
-    @OnlyIn(Dist.CLIENT)
-    public int getStatusIconIndex() {
-        Minecraft.getInstance().renderEngine.bindTexture(PotionSunScorned.rl);
-        return super.getStatusIconIndex();
+
+    @Override
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+        return duration % 40 == 0;
     }
-    
-    public void performEffect(LivingEntity target, int par2) {
-        if (!target.level().isClientSide()) {
-            float f = target.getBrightness();
-            if (f > 0.5f && target.getRandom().nextFloat() * 30.0f < (f - 0.4f) * 2.0f && target.level().canBlockSeeSky(new BlockPos(Mth.floor(target.getX()), Mth.floor(target.getY()), Mth.floor(target.getZ())))) {
-                target.setFire(4);
-            }
-            else if (f < 0.25f && target.getRandom().nextFloat() > f * 2.0f) {
-                target.heal(1.0f);
-            }
-        }
-    }
-    
-    public boolean isReady(int par1, int par2) {
-        return par1 % 40 == 0;
-    }
-    
+
     static {
         PotionSunScorned.instance = null;
-        rl = Identifier.fromNamespaceAndPath("thaumcraft", "textures/misc/potions.png");
     }
 }

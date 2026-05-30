@@ -74,7 +74,7 @@ public enum ShardType
     static {
         METADATA_LOOKUP = new ShardType[values().length];
         for (ShardType var4 : values()) {
-            ShardType.METADATA_LOOKUP[var4.getMetadata()] = var4;
+            ShardType.METADATA_LOOKUP[var4.ordinal()] = var4;
         }
     }
 }

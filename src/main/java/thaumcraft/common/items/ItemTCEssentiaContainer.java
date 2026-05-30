@@ -13,7 +13,7 @@ public class ItemTCEssentiaContainer extends ItemGenericEssentiaContainer implem
     
     public ItemTCEssentiaContainer(String name, int base, String... variants) {
         // Entity requires EntityType; use factory method
-        setNoRepair();
+        
         BASE_NAME = name;
         if (variants.length == 0) {
             VARIANTS = new String[] { name };

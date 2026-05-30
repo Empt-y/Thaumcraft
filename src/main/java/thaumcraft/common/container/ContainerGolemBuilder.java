@@ -82,7 +82,7 @@ public class ContainerGolemBuilder extends AbstractContainerMenu
 
     @Override
     public boolean stillValid(Player par1Player) {
-        net.minecraft.world.level.Level level = builder.level();
+        net.minecraft.world.level.Level level = builder.getLevel();
         if (level == null) return false;
         return level.getBlockEntity(builder.getBlockPos()) == builder &&
                par1Player.distanceToSqr(builder.getBlockPos().getCenter()) <= 64.0;

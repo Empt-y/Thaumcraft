@@ -54,7 +54,7 @@ public class TileHole extends TileMemory
                     case Y: {
                         for (int a = 0; a < 9; ++a) {
                             if (a / 3 != 1 || a % 3 != 1) {
-                                FocusEffectRift.createHole(world, getBlockPos().add(-1 + a / 3, 0, -1 + a % 3), null, (byte)1, countdownmax);
+                                FocusEffectRift.createHole(level, getBlockPos().offset(-1 + a / 3, 0, -1 + a % 3), null, (byte)1, countdownmax);
                             }
                         }
                         break;
@@ -62,7 +62,7 @@ public class TileHole extends TileMemory
                     case Z: {
                         for (int a = 0; a < 9; ++a) {
                             if (a / 3 != 1 || a % 3 != 1) {
-                                FocusEffectRift.createHole(world, getBlockPos().add(-1 + a / 3, -1 + a % 3, 0), null, (byte)1, countdownmax);
+                                FocusEffectRift.createHole(level, getBlockPos().offset(-1 + a / 3, -1 + a % 3, 0), null, (byte)1, countdownmax);
                             }
                         }
                         break;
@@ -70,13 +70,13 @@ public class TileHole extends TileMemory
                     case X: {
                         for (int a = 0; a < 9; ++a) {
                             if (a / 3 != 1 || a % 3 != 1) {
-                                FocusEffectRift.createHole(world, getBlockPos().add(0, -1 + a / 3, -1 + a % 3), null, (byte)1, countdownmax);
+                                FocusEffectRift.createHole(level, getBlockPos().offset(0, -1 + a / 3, -1 + a % 3), null, (byte)1, countdownmax);
                             }
                         }
                         break;
                     }
                 }
-                if (!FocusEffectRift.createHole(world, getBlockPos().relative(direction.getOpposite()), direction, (byte)(count - 1), countdownmax)) {
+                if (!FocusEffectRift.createHole(level, getBlockPos().relative(direction.getOpposite()), direction, (byte)(count - 1), countdownmax)) {
                     count = 0;
                 }
             }

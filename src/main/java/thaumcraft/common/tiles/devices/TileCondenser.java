@@ -99,7 +99,7 @@ public class TileCondenser extends TileThaumcraft implements IEssentiaTransport
                 BlockState bs = getLevel().getBlockState(p);
                 if (bs.getBlock() == BlocksTC.condenserlattice) {
                     getLevel().setBlock(p, BlocksTC.condenserlatticeDirty.defaultBlockState(), 3);
-                    ((BlockCondenserLattice)bs.getBlock()).triggerUpdate(world, p);
+                    ((BlockCondenserLattice)bs.getBlock()).triggerUpdate(level, p);
                 }
             }
         }
@@ -107,7 +107,7 @@ public class TileCondenser extends TileThaumcraft implements IEssentiaTransport
     
     private void fill() {
         for (Direction face : Direction.Plane.HORIZONTAL) {
-            BlockEntity te = ThaumcraftApiHelper.getConnectableTile(world, getBlockPos(), face);
+            BlockEntity te = ThaumcraftApiHelper.getConnectableTile(level, getBlockPos(), face);
             if (te != null) {
                 IEssentiaTransport ic = (IEssentiaTransport)te;
                 Aspect ta = null;

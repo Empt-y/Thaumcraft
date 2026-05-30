@@ -40,8 +40,8 @@ public class EntityCausalityCollapser extends ThrowableProjectile
         if (level().isClientSide()) {
             for (double i = 0.0; i < 3.0; ++i) {
                 double coeff = i / 3.0;
-                FXDispatcher.INSTANCE.drawAlumentum((float)(xo + (getX() - xo) * coeff), (float)(yo + (getY() - yo) * coeff) + getBbHeight() / 2.0f, (float)(zo + (getZ() - zo) * coeff), 0.0125f * (random.nextFloat() - 0.5f), 0.0125f * (random.nextFloat() - 0.5f), 0.0125f * (random.nextFloat() - 0.5f), 0.8f + random.nextFloat() * 0.2f, 0.3f + random.nextFloat() * 0.1f, random.nextFloat() * 0.1f, 0.5f, 4.0f);
-                FXDispatcher.INSTANCE.drawGenericParticles(getX() + random.nextGaussian() * 0.20000000298023224, getY() + random.nextGaussian() * 0.20000000298023224, getZ() + random.nextGaussian() * 0.20000000298023224, 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.7f, false, 448, 8, 1, 8, 0, 0.3f, 0.0f, 1);
+                FXDispatcher.INSTANCE.drawAlumentum((float)(xo + (getX() - xo) * coeff), (float)(yo + (getY() - yo) * coeff) + getBbHeight() / 2.0f, (float)(zo + (getZ() - zo) * coeff), 0.0125f * (getRandom().nextFloat() - 0.5f), 0.0125f * (getRandom().nextFloat() - 0.5f), 0.0125f * (getRandom().nextFloat() - 0.5f), 0.8f + getRandom().nextFloat() * 0.2f, 0.3f + getRandom().nextFloat() * 0.1f, getRandom().nextFloat() * 0.1f, 0.5f, 4.0f);
+                FXDispatcher.INSTANCE.drawGenericParticles(getX() + getRandom().nextGaussian() * 0.20000000298023224, getY() + getRandom().nextGaussian() * 0.20000000298023224, getZ() + getRandom().nextGaussian() * 0.20000000298023224, 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.7f, false, 448, 8, 1, 8, 0, 0.3f, 0.0f, 1);
             }
         }
     }
@@ -49,7 +49,7 @@ public class EntityCausalityCollapser extends ThrowableProjectile
     protected void onImpact(HitResult par1HitResult) {
         if (!level().isClientSide()) {
             level().explode(this, getX(), getY(), getZ(), 2.0f, true);
-            List<EntityFluxRift> list = EntityUtils.getEntitiesInRange(world, getX(), getY(), getZ(), this, EntityFluxRift.class, 3.0);
+            List<EntityFluxRift> list = EntityUtils.getEntitiesInRange(level(), getX(), getY(), getZ(), this, EntityFluxRift.class, 3.0);
             for (EntityFluxRift fr : list) {
                 fr.setCollapse(true);
             }

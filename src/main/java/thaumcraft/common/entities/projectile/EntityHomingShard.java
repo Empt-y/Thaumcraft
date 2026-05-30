@@ -56,8 +56,8 @@ public class EntityHomingShard extends ThrowableProjectile
         Vec3 v = p.getLookAngle();
         moveTo(p.getX() + v.x / 2.0, p.getY() + p.getEyeHeight() + v.y / 2.0, p.getZ() + v.z / 2.0, p.getYRot(), p.getXRot());
         float f = 0.5f;
-        float ry = p.getYRot() + (random.nextFloat() - random.nextFloat()) * 60.0f;
-        float rp = p.getXRot() + (random.nextFloat() - random.nextFloat()) * 60.0f;
+        float ry = p.getYRot() + (getRandom().nextFloat() - getRandom().nextFloat()) * 60.0f;
+        float rp = p.getXRot() + (getRandom().nextFloat() - getRandom().nextFloat()) * 60.0f;
         setDeltaMovement(-Mth.sin(ry / 180.0f * 3.1415927f) * Mth.cos(rp / 180.0f * 3.1415927f) * f, getDeltaMovement().y, getDeltaMovement().z);
         setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, Mth.cos(ry / 180.0f * 3.1415927f) * Mth.cos(rp / 180.0f * 3.1415927f) * f);
         setDeltaMovement(getDeltaMovement().x, -Mth.sin(rp / 180.0f * 3.1415927f) * f, getDeltaMovement().z);
@@ -83,7 +83,7 @@ public class EntityHomingShard extends ThrowableProjectile
     protected void onImpact(HitResult mop) {
         if (!level().isClientSide() && mop.getType() == HitResult.Type.ENTITY && (getOwner() == null || (getOwner() != null && ((net.minecraft.world.phys.EntityHitResult)mop).getEntity() != getOwner()))) {
             ((net.minecraft.world.phys.EntityHitResult)mop).getEntity().hurt(level().damageSources().indirectMagic(this, getOwner()), 1.0f + getStrength() * 0.5f);
-            playSound(SoundsTC.zap, 1.0f, 1.0f + (random.nextFloat() - random.nextFloat()) * 0.2f);
+            playSound(SoundsTC.zap, 1.0f, 1.0f + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
             level().broadcastEntityEvent(this, (byte)16);
             discard();
         }
@@ -118,9 +118,9 @@ public class EntityHomingShard extends ThrowableProjectile
         super.tick();
         if (!level().isClientSide()) {
             if (persistant && (target == null || target.isDeadOrDying() || target.distanceToSqr(this.getX() + 0.5, this.getY() + 0.5, this.getZ() + 0.5) > 1250.0)) {
-                List<Entity> es = EntityUtils.getEntitiesInRange(world, getX(), getY(), getZ(), this, (Class<? extends Entity>) tclass, 16.0);
+                List<Entity> es = EntityUtils.getEntitiesInRange(level(), getX(), getY(), getZ(), this, (Class<? extends Entity>) tclass, 16.0);
                 for (Entity e : es) {
-                    if (e instanceof LivingEntity && !e.isDeadOrDying() && (getOwner() == null || e.getId() != getOwner().getId())) {
+                    if (e instanceof LivingEntity && !!e.isAlive() && (getOwner() == null || e.getId() != getOwner().getId())) {
                         target = (LivingEntity)e;
                         break;
                     }

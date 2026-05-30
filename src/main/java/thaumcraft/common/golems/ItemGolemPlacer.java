@@ -103,10 +103,10 @@ public class ItemGolemPlacer extends ItemTCBase implements ISealDisplayer
             golem.setOwned(true);
             golem.setValidSpawn();
             golem.setOwnerId(player.getUUID());
-            if (player.getItemInHand(hand).getTag() != null && player.getItemInHand(hand).contains("props")) {
+            if (!player.getItemInHand(hand).getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().isEmpty() && player.getItemInHand(hand).getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains("props")) {
                 golem.setProperties(GolemProperties.fromLong(player.getItemInHand(hand).getLongOr("props", 0L)));
             }
-            if (player.getItemInHand(hand).getTag() != null && player.getItemInHand(hand).contains("xp")) {
+            if (!player.getItemInHand(hand).getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().isEmpty() && player.getItemInHand(hand).getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains("xp")) {
                 golem.rankXp = player.getItemInHand(hand).getIntOr("xp", 0);
             }
             golem.finalizeSpawn((world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).getCurrentDifficultyAt(pos) : new net.minecraft.world.DifficultyInstance(net.minecraft.world.Difficulty.NORMAL, 0L, 0L, 0.0f)), net.minecraft.world.entity.MobSpawnType.MOB_SUMMONED, null);

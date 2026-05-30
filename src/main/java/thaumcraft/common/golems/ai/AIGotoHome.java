@@ -26,14 +26,14 @@ public class AIGotoHome extends Goal
             return false;
         }
         idleCounter = 50;
-        double dd = golem.distanceToSqr(golem.getRestrictCenter());
+        double dd = golem.distanceToSqr(golem.getHomePosition());
         if (dd < 5.0) {
             return false;
         }
         if (dd <= 1024.0) {
-            movePosX = golem.getRestrictCenter().getX();
-            movePosY = golem.getRestrictCenter().getY();
-            movePosZ = golem.getRestrictCenter().getZ();
+            movePosX = golem.getHomePosition().getX();
+            movePosY = golem.getHomePosition().getY();
+            movePosZ = golem.getHomePosition().getZ();
             return true;
         }
         Vec3 vec3 = null; /* DefaultRandomPos call removed */
@@ -51,7 +51,7 @@ public class AIGotoHome extends Goal
     }
     
     public boolean canContinueToUse() {
-        return golem.getTask() == null && !golem.getNavigation().isDone() && golem.distanceToSqr(golem.getRestrictCenter()) > 3.0;
+        return golem.getTask() == null && !golem.getNavigation().isDone() && golem.distanceToSqr(golem.getHomePosition()) > 3.0;
     }
     
     public void stop() {

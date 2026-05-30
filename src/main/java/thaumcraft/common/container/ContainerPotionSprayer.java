@@ -29,7 +29,7 @@ public class ContainerPotionSprayer extends AbstractContainerMenu
 
     @Override
     public boolean stillValid(Player par1Player) {
-        Level level = sprayer.level();
+        Level level = sprayer.getLevel();
         if (level == null) return false;
         return level.getBlockEntity(sprayer.getBlockPos()) == sprayer
             && par1Player.distanceToSqr(sprayer.getBlockPos().getCenter()) <= 64.0;

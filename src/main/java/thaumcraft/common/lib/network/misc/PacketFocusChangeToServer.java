@@ -38,7 +38,7 @@ public class PacketFocusChangeToServer implements CustomPacketPayload
     public static void handle(PacketFocusChangeToServer msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             Player player = (Player) ctx.player();
-            var level = ((ServerPlayer) ctx.player()).serverLevel();
+            var level = (ServerLevel) ((ServerPlayer) ctx.player()).level();
             if (level == null) {
                 return;
             }

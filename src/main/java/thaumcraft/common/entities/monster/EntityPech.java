@@ -238,11 +238,11 @@ public class EntityPech extends Monster implements RangedAttackMob
                 if (!entityItem.isEmpty() && !loot.get(a).isEmpty()
                     && InventoryUtils.areItemStacksEqualStrict(entityItem, loot.get(a))) {
                     if (entityItem.getCount() + loot.get(a).getCount() <= loot.get(a).getMaxStackSize()) {
-                        loot.get(a).inflate(entityItem.getCount());
+                        loot.get(a).grow(entityItem.getCount());
                         return ItemStack.EMPTY;
                     }
                     int sz = Math.min(entityItem.getCount(), loot.get(a).getMaxStackSize() - loot.get(a).getCount());
-                    loot.get(a).inflate(sz);
+                    loot.get(a).grow(sz);
                     entityItem.shrink(sz);
                 }
                 if (!entityItem.isEmpty() && entityItem.getCount() <= 0) entityItem = ItemStack.EMPTY;

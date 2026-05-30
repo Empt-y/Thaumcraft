@@ -54,10 +54,10 @@ public class PacketFXInfusionSource implements CustomPacketPayload
             BlockPos bp2 = BlockPos.of(msg.p2);
             String key = bp2.getX() + ":" + bp2.getY() + ":" + bp2.getZ() + ":" + msg.color;
             var level = Minecraft.getInstance().level;
-            BlockEntity tile = getLevel().getBlockEntity(bp1);
+            BlockEntity tile = Minecraft.getInstance().level.getBlockEntity(bp1);
             if (tile != null && tile instanceof TileInfusionMatrix) {
                 int count = 15;
-                if (getLevel().getBlockEntity(bp2) != null && getLevel().getBlockEntity(bp2) instanceof TilePedestal) {
+                if (Minecraft.getInstance().level.getBlockEntity(bp2) != null && Minecraft.getInstance().level.getBlockEntity(bp2) instanceof TilePedestal) {
                     count = 60;
                 }
                 TileInfusionMatrix is = (TileInfusionMatrix) tile;

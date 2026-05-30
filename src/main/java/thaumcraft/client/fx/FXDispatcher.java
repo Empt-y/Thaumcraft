@@ -202,11 +202,11 @@ public class FXDispatcher
     }
 
     public void drawBlockSparkles(BlockPos p, Vec3 start) {
-        net.minecraft.world.phys.shapes.VoxelShape bsShape = getWorld().getBlockState(p).getShape(getLevel(), p);
+        net.minecraft.world.phys.shapes.VoxelShape bsShape = getLevel().getBlockState(p).getShape(getLevel(), p);
         AABB bs = bsShape.isEmpty() ? new AABB(0, 0, 0, 1, 1, 1) : bsShape.bounds();
         int num = (int)(((bs.getXsize() + bs.getYsize() + bs.getZsize()) / 3.0) * 20.0);
         for (Direction face : Direction.values()) {
-            BlockState state = getWorld().getBlockState(p.relative(face));
+            BlockState state = getLevel().getBlockState(p.relative(face));
             if (!state.canOcclude()) {
                 boolean rx = face.getStepX() == 0;
                 boolean ry = face.getStepY() == 0;
@@ -292,7 +292,7 @@ public class FXDispatcher
     }
 
     public void drawBlockMistParticles(BlockPos p, int c) {
-        net.minecraft.world.phys.shapes.VoxelShape bsShape2 = getWorld().getBlockState(p).getShape(getLevel(), p);
+        net.minecraft.world.phys.shapes.VoxelShape bsShape2 = getLevel().getBlockState(p).getShape(getLevel(), p);
         AABB bs = bsShape2.isEmpty() ? new AABB(0, 0, 0, 1, 1, 1) : bsShape2.bounds();
         Color color = new Color(c);
         for (int a = 0; a < 8; ++a) {
@@ -554,7 +554,7 @@ public class FXDispatcher
     }
 
     public void scanHighlight(BlockPos p) {
-        net.minecraft.world.phys.shapes.VoxelShape scanShape = getWorld().getBlockState(p).getShape(getLevel(), p);
+        net.minecraft.world.phys.shapes.VoxelShape scanShape = getLevel().getBlockState(p).getShape(getLevel(), p);
         AABB bb = (scanShape.isEmpty() ? new AABB(0, 0, 0, 1, 1, 1) : scanShape.bounds()).move(p);
         scanHighlight(bb);
     }

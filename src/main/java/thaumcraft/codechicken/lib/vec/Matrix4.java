@@ -86,26 +86,26 @@ public class Matrix4 extends Transformation implements Copyable<Matrix4>
     }
     
     public Matrix4 translate(Vector3 vec) {
-        m03 += m00 * vec.getX() + m01 * vec.getY() + m02 * vec.getZ();
-        m13 += m10 * vec.getX() + m11 * vec.getY() + m12 * vec.getZ();
-        m23 += m20 * vec.getX() + m21 * vec.getY() + m22 * vec.getZ();
-        m33 += m30 * vec.getX() + m31 * vec.getY() + m32 * vec.getZ();
+        m03 += m00 * vec.x + m01 * vec.y + m02 * vec.z;
+        m13 += m10 * vec.x + m11 * vec.y + m12 * vec.z;
+        m23 += m20 * vec.x + m21 * vec.y + m22 * vec.z;
+        m33 += m30 * vec.x + m31 * vec.y + m32 * vec.z;
         return this;
     }
     
     public Matrix4 scale(Vector3 vec) {
-        m00 *= vec.getX();
-        m10 *= vec.getX();
-        m20 *= vec.getX();
-        m30 *= vec.getX();
-        m01 *= vec.getY();
-        m11 *= vec.getY();
-        m21 *= vec.getY();
-        m31 *= vec.getY();
-        m02 *= vec.getZ();
-        m12 *= vec.getZ();
-        m22 *= vec.getZ();
-        m32 *= vec.getZ();
+        m00 *= vec.x;
+        m10 *= vec.x;
+        m20 *= vec.x;
+        m30 *= vec.x;
+        m01 *= vec.y;
+        m11 *= vec.y;
+        m21 *= vec.y;
+        m31 *= vec.y;
+        m02 *= vec.z;
+        m12 *= vec.z;
+        m22 *= vec.z;
+        m32 *= vec.z;
         return this;
     }
     
@@ -295,12 +295,12 @@ public class Matrix4 extends Transformation implements Copyable<Matrix4>
     }
     
     private void mult3x3(Vector3 vec) {
-        double x = m00 * vec.getX() + m01 * vec.getY() + m02 * vec.getZ();
-        double y = m10 * vec.getX() + m11 * vec.getY() + m12 * vec.getZ();
-        double z = m20 * vec.getX() + m21 * vec.getY() + m22 * vec.getZ();
-        vec.getX() = x;
-        vec.getY() = y;
-        vec.getZ() = z;
+        double x = m00 * vec.x + m01 * vec.y + m02 * vec.z;
+        double y = m10 * vec.x + m11 * vec.y + m12 * vec.z;
+        double z = m20 * vec.x + m21 * vec.y + m22 * vec.z;
+        vec.x = x;
+        vec.y = y;
+        vec.z = z;
     }
     
     @Override

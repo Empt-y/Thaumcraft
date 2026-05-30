@@ -40,13 +40,13 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
                         worldIn.playSound(null, se.getSealPos().pos, SoundsTC.zap, SoundSource.BLOCKS, 0.5f, 1.0f);
                     }
                     else {
-                        playerIn.openGui(Thaumcraft.instance, 18, playerIn.level(), se.getSealPos().pos.getX(), se.getSealPos().pos.getY(), se.getSealPos().pos.getZ());
+                        /* TODO: port to NetworkHooks.openScreen */ 
                     }
                 }
                 return InteractionResult.sidedSuccess(worldIn.isClientSide());
             }
             if (playerIn.isCrouching() && ThaumcraftCapabilities.knowsResearch(playerIn, "GOLEMLOGISTICS")) {
-                playerIn.openGui(Thaumcraft.instance, 20, playerIn.level(), (int)playerIn.getX(), (int)playerIn.getY(), (int)playerIn.getZ());
+                /* TODO: port to NetworkHooks.openScreen */ 
                 return InteractionResult.sidedSuccess(worldIn.isClientSide());
             }
         }
@@ -66,12 +66,12 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
                     world.playSound(null, pos, SoundsTC.zap, SoundSource.BLOCKS, 0.5f, 1.0f);
                 }
                 else {
-                    player.openGui(Thaumcraft.instance, 18, world, pos.getX(), pos.getY(), pos.getZ());
+                    /* TODO: port to NetworkHooks.openScreen */ 
                 }
                 return InteractionResult.SUCCESS;
             }
             if (player.isCrouching() && ThaumcraftCapabilities.knowsResearch(player, "GOLEMLOGISTICS")) {
-                player.openGui(Thaumcraft.instance, 20, world, pos.getX(), pos.getY(), pos.getZ());
+                /* TODO: port to NetworkHooks.openScreen */ 
                 return InteractionResult.SUCCESS;
             }
         }

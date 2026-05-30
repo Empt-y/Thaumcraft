@@ -14,8 +14,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
@@ -32,6 +35,7 @@ import io.netty.buffer.ByteBuf;
 
 public class EntityFocusCloud extends Entity
 {
+    public static net.minecraft.world.entity.EntityType<EntityFocusCloud> TYPE;
     @Override
     public boolean hurtServer(net.minecraft.server.level.ServerLevel level, net.minecraft.world.damagesource.DamageSource source, float damage) {
         return false; // Entity is abstract, no super to call
@@ -51,7 +55,7 @@ public class EntityFocusCloud extends Entity
     }
     
     public EntityFocusCloud(FocusPackage pack, Trajectory trajectory, float rad, int dur) {
-        super(pack.world);
+        super(TYPE, pack.world);
         effects = null;
         focusPackage = pack;
         setPos(trajectory.source.x, trajectory.source.y, trajectory.source.z);
@@ -76,8 +80,8 @@ public class EntityFocusCloud extends Entity
     
     @Nullable
     public LivingEntity getOwner() {
-        if (owner == null && ownerUniqueId != null && world instanceof ServerLevel) {
-            Entity entity = ((ServerLevel) world).getEntity(ownerUniqueId);
+        if (owner == null && ownerUniqueId != null && level() instanceof ServerLevel) {
+            Entity entity = ((ServerLevel) level()).getEntity(ownerUniqueId);
             if (entity instanceof LivingEntity) {
                 owner = (LivingEntity)entity;
             }
@@ -140,9 +144,9 @@ public class EntityFocusCloud extends Entity
                 }
                 if (effects != null && effects.length > 0) {
                     for (int a = 0; a < rad; ++a) {
-                        FocusEffect eff = effects[random.nextInt(effects.length)];
-                        FXDispatcher.INSTANCE.drawFocusCloudParticle(getX() + random.nextGaussian() * rad / 2.0 * 0.85, getY() + random.nextGaussian() * rad / 2.0 * 0.85, getZ() + random.nextGaussian() * rad / 2.0 * 0.85, random.nextGaussian() * 0.01, random.nextGaussian() * 0.01, random.nextGaussian() * 0.01, FocusEngine.getElementColor(eff.getKey()));
-                        eff.renderParticleFX(world, getX() + random.nextGaussian() * rad / 2.0, getY() + random.nextGaussian() * rad / 2.0, getZ() + random.nextGaussian() * rad / 2.0, random.nextGaussian() * 0.009999999776482582, random.nextGaussian() * 0.009999999776482582, random.nextGaussian() * 0.009999999776482582);
+                        FocusEffect eff = effects[getRandom().nextInt(effects.length)];
+                        FXDispatcher.INSTANCE.drawFocusCloudParticle(getX() + getRandom().nextGaussian() * rad / 2.0 * 0.85, getY() + getRandom().nextGaussian() * rad / 2.0 * 0.85, getZ() + getRandom().nextGaussian() * rad / 2.0 * 0.85, getRandom().nextGaussian() * 0.01, getRandom().nextGaussian() * 0.01, getRandom().nextGaussian() * 0.01, FocusEngine.getElementColor(eff.getKey()));
+                        eff.renderParticleFX(level(), getX() + getRandom().nextGaussian() * rad / 2.0, getY() + getRandom().nextGaussian() * rad / 2.0, getZ() + getRandom().nextGaussian() * rad / 2.0, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582);
                     }
                 }
             }
@@ -150,9 +154,9 @@ public class EntityFocusCloud extends Entity
                 long t = System.currentTimeMillis();
                 ArrayList<Trajectory> trajectories = new ArrayList<Trajectory>();
                 ArrayList<HitResult> targets = new ArrayList<HitResult>();
-                List<Entity> list = EntityUtils.getEntitiesInRange(world, getX(), getY(), getZ(), this, Entity.class, rad);
+                List<Entity> list = EntityUtils.getEntitiesInRange(level(), getX(), getY(), getZ(), this, Entity.class, rad);
                 for (Entity e : list) {
-                    if (e.isDeadOrDying()) {
+                    if (!e.isAlive()) {
                         continue;
                     }
                     if (e instanceof EntityFocusCloud) {
@@ -167,19 +171,21 @@ public class EntityFocusCloud extends Entity
                         continue;
                     }
                     EntityFocusCloud.cooldownMap.put((long)e.getId(), t + 2000L);
-                    HitResult ray = null /* new HitResult removed */;
-                    ray.getLocation() = e.position().add(0.0, e.getBbHeight() / 2.0f, 0.0);
+                    Vec3 hitPos = e.position().add(0.0, e.getBbHeight() / 2.0f, 0.0);
+                    EntityHitResult ray = new EntityHitResult(e, hitPos);
                     Trajectory tra = new Trajectory(position(), position().subtractReverse(ray.getLocation()));
                     targets.add(ray);
                     trajectories.add(tra);
                 }
                 for (int a2 = 0; a2 < rad; ++a2) {
-                    Vec3 dV = new Vec3(random.nextGaussian(), random.nextGaussian(), random.nextGaussian());
+                    Vec3 dV = new Vec3(getRandom().nextGaussian(), getRandom().nextGaussian(), getRandom().nextGaussian());
                     dV = dV.normalize();
-                    HitResult br = level().rayTraceBlocks(position(), position().add(dV.scale(rad)));
+                    Vec3 end = position().add(dV.scale(rad));
+                    BlockHitResult br = level().clip(new ClipContext(
+                            position(), end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
                     long bl = 0L;
-                    if (br != null) {
-                        bl = br.getPos().asLong();
+                    if (br != null && br.getType() != HitResult.Type.MISS) {
+                        bl = br.getBlockPos().asLong();
                         if (EntityFocusCloud.cooldownMap.containsKey(bl)) {
                             if (EntityFocusCloud.cooldownMap.get(bl) <= t) {
                                 EntityFocusCloud.cooldownMap.remove(bl);

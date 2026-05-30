@@ -19,7 +19,7 @@ public class ItemPrimordialPearl extends ItemTCBase
         /* setMaxDamage removed - use Item.Properties */;
         /* addPropertyOverride removed */
 
-        setNoRepair();
+        
     }
     
     public boolean isValidRepairItem(ItemStack repairItem) {

@@ -33,6 +33,7 @@ import io.netty.buffer.ByteBuf;
 
 public class EntityFocusProjectile extends ThrowableProjectile
 {
+    public static net.minecraft.world.entity.EntityType<EntityFocusProjectile> TYPE;
     FocusPackage focusPackage;
     private static EntityDataAccessor<Integer> SPECIAL;
     private static EntityDataAccessor<Integer> OWNER;
@@ -52,7 +53,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
     }
     
     public EntityFocusProjectile(FocusPackage pack, float speed, Trajectory trajectory, int special) {
-        super(pack.world, pack.getCaster());
+        super(TYPE, pack.getCaster(), pack.world);
         noTouchy = false;
         firstParticle = false;
         lastRenderTick = 0.0f;
@@ -228,13 +229,13 @@ public class EntityFocusProjectile extends ThrowableProjectile
             effects = focusPackage.getFocusEffects();
         }
         if (effects != null && effects.length > 0) {
-            FocusEffect eff = effects[random.nextInt(effects.length)];
+            FocusEffect eff = effects[getRandom().nextInt(effects.length)];
             float scale = 1.0f;
             Color c1 = new Color(FocusEngine.getElementColor(eff.getKey()));
-            FXDispatcher.INSTANCE.drawFireMote((float)(xo + (getX() - xo) * coeff), (float)(yo + (getY() - yo) * coeff) + getBbHeight() / 2.0f, (float)(zo + (getZ() - zo) * coeff), 0.0125f * (random.nextFloat() - 0.5f) * scale, 0.0125f * (random.nextFloat() - 0.5f) * scale, 0.0125f * (random.nextFloat() - 0.5f) * scale, c1.getRed() / 255.0f, c1.getGreen() / 255.0f, c1.getBlue() / 255.0f, 0.5f, 7.0f * scale);
+            FXDispatcher.INSTANCE.drawFireMote((float)(xo + (getX() - xo) * coeff), (float)(yo + (getY() - yo) * coeff) + getBbHeight() / 2.0f, (float)(zo + (getZ() - zo) * coeff), 0.0125f * (getRandom().nextFloat() - 0.5f) * scale, 0.0125f * (getRandom().nextFloat() - 0.5f) * scale, 0.0125f * (getRandom().nextFloat() - 0.5f) * scale, c1.getRed() / 255.0f, c1.getGreen() / 255.0f, c1.getBlue() / 255.0f, 0.5f, 7.0f * scale);
             if (firstParticle) {
                 firstParticle = false;
-                eff.renderParticleFX(world, xo + (getX() - xo) * coeff + random.nextGaussian() * 0.10000000149011612, yo + (getY() - yo) * coeff + getBbHeight() / 2.0f + random.nextGaussian() * 0.10000000149011612, zo + (getZ() - zo) * coeff + random.nextGaussian() * 0.10000000149011612, random.nextGaussian() * 0.009999999776482582, random.nextGaussian() * 0.009999999776482582, random.nextGaussian() * 0.009999999776482582);
+                eff.renderParticleFX(level(), xo + (getX() - xo) * coeff + getRandom().nextGaussian() * 0.10000000149011612, yo + (getY() - yo) * coeff + getBbHeight() / 2.0f + getRandom().nextGaussian() * 0.10000000149011612, zo + (getZ() - zo) * coeff + getRandom().nextGaussian() * 0.10000000149011612, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582);
             }
         }
     }

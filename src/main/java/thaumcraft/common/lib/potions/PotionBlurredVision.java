@@ -1,43 +1,29 @@
 package thaumcraft.common.lib.potions;
-import net.minecraft.client.Minecraft;
+
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.effect.MobEffectCategory;
 
+public class PotionBlurredVision extends MobEffect {
 
-public class PotionBlurredVision extends MobEffect
-{
     public static MobEffect instance;
-    private int statusIconIndex;
-    static Identifier rl;
-    
-    public PotionBlurredVision(boolean par2, int par3) {
-        super(net.minecraft.world.effect.MobEffectCategory.HARMFUL, par3);
-        statusIconIndex = -1;
-        setIconIndex(0, 0);
-        setPotionName("potion.blurred");
-        setIconIndex(5, 2, par2);
-        setEffectiveness(0.25);
+
+    public PotionBlurredVision(int color) {
+        super(MobEffectCategory.HARMFUL, color);
     }
-    
-    public boolean isBadEffect() {
+
+    @Override
+    public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
         return true;
     }
-    
-    @OnlyIn(Dist.CLIENT)
-    public int getStatusIconIndex() {
-        Minecraft.getInstance().renderEngine.bindTexture(PotionBlurredVision.rl);
-        return super.getStatusIconIndex();
+
+    @Override
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+        return true;
     }
-    
-    public void performEffect(LivingEntity target, int par2) {
-    }
-    
+
     static {
         PotionBlurredVision.instance = null;
-        rl = Identifier.fromNamespaceAndPath("thaumcraft", "textures/misc/potions.png");
     }
 }

@@ -1,53 +1,35 @@
 package thaumcraft.common.lib.potions;
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.Entity;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.resources.Identifier;
-import net.minecraft.core.BlockPos;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraft.world.effect.MobEffectCategory;
 import thaumcraft.api.blocks.BlocksTC;
-import net.minecraft.world.entity.Mob;
 
+public class PotionThaumarhia extends MobEffect {
 
-public class PotionThaumarhia extends MobEffect
-{
     public static MobEffect instance;
-    private int statusIconIndex;
-    static Identifier rl;
-    
-    public PotionThaumarhia(boolean par2, int par3) {
-        super(net.minecraft.world.effect.MobEffectCategory.HARMFUL, par3);
-        statusIconIndex = -1;
-        setIconIndex(0, 0);
-        setPotionName("potion.thaumarhia");
-        setIconIndex(7, 2, par2);
-        setEffectiveness(0.25);
+
+    public PotionThaumarhia(int color) {
+        super(MobEffectCategory.HARMFUL, color);
     }
-    
-    public boolean isBadEffect() {
+
+    @Override
+    public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
+        BlockPos pos = entity.blockPosition();
+        if (entity.getRandom().nextInt(15) == 0 && level.isEmptyBlock(pos)) {
+            level.setBlockAndUpdate(pos, BlocksTC.fluxGoo.defaultBlockState());
+        }
         return true;
     }
-    
-    @OnlyIn(Dist.CLIENT)
-    public int getStatusIconIndex() {
-        Minecraft.getInstance().renderEngine.bindTexture(PotionThaumarhia.rl);
-        return super.getStatusIconIndex();
+
+    @Override
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+        return duration % 20 == 0;
     }
-    
-    public void performEffect(LivingEntity target, int par2) {
-        if (!target.level().isClientSide() && target.getRandom().nextInt(15) == 0 && target.level().isEmptyBlock(new BlockPos(target))) {
-            target.level().setBlockAndUpdate(new BlockPos(target), BlocksTC.fluxGoo.defaultBlockState());
-        }
-    }
-    
-    public boolean isReady(int par1, int par2) {
-        return par1 % 20 == 0;
-    }
-    
+
     static {
         PotionThaumarhia.instance = null;
-        rl = Identifier.fromNamespaceAndPath("thaumcraft", "textures/misc/potions.png");
     }
 }

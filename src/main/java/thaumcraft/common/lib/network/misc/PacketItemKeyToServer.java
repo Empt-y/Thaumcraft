@@ -53,7 +53,7 @@ public class PacketItemKeyToServer implements CustomPacketPayload
     public static void handle(PacketItemKeyToServer msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             Player player = (Player) ctx.player();
-            var level = ((ServerPlayer) ctx.player()).serverLevel();
+            var level = (ServerLevel) ((ServerPlayer) ctx.player()).level();
             if (level == null) {
                 return;
             }

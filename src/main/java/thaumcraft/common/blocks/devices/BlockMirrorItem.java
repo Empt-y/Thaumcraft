@@ -38,7 +38,7 @@ public class BlockMirrorItem extends BlockItem
 
     
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext ctx) {
-        Level world = ctx.level();
+        Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
         Player player = ctx.getPlayer();
         InteractionHand hand = ctx.getHand();

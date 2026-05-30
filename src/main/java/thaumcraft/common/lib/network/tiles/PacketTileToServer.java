@@ -48,7 +48,7 @@ public class PacketTileToServer implements CustomPacketPayload
     public static void handle(PacketTileToServer msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             ServerPlayer serverPlayer = (ServerPlayer) ctx.player();
-            var level = serverPlayer.serverLevel();
+            var level = (ServerLevel) serverPlayer.level();
             BlockPos bp = BlockPos.of(msg.pos);
             if (level != null && bp != null) {
                 BlockEntity te = getLevel().getBlockEntity(bp);

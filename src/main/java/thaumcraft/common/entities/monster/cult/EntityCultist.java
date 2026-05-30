@@ -75,7 +75,7 @@ public class EntityCultist extends Monster
     
     public void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput nbt) {
         super.readAdditionalSaveData(nbt);
-        if (nbt.contains("HomeD")) {
+        if (nbt.child("HomeD").isPresent()) {
             setHomeTo(new BlockPos(nbt.getIntOr("HomeX", 0), nbt.getIntOr("HomeY", 0), nbt.getIntOr("HomeZ", 0)), nbt.getIntOr("HomeD", 0));
         }
     }

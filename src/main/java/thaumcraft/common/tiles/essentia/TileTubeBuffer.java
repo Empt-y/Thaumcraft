@@ -178,7 +178,7 @@ public class TileTubeBuffer extends TileTube implements IAspectContainer
         BlockEntity te = null;
         IEssentiaTransport ic = null;
         int suction = 0;
-        te = ThaumcraftApiHelper.getConnectableTile(world, getBlockPos(), face);
+        te = ThaumcraftApiHelper.getConnectableTile(level, getBlockPos(), face);
         if (te != null) {
             ic = (IEssentiaTransport)te;
             suction = ic.getSuctionAmount(face.getOpposite());
@@ -186,7 +186,7 @@ public class TileTubeBuffer extends TileTube implements IAspectContainer
         for (Direction dir : Direction.values()) {
             if (canOutputTo(dir)) {
                 if (dir != face) {
-                    te = ThaumcraftApiHelper.getConnectableTile(world, getBlockPos(), dir);
+                    te = ThaumcraftApiHelper.getConnectableTile(level, getBlockPos(), dir);
                     if (te != null) {
                         ic = (IEssentiaTransport)te;
                         int sa = ic.getSuctionAmount(dir.getOpposite());
@@ -229,7 +229,7 @@ public class TileTubeBuffer extends TileTube implements IAspectContainer
         IEssentiaTransport ic = null;
         for (Direction dir : Direction.values()) {
             if (canInputFrom(dir)) {
-                te = ThaumcraftApiHelper.getConnectableTile(world, getBlockPos(), dir);
+                te = ThaumcraftApiHelper.getConnectableTile(level, getBlockPos(), dir);
                 if (te != null) {
                     ic = (IEssentiaTransport)te;
                     if (ic.getEssentiaAmount(dir.getOpposite()) > 0 && ic.getSuctionAmount(dir.getOpposite()) < getSuctionAmount(dir) && getSuctionAmount(dir) >= ic.getMinimumSuction()) {
@@ -243,12 +243,12 @@ public class TileTubeBuffer extends TileTube implements IAspectContainer
     }
     
     public void getBellows() {
-        bellows = TileBellows.getBellows(world, getBlockPos(), Direction.values());
+        bellows = TileBellows.getBellows(level, getBlockPos(), Direction.values());
     }
     
     @Override
-    public boolean onCasterRightClick(Level world, ItemStack wandstack, Player player, BlockPos bp, Direction side, InteractionHand hand) {
-        HitResult hit = RayTracer.retraceBlock(world, player, getBlockPos());
+    public boolean onCasterRightClick(Level level, ItemStack wandstack, Player player, BlockPos bp, Direction side, InteractionHand hand) {
+        HitResult hit = RayTracer.retraceBlock(level, player, getBlockPos());
         if (hit == null) {
             return false;
         }

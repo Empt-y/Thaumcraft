@@ -55,7 +55,7 @@ public class PacketFXSlash implements CustomPacketPayload
 
     @OnlyIn(Dist.CLIENT)
     private static Entity getEntityByID(int par1, Minecraft mc, net.minecraft.client.multiplayer.ClientLevel level) {
-        return (par1 == mc.player.getId()) ? mc.player : level().getEntity(par1);
+        return (par1 == mc.player.getId()) ? mc.player : level.getEntity(par1);
     }
 
     @Override

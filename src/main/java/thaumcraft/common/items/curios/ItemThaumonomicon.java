@@ -85,7 +85,7 @@ public class ItemThaumonomicon extends ItemTCBase
         else {
             world.playSound(player.getX(), player.getY(), player.getZ(), SoundsTC.page, SoundSource.PLAYERS, 1.0f, 1.0f, false);
         }
-        player.openGui(Thaumcraft.instance, 12, world, 0, 0, 0);
+        /* TODO: port to NetworkHooks.openScreen */ 
         return InteractionResult.SUCCESS;
     }
     

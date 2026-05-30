@@ -106,15 +106,15 @@ public class SealUse extends SealFiltered implements ISealConfigToggles
                 fp2.getInventory().setItem(i, ItemStack.EMPTY);
             }
         }
-        for (int i = 0; i < fp2.getInventory().armor.size(); ++i) {
+        for (int i = 0; i < 4 /* 4 */; ++i) {
             if (!fp2.getInventory().getItem(36 + i).isEmpty()) {
                 if (golem.canCarry(fp2.getInventory().getItem(36 + i), true)) {
-                    fp2.getInventory().armor.set(i, golem.holdItem(fp2.getInventory().getItem(36 + i)));
+                    fp2.getInventory().setItem(36 + i, golem.holdItem(fp2.getInventory().getItem(36 + i)));
                 }
                 if (!fp2.getInventory().getItem(i).isEmpty() && fp2.getInventory().getItem(36 + i).getCount() > 0) {
                     InventoryUtils.dropItemAtEntity(golem.getGolemWorld(), fp2.getInventory().getItem(36 + i), golem.getGolemEntity());
                 }
-                fp2.getInventory().armor.set(i, ItemStack.EMPTY);
+                fp2.getInventory().setItem(36 + i, ItemStack.EMPTY);
             }
         }
     }

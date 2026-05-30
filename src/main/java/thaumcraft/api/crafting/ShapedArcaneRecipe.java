@@ -77,13 +77,13 @@ public class ShapedArcaneRecipe implements IArcaneRecipe {
         this.width = Math.max(w, 1);
         this.height = Math.max(h, 1);
         Ingredient emptyIng = Ingredient.of(net.minecraft.world.item.Items.AIR);
-        NonNullList<Ingredient> ing = NonNullList.withSize(this.getBbWidth() * this.height, emptyIng);
+        NonNullList<Ingredient> ing = NonNullList.withSize(this.width * this.height, emptyIng);
         for (int r = 0; r < rows.size(); r++) {
             String row = rows.get(r);
             for (int c = 0; c < row.length(); c++) {
                 char ch = row.charAt(c);
                 if (ch != ' ' && keyMap.containsKey(ch)) {
-                    ing.set(r * this.getBbWidth() + c, keyMap.get(ch));
+                    ing.set(r * this.width + c, keyMap.get(ch));
                 }
             }
         }

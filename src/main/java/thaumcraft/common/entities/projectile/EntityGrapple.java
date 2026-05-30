@@ -96,14 +96,14 @@ public class EntityGrapple extends ThrowableProjectile
     
     public void tick() {
         super.tick();
-        if (!getPulling() && !isDeadOrDying() && (tickCount > 30 || getOwner() == null)) {
+        if (!getPulling() && !isRemoved() && (tickCount > 30 || getOwner() == null)) {
             if (getOwner() != null) {
                 EntityGrapple.grapples.remove(getOwner().getId());
             }
             discard();
         }
         if (getOwner() != null) {
-            if (!level().isClientSide() && !isDeadOrDying() && !added) {
+            if (!level().isClientSide() && !isRemoved() && !added) {
                 if (EntityGrapple.grapples.containsKey(getOwner().getId())) {
                     int ii = EntityGrapple.grapples.get(getOwner().getId());
                     if (ii != getId()) {
@@ -123,7 +123,7 @@ public class EntityGrapple extends ThrowableProjectile
             }
             catch (Exception ex) {}
             double dis = getOwner().distanceTo(this);
-            if (getOwner() != null && getPulling() && !isDeadOrDying()) {
+            if (getOwner() != null && getPulling() && !isRemoved()) {
                 if (getOwner().isCrouching()) {
                     EntityGrapple.grapples.remove(getOwner().getId());
                     discard();

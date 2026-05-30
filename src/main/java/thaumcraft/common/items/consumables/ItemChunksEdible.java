@@ -33,8 +33,8 @@ public class ItemChunksEdible extends Item /* ItemFood removed */ implements ITh
     }
     
     public String getUnlocalizedName(ItemStack itemStack) {
-        if (hasSubtypes && itemStack.getMetadata() < variants.length && variants[itemStack.getMetadata()] != "chunk") {
-            return String.format(super.getName() + ".%s", variants[itemStack.getMetadata()]);
+        if (hasSubtypes && 0 < variants.length && variants[0] != "chunk") {
+            return String.format(super.getName() + ".%s", variants[0]);
         }
         return super.getUnlocalizedName(itemStack);
     }

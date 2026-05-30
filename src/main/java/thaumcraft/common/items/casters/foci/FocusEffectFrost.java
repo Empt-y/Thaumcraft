@@ -65,15 +65,17 @@ public class FocusEffectFrost extends FocusEffect
             float damage = getDamageForDisplay(finalPower);
             int duration = 20 * getSettingValue("duration");
             int potency = (int)(1.0f + getSettingValue("power") * finalPower / 3.0f);
-            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(level().damageSources().thrown((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
+            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(getPackage().world.damageSources().thrown((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
             if (((net.minecraft.world.phys.EntityHitResult)target).getEntity() instanceof LivingEntity) {
                 ((LivingEntity)((net.minecraft.world.phys.EntityHitResult)target).getEntity()).addEffect(new MobEffectInstance(MobEffects.SLOWNESS, duration, potency));
             }
         }
         else if (target.getType() == HitResult.Type.BLOCK) {
             float f = Math.min(16.0f, 2 * getSettingValue("power") * finalPower);
-            for (BlockPos.MutableBlockPos blockpos$mutableblockpos1 : BlockPos.betweenClosed(((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().add((int)(-f), (int)(-f), (int)(-f)), ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().add(f, f))) {
-                if (blockpos$mutableblockpos1.distanceTo(new net.minecraft.world.phys.Vec3(target.getLocation().x, target.getLocation().y, target.getLocation().z)) <= f * f) {
+            int fi = (int) f;
+            for (BlockPos.MutableBlockPos blockpos$mutableblockpos1 : BlockPos.betweenClosed(((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset(-fi, -fi, -fi), ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos().offset(fi, fi, fi))) {
+                net.minecraft.world.phys.Vec3 hitVec = target.getLocation();
+                if (blockpos$mutableblockpos1.distToCenterSqr(hitVec.x, hitVec.y, hitVec.z) <= f * f) {
                     BlockState iblockstate1 = getPackage().world.getBlockState(blockpos$mutableblockpos1);
                     if (!iblockstate1.canBeReplaced() /* was: getMaterial() != WATER check */) {
                         continue;
@@ -94,7 +96,7 @@ public class FocusEffectFrost extends FocusEffect
     @OnlyIn(Dist.CLIENT)
     @Override
     public void renderParticleFX(Level world, double x, double y, double z, double vx, double vy, double vz) {
-        FXGeneric fb = new FXGeneric(world, getX(), getY(), getZ(), vx, vy, vz);
+        FXGeneric fb = new FXGeneric(world, x, y, z, vx, vy, vz);
         fb.setMaxAge(40 + getPackage().world.getRandom().nextInt(40));
         fb.setAlphaF(1.0f, 0.0f);
         fb.setParticles(8, 1, 1);

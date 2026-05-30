@@ -74,7 +74,7 @@ public class TileTube extends TileThaumcraft implements IEssentiaTransport, IInt
     @Override
     public CompoundTag writeSyncNBT(CompoundTag nbttagcompound) {
         if (essentiaType != null) {
-            nbttagcompound.putString("type", essentiaType.get());
+            nbttagcompound.putString("type", essentiaType.getTag());
         }
         nbttagcompound.putInt("amount", essentiaAmount);
         byte[] sides = new byte[6];
@@ -95,7 +95,7 @@ public class TileTube extends TileThaumcraft implements IEssentiaTransport, IInt
         public CompoundTag saveAdditional(CompoundTag nbttagcompound) {
         /* super.saveAdditional removed - CompoundTag not compatible with ValueOutput */
         if (suctionType != null) {
-            nbttagcompound.putString("stype", suctionType.get());
+            nbttagcompound.putString("stype", suctionType.getTag());
         }
         nbttagcompound.putInt("samount", suction);
         return nbttagcompound;
@@ -301,7 +301,7 @@ public class TileTube extends TileThaumcraft implements IEssentiaTransport, IInt
         return 0;
     }
     
-    public boolean receiveClientEvent(int i, int j) {
+    public boolean triggerEvent(int i, int j) {
         if (i == 0) {
             if (getLevel().isClientSide()) {
                 getLevel().playLocalSound(getBlockPos().getX() + 0.5, getBlockPos().getY() + 0.5, getBlockPos().getZ() + 0.5, SoundsTC.creak, SoundSource.AMBIENT, 1.0f, 1.3f + this.level.getRandom().nextFloat() * 0.2f, false);
@@ -323,7 +323,7 @@ public class TileTube extends TileThaumcraft implements IEssentiaTransport, IInt
             }
             return true;
         }
-        return super.receiveClientEvent(i, j);
+        return super.triggerEvent(i, j);
     }
     
     @Override

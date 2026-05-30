@@ -69,7 +69,7 @@ public class TileStabilizer extends TileThaumcraft
         List<EntityFluxRift> targets = getLevel().getEntitiesOfClass(EntityFluxRift.class, new AABB(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), getBlockPos().getX() + 1, getBlockPos().getY() + 1, getBlockPos().getZ() + 1).inflate(8.0));
         if (targets.size() > 0) {
             for (EntityFluxRift e : targets) {
-                if (e.isDeadOrDying()) {
+                if (!e.isAlive()) {
                     continue;
                 }
                 if (e.getStability() == EntityFluxRift.EnumStability.VERY_STABLE || !mitigate(1)) {

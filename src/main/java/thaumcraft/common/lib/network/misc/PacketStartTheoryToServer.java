@@ -56,7 +56,7 @@ public class PacketStartTheoryToServer implements CustomPacketPayload
     public static void handle(PacketStartTheoryToServer msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             ServerPlayer serverPlayer = (ServerPlayer) ctx.player();
-            var level = serverPlayer.serverLevel();
+            var level = (ServerLevel) serverPlayer.level();
             Player player = serverPlayer;
             BlockPos bp = BlockPos.of(msg.pos);
             if (level != null && player != null && bp != null) {

@@ -62,7 +62,7 @@ public class AIGotoBlock extends AIGoto
         for (Direction face : Direction.Plane.HORIZONTAL) {
             BlockState block = golem.level().getBlockState(pos.relative(face));
             if (!block.isSolid()) {
-                double dist = pos.relative(face).distanceTo(new net.minecraft.world.phys.Vec3(golem.getX(), golem.getY(), golem.getZ()));
+                double dist = pos.relative(face).getCenter().distanceTo(golem.position());
                 if (dist < d) {
                     closest = pos.relative(face);
                     d = dist;

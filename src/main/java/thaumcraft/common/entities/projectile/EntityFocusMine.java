@@ -115,12 +115,12 @@ public class EntityFocusMine extends ThrowableProjectile
                         effects = focusPackage.getFocusEffects();
                     }
                     if (effects != null && effects.length > 0) {
-                        FocusEffect eff = effects[random.nextInt(effects.length)];
-                        eff.renderParticleFX(world, getX() + random.nextGaussian() * 0.1, getY() + random.nextGaussian() * 0.1, getZ() + random.nextGaussian() * 0.1, random.nextGaussian() * 0.009999999776482582, random.nextGaussian() * 0.009999999776482582, random.nextGaussian() * 0.009999999776482582);
+                        FocusEffect eff = effects[getRandom().nextInt(effects.length)];
+                        eff.renderParticleFX(level(), getX() + getRandom().nextGaussian() * 0.1, getY() + getRandom().nextGaussian() * 0.1, getZ() + getRandom().nextGaussian() * 0.1, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582);
                     }
                 }
                 else {
-                    List<LivingEntity> list2 = EntityUtils.getEntitiesInRange(world, getX(), getY(), getZ(), this, LivingEntity.class, 1.0);
+                    List<LivingEntity> list2 = EntityUtils.getEntitiesInRange(level(), getX(), getY(), getZ(), this, LivingEntity.class, 1.0);
                     int d = 0;
                     for (LivingEntity e : list2) {
                         if (e.isDeadOrDying()) {

@@ -16,14 +16,16 @@ public class FXSwarmRunes extends Particle
     private float turnSpeed;
     private float speed;
     int deathtimer;
-    float getXRot();
-    float getYRot();
     public int particle;
     protected float rCol;
     protected float gCol;
     protected float bCol;
     private float particleGravity;
     private float particleScale;
+    protected float xRot;
+    protected float yRot;
+    public float getXRot() { return xRot; }
+    public float getYRot() { return yRot; }
 
     public FXSwarmRunes(Level par1World, double x, double y, double z, Entity target, float r, float g, float b) {
         super((ClientLevel) par1World, x, y, z, 0.0, 0.0, 0.0);

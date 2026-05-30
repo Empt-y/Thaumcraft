@@ -252,14 +252,14 @@ public class TilePatternCrafter extends TileThaumcraft
         setChanged();
     }
     
-    public boolean receiveClientEvent(int i, int j) {
+    public boolean triggerEvent(int i, int j) {
         if (i == 1) {
             if (getLevel().isClientSide()) {
                 rotTicks = 10;
             }
             return true;
         }
-        return super.receiveClientEvent(i, j);
+        return super.triggerEvent(i, j);
     }
     
     public HitResult rayTrace(Level world, Vec3 vec3d, Vec3 vec3d1, HitResult fullblock) {

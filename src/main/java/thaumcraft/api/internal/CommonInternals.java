@@ -44,7 +44,7 @@ public class CommonInternals {
 	public static int generateUniqueItemstackId(ItemStack stack) {
     	ItemStack sc = stack.copy();
     	sc.setCount(1);
-    	return java.util.Objects.hash(sc.getItem().getDescription(), sc.getComponentsPatch());
+    	return java.util.Objects.hash(sc.getItem().getDescriptionId(), sc.getComponentsPatch());
     }
 
 	/**
@@ -54,6 +54,6 @@ public class CommonInternals {
 	 * @return
 	 */
 	public static int generateUniqueItemstackIdStripped(ItemStack stack) {
-    	return stack.getItem().getDescription().hashCode();
+    	return stack.getItem().getDescriptionId().hashCode();
     }
 }

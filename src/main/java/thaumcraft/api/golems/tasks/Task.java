@@ -172,12 +172,12 @@ public class Task {
 //		Task task = new Task();
 //		task.id = nbt.getIntOr("id", 0);
 //		task.type = nbt.getByteOr("type", (byte)0);		
-//		if (nbt.contains("pos")) task.pos = BlockPos.of(nbt.getLongOr("pos", 0L));	
+//		if (nbt.child("pos").isPresent()) task.pos = BlockPos.of(nbt.getLongOr("pos", 0L));	
 //		
-//		if (nbt.contains("GUUIDMost") && nbt.contains("GUUIDLeast"))
+//		if (nbt.child("GUUIDMost").isPresent() && nbt.child("GUUIDLeast").isPresent())
 //			task.golemUUID = new UUID(nbt.getLongOr("GUUIDMost", 0L), nbt.getLongOr("GUUIDLeast", 0L));
 //		
-//		if (nbt.contains("EUUIDMost") && nbt.contains("EUUIDLeast"))
+//		if (nbt.child("EUUIDMost").isPresent() && nbt.child("EUUIDLeast").isPresent())
 //			task.entityUUID = new UUID(nbt.getLongOr("EUUIDMost", 0L), nbt.getLongOr("EUUIDLeast", 0L));
 //		
 //		if (task.pos==null && task.entityUUID==null) return null;
@@ -187,7 +187,7 @@ public class Task {
 //		task.suspended = false;
 //		task.completed = nbt.getBooleanOr("completed", false);
 //		task.expireTime = System.currentTimeMillis() + 300000;		
-//		if (nbt.contains("sealpos")) {
+//		if (nbt.child("sealpos").isPresent()) {
 //			CompoundTag sealpos = nbt.getCompoundOrEmpty("sealpos");
 //			SealPos sp = new SealPos(BlockPos.of(nbt.getLongOr("pos", 0L)), Direction.values()[nbt.getByteOr("face", (byte)0)]);
 //			TaskHandler.sealTaskCrossRef.put(task.id, sp);

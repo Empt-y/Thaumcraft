@@ -253,7 +253,7 @@ public class TileMirror extends TileThaumcraft implements Container
         return nbttagcompound;
     }
     
-    public boolean receiveClientEvent(int i, int j) {
+    public boolean triggerEvent(int i, int j) {
         if (i == 1) {
             if (getLevel().isClientSide()) {
                 Direction face = getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING);
@@ -264,7 +264,7 @@ public class TileMirror extends TileThaumcraft implements Container
             }
             return true;
         }
-        return super.receiveClientEvent(i, j);
+        return super.triggerEvent(i, j);
     }
     
     public void update() {

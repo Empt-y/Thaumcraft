@@ -70,7 +70,7 @@ public class PacketNote implements CustomPacketPayload
                     // TODO: null /* TODO: DimensionManager removed */ doesn't exist in NeoForge 26.1.2
                     // Use server-side dimension lookup via ctx.player().getServer().getLevel(...)
                     // For now, use the player's current level as a best-effort fallback
-                    var level = ((ServerPlayer) ctx.player()).serverLevel();
+                    var level = (ServerLevel) ((ServerPlayer) ctx.player()).level();
                     if (level == null) return;
                     BlockEntity tile2 = getLevel().getBlockEntity(new BlockPos(msg.getX(), msg.y, msg.z));
                     byte note = -1;

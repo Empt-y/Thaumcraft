@@ -49,7 +49,7 @@ public class PacketSelectThaumotoriumRecipeToServer implements CustomPacketPaylo
     public static void handle(PacketSelectThaumotoriumRecipeToServer msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             ServerPlayer serverPlayer = (ServerPlayer) ctx.player();
-            var level = serverPlayer.serverLevel();
+            var level = (ServerLevel) serverPlayer.level();
             Player player = serverPlayer;
             BlockPos bp = BlockPos.of(msg.pos);
             if (level != null && player != null && bp != null) {

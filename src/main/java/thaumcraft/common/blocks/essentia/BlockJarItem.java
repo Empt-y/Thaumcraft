@@ -52,7 +52,7 @@ public class BlockJarItem extends BlockItem implements IEssentiaContainerItem
 
     
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
-        Level world = context.level();
+        Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Player player = context.getPlayer();
         if (player == null) return InteractionResult.PASS;
@@ -100,9 +100,9 @@ public class BlockJarItem extends BlockItem implements IEssentiaContainerItem
     public InteractionResult place(BlockPlaceContext context) {
         ItemStack stack = context.getItemInHand();
         InteractionResult result = super.place(context);
-        if (result.consumesAction() && !context.level().isClientSide()) {
+        if (result.consumesAction() && !context.getLevel().isClientSide()) {
             BlockPos pos = context.getClickedPos();
-            Level world = context.level();
+            Level world = context.getLevel();
             BlockState newState = world.getBlockState(pos);
             BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof TileJarFillable jar) {

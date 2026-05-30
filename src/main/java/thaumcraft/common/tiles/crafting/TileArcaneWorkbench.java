@@ -30,7 +30,7 @@ public class TileArcaneWorkbench extends TileThaumcraft
     }
 
     public TileArcaneWorkbench(BlockPos pos, BlockState state) {
-        this(TYPE, getBlockPos(), state);
+        this(TYPE, pos, state);
     }
 
     @Override

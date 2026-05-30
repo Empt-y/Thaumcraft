@@ -41,10 +41,10 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
     @Override
     public CompoundTag writeSyncNBT(CompoundTag nbttagcompound) {
         if (aspectIn != null) {
-            nbttagcompound.putString("aspectIn", aspectIn.get());
+            nbttagcompound.putString("aspectIn", aspectIn.getTag());
         }
         if (aspectOut != null) {
-            nbttagcompound.putString("aspectOut", aspectOut.get());
+            nbttagcompound.putString("aspectOut", aspectOut.getTag());
         }
         return nbttagcompound;
     }
@@ -63,7 +63,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
         if (am > 0 && aspectOut == null) {
             aspectOut = tt;
             setChanged();
-            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkFromBlockCoords(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
             --am;
         }
         return am;
@@ -74,7 +74,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
         if (aspectOut != null && tt == aspectOut) {
             aspectOut = null;
             setChanged();
-            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkFromBlockCoords(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
             return true;
         }
         return false;
@@ -165,7 +165,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
             aspectIn = aspect;
             process = 39;
             setChanged();
-            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkFromBlockCoords(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
             return 1;
         }
         return 0;
@@ -205,11 +205,11 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
         aspectOut = comps[net.minecraft.util.RandomSource.create().nextInt(2)];
         aspectIn = null;
         setChanged();
-        getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkFromBlockCoords(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+        getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
     }
     
     void drawEssentia() {
-        BlockEntity te = ThaumcraftApiHelper.getConnectableTile(world, getBlockPos(), Direction.DOWN);
+        BlockEntity te = ThaumcraftApiHelper.getConnectableTile(level, getBlockPos(), Direction.DOWN);
         if (te != null) {
             IEssentiaTransport ic = (IEssentiaTransport)te;
             if (!ic.canOutputTo(Direction.UP)) {
@@ -223,7 +223,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
                 aspectIn = ta;
                 process = 39;
                 setChanged();
-                getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkFromBlockCoords(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+                getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
             }
         }
     }

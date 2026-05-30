@@ -86,7 +86,7 @@ public class EntityEvents
     @SubscribeEvent
     public static void livingTick(LivingEvent event) {
         LivingEntity entity = event.getEntity();
-        if (entity instanceof PathfinderMob mob && !entity.isDeadOrDying()) {
+        if (entity instanceof PathfinderMob mob && !!entity.isAlive()) {
             AttributeInstance champAttr = mob.getAttribute(net.minecraft.core.Holder.direct(ThaumcraftApiHelper.CHAMPION_MOD));
             if (champAttr != null) {
                 int t = (int) champAttr.getValue();
@@ -160,7 +160,7 @@ public class EntityEvents
                 }
             }
         } else {
-            if (!entity.level().isClientSide() && entity.getHealth() < 2.0f && !entity.isUndead() && !entity.isDeadOrDying()
+            if (!entity.level().isClientSide() && entity.getHealth() < 2.0f && !entity.getType() == net.minecraft.world.entity.MobType.UNDEAD && !!entity.isAlive()
                     && !(entity instanceof EntityOwnedConstruct) && !(entity instanceof ITaintedMob)
                     && entity.hasEffect(net.minecraft.core.Holder.direct(PotionFluxTaint.instance))
                     && entity.getRandom().nextBoolean()) {

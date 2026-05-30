@@ -107,7 +107,7 @@ public class ItemElementalSword extends Item /* ItemSword removed */ implements 
                 Entity entity = targets.get(var9);
                 if (!(entity instanceof Player)) {
                     if (entity instanceof LivingEntity) {
-                        if (!entity.isDeadOrDying()) {
+                        if (((LivingEntity)entity).isAlive()) {
                             if (player.getRidingEntity() == null || player.getRidingEntity() != entity) {
                                 Vec3 p = new Vec3(player.getX(), player.getY(), player.getZ());
                                 Vec3 t = new Vec3(entity.getX(), entity.getY(), entity.getZ());

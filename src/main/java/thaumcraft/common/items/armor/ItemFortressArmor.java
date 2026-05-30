@@ -113,7 +113,7 @@ public class ItemFortressArmor extends net.minecraft.world.item.Item implements 
         if (player instanceof Player) {
             int q = 0;
             for (int a = 1; a < 4; ++a) {
-                ItemStack piece = ((Player)player).getInventory().armor.get(a);
+                ItemStack piece = ((Player)player).getInventory().getItem(36 + a);
                 if (piece != null && !piece.isEmpty() && piece.getItem() instanceof ItemFortressArmor) {
                     if (!piece.isEmpty() && piece.contains("mask")) {
                         Object /* removed */ armorProperties = ap;
