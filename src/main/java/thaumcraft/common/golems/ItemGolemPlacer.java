@@ -84,7 +84,8 @@ public class ItemGolemPlacer extends ItemTCBase implements ISealDisplayer
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
     
-    public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
+    /* TODO: port to useOn(UseOnContext)
+    public InteractionResult onItemUseFirst_TODO(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
         BlockState bs = world.getBlockState(pos);
         if (!bs.isSolid()) {
             return InteractionResult.FAIL;
@@ -116,4 +117,5 @@ public class ItemGolemPlacer extends ItemTCBase implements ISealDisplayer
         }
         return InteractionResult.SUCCESS;
     }
+    */
 }

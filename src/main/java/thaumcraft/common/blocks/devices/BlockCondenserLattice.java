@@ -75,7 +75,7 @@ public class BlockCondenserLattice extends BlockTC
 
     @Override
     public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, Orientation orientation, boolean isMoving) {
-        if (blockIn.getBlock() == BlocksTC.condenserlattice || blockIn.getBlock() == BlocksTC.condenserlatticeDirty || blockIn.getBlock() == BlocksTC.condenser) {
+        if (blockIn == BlocksTC.condenserlattice || blockIn == BlocksTC.condenserlatticeDirty || blockIn == BlocksTC.condenser) {
             triggerUpdate(worldIn, pos);
         }
     }
@@ -121,7 +121,7 @@ public class BlockCondenserLattice extends BlockTC
                         return pp;
                     }
                 }
-                if (face == Direction.DOWN && b.getBlock() == BlocksTC.condenser) {
+                if (face == Direction.DOWN && b == BlocksTC.condenser) {
                     BlockEntity te = world.getBlockEntity(p2);
                     if (te != null && te instanceof TileCondenser) {
                         ((TileCondenser)te).latticeCount = -1.0f;
@@ -144,7 +144,7 @@ public class BlockCondenserLattice extends BlockTC
         for (int side = 0; side < 6; ++side) {
             fd = Direction.from3DDataValue(side);
             Block b = source.getBlockState(pos.relative(fd)).getBlock();
-            if (b instanceof BlockCondenserLattice || (fd == Direction.DOWN && b.getBlock() == BlocksTC.condenser)) {
+            if (b instanceof BlockCondenserLattice || (fd == Direction.DOWN && b == BlocksTC.condenser)) {
                 switch (side) {
                     case 0: { miny = 0.0f; break; }
                     case 1: { maxy = 1.0f; break; }

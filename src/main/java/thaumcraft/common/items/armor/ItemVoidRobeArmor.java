@@ -154,7 +154,8 @@ public class ItemVoidRobeArmor extends net.minecraft.world.item.Item implements 
     }
 
     @Override
-    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+    public InteractionResult useOn(UseOnContext context) {
+        ItemStack stack = context.getItemInHand();
         Player player = context.getPlayer();
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();

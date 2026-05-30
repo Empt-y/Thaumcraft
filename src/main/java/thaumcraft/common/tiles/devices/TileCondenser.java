@@ -61,7 +61,7 @@ public class TileCondenser extends TileThaumcraft implements IEssentiaTransport
             triggerCheck();
         }
         ++count;
-        if (BlockStateUtils.isEnabled(getBlockState().getBlockState()) && latticeCount > 0.0f) {
+        if (BlockStateUtils.isEnabled(getBlockState()) && latticeCount > 0.0f) {
             if (getLevel().isClientSide()) {
                 if (essentia > 0 && uncloggedList.size() > 0 && count % Math.max(3, interval / 50) == 0) {
                     BlockPos p = BlockPos.of(uncloggedList.get(this.level.getRandom().nextInt(uncloggedList.size())));

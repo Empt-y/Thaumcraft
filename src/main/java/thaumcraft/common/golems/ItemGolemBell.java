@@ -46,7 +46,7 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
                 return InteractionResult.SUCCESS;
             }
             if (playerIn.isCrouching() && ThaumcraftCapabilities.knowsResearch(playerIn, "GOLEMLOGISTICS")) {
-                /* TODO: port to NetworkHooks.openScreen */ 
+                // TODO: port to NetworkHooks.openScreen
                 return InteractionResult.SUCCESS;
             }
         }
@@ -56,7 +56,8 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
         return super.use(worldIn, playerIn, hand);
     }
     
-    public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
+    /* TODO: port to useOn(UseOnContext)
+    public InteractionResult onItemUseFirst_TODO(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
         player.swing(hand);
         if (!world.isClientSide()) {
             ISealEntity se = SealHandler.getSealEntity((world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0), new SealPos(pos, side));
@@ -66,17 +67,18 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
                     world.playSound(null, pos, SoundsTC.zap, SoundSource.BLOCKS, 0.5f, 1.0f);
                 }
                 else {
-                    /* TODO: port to NetworkHooks.openScreen */ 
+                    // TODO: port to NetworkHooks.openScreen
                 }
                 return InteractionResult.SUCCESS;
             }
             if (player.isCrouching() && ThaumcraftCapabilities.knowsResearch(player, "GOLEMLOGISTICS")) {
-                /* TODO: port to NetworkHooks.openScreen */ 
+                // TODO: port to NetworkHooks.openScreen
                 return InteractionResult.SUCCESS;
             }
         }
         return InteractionResult.PASS;
     }
+    */
     
     public static ISealEntity getSeal(Player playerIn) {
         float f = playerIn.getXRot();

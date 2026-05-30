@@ -36,7 +36,7 @@ public class TileBellows extends TileThaumcraft
     
     public void update() {
         if (getLevel().isClientSide()) {
-            if (BlockStateUtils.isEnabled(getBlockState().getBlockState())) {
+            if (BlockStateUtils.isEnabled(getBlockState())) {
                 if (firstrun) {
                     inflation = 0.35f + net.minecraft.util.RandomSource.create().nextFloat() * 0.55f;
                 }
@@ -56,7 +56,7 @@ public class TileBellows extends TileThaumcraft
                 }
             }
         }
-        else if (BlockStateUtils.isEnabled(getBlockState().getBlockState())) {
+        else if (BlockStateUtils.isEnabled(getBlockState())) {
             ++delay;
             if (delay >= 2) {
                 delay = 0;

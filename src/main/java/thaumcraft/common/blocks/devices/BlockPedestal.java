@@ -140,7 +140,7 @@ public class BlockPedestal extends BlockTCTile implements IInfusionStabiliserExt
     @Override
     public float getStabilizationAmount(Level world, BlockPos pos) {
         Block b = world.getBlockState(pos).getBlock();
-        return (b.getBlock() == BlocksTC.pedestalEldritch) ? 0.1f : 0.0f;
+        return (b == BlocksTC.pedestalEldritch) ? 0.1f : 0.0f;
     }
 
     @Override

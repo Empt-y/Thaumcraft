@@ -83,7 +83,7 @@ public class TilePatternCrafter extends TileThaumcraft
             }
             rot += rp;
         }
-        if (!getLevel().isClientSide() && count++ % 20 == 0 && BlockStateUtils.isEnabled(getBlockState().getBlockState())) {
+        if (!getLevel().isClientSide() && count++ % 20 == 0 && BlockStateUtils.isEnabled(getBlockState())) {
             if (power <= 0.0f) {
                 power += AuraHelper.drainVis(getLevel(), getBlockPos(), 5.0f, false);
             }

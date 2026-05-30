@@ -51,13 +51,14 @@ public class BlockJarItem extends BlockItem implements IEssentiaContainerItem
     }
 
     
-    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+    public InteractionResult useOn(UseOnContext context) {
+        ItemStack stack = context.getItemInHand();
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Player player = context.getPlayer();
         if (player == null) return InteractionResult.PASS;
         Block bi = world.getBlockState(pos).getBlock();
-        if (bi.getBlock() == BlocksTC.alembic && !world.isClientSide()) {
+        if (bi == BlocksTC.alembic && !world.isClientSide()) {
             TileAlembic tile = (TileAlembic)world.getBlockEntity(pos);
             if (tile != null && tile.amount > 0) {
                 if (getFilter(stack) != null && getFilter(stack) != tile.aspect) {

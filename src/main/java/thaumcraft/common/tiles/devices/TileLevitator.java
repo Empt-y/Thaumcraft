@@ -46,7 +46,7 @@ public class TileLevitator extends TileThaumcraft
             rangeActual = 0;
         }
         int p = counter % ranges[range];
-        if (getLevel().getBlockState(getBlockPos().relative(facing, 1 + p)).isOpaqueCube()) {
+        if (getLevel().getBlockState(getBlockPos().relative(facing, 1 + p)).canOcclude()) {
             if (1 + p < rangeActual) {
                 rangeActual = 1 + p;
             }
@@ -57,11 +57,11 @@ public class TileLevitator extends TileThaumcraft
         }
         ++counter;
         if (!getLevel().isClientSide() && vis < 10) {
-            vis += (int)(AuraHelper.drainVis(level, getBlockPos(), 1.0f, false) * 1200.0f);
+            vis += (int)(AuraHelper.drainVis(getLevel(), getBlockPos(), 1.0f, false) * 1200.0f);
             setChanged();
             syncTile(false);
         }
-        if (rangeActual > 0 && vis > 0 && BlockStateUtils.isEnabled(getBlockState().getBlockState())) {
+        if (rangeActual > 0 && vis > 0 && BlockStateUtils.isEnabled(getBlockState())) {
             List<Entity> targets = getLevel().getEntitiesOfClass(Entity.class, new AABB(getBlockPos().getX() - ((facing.getStepX() < 0) ? rangeActual : 0), getBlockPos().getY() - ((facing.getStepY() < 0) ? rangeActual : 0), getBlockPos().getZ() - ((facing.getStepZ() < 0) ? rangeActual : 0), getBlockPos().getX() + 1 + ((facing.getStepX() > 0) ? rangeActual : 0), getBlockPos().getY() + 1 + ((facing.getStepY() > 0) ? rangeActual : 0), getBlockPos().getZ() + 1 + ((facing.getStepZ() > 0) ? rangeActual : 0)));
             boolean lifted = false;
             if (targets.size() > 0) {
@@ -75,7 +75,7 @@ public class TileLevitator extends TileThaumcraft
                     if (e.isCrouching() && facing == Direction.UP) {
                         if (e.getDeltaMovement().y < 0.0) {
                             Entity entity = e;
-                            entity.getDeltaMovement().y *= 0.8999999761581421;
+                            e.setDeltaMovement(e.getDeltaMovement().x, e.getDeltaMovement().y * 0.9, e.getDeltaMovement().z);
                         }
                     }
                     else {
@@ -88,7 +88,7 @@ public class TileLevitator extends TileThaumcraft
                         if (facing.getAxis() != Direction.Axis.Y && !e.onGround()) {
                             if (e.getDeltaMovement().y < 0.0) {
                                 Entity entity5 = e;
-                                entity5.getDeltaMovement().y *= 0.8999999761581421;
+                                entity5.setDeltaMovement(entity5.getDeltaMovement().x, entity5.getDeltaMovement().y * 0.9, entity5.getDeltaMovement().z);
                             }
                             Entity entity6 = e;
                             entity6.setDeltaMovement(entity6.getDeltaMovement().x, entity6.getDeltaMovement().y + 0.07999999821186066, entity6.getDeltaMovement().z);

@@ -20,7 +20,8 @@ public class ItemTurretPlacer extends ItemTCBase
         super("turret", "basic", "advanced", "bore");
     }
     
-    public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
+    /* TODO: port to useOn(UseOnContext)
+    public InteractionResult onItemUseFirst_TODO(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
         if (side == Direction.DOWN) {
             return InteractionResult.PASS;
         }
@@ -63,4 +64,5 @@ public class ItemTurretPlacer extends ItemTCBase
         }
         return InteractionResult.PASS;
     }
+    */
 }

@@ -40,7 +40,7 @@ public class TileDioptra extends TileThaumcraft
                     for (int zz = 0; zz < 13; ++zz) {
                         AuraChunk ac = AuraHandler.getAuraChunk((this.level instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)this.level).dimension().identifier().hashCode() : 0), (getBlockPos().getX() >> 4) + xx - 6, (getBlockPos().getZ() >> 4) + zz - 6);
                         if (ac != null) {
-                            if (BlockStateUtils.isEnabled(getBlockState().getBlockState())) {
+                            if (BlockStateUtils.isEnabled(getBlockState())) {
                                 grid_amt[xx + zz * 13] = (byte)Math.min(64.0f, ac.getVis() / 500.0f * 64.0f);
                             }
                             else {

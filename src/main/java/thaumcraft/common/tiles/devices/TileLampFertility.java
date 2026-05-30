@@ -52,11 +52,11 @@ public class TileLampFertility extends TileThaumcraft implements IEssentiaTransp
                     syncTile(true);
                 }
                 if (charges <= 1) {
-                    if (BlockStateUtils.isEnabled(getBlockState().getBlockState())) {
+                    if (BlockStateUtils.isEnabled(getBlockState())) {
                         getLevel().setBlock(getBlockPos(), getLevel().getBlockState(getBlockPos()).setValue((Property)IBlockEnabled.ENABLED, (Comparable)false), 3);
                     }
                 }
-                else if (!gettingPower() && !BlockStateUtils.isEnabled(getBlockState().getBlockState())) {
+                else if (!gettingPower() && !BlockStateUtils.isEnabled(getBlockState())) {
                     getLevel().setBlock(getBlockPos(), getLevel().getBlockState(getBlockPos()).setValue((Property)IBlockEnabled.ENABLED, (Comparable)true), 3);
                 }
             }

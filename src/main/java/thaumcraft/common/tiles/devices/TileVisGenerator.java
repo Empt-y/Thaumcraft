@@ -21,7 +21,7 @@ public class TileVisGenerator extends TileThaumcraft implements IEnergyStorage
     protected int maxExtract = 20;
     
     public void update() {
-        if (!getLevel().isClientSide() && BlockStateUtils.isEnabled(getBlockState().getBlockState())) {
+        if (!getLevel().isClientSide() && BlockStateUtils.isEnabled(getBlockState())) {
             recharge();
             Direction face = getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING);
             BlockState state = getLevel().getBlockState(getBlockPos().relative(face));
