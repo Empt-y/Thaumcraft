@@ -66,7 +66,7 @@ public Rarity getRarity(ItemStack itemstack) {
         return ItemUseAnimation.NONE;
     }
     
-    public int getMaxItemUseDuration(ItemStack stack) {
+    public int getUseDuration(ItemStack stack) {
         return 72000;
     }
     
@@ -78,7 +78,7 @@ public Rarity getRarity(ItemStack itemstack) {
     @Override
     public void onUseTick(net.minecraft.world.level.Level level, LivingEntity player, ItemStack stack, int count) {
         super.onUseTick(level, player, stack, count);
-        int ticks = getMaxItemUseDuration(stack, player) - count;
+        int ticks = getUseDuration(stack, player) - count;
         if (player.getDeltaMovement().y < 0.0) {
             player.setDeltaMovement(player.getDeltaMovement().x, player.getDeltaMovement().y / 1.2, player.getDeltaMovement().z);
             player.fallDistance /= 1.2f;

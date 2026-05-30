@@ -55,7 +55,7 @@ public class FocusElementNode
             ((FocusNode)fe).initialize();
             if (((FocusNode)fe).getSettingList() != null) {
                 for (String ns : ((FocusNode)fe).getSettingList()) {
-                    ((FocusNode)fe).getSetting(ns).setValue(nbt.getInt("setting." + ns));
+                    ((FocusNode)fe).getSetting(ns).setValue(nbt.getIntOr("setting." + ns, 0));
                 }
             }
         }

@@ -70,7 +70,7 @@ public class AIFollowOwner extends Goal
     private boolean func_181065_a(BlockPos p_181065_1_) {
         BlockState iblockstate = theWorld.getBlockState(p_181065_1_);
         Block block = iblockstate.getBlock();
-        return block == Blocks.AIR || !null.isCollisionShapeFullBlock(iblockstate, null);
+        return block == Blocks.AIR || !iblockstate.isCollisionShapeFullBlock(theWorld, p_181065_1_);
     }
     
     @Override

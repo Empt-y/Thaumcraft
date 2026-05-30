@@ -16,6 +16,15 @@ import thaumcraft.common.tiles.TileThaumcraft;
 public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContainer, IEssentiaTransport, WorldlyContainer
 {
     public TileThaumatorium thaumatorium;
+
+    @Override
+    public int getContainerSize() { return thaumatorium != null ? thaumatorium.getContainerSize() : 0; }
+    @Override
+    public net.minecraft.world.item.ItemStack removeItem(int slot, int count) { return thaumatorium != null ? thaumatorium.removeItem(slot, count) : net.minecraft.world.item.ItemStack.EMPTY; }
+    @Override
+    public net.minecraft.world.item.ItemStack removeItemNoUpdate(int slot) { return thaumatorium != null ? thaumatorium.removeItemNoUpdate(slot) : net.minecraft.world.item.ItemStack.EMPTY; }
+    @Override
+    public void setItem(int slot, net.minecraft.world.item.ItemStack stack) { if (thaumatorium != null) thaumatorium.setItem(slot, stack); }
     
     public TileThaumatoriumTop(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
         super(type, pos, state);

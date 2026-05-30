@@ -16,7 +16,7 @@ public class ShapedArcaneVoidJar extends ShapedArcaneRecipe
     }
     
     @Override
-    public ItemStack getCraftingResult(CraftingContainer var1) {
+    public ItemStack assemble(net.minecraft.world.item.crafting.CraftingInput var1) {
         net.minecraft.world.item.component.CustomData nbt = null;
         for (int a = 0; a < var1.getContainerSize(); ++a) {
             if (Block.byItem(var1.getItem(a).getItem()) == BlocksTC.jarNormal) {
@@ -24,7 +24,7 @@ public class ShapedArcaneVoidJar extends ShapedArcaneRecipe
                 break;
             }
         }
-        ItemStack res = super.getCraftingResult(var1);
+        ItemStack res = super.assemble(var1);
         if (nbt != null) {
             res.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, nbt);
         }

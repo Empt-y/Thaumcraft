@@ -20,7 +20,7 @@ public class TileBarrierStone extends BlockEntity
     }
     
     public boolean gettingPower() {
-        return this.level.hasNeighborSignal(this.worldPosition) > 0;
+        return this.level.hasNeighborSignal(this.worldPosition);
     }
     
     public void update() {

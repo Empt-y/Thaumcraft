@@ -87,7 +87,7 @@ public class ChunkEvents
             }
         } else {
             if (event.getChunk() instanceof LevelChunk lc && event.getLevel() != null) {
-                AuraHandler.generateAura(lc, event.getLevel(), new java.util.Random());
+                if (event.getLevel() instanceof net.minecraft.world.level.Level lvl) AuraHandler.generateAura(lc, lvl, new java.util.Random());
             }
         }
         if (attachments.contains("Thaumcraft")) {

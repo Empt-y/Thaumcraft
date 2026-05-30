@@ -563,7 +563,7 @@ public class ResearchManager
         ItemStack stack = ItemStack.EMPTY;
         try {
             net.minecraft.resources.Identifier itemId = net.minecraft.resources.Identifier.parse(name);
-            Item it = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(itemId);
+            Item it = net.minecraft.core.registries.BuiltInRegistries.ITEM.getOptional(itemId).orElse(null);
             if (it != null && it != net.minecraft.world.item.Items.AIR) {
                 stack = new ItemStack(it, num);
                 // damage value (metadata) ignored - use components if needed

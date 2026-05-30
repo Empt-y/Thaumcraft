@@ -229,7 +229,7 @@ public class TilePatternCrafter extends TileThaumcraft
             return false;
         }
         if (!(ir instanceof net.minecraft.world.item.crafting.CraftingRecipe cr)) return false;
-        outStack = cr.assemble(craftMatrix, getLevel().registryAccess());
+        outStack = cr.assemble(craftMatrix);
         NonNullList<ItemStack> aitemstack = null /* CraftingManager removed */;
         for (int i = 0; i < aitemstack.size(); ++i) {
             ItemStack itemstack1 = craftMatrix.getItem(i);

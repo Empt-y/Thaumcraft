@@ -79,7 +79,7 @@ public class BlockBarrier extends BlockTC
         for (int a = 1; a < 3; ++a) {
             BlockEntity te = worldIn.getBlockEntity(pos.below(a));
             if (te instanceof TileBarrierStone) {
-                return ((net.minecraft.world.level.Level)te.getLevel()).hasNeighborSignal(pos.below(a)) > 0;
+                return ((net.minecraft.world.level.Level)te.getLevel()).hasNeighborSignal(pos.below(a));
             }
         }
         return true;

@@ -75,7 +75,7 @@ public class PacketSelectThaumotoriumRecipeToServer implements CustomPacketPaylo
                         for (CrucibleRecipe cr : thaumatorium.recipes) {
                             if (cr.hash == msg.hash) {
                                 thaumatorium.recipeEssentia.add(cr.getAspects().copy());
-                                thaumatorium.recipePlayer.add(player.getName());
+                                thaumatorium.recipePlayer.add(player.getName().getString());
                                 thaumatorium.recipeHash.add(cr.hash);
                                 flag = true;
                                 break;

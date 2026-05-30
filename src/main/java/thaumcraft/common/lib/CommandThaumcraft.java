@@ -169,7 +169,7 @@ public class CommandThaumcraft
             ThaumcraftCapabilities.getWarp(player).add(IPlayerWarp.EnumWarpType.NORMAL, i);
         }
         ThaumcraftCapabilities.getWarp(player).sync(player);
-        PacketHandler.sendToPlayer(new PacketWarpMessage(player, null, i), player);
+        PacketHandler.sendToPlayer(new PacketWarpMessage(player, (byte)0, i), player);
         player.sendSystemMessage(Component.literal("§5" + icommandsender.getTextName() + " added " + i + " warp to your total."));
         icommandsender.sendSuccess(() -> Component.literal("§5Success!"), false);
     }

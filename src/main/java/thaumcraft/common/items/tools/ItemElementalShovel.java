@@ -137,7 +137,7 @@ public class ItemElementalShovel extends ShovelItem implements IArchitect, IThau
                     BlockPos p2 = pos.relative(side).offset(xx, yy, zz);
                     BlockState b2 = world.getBlockState(p2);
                     if (b2.canSurvive(world, p2)) {
-                        if (player.getAbilities().instabuild || InventoryUtils.consumePlayerItem(player, bs.getBlock().asItem(), bs.getBlock())) {
+                        if (player.getAbilities().instabuild || InventoryUtils.consumePlayerItem(player, bs.getBlock().asItem(), 0)) {
                             world.playSound(null, p2, bs.getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.6f, 0.9f + net.minecraft.util.RandomSource.create().nextFloat() * 0.2f);
                             world.setBlockAndUpdate(p2, bs);
                             if (!world.isClientSide() && world instanceof net.minecraft.server.level.ServerLevel sl) {

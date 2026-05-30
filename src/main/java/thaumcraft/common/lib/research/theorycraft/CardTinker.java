@@ -58,7 +58,7 @@ public class CardTinker extends TheorycraftCard
     private int getVal() {
         int q = 0;
         try {
-            q += (int)Math.sqrt(null /* getInfusionRecipeAspects removed */.visSize());
+            q += (int)Math.sqrt(0);
         }
         catch (Exception ex) {}
         return q;

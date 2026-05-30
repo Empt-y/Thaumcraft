@@ -95,9 +95,9 @@ public class ItemElementalAxe extends Item /* ItemAxe removed */ implements ITha
                     ItemEntity entityItem = e;
                     entityItem.setDeltaMovement(entityItem.getDeltaMovement().x - (d6 * d10), entityItem.getDeltaMovement().y, entityItem.getDeltaMovement().z);
                     ItemEntity entityItem2 = e;
-                    entityItem2.getDeltaMovement().y -= d7 * d10 - 0.1;
+                    entityItem2.setDeltaMovement(entityItem2.getDeltaMovement().x, entityItem2.getDeltaMovement().y - d7 * d10 + 0.1, entityItem2.getDeltaMovement().z);
                     ItemEntity entityItem3 = e;
-                    entityItem3.getDeltaMovement().z -= d8 * d10;
+                    entityItem3.setDeltaMovement(entityItem3.getDeltaMovement().x, entityItem3.getDeltaMovement().y, entityItem3.getDeltaMovement().z - d8 * d10);
                     if (e.getDeltaMovement().x > 0.25) {
                         e.setDeltaMovement(0.25, e.getDeltaMovement().y, e.getDeltaMovement().z);
                     }

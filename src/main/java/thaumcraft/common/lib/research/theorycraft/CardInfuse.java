@@ -77,7 +77,7 @@ public class CardInfuse extends TheorycraftCard
     private int getVal() {
         int q = 10;
         try {
-            q += (int)(Math.sqrt(null /* getInfusionRecipeAspects removed */.visSize()) * 1.5);
+            q += (int)(Math.sqrt(0) * 1.5);
         }
         catch (Exception ex) {}
         return q;

@@ -12,7 +12,7 @@ public class ItemTCEssentiaContainer extends ItemGenericEssentiaContainer implem
     protected int[] VARIANTS_META;
     
     public ItemTCEssentiaContainer(String name, int base, String... variants) {
-        // Entity requires EntityType; use factory method
+        super(base);
         
         BASE_NAME = name;
         if (variants.length == 0) {

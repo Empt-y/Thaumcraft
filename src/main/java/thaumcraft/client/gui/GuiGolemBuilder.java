@@ -61,7 +61,7 @@ public class GuiGolemBuilder extends AbstractContainerScreen<ContainerGolemBuild
         valAddons = new ArrayList<GolemAddon>();
         props = GolemProperties.fromLong(0L);
         hearts = 0.0f;
-        0 /* armor field removed */ = 0.0f;
+        
         damage = 0.0f;
         craftButton = null;
         matIcon = Identifier.fromNamespaceAndPath("thaumcraft", "textures/items/golem.png");
