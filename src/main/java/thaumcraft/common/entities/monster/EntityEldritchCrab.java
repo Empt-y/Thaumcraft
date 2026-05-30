@@ -92,7 +92,7 @@ public class EntityEldritchCrab extends Monster implements IEldritchMob
 
     @Override
     public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor levelAccessor, DifficultyInstance diff, net.minecraft.world.entity.EntitySpawnReason reason, SpawnGroupData data) {
-        setHelm(level().getDifficulty() == Difficulty.HARD || random.nextFloat() < 0.33f);
+        setHelm(level().getDifficulty() == Difficulty.HARD || getRandom().nextFloat() < 0.33f);
         return super.finalizeSpawn(levelAccessor, diff, reason, data);
     }
 
@@ -108,9 +108,9 @@ public class EntityEldritchCrab extends Monster implements IEldritchMob
                 setRiding(getTarget().getId());
             }
             if (getVehicle() != null && !isDeadOrDying() && attackTime <= 0 && level() instanceof net.minecraft.server.level.ServerLevel sl) {
-                attackTime = 10 + random.nextInt(10);
+                attackTime = 10 + getRandom().nextInt(10);
                 doHurtTarget(sl, getVehicle());
-                if (random.nextFloat() < 0.2f) {
+                if (getRandom().nextFloat() < 0.2f) {
                     stopRiding();
                     setRiding(-1);
                 }

@@ -118,7 +118,7 @@ public class EntityCultistPortalLesser extends Monster
                         spawnMinions();
                     }
                 }
-                stagecounter = 50 + random.nextInt(50);
+                stagecounter = 50 + getRandom().nextInt(50);
             }
         }
         if (pulse > 0) --pulse;
@@ -126,17 +126,17 @@ public class EntityCultistPortalLesser extends Monster
 
     void spawnMinions() {
         EntityCultist cultist;
-        if (random.nextFloat() > 0.33f) {
+        if (getRandom().nextFloat() > 0.33f) {
             cultist = new EntityCultistKnight(level());
         } else {
             cultist = new EntityCultistCleric(level());
         }
-        cultist.setPos(getX() + random.nextFloat() - random.nextFloat(), getY() + 0.25, getZ() + random.nextFloat() - random.nextFloat());
+        cultist.setPos(getX() + getRandom().nextFloat() - getRandom().nextFloat(), getY() + 0.25, getZ() + getRandom().nextFloat() - getRandom().nextFloat());
         level().addFreshEntity(cultist);
         cultist.spawnExplosionParticle();
         cultist.playSound(SoundsTC.wandfail, 1.0f, 1.0f);
         if (level() instanceof net.minecraft.server.level.ServerLevel sl) {
-            hurtServer(sl, sl.damageSources().fellOutOfWorld(), (float)(5 + random.nextInt(5)));
+            hurtServer(sl, sl.damageSources().fellOutOfWorld(), (float)(5 + getRandom().nextInt(5)));
         }
     }
 
@@ -144,7 +144,7 @@ public class EntityCultistPortalLesser extends Monster
     public void playerTouch(Player p) {
         if (distanceToSqr(p.getX() + 0.5, p.getY() + 0.5, p.getZ() + 0.5) < 3.0 && level() instanceof net.minecraft.server.level.ServerLevel sl) {
             p.hurtServer(sl, sl.damageSources().indirectMagic(this, this), 4.0f);
-            playSound(SoundsTC.zap, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.1f + 1.0f);
+            playSound(SoundsTC.zap, 1.0f, (getRandom().nextFloat() - getRandom().nextFloat()) * 0.1f + 1.0f);
         }
     }
 

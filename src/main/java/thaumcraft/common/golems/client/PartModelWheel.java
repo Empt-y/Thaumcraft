@@ -19,8 +19,8 @@ public class PartModelWheel extends PartModel
             if (GolemLegWheels.ani.containsKey(golem.getGolemEntity().getId())) {
                 lastRot = GolemLegWheels.ani.get(golem.getGolemEntity().getId());
             }
-            RenderSystem.translate(0.0, -0.375, 0.0);
-            RenderSystem.rotate(lastRot, -1.0f, 0.0f, 0.0f);
+            /* TODO: use PoseStack */ // RenderSystem.translate(0.0, -0.375, 0.0);
+            /* TODO: use PoseStack */ // RenderSystem.rotate(lastRot, -1.0f, 0.0f, 0.0f);
         }
     }
 }

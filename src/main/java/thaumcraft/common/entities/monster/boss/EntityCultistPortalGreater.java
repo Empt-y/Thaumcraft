@@ -95,8 +95,8 @@ public class EntityCultistPortalGreater extends Monster
                     // TODO: banner placement and network packets
                 }
                 if (stagecounter > 20 && stagecounter < 150 && stage == 0 && stagecounter % 13 == 0) {
-                    int a = (int) getX() + random.nextInt(5) - random.nextInt(5);
-                    int b = (int) getZ() + random.nextInt(5) - random.nextInt(5);
+                    int a = (int) getX() + getRandom().nextInt(5) - getRandom().nextInt(5);
+                    int b = (int) getZ() + getRandom().nextInt(5) - getRandom().nextInt(5);
                     BlockPos bp2 = new BlockPos(a, (int) getY(), b);
                     if (a != (int) getX() && b != (int) getZ() && level().isEmptyBlock(bp2)) {
                         level().broadcastEntityEvent(this, (byte) 16);
@@ -114,22 +114,22 @@ public class EntityCultistPortalGreater extends Monster
                 level().broadcastEntityEvent(this, (byte) 16);
                 switch (stage) {
                     case 0: case 1: case 2: case 3: case 4:
-                        stagecounter = 15 + random.nextInt(Math.max(1, 10 - stage)) - stage;
+                        stagecounter = 15 + getRandom().nextInt(Math.max(1, 10 - stage)) - stage;
                         spawnMinions();
                         break;
                     case 12:
-                        stagecounter = 50 + getTiming() * 2 + random.nextInt(50);
+                        stagecounter = 50 + getTiming() * 2 + getRandom().nextInt(50);
                         spawnBoss();
                         break;
                     default:
                         int t = getTiming();
-                        stagecounter = t + random.nextInt(5 + t / 3);
+                        stagecounter = t + getRandom().nextInt(5 + t / 3);
                         spawnMinions();
                         break;
                 }
                 ++stage;
             } else {
-                stagecounter = 30 + random.nextInt(30);
+                stagecounter = 30 + getRandom().nextInt(30);
             }
             if (stage < 12) {
                 heal(1.0f);
@@ -147,24 +147,24 @@ public class EntityCultistPortalGreater extends Monster
 
     void spawnMinions() {
         EntityCultist cultist;
-        if (random.nextFloat() > 0.33f) {
+        if (getRandom().nextFloat() > 0.33f) {
             cultist = new EntityCultistKnight(level());
         } else {
             cultist = new EntityCultistCleric(level());
         }
-        cultist.setPos(getX() + random.nextFloat() - random.nextFloat(), getY() + 0.25, getZ() + random.nextFloat() - random.nextFloat());
+        cultist.setPos(getX() + getRandom().nextFloat() - getRandom().nextFloat(), getY() + 0.25, getZ() + getRandom().nextFloat() - getRandom().nextFloat());
         cultist.setHomeTo(blockPosition(), 32);
         level().addFreshEntity(cultist);
         cultist.spawnExplosionParticle();
         cultist.playSound(SoundsTC.wandfail, 1.0f, 1.0f);
         if (stage > 12 && level() instanceof net.minecraft.server.level.ServerLevel sl) {
-            hurtServer(sl, sl.damageSources().fellOutOfWorld(), (float)(5 + random.nextInt(5)));
+            hurtServer(sl, sl.damageSources().fellOutOfWorld(), (float)(5 + getRandom().nextInt(5)));
         }
     }
 
     void spawnBoss() {
         EntityCultistLeader cultist = new EntityCultistLeader(level());
-        cultist.setPos(getX() + random.nextFloat() - random.nextFloat(), getY() + 0.25, getZ() + random.nextFloat() - random.nextFloat());
+        cultist.setPos(getX() + getRandom().nextFloat() - getRandom().nextFloat(), getY() + 0.25, getZ() + getRandom().nextFloat() - getRandom().nextFloat());
         cultist.setHomeTo(blockPosition(), 32);
         level().addFreshEntity(cultist);
         cultist.spawnExplosionParticle();
@@ -175,7 +175,7 @@ public class EntityCultistPortalGreater extends Monster
     public void playerTouch(Player p) {
         if (distanceToSqr(p.getX() + 0.5, p.getY() + 0.5, p.getZ() + 0.5) < 3.0 && level() instanceof net.minecraft.server.level.ServerLevel sl) {
             p.hurtServer(sl, sl.damageSources().indirectMagic(this, this), 8.0f);
-            playSound(SoundsTC.zap, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.1f + 1.0f);
+            playSound(SoundsTC.zap, 1.0f, (getRandom().nextFloat() - getRandom().nextFloat()) * 0.1f + 1.0f);
         }
     }
 

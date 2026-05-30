@@ -129,7 +129,7 @@ public class EntityCultistLeader extends EntityThaumcraftBoss implements RangedA
     @Override
     public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor levelAccessor, DifficultyInstance diff, net.minecraft.world.entity.EntitySpawnReason reason, SpawnGroupData data) {
         setEquipmentBasedOnDifficulty(diff);
-        setTitle(random.nextInt(titles.length));
+        setTitle(getRandom().nextInt(titles.length));
         return super.finalizeSpawn(levelAccessor, diff, reason, data);
     }
 
@@ -152,10 +152,10 @@ public class EntityCultistLeader extends EntityThaumcraftBoss implements RangedA
     public void spawnExplosionParticle() {
         if (level().isClientSide()) {
             for (int i = 0; i < 20; ++i) {
-                double d0 = random.nextGaussian() * 0.05;
-                double d2 = random.nextGaussian() * 0.05;
-                double d3 = random.nextGaussian() * 0.05;
-                FXDispatcher.INSTANCE.cultistSpawn(getX() + random.nextFloat() * getBbWidth() * 2.0f - getBbWidth() + d0 * 2.0, getY() + random.nextFloat() * getBbHeight() + d2 * 2.0, getZ() + random.nextFloat() * getBbWidth() * 2.0f - getBbWidth() + d3 * 2.0, d0, d2, d3);
+                double d0 = getRandom().nextGaussian() * 0.05;
+                double d2 = getRandom().nextGaussian() * 0.05;
+                double d3 = getRandom().nextGaussian() * 0.05;
+                FXDispatcher.INSTANCE.cultistSpawn(getX() + getRandom().nextFloat() * getBbWidth() * 2.0f - getBbWidth() + d0 * 2.0, getY() + getRandom().nextFloat() * getBbHeight() + d2 * 2.0, getZ() + getRandom().nextFloat() * getBbWidth() * 2.0f - getBbWidth() + d3 * 2.0, d0, d2, d3);
             }
         } else {
             level().broadcastEntityEvent(this, (byte) 20);

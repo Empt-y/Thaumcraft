@@ -59,7 +59,7 @@ public class EntityGolemOrb extends ThrowableProjectile
         if (!level().isClientSide() && getOwner() != null && mop.getType() == HitResult.Type.ENTITY) {
             ((net.minecraft.world.phys.EntityHitResult)mop).getEntity().hurt(level().damageSources().indirectMagic(this, getOwner()), (float) getOwner().getAttribute(Attributes.ATTACK_DAMAGE).getValue() * (red ? 1.0f : 0.6f));
         }
-        playSound(SoundsTC.shock, 1.0f, 1.0f + (random.nextFloat() - random.nextFloat()) * 0.2f);
+        playSound(SoundsTC.shock, 1.0f, 1.0f + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
         if (level().isClientSide()) {
             FXDispatcher.INSTANCE.burst(getX(), getY(), getZ(), 1.0f);
         }
@@ -102,7 +102,7 @@ public class EntityGolemOrb extends ThrowableProjectile
                 setDeltaMovement(getDeltaMovement().x * 0.9, getDeltaMovement().y, getDeltaMovement().z);
                 setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y * 0.9, getDeltaMovement().z);
                 setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z * 0.9);
-                playSound(SoundsTC.zap, 1.0f, 1.0f + (random.nextFloat() - random.nextFloat()) * 0.2f);
+                playSound(SoundsTC.zap, 1.0f, 1.0f + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
             }
             return true;
         }

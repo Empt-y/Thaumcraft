@@ -72,7 +72,7 @@ public class TileLampFertility extends TileThaumcraft implements IEssentiaTransp
     Label_0314:
         for (LivingEntity var8 : var5) {
             net.minecraft.world.entity.animal.Animal var7 = (net.minecraft.world.entity.animal.Animal)var8;
-            if (var7.getGrowingAge() == 0) {
+            if (var7.getAge() == 0) {
                 if (var7.isInLove()) {
                     continue;
                 }
@@ -89,7 +89,7 @@ public class TileLampFertility extends TileThaumcraft implements IEssentiaTransp
                 net.minecraft.world.entity.animal.Animal partner = null;
                 while (var10.hasNext()) {
                     net.minecraft.world.entity.animal.Animal var11 = var10.next();
-                    if (var11.getGrowingAge() == 0) {
+                    if (var11.getAge() == 0) {
                         if (var11.isInLove()) {
                             continue;
                         }

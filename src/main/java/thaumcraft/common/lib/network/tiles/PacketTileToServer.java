@@ -28,7 +28,7 @@ public class PacketTileToServer implements CustomPacketPayload
     private final CompoundTag nbt;
 
     public PacketTileToServer(long pos, CompoundTag nbt) {
-        this.getBlockPos() = pos;
+        this.pos = pos;
         this.nbt = nbt;
     }
 
@@ -53,7 +53,7 @@ public class PacketTileToServer implements CustomPacketPayload
             var level = (ServerLevel) serverPlayer.level();
             BlockPos bp = BlockPos.of(msg.pos);
             if (level != null && bp != null) {
-                BlockEntity te = getLevel().getBlockEntity(bp);
+                BlockEntity te = level.getBlockEntity(bp);
                 if (te != null && te instanceof TileThaumcraft) {
                     ((TileThaumcraft) te).messageFromClient((msg.nbt == null) ? new CompoundTag() : msg.nbt, serverPlayer);
                 }

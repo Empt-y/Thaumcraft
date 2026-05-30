@@ -74,7 +74,7 @@ public class PacketNote implements CustomPacketPayload
                     // For now, use the player's current level as a best-effort fallback
                     var level = (ServerLevel) ((ServerPlayer) ctx.player()).level();
                     if (level == null) return;
-                    BlockEntity tile2 = getLevel().getBlockEntity(new BlockPos(msg.getX(), msg.y, msg.z));
+                    BlockEntity tile2 = level.getBlockEntity(new BlockPos(msg.x, msg.y, msg.z));
                     byte note = -1;
                     if (tile2 != null && tile2 instanceof net.minecraft.world.level.block.entity.NoteBlockBlockEntity) {
                         note = (byte)((net.minecraft.world.level.block.entity.NoteBlockBlockEntity)tile2).getNote();

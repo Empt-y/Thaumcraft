@@ -144,7 +144,7 @@ public class SealHarvest implements ISeal, ISealGui, ISealConfigArea, ISealConfi
                                 Task tt = new Task(task.getSealPos(), task.getPos());
                                 tt.setPriority(task.getPriority());
                                 tt.setLifespan((short)300);
-                                replantTasks.put(tt.getBlockPos().asLong(), new ReplantInfo(tt.getBlockPos(), rf, tt.getId(), seed.copy(), bb.getBlock() instanceof BlockFarmland));
+                                replantTasks.put(tt.getPos().asLong(), new ReplantInfo(tt.getPos(), rf, tt.getId(), seed.copy(), bb.getBlock() instanceof BlockFarmland));
                                 TaskHandler.addTask((world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0), tt);
                             }
                         }

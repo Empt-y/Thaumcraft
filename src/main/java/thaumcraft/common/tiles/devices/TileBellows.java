@@ -85,7 +85,7 @@ public class TileBellows extends TileThaumcraft
         for (Direction dir : directions) {
             BlockEntity tile = world.getBlockEntity(pos.relative(dir));
             try {
-                if (tile != null && tile instanceof TileBellows && tile.getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING) == dir.getOpposite() && BlockStateUtils.isEnabled(tile.getBlockState().getBlockState())) {
+                if (tile != null && tile instanceof TileBellows && tile.getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING) == dir.getOpposite() && BlockStateUtils.isEnabled(tile.getBlockState())) {
                     ++bellows;
                 }
             }

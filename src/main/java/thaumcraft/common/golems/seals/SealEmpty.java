@@ -79,7 +79,7 @@ public class SealEmpty extends SealFiltered
             if (limit > 0) {
                 ItemStack s = golem.holdItem(InventoryUtils.removeStackFrom(world, task.getSealPos().pos, task.getSealPos().face, InventoryUtils.copyLimitedStack(stack, limit), new ThaumcraftInvHelper.InvFilter(!props[0].value, !props[1].value, props[2].value, props[3].value), false));
                 if (!s.isEmpty()) {
-                    InventoryUtils.ejectStackAt(world, task.getSealPos().pos.offset(task.getSealPos().face), task.getSealPos().face.getOpposite(), s);
+                    InventoryUtils.ejectStackAt(world, task.getSealPos().pos.relative(task.getSealPos().face), task.getSealPos().face.getOpposite(), s);
                 }
                 ((Entity)golem).playSound(SoundEvents.ITEM_PICKUP, 0.125f, ((net.minecraft.util.RandomSource.create().nextFloat() - net.minecraft.util.RandomSource.create().nextFloat()) * 0.7f + 1.0f) * 2.0f);
                 golem.swing();

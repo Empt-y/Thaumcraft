@@ -77,7 +77,7 @@ public class EntityCultistCleric extends EntityCultist implements RangedAttackMo
         setItemSlot(EquipmentSlot.HEAD, new ItemStack(ItemsTC.crimsonRobeHelm));
         setItemSlot(EquipmentSlot.CHEST, new ItemStack(ItemsTC.crimsonRobeChest));
         setItemSlot(EquipmentSlot.LEGS, new ItemStack(ItemsTC.crimsonRobeLegs));
-        if (random.nextFloat() < ((level().getDifficulty() == Difficulty.HARD) ? 0.3f : 0.1f)) {
+        if (getRandom().nextFloat() < ((level().getDifficulty() == Difficulty.HARD) ? 0.3f : 0.1f)) {
             setItemSlot(EquipmentSlot.FEET, new ItemStack(ItemsTC.crimsonBoots));
         }
     }

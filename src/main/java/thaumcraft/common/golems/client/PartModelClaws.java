@@ -20,8 +20,8 @@ public class PartModelClaws extends PartModel
             f = 0.0f;
             f = golem.getGolemEntity().getSwingProgress(partialTicks) * 4.1f;
             f *= f;
-            RenderSystem.translate(0.0, -0.2, 0.0);
-            RenderSystem.rotate(f, partName.endsWith("1") ? 1.0f : -1.0f, 0.0f, 0.0f);
+            /* TODO: use PoseStack */ // RenderSystem.translate(0.0, -0.2, 0.0);
+            /* TODO: use PoseStack */ // RenderSystem.rotate(f, partName.endsWith("1") ? 1.0f : -1.0f, 0.0f, 0.0f);
         }
     }
 }

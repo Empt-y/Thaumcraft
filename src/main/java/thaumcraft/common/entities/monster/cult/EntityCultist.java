@@ -103,11 +103,11 @@ public class EntityCultist extends Monster
     public void spawnExplosionParticle() {
         if (level().isClientSide()) {
             for (int i = 0; i < 20; ++i) {
-                double d0 = random.nextGaussian() * 0.05;
-                double d2 = random.nextGaussian() * 0.05;
-                double d3 = random.nextGaussian() * 0.05;
+                double d0 = getRandom().nextGaussian() * 0.05;
+                double d2 = getRandom().nextGaussian() * 0.05;
+                double d3 = getRandom().nextGaussian() * 0.05;
                 double d4 = 2.0;
-                FXDispatcher.INSTANCE.cultistSpawn(getX() + random.nextFloat() * getBbWidth() * 2.0f - getBbWidth() + d0 * d4, getY() + random.nextFloat() * getBbHeight() + d2 * d4, getZ() + random.nextFloat() * getBbWidth() * 2.0f - getBbWidth() + d3 * d4, d0, d2, d3);
+                FXDispatcher.INSTANCE.cultistSpawn(getX() + getRandom().nextFloat() * getBbWidth() * 2.0f - getBbWidth() + d0 * d4, getY() + getRandom().nextFloat() * getBbHeight() + d2 * d4, getZ() + getRandom().nextFloat() * getBbWidth() * 2.0f - getBbWidth() + d3 * d4, d0, d2, d3);
             }
         }
         else {

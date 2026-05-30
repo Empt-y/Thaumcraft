@@ -77,7 +77,7 @@ public class EntityTurretCrossbow extends EntityOwnedConstruct implements Ranged
     public void performRangedAttack(LivingEntity target, float range) {
         if (!getMainHandItem().isEmpty()) {
             Arrow arrow = new Arrow(level(), this, getMainHandItem(), null);
-            arrow.setBaseDamage(2.25 + range * 2.0f + random.nextGaussian() * 0.25);
+            arrow.setBaseDamage(2.25 + range * 2.0f + getRandom().nextGaussian() * 0.25);
             arrow.pickup = AbstractArrow.Pickup.DISALLOWED;
             double dx = target.getX() - getX();
             double dy = target.getBoundingBox().minY + target.getEyeHeight() - arrow.getY();
@@ -85,7 +85,7 @@ public class EntityTurretCrossbow extends EntityOwnedConstruct implements Ranged
             arrow.shoot(dx, dy, dz, 2.0f, 2.0f);
             level().addFreshEntity(arrow);
             level().broadcastEntityEvent(this, (byte) 16);
-            playSound(SoundEvents.ARROW_SHOOT, 1.0f, 1.0f / (random.nextFloat() * 0.4f + 0.8f));
+            playSound(SoundEvents.ARROW_SHOOT, 1.0f, 1.0f / (getRandom().nextFloat() * 0.4f + 0.8f));
             getMainHandItem().shrink(1);
             if (getMainHandItem().getCount() <= 0) {
                 setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
@@ -162,10 +162,10 @@ public class EntityTurretCrossbow extends EntityOwnedConstruct implements Ranged
 
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource cause, boolean recentlyHit) {
-        if (random.nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.mind));
-        if (random.nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.mechanismSimple));
-        if (random.nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.plankGreatwood));
-        if (random.nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.plankGreatwood));
+        if (getRandom().nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.mind));
+        if (getRandom().nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.mechanismSimple));
+        if (getRandom().nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.plankGreatwood));
+        if (getRandom().nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.plankGreatwood));
     }
 
     @Override

@@ -62,7 +62,7 @@ public class EntityRiftBlast extends ThrowableProjectile
         if (!level().isClientSide() && getOwner() != null && mop.getType() == HitResult.Type.ENTITY) {
             ((net.minecraft.world.phys.EntityHitResult)mop).getEntity().hurt(level().damageSources().indirectMagic(this, getOwner()), (float) getOwner().getAttribute(Attributes.ATTACK_DAMAGE).getValue() * (red ? 1.0f : 0.6f));
         }
-        playSound(SoundsTC.shock, 1.0f, 1.0f + (random.nextFloat() - random.nextFloat()) * 0.2f);
+        playSound(SoundsTC.shock, 1.0f, 1.0f + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
         if (level().isClientSide()) {
             FXDispatcher.INSTANCE.burst(getX(), getY(), getZ(), 6.0f);
         }
@@ -93,9 +93,9 @@ public class EntityRiftBlast extends ThrowableProjectile
             setDeltaMovement(getDeltaMovement().x, Mth.clamp((float) getDeltaMovement().y, -0.33f, 0.33f), getDeltaMovement().z);
             setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, Mth.clamp((float) getDeltaMovement().z, -0.33f, 0.33f));
             if (level().isClientSide()) {
-                Quat q = new Quat(0.1, getX() + random.nextGaussian() * 0.05, getY() + random.nextGaussian() * 0.05, getZ() + random.nextGaussian() * 0.05);
+                Quat q = new Quat(0.1, getX() + getRandom().nextGaussian() * 0.05, getY() + getRandom().nextGaussian() * 0.05, getZ() + getRandom().nextGaussian() * 0.05);
                 vecs.add(q);
-                FXDispatcher.INSTANCE.drawCurlyWisp(q.x, q.y, q.z, 0.0, 0.0, 0.0, 0.3f + random.nextFloat() * 0.2f, random.nextFloat(), random.nextFloat() * 0.2f, random.nextFloat() * 0.2f, 0.5f, null, 1, random.nextInt(2), 0);
+                FXDispatcher.INSTANCE.drawCurlyWisp(q.x, q.y, q.z, 0.0, 0.0, 0.0, 0.3f + getRandom().nextFloat() * 0.2f, getRandom().nextFloat(), getRandom().nextFloat() * 0.2f, getRandom().nextFloat() * 0.2f, 0.5f, null, 1, getRandom().nextInt(2), 0);
                 if (vecs.size() > 9) {
                     vecs.remove(0);
                 }
@@ -141,7 +141,7 @@ public class EntityRiftBlast extends ThrowableProjectile
                 setDeltaMovement(getDeltaMovement().x * 0.9, getDeltaMovement().y, getDeltaMovement().z);
                 setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y * 0.9, getDeltaMovement().z);
                 setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z * 0.9);
-                playSound(SoundsTC.zap, 1.0f, 1.0f + (random.nextFloat() - random.nextFloat()) * 0.2f);
+                playSound(SoundsTC.zap, 1.0f, 1.0f + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
             }
             return true;
         }

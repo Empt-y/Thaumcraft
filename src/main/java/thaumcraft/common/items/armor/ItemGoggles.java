@@ -94,8 +94,8 @@ public class ItemGoggles extends net.minecraft.world.item.Item implements IVisDi
             /* null call removed */;
             /* null call removed */;
             /* null call removed */;
-            RenderSystem.rotate(180.0f, 0.0f, 1.0f, 0.0f);
-            RenderSystem.translate(-0.5, -0.5, armor ? 0.11999999731779099 : 0.0);
+            /* TODO: use PoseStack */ // RenderSystem.rotate(180.0f, 0.0f, 1.0f, 0.0f);
+            /* TODO: use PoseStack */ // RenderSystem.translate(-0.5, -0.5, armor ? 0.11999999731779099 : 0.0);
             UtilsFX.renderTextureIn3D(0.0f, 0.0f, 1.0f, 1.0f, 16, 26, 0.1f);
         }
     }

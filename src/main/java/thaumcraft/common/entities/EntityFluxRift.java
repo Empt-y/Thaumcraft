@@ -172,7 +172,7 @@ public class EntityFluxRift extends Entity
         }
         if (!level().isClientSide()) {
             if (getRiftSeed() == 0) {
-                setRiftSeed(random.nextInt());
+                setRiftSeed(getRandom().nextInt());
             }
             // entity interaction logic stubbed — uses removed APIs
             if (points.size() < 3 && !getCollapse()) {
@@ -180,7 +180,7 @@ public class EntityFluxRift extends Entity
             }
             if (getCollapse()) {
                 setRiftSize(getRiftSize() - 1);
-                if (random.nextBoolean()) {
+                if (getRandom().nextBoolean()) {
                     AuraHelper.addVis(level(), blockPosition(), 1.0f);
                 } else {
                     AuraHelper.polluteAura(level(), blockPosition(), 1.0f, false);
@@ -200,23 +200,23 @@ public class EntityFluxRift extends Entity
                     AuraHandler.drainFlux(level(), blockPosition(), (float)size, false);
                     setRiftSize(getRiftSize() + 1);
                 }
-                if (getRiftStability() < 0.0f && random.nextInt(1000) < Math.abs(getRiftStability()) + getRiftSize()) {
+                if (getRiftStability() < 0.0f && getRandom().nextInt(1000) < Math.abs(getRiftStability()) + getRiftSize()) {
                     executeRiftEvent();
                 }
             }
             if (!isRemoved() && tickCount % 300 == 0) {
-                playSound(SoundsTC.evilportal, (float)(0.15 + random.nextGaussian() * 0.066), (float)(0.75 + random.nextGaussian() * 0.1));
+                playSound(SoundsTC.evilportal, (float)(0.15 + getRandom().nextGaussian() * 0.066), (float)(0.75 + getRandom().nextGaussian() * 0.1));
             }
         } else {
-            if (!points.isEmpty() && points.size() > 2 && !getCollapse() && getRiftStability() < 0.0f && random.nextInt(150) < Math.abs(getRiftStability())) {
-                int pi = 1 + random.nextInt(points.size() - 2);
+            if (!points.isEmpty() && points.size() > 2 && !getCollapse() && getRiftStability() < 0.0f && getRandom().nextInt(150) < Math.abs(getRiftStability())) {
+                int pi = 1 + getRandom().nextInt(points.size() - 2);
                 Vec3 v1 = points.get(pi).add(getX(), getY(), getZ());
                 FXDispatcher.INSTANCE.drawCurlyWisp(v1.x, v1.y, v1.z, 0, 0, 0, 0.1f + pointsWidth.get(pi) * 3.0f, 1, 1, 1, 0.25f, null, 1, 0, 0);
             }
             if (!points.isEmpty() && points.size() > 2 && getCollapse()) {
-                int pi = 1 + random.nextInt(points.size() - 2);
+                int pi = 1 + getRandom().nextInt(points.size() - 2);
                 Vec3 v1 = points.get(pi).add(getX(), getY(), getZ());
-                FXDispatcher.INSTANCE.drawCurlyWisp(v1.x, v1.y, v1.z, 0, 0, 0, 0.1f + pointsWidth.get(pi) * 3.0f, 1, 0.3f + random.nextFloat() * 0.1f, 0.3f + random.nextFloat() * 0.1f, 0.4f, null, 1, 0, 0);
+                FXDispatcher.INSTANCE.drawCurlyWisp(v1.x, v1.y, v1.z, 0, 0, 0, 0.1f + pointsWidth.get(pi) * 3.0f, 1, 0.3f + getRandom().nextFloat() * 0.1f, 0.3f + getRandom().nextFloat() * 0.1f, 0.4f, null, 1, 0, 0);
             }
         }
     }
@@ -279,8 +279,8 @@ public class EntityFluxRift extends Entity
     private void completeCollapse() {
         int qq = (int)Math.sqrt(maxSize);
         if (level() instanceof ServerLevel sl) {
-            if (random.nextInt(100) < qq) {
-                spawnAtLocation(sl, new ItemStack(ItemsTC.primordialPearl, 4 + random.nextInt(4)));
+            if (getRandom().nextInt(100) < qq) {
+                spawnAtLocation(sl, new ItemStack(ItemsTC.primordialPearl, 4 + getRandom().nextInt(4)));
             }
             for (int a = 0; a < qq; ++a) {
                 spawnAtLocation(sl, new ItemStack(ItemsTC.voidSeed));

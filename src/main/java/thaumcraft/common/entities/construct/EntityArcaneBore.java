@@ -201,13 +201,13 @@ public class EntityArcaneBore extends EntityOwnedConstruct
 
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource cause, boolean recentlyHit) {
-        if (random.nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.mind));
-        if (random.nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.morphicResonator));
-        if (random.nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.crystalAir));
-        if (random.nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.crystalEarth));
-        if (random.nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.mechanismSimple));
-        if (random.nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.plate));
-        if (random.nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.plankGreatwood));
+        if (getRandom().nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.mind));
+        if (getRandom().nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.morphicResonator));
+        if (getRandom().nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.crystalAir));
+        if (getRandom().nextFloat() < 0.2f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.crystalEarth));
+        if (getRandom().nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.mechanismSimple));
+        if (getRandom().nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(ItemsTC.plate));
+        if (getRandom().nextFloat() < 0.5f) spawnAtLocation((net.minecraft.server.level.ServerLevel)level(), new net.minecraft.world.item.ItemStack(BlocksTC.plankGreatwood));
     }
 
     @Override

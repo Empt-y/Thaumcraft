@@ -257,7 +257,7 @@ public class EntityPech extends Monster implements RangedAttackMob
             if (!entityItem.isEmpty() && entityItem.getCount() <= 0) entityItem = ItemStack.EMPTY;
             return entityItem;
         }
-        if (random.nextInt(10) < getValue(entityItem)) {
+        if (getRandom().nextInt(10) < getValue(entityItem)) {
             setTamed(true);
             setCombatTask();
         }

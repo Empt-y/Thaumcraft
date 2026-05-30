@@ -53,7 +53,7 @@ public class EntityEldritchOrb extends ThrowableProjectile
                     catch (Exception ex) {}
                 }
             }
-            playSound(SoundEvents.LAVA_EXTINGUISH, 0.5f, 2.6f + (random.nextFloat() - random.nextFloat()) * 0.8f);
+            playSound(SoundEvents.LAVA_EXTINGUISH, 0.5f, 2.6f + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.8f);
             discard();
         }
     }

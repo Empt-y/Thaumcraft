@@ -87,11 +87,11 @@ public class EntityWisp extends Mob {
         if (level().isClientSide() && tickCount <= 1) {
             FXDispatcher.INSTANCE.burst(getX(), getY(), getZ(), 10.0f);
         }
-        if (level().isClientSide() && random.nextBoolean() && Aspect.getAspect(getWispType()) != null) {
+        if (level().isClientSide() && getRandom().nextBoolean() && Aspect.getAspect(getWispType()) != null) {
             FXDispatcher.INSTANCE.drawWispParticles(
-                getX() + (random.nextFloat() - random.nextFloat()) * 0.7f,
-                getY() + (random.nextFloat() - random.nextFloat()) * 0.7f,
-                getZ() + (random.nextFloat() - random.nextFloat()) * 0.7f,
+                getX() + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.7f,
+                getY() + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.7f,
+                getZ() + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.7f,
                 0.0, 0.0, 0.0, Aspect.getAspect(getWispType()).getColor(), 0);
         }
         setDeltaMovement(getDeltaMovement().multiply(1.0, 0.6, 1.0));
@@ -102,12 +102,12 @@ public class EntityWisp extends Mob {
         super.customServerAiStep(serverLevel);
 
         if (Aspect.getAspect(getWispType()) == null) {
-            if (random.nextInt(10) != 0) {
+            if (getRandom().nextInt(10) != 0) {
                 ArrayList<Aspect> as = Aspect.getPrimalAspects();
-                setWispType(as.get(random.nextInt(as.size())).getTag());
+                setWispType(as.get(getRandom().nextInt(as.size())).getTag());
             } else {
                 ArrayList<Aspect> as = Aspect.getCompoundAspects();
-                setWispType(as.get(random.nextInt(as.size())).getTag());
+                setWispType(as.get(getRandom().nextInt(as.size())).getTag());
             }
         }
         if (serverLevel.getDifficulty() == Difficulty.PEACEFUL) {
@@ -125,12 +125,12 @@ public class EntityWisp extends Mob {
                     || currentFlightTarget.getY() > level().getMaxY() - 8)) {
                 currentFlightTarget = null;
             }
-            if (currentFlightTarget == null || random.nextInt(30) == 0
+            if (currentFlightTarget == null || getRandom().nextInt(30) == 0
                     || distanceToSqr(currentFlightTarget.getX() + 0.5, currentFlightTarget.getY() + 0.5, currentFlightTarget.getZ() + 0.5) < 4.0) {
                 currentFlightTarget = new BlockPos(
-                    (int) getX() + random.nextInt(7) - random.nextInt(7),
-                    (int) getY() + random.nextInt(6) - 2,
-                    (int) getZ() + random.nextInt(7) - random.nextInt(7));
+                    (int) getX() + getRandom().nextInt(7) - getRandom().nextInt(7),
+                    (int) getY() + getRandom().nextInt(6) - 2,
+                    (int) getZ() + getRandom().nextInt(7) - getRandom().nextInt(7));
             }
             double vx = currentFlightTarget.getX() + 0.5 - getX();
             double vy = currentFlightTarget.getY() + 0.1 - getY();
@@ -169,7 +169,7 @@ public class EntityWisp extends Mob {
         }
 
         --aggroCooldown;
-        if (random.nextInt(1000) == 0 && (getTarget() == null || aggroCooldown-- <= 0)) {
+        if (getRandom().nextInt(1000) == 0 && (getTarget() == null || aggroCooldown-- <= 0)) {
             setTarget(serverLevel.getNearestPlayer(this, 16.0));
             if (getTarget() != null) aggroCooldown = 50;
         }
@@ -190,13 +190,13 @@ public class EntityWisp extends Mob {
                     float damage = (float) getAttributeValue(Attributes.ATTACK_DAMAGE);
                     Vec3 tm = target.getDeltaMovement();
                     if (Math.abs(tm.x) > 0.1 || Math.abs(tm.y) > 0.1 || Math.abs(tm.z) > 0.1) {
-                        if (random.nextFloat() < 0.4f) {
+                        if (getRandom().nextFloat() < 0.4f) {
                             target.hurt(serverLevel.damageSources().mobAttack(this), damage);
                         }
-                    } else if (random.nextFloat() < 0.66f) {
+                    } else if (getRandom().nextFloat() < 0.66f) {
                         target.hurt(serverLevel.damageSources().mobAttack(this), damage + 1.0f);
                     }
-                    attackCounter = -20 + random.nextInt(20);
+                    attackCounter = -20 + getRandom().nextInt(20);
                 }
             } else if (attackCounter > 0) {
                 --attackCounter;
@@ -249,7 +249,7 @@ public class EntityWisp extends Mob {
     @Override
     public boolean checkSpawnObstruction(LevelReader level) {
         BlockPos pos = new BlockPos((int) getX(), (int) getBoundingBox().minY, (int) getZ());
-        if (level.getBrightness(LightLayer.SKY, pos) > random.nextInt(32)) {
+        if (level.getBrightness(LightLayer.SKY, pos) > getRandom().nextInt(32)) {
             return false;
         }
         return level.getMaxLocalRawBrightness(pos) <= net.minecraft.util.RandomSource.create().nextInt(8);

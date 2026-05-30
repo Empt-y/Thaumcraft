@@ -77,8 +77,8 @@ public class EntityFireBat extends Monster
             BlockPos blockpos2 = blockpos.above();
 
             if (getTarget() == null) {
-                if (currentFlightTarget == null || random.nextInt(30) == 0 || distanceToSqr(currentFlightTarget.getX() + 0.5, currentFlightTarget.getY(), currentFlightTarget.getZ() + 0.5) < 4.0) {
-                    currentFlightTarget = new BlockPos((int)getX() + random.nextInt(7) - random.nextInt(7), (int)getY() + random.nextInt(6) - 2, (int)getZ() + random.nextInt(7) - random.nextInt(7));
+                if (currentFlightTarget == null || getRandom().nextInt(30) == 0 || distanceToSqr(currentFlightTarget.getX() + 0.5, currentFlightTarget.getY(), currentFlightTarget.getZ() + 0.5) < 4.0) {
+                    currentFlightTarget = new BlockPos((int)getX() + getRandom().nextInt(7) - getRandom().nextInt(7), (int)getY() + getRandom().nextInt(6) - 2, (int)getZ() + getRandom().nextInt(7) - getRandom().nextInt(7));
                 }
                 double vx = currentFlightTarget.getX() + 0.5 - getX();
                 double vy = currentFlightTarget.getY() + 0.1 - getY();
@@ -142,7 +142,7 @@ public class EntityFireBat extends Monster
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return (getIsBatHanging() && random.nextInt(4) != 0) ? null : SoundEvents.BAT_AMBIENT;
+        return (getIsBatHanging() && getRandom().nextInt(4) != 0) ? null : SoundEvents.BAT_AMBIENT;
     }
 
     @Override

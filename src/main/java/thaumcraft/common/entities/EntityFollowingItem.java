@@ -104,10 +104,10 @@ public class EntityFollowingItem extends EntitySpecialItem
             if (level().isClientSide()) {
                 float h = (float)((getBoundingBox().maxY - getBoundingBox().minY) / 2.0) + Mth.sin(getAge() / 10.0f + hoverStart) * 0.1f + 0.1f;
                 if (type != 10) {
-                    FXDispatcher.INSTANCE.drawNitorCore((float) xo + (random.nextFloat() - random.nextFloat()) * 0.125f, (float) yo + h + (random.nextFloat() - random.nextFloat()) * 0.125f, (float) zo + (random.nextFloat() - random.nextFloat()) * 0.125f, random.nextGaussian() * 0.009999999776482582, random.nextGaussian() * 0.009999999776482582, random.nextGaussian() * 0.009999999776482582);
+                    FXDispatcher.INSTANCE.drawNitorCore((float) xo + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.125f, (float) yo + h + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.125f, (float) zo + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.125f, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582);
                 }
                 else {
-                    FXDispatcher.INSTANCE.crucibleBubble((float) xo + (random.nextFloat() - random.nextFloat()) * 0.125f, (float) yo + h + (random.nextFloat() - random.nextFloat()) * 0.125f, (float) zo + (random.nextFloat() - random.nextFloat()) * 0.125f, 0.33f, 0.33f, 1.0f);
+                    FXDispatcher.INSTANCE.crucibleBubble((float) xo + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.125f, (float) yo + h + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.125f, (float) zo + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.125f, 0.33f, 0.33f, 1.0f);
                 }
             }
         }

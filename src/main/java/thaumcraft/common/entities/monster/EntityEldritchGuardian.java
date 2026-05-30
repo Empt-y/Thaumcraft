@@ -88,8 +88,8 @@ public class EntityEldritchGuardian extends Monster implements RangedAttackMob, 
         if (level().isClientSide()) {
             if (armLiftL > 0.0f) armLiftL -= 0.05f;
             if (armLiftR > 0.0f) armLiftR -= 0.05f;
-            float x = (float)(getX() + (random.nextFloat() - random.nextFloat()) * 0.2f);
-            float z = (float)(getZ() + (random.nextFloat() - random.nextFloat()) * 0.2f);
+            float x = (float)(getX() + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
+            float z = (float)(getZ() + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
             FXDispatcher.INSTANCE.wispFXEG(x, getY() + 0.22 * getBbHeight(), z, this);
         }
     }
@@ -121,11 +121,11 @@ public class EntityEldritchGuardian extends Monster implements RangedAttackMob, 
     @Override
     public void performRangedAttack(LivingEntity target, float f) {
         // TODO: EntityEldritchOrb / sonic attack
-        if (random.nextFloat() <= 0.15f && getSensing().hasLineOfSight(target)) {
+        if (getRandom().nextFloat() <= 0.15f && getSensing().hasLineOfSight(target)) {
             try {
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, 400, 0));
             } catch (Exception ignored) {}
-            playSound(SoundsTC.egscreech, 3.0f, 1.0f + random.nextFloat() * 0.1f);
+            playSound(SoundsTC.egscreech, 3.0f, 1.0f + getRandom().nextFloat() * 0.1f);
         }
     }
 

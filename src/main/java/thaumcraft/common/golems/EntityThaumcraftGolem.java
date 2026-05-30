@@ -304,7 +304,7 @@ public class EntityThaumcraftGolem extends EntityOwnedConstruct implements IGole
     @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte par1) {
         if (par1 == 5) {
-            FXDispatcher.INSTANCE.drawGenericParticles(getX(), getY() + getBbHeight() + 0.1, getZ(), 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.5f, false, 704 + (random.nextBoolean() ? 0 : 3), 3, 1, 6, 0, 2.0f, 0.0f, 1);
+            FXDispatcher.INSTANCE.drawGenericParticles(getX(), getY() + getBbHeight() + 0.1, getZ(), 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.5f, false, 704 + (getRandom().nextBoolean() ? 0 : 3), 3, 1, 6, 0, 2.0f, 0.0f, 1);
         }
         else if (par1 == 6) {
             FXDispatcher.INSTANCE.drawGenericParticles(getX(), getY() + getBbHeight() + 0.1, getZ(), 0.0, 0.025, 0.0, 0.1f, 1.0f, 1.0f, 0.5f, false, 15, 1, 1, 10, 0, 2.0f, 0.0f, 1);
@@ -317,7 +317,7 @@ public class EntityThaumcraftGolem extends EntityOwnedConstruct implements IGole
         }
         else if (par1 == 9) {
             for (int a = 0; a < 5; ++a) {
-                FXDispatcher.INSTANCE.drawGenericParticles(getX(), getY() + getBbHeight(), getZ(), random.nextGaussian() * 0.009999999776482582, random.nextFloat() * 0.02, random.nextGaussian() * 0.009999999776482582, 1.0f, 1.0f, 1.0f, 0.5f, false, 13, 1, 1, 20 + random.nextInt(20), 0, 0.3f + random.nextFloat() * 0.4f, 0.0f, 1);
+                FXDispatcher.INSTANCE.drawGenericParticles(getX(), getY() + getBbHeight(), getZ(), getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextFloat() * 0.02, getRandom().nextGaussian() * 0.009999999776482582, 1.0f, 1.0f, 1.0f, 0.5f, false, 13, 1, 1, 20 + getRandom().nextInt(20), 0, 0.3f + getRandom().nextFloat() * 0.4f, 0.0f, 1);
             }
         }
         else {
@@ -488,9 +488,9 @@ public class EntityThaumcraftGolem extends EntityOwnedConstruct implements IGole
         float b = 0.15f; // drop bonus
         for (ItemStack stack : getProperties().generateComponents()) {
             ItemStack s = stack.copy();
-            if (random.nextFloat() < 0.3f + b) {
+            if (getRandom().nextFloat() < 0.3f + b) {
                 if (s.getCount() > 0) {
-                    s.shrink(random.nextInt(s.getCount()));
+                    s.shrink(getRandom().nextInt(s.getCount()));
                 }
                 if (level() instanceof net.minecraft.server.level.ServerLevel _sl) spawnAtLocation(_sl, s);
             }

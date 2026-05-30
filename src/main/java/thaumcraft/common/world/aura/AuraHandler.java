@@ -177,7 +177,7 @@ public class AuraHandler
             life += BiomeHandler.getBiomeAuraModifier(bgb2);
         }
         life /= 5.0f;
-        float noise = (float)(1.0 + world.random.nextGaussian() * 0.10000000149011612);
+        float noise = (float)(1.0 + world.getRandom().nextGaussian() * 0.10000000149011612);
         short base = (short)(life * 500.0f * noise);
         base = (short)Mth.clamp(base, 0, 500);
         int dim = (level instanceof net.minecraft.server.level.ServerLevel sl) ? sl.dimension().identifier().hashCode() : 0;

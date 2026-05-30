@@ -125,6 +125,6 @@ public class TileTubeValve extends TileTube
     
     @Override
     public boolean gettingPower() {
-        return getLevel().isBlockIndirectlyGettingPowered(getBlockPos()) > 0;
+        return getLevel().hasNeighborSignal(getBlockPos()) > 0;
     }
 }

@@ -77,7 +77,7 @@ public class SealHandler
                     if (se.getSealPos() == null) {
                         continue;
                     }
-                    ChunkPos cc = new ChunkPos((se.sealPos.pos).x, (se.sealPos.pos).z);
+                    ChunkPos cc = new ChunkPos((se.sealPos.pos).getX(), (se.sealPos.pos).getZ());
                     if (!cc.equals(chunk)) {
                         continue;
                     }
@@ -208,7 +208,7 @@ public class SealHandler
     }
     
     public static void markChunkAsDirty(int dim, BlockPos bp) {
-        ChunkPos pos = new ChunkPos((bp).x, (bp).z);
+        ChunkPos pos = new ChunkPos((bp).getX(), (bp).getZ());
         if (!AuraHandler.dirtyChunks.containsKey(dim)) {
             AuraHandler.dirtyChunks.put(dim, new CopyOnWriteArrayList<ChunkPos>());
         }

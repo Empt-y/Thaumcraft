@@ -60,10 +60,10 @@ public class EntityBottleTaint extends ThrowableProjectile
                 }
             }
             for (int a = 0; a < 10; ++a) {
-                int xx = (int)((random.nextFloat() - random.nextFloat()) * 4.0f);
-                int zz = (int)((random.nextFloat() - random.nextFloat()) * 4.0f);
+                int xx = (int)((getRandom().nextFloat() - getRandom().nextFloat()) * 4.0f);
+                int zz = (int)((getRandom().nextFloat() - getRandom().nextFloat()) * 4.0f);
                 BlockPos p = blockPosition().offset(xx, 0, zz);
-                if (random.nextBoolean()) {
+                if (getRandom().nextBoolean()) {
                     if (level().getBlockState(p.below()).isSolidRender() && level().getBlockState(p).canBeReplaced()) {
                         level().setBlockAndUpdate(p, BlocksTC.fluxGoo.defaultBlockState());
                     } else {

@@ -34,7 +34,7 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
         super(type, par1World);
         launched = 10;
         spitCounter = 100;
-        int i = 1 << 1 + random.nextInt(3);
+        int i = 1 << 1 + getRandom().nextInt(3);
         // setSize removed - dimensions in EntityType
     }
     
@@ -65,9 +65,9 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
         par1 /= var9;
         par3 /= var9;
         par5 /= var9;
-        par1 += random.nextGaussian() * 0.007499999832361937 * par8;
-        par3 += random.nextGaussian() * 0.007499999832361937 * par8;
-        par5 += random.nextGaussian() * 0.007499999832361937 * par8;
+        par1 += getRandom().nextGaussian() * 0.007499999832361937 * par8;
+        par3 += getRandom().nextGaussian() * 0.007499999832361937 * par8;
+        par5 += getRandom().nextGaussian() * 0.007499999832361937 * par8;
         par1 *= par7;
         par3 *= par7;
         par5 *= par7;
@@ -85,7 +85,7 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
     
     public SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor accessor, DifficultyInstance p_180482_1_, net.minecraft.world.entity.EntitySpawnReason reason, SpawnGroupData p_180482_2_) {
         int i = net.minecraft.util.RandomSource.create().nextInt(3);
-        if (i < 2 && random.nextFloat() < 0.5f * p_180482_1_.getSpecialMultiplier()) {
+        if (i < 2 && getRandom().nextFloat() < 0.5f * p_180482_1_.getSpecialMultiplier()) {
             ++i;
         }
         int j = 1 << i;
@@ -118,7 +118,7 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
                 }
             }
             if (doPlayJumpSound()) {
-                playSound(getJumpSound(), getSoundVolume(), ((random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f) * 0.8f);
+                playSound(getJumpSound(), getSoundVolume(), ((getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f + 1.0f) * 0.8f);
             }
             squish = -0.5f;
             localWasOnGround = onGround();
@@ -151,7 +151,7 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
                         EntityThaumicSlime flyslime = new EntityThaumicSlime(null, this, entityplayer);
                         level().addFreshEntity(flyslime);
                     }
-                    playSound(SoundsTC.gore, 1.0f, ((random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f) * 0.8f);
+                    playSound(SoundsTC.gore, 1.0f, ((getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f + 1.0f) * 0.8f);
                     setSize(getSize() - 1, true);
                 }
             }
@@ -170,7 +170,7 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
                 float f = (k % 2 - 0.5f) * i / 4.0f;
                 float f2 = (k / 2 - 0.5f) * i / 4.0f;
                 EntityThaumicSlime entityslime = createInstance();
-                                entityslime.moveTo(getX() + f, getY() + 0.5, getZ() + f2, random.nextFloat() * 360.0f, 0.0f);
+                                entityslime.moveTo(getX() + f, getY() + 0.5, getZ() + f2, getRandom().nextFloat() * 360.0f, 0.0f);
                 level().addFreshEntity(entityslime);
             }
         }
@@ -197,7 +197,7 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
         }
         p_175451_1_.hurt(this.level().damageSources().mobAttack(this), (float) getAttackStrength());
         if (isAlive() && getSensing().hasLineOfSight(p_175451_1_) && distanceToSqr(p_175451_1_.getX() + 0.5, p_175451_1_.getY() + 0.5, p_175451_1_.getZ() + 0.5) < 0.6 * i * 0.6 * i) {
-            playSound(SoundEvents.SLIME_ATTACK, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f);
+            playSound(SoundEvents.SLIME_ATTACK, 1.0f, (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f + 1.0f);
             /* applyEnchantments removed */ ;
         }
     }

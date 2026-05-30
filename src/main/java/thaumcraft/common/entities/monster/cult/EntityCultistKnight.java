@@ -59,14 +59,14 @@ public class EntityCultistKnight extends EntityCultist
         setItemSlot(EquipmentSlot.CHEST, new ItemStack(ItemsTC.crimsonPlateChest));
         setItemSlot(EquipmentSlot.LEGS, new ItemStack(ItemsTC.crimsonPlateLegs));
         setItemSlot(EquipmentSlot.FEET, new ItemStack(ItemsTC.crimsonBoots));
-        if (random.nextFloat() < ((level().getDifficulty() == Difficulty.HARD) ? 0.05f : 0.01f)) {
+        if (getRandom().nextFloat() < ((level().getDifficulty() == Difficulty.HARD) ? 0.05f : 0.01f)) {
             int i = net.minecraft.util.RandomSource.create().nextInt(5);
             if (i == 0) {
                 setItemInHand(getUsedItemHand(), new ItemStack(ItemsTC.voidSword));
                 setItemSlot(EquipmentSlot.HEAD, new ItemStack(ItemsTC.crimsonRobeHelm));
             } else {
                 setItemInHand(getUsedItemHand(), new ItemStack(ItemsTC.thaumiumSword));
-                if (random.nextBoolean()) setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                if (getRandom().nextBoolean()) setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
             }
         } else {
             setItemInHand(getUsedItemHand(), new ItemStack(Items.IRON_SWORD));

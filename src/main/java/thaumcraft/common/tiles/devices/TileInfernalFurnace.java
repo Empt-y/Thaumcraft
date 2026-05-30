@@ -126,7 +126,7 @@ public class TileInfernalFurnace extends TileThaumcraftInventory
             if (dir != Direction.UP) {
                 BlockPos p2 = getBlockPos().relative(dir, 2);
                 BlockEntity tile = getLevel().getBlockEntity(p2);
-                if (tile != null && tile instanceof TileBellows && BlockStateUtils.getFacing(getLevel().getBlockState(p2)) == dir.getOpposite() && getLevel().isBlockIndirectlyGettingPowered(p2) == 0) {
+                if (tile != null && tile instanceof TileBellows && BlockStateUtils.getFacing(getLevel().getBlockState(p2)) == dir.getOpposite() && getLevel().hasNeighborSignal(p2) == 0) {
                     ++bellows;
                 }
             }

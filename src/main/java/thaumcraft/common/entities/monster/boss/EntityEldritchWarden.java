@@ -146,8 +146,8 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements Ranged
         if (level().isClientSide()) {
             if (armLiftL > 0.0f) armLiftL -= 0.05f;
             if (armLiftR > 0.0f) armLiftR -= 0.05f;
-            float x = (float)(getX() + (random.nextFloat() - random.nextFloat()) * 0.2f);
-            float z = (float)(getZ() + (random.nextFloat() - random.nextFloat()) * 0.2f);
+            float x = (float)(getX() + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
+            float z = (float)(getZ() + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
             FXDispatcher.INSTANCE.wispFXEG(x, getY() + 0.25 * getBbHeight(), z, this);
         } else {
             if (!fieldFrenzy) {
@@ -182,7 +182,7 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements Ranged
     @Override
     public net.minecraft.world.entity.SpawnGroupData finalizeSpawn(net.minecraft.world.level.ServerLevelAccessor levelAccessor, DifficultyInstance diff, net.minecraft.world.entity.EntitySpawnReason reason, SpawnGroupData data) {
         spawnTimer = 150;
-        setTitle(random.nextInt(titles.length));
+        setTitle(getRandom().nextInt(titles.length));
         setAbsorptionAmount(getAbsorptionAmount() + (float)(getAttribute(Attributes.MAX_HEALTH).getBaseValue() * 0.66));
         return super.finalizeSpawn(levelAccessor, diff, reason, data);
     }
@@ -190,12 +190,12 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements Ranged
     @Override
     public void performRangedAttack(LivingEntity target, float f) {
         // TODO: EntityEldritchOrb + sonic attack
-        if (random.nextFloat() <= 0.2f && getSensing().hasLineOfSight(target)) {
+        if (getRandom().nextFloat() <= 0.2f && getSensing().hasLineOfSight(target)) {
             try {
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, 400, 0));
                 target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 400, 0));
             } catch (Exception ignored) {}
-            playSound(SoundsTC.egscreech, 4.0f, 1.0f + random.nextFloat() * 0.1f);
+            playSound(SoundsTC.egscreech, 4.0f, 1.0f + getRandom().nextFloat() * 0.1f);
         }
     }
 

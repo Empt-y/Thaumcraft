@@ -36,8 +36,8 @@ public class EntityAlumentum extends ThrowableProjectile
         if (level().isClientSide()) {
             for (double i = 0.0; i < 3.0; ++i) {
                 double coeff = i / 3.0;
-                FXDispatcher.INSTANCE.drawAlumentum((float)(xo + (getX() - xo) * coeff), (float)(yo + (getY() - yo) * coeff) + getBbHeight() / 2.0f, (float)(zo + (getZ() - zo) * coeff), 0.0125f * (random.nextFloat() - 0.5f), 0.0125f * (random.nextFloat() - 0.5f), 0.0125f * (random.nextFloat() - 0.5f), random.nextFloat() * 0.2f, random.nextFloat() * 0.1f, random.nextFloat() * 0.1f, 0.5f, 4.0f);
-                FXDispatcher.INSTANCE.drawGenericParticles(getX() + random.nextGaussian() * 0.20000000298023224, getY() + random.nextGaussian() * 0.20000000298023224, getZ() + random.nextGaussian() * 0.20000000298023224, 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.7f, false, 448, 8, 1, 8, 0, 0.3f, 0.0f, 1);
+                FXDispatcher.INSTANCE.drawAlumentum((float)(xo + (getX() - xo) * coeff), (float)(yo + (getY() - yo) * coeff) + getBbHeight() / 2.0f, (float)(zo + (getZ() - zo) * coeff), 0.0125f * (getRandom().nextFloat() - 0.5f), 0.0125f * (getRandom().nextFloat() - 0.5f), 0.0125f * (getRandom().nextFloat() - 0.5f), getRandom().nextFloat() * 0.2f, getRandom().nextFloat() * 0.1f, getRandom().nextFloat() * 0.1f, 0.5f, 4.0f);
+                FXDispatcher.INSTANCE.drawGenericParticles(getX() + getRandom().nextGaussian() * 0.20000000298023224, getY() + getRandom().nextGaussian() * 0.20000000298023224, getZ() + getRandom().nextGaussian() * 0.20000000298023224, 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.7f, false, 448, 8, 1, 8, 0, 0.3f, 0.0f, 1);
             }
         }
     }

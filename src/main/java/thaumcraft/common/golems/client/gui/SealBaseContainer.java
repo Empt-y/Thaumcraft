@@ -179,8 +179,8 @@ public class SealBaseContainer extends AbstractContainerMenu
 
     public void addListener(ContainerListener crafting) {
         super.addListener(crafting);
-        crafting.sendWindowProperty(this, 0, seal.getPriority());
-        crafting.sendWindowProperty(this, 4, seal.getColor());
+        crafting.dataChanged(this, 0, seal.getPriority());
+        crafting.dataChanged(this, 4, seal.getColor());
     }
 
     public void broadcastChanges() {
@@ -188,19 +188,19 @@ public class SealBaseContainer extends AbstractContainerMenu
         for (int i = 0; i < listeners.size(); ++i) {
             ContainerListener icrafting = listeners.get(i);
             if (lastPriority != seal.getPriority()) {
-                icrafting.sendWindowProperty(this, 0, seal.getPriority());
+                icrafting.dataChanged(this, 0, seal.getPriority());
             }
             if (lastAreaX != seal.getArea().getX()) {
-                icrafting.sendWindowProperty(this, 1, seal.getArea().getX());
+                icrafting.dataChanged(this, 1, seal.getArea().getX());
             }
             if (lastAreaY != seal.getArea().getY()) {
-                icrafting.sendWindowProperty(this, 2, seal.getArea().getY());
+                icrafting.dataChanged(this, 2, seal.getArea().getY());
             }
             if (lastAreaZ != seal.getArea().getZ()) {
-                icrafting.sendWindowProperty(this, 3, seal.getArea().getZ());
+                icrafting.dataChanged(this, 3, seal.getArea().getZ());
             }
             if (lastColor != seal.getColor()) {
-                icrafting.sendWindowProperty(this, 4, seal.getColor());
+                icrafting.dataChanged(this, 4, seal.getColor());
             }
         }
         lastPriority = seal.getPriority();

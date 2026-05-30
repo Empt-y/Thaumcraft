@@ -97,8 +97,8 @@ public class EntityTaintSwarm extends Monster implements ITaintedMob
                 if (getIsSummoned() && level() instanceof net.minecraft.server.level.ServerLevel sl) {
                     hurtServer(sl, sl.damageSources().generic(), 5.0f);
                 }
-                if (currentFlightTarget == null || random.nextInt(30) == 0 || distanceToSqr(currentFlightTarget.getX() + 0.5, currentFlightTarget.getY(), currentFlightTarget.getZ() + 0.5) < 4.0) {
-                    currentFlightTarget = new BlockPos((int)getX() + random.nextInt(7) - random.nextInt(7), (int)getY() + random.nextInt(6) - 2, (int)getZ() + random.nextInt(7) - random.nextInt(7));
+                if (currentFlightTarget == null || getRandom().nextInt(30) == 0 || distanceToSqr(currentFlightTarget.getX() + 0.5, currentFlightTarget.getY(), currentFlightTarget.getZ() + 0.5) < 4.0) {
+                    currentFlightTarget = new BlockPos((int)getX() + getRandom().nextInt(7) - getRandom().nextInt(7), (int)getY() + getRandom().nextInt(6) - 2, (int)getZ() + getRandom().nextInt(7) - getRandom().nextInt(7));
                 }
                 double vx = (currentFlightTarget.getX() + 0.5 - getX());
                 double vy = (currentFlightTarget.getY() + 0.1 - getY());
@@ -117,7 +117,7 @@ public class EntityTaintSwarm extends Monster implements ITaintedMob
                     getDeltaMovement().z + (Math.signum(vz) * 0.5 - getDeltaMovement().z) * 0.025);
                 float dist = distanceTo(target);
                 if (attackTime <= 0 && dist < 3.0f && getSensing().hasLineOfSight(target)) {
-                    attackTime = 15 + random.nextInt(10);
+                    attackTime = 15 + getRandom().nextInt(10);
                     if (level() instanceof net.minecraft.server.level.ServerLevel sl) {
                         if (doHurtTarget(sl, target)) {
                             target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 0));

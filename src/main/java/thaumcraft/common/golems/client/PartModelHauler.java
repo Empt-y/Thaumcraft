@@ -25,9 +25,9 @@ public class PartModelHauler extends PartModel
                 Item item = itemstack.getItem();
                 Minecraft minecraft = Minecraft.getInstance();
                 RenderSystem.scale(0.375, 0.375, 0.375);
-                RenderSystem.translate(0.0f, 0.33f, 0.825f);
+                /* TODO: use PoseStack */ // RenderSystem.translate(0.0f, 0.33f, 0.825f);
                 if (!(item instanceof BlockItem)) {
-                    RenderSystem.translate(0.0f, 0.0f, -0.25f);
+                    /* TODO: use PoseStack */ // RenderSystem.translate(0.0f, 0.0f, -0.25f);
                 }
                 minecraft.getItemRenderer().renderItem(golem.getGolemEntity(), itemstack.TransformType.HEAD);
                 RenderSystem.popMatrix();

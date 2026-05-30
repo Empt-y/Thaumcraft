@@ -28,8 +28,8 @@ public class PartModelBreakers extends PartModel
             float rot = lastRot + f;
             lastSpeed = f * 0.99f;
             ani.put(golem.getGolemEntity().getId(), new Float[] { lastSpeed, rot });
-            RenderSystem.translate(0.0, -0.34, 0.0);
-            RenderSystem.rotate((golem.getGolemEntity().tickCount + partialTicks) / 2.0f + rot + ((side == EnumLimbSide.LEFT) ? 22 : 0), (side == EnumLimbSide.LEFT) ? -1.0f : 1.0f, 0.0f, 0.0f);
+            /* TODO: use PoseStack */ // RenderSystem.translate(0.0, -0.34, 0.0);
+            /* TODO: use PoseStack */ // RenderSystem.rotate((golem.getGolemEntity().tickCount + partialTicks) / 2.0f + rot + ((side == EnumLimbSide.LEFT) ? 22 : 0), (side == EnumLimbSide.LEFT) ? -1.0f : 1.0f, 0.0f, 0.0f);
         }
     }
 }

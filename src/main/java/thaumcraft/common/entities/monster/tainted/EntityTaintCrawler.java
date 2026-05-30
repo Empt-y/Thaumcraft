@@ -148,7 +148,7 @@ public class EntityTaintCrawler extends Monster implements ITaintedMob
                 byte b0 = 0;
                 if (level().getDifficulty() == Difficulty.NORMAL) b0 = 3;
                 else if (level().getDifficulty() == Difficulty.HARD) b0 = 6;
-                if (b0 > 0 && random.nextInt(b0 + 1) > 2) {
+                if (b0 > 0 && getRandom().nextInt(b0 + 1) > 2) {
                     lv.addEffect(new MobEffectInstance(net.minecraft.core.Holder.direct(PotionFluxTaint.instance), b0 * 20, 0));
                 }
             }
