@@ -26,13 +26,13 @@ public class GolemArmDart implements GolemArm.IArmFunction
         double d2 = target.getBoundingBox().minY + target.getEyeHeight() + range * range - entityarrow.getY();
         double d3 = target.getZ() - golem.getGolemEntity().getZ();
         entityarrow.shoot(d0, d2, d3, 1.6f, 3.0f);
-        golem.getGolemWorld().spawnEntity(entityarrow);
+        golem.getGolemWorld().addFreshEntity(entityarrow);
         golem.getGolemEntity().playSound(SoundEvents.ARROW_SHOOT, 1.0f, 1.0f / (golem.getGolemWorld().getRandom().nextFloat() * 0.4f + 0.8f));
     }
     
     @Override
-    public RangedAttackGoal getRangedAttackAI(RangedAttackMob golem) {
-        return new AIArrowAttack(golem, 1.0, 20, 25, 16.0f);
+    public Object getRangedAttackAI(Object golem) {
+        return new AIArrowAttack((RangedAttackMob)golem, 1.0, 20, 25, 16.0f);
     }
     
     @Override

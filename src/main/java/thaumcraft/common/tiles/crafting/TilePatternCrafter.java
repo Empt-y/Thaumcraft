@@ -40,7 +40,7 @@ public class TilePatternCrafter extends TileThaumcraft
     
     public TilePatternCrafter(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
         super(type, pos, state);
-        type = 0;
+        // type removed - was old block type constant
         count = new Random(System.currentTimeMillis()).nextInt(20);
         craftMatrix = new TransientCraftingContainer(new ContainerFake(), 3, 3);
         power = 0.0f;
@@ -125,7 +125,7 @@ public class TilePatternCrafter extends TileThaumcraft
             IItemHandler below = ThaumcraftInvHelper.getItemHandlerAt(getLevel(), getBlockPos().below(), Direction.UP);
             if (above != null && below != null) {
                 for (int a = 0; a < above.getSlots(); ++a) {
-                    ItemStack testStack = above.getItem(a).copy();
+                    ItemStack testStack = above.getStackInSlot(a).copy();
                     if (!testStack.isEmpty()) {
                         testStack.setCount(amt);
                         if (InventoryUtils.removeStackFrom(getLevel(), getBlockPos().above(), Direction.DOWN, testStack.copy(), ThaumcraftInvHelper.InvFilter.BASEORE, true).getCount() == amt && craft(testStack) && power >= 1.0f && ItemHandlerHelper.insertItem(below, outStack.copy(), true).isEmpty()) {
@@ -157,7 +157,7 @@ public class TilePatternCrafter extends TileThaumcraft
     
     private boolean craft(ItemStack inStack) {
         outStack = ItemStack.EMPTY;
-        craftMatrix.clear();
+        craftMatrix.clearContent();
         switch (type) {
             case 0: {
                 for (int a = 0; a < 9; ++a) {
@@ -228,7 +228,8 @@ public class TilePatternCrafter extends TileThaumcraft
         if (ir == null) {
             return false;
         }
-        outStack = ir.getCraftingResult(craftMatrix);
+        if (!(ir instanceof net.minecraft.world.item.crafting.CraftingRecipe cr)) return false;
+        outStack = cr.assemble(craftMatrix, getLevel().registryAccess());
         NonNullList<ItemStack> aitemstack = null /* CraftingManager removed */;
         for (int i = 0; i < aitemstack.size(); ++i) {
             ItemStack itemstack1 = craftMatrix.getItem(i);

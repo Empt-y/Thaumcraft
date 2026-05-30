@@ -45,7 +45,7 @@ public class ItemGrappleGun extends ItemTCBase implements IRechargable
     }
     
     public void onUpdate(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        if (!EntityGrapple.grapples.containsKey(entityIn.getId()) && !stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).getUnsafe().getByteOr("loaded", (byte)0) == 1) {
+        if (!EntityGrapple.grapples.containsKey(entityIn.getId()) && !stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getByteOr("loaded", (byte)0) == 1) {
             net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("loaded", net.minecraft.nbt.ByteTag.valueOf((byte)0)));
         }
     }
@@ -54,14 +54,11 @@ public class ItemGrappleGun extends ItemTCBase implements IRechargable
         player.playSound(SoundsTC.ice, 3.0f, 0.8f + net.minecraft.util.RandomSource.create().nextFloat() * 0.1f);
         if (!world.isClientSide() && RechargeHelper.getCharge(player.getItemInHand(hand)) > 0) {
             EntityGrapple grapple = new EntityGrapple(world, player, hand);
-            grapple.shoot(player, player.getXRot(), player.getYRot(), -5.0f, 1.5f, 0.0f);
+            grapple.shootFromRotation(player, player.getXRot(), player.getYRot(), -5.0f, 1.5f, 0.0f);
             double px = -Mth.cos((player.getYRot() - 0.5f) / 180.0f * 3.141593f) * 0.2f * ((grapple.hand == InteractionHand.MAIN_HAND) ? 1 : -1);
             double pz = -Mth.sin((player.getYRot() - 0.5f) / 180.0f * 3.141593f) * 0.3f * ((grapple.hand == InteractionHand.MAIN_HAND) ? 1 : -1);
             Vec3 vl = player.getLookAngle();
-            EntityGrapple entityGrapple = grapple;
-            entityGrapple.getX() += px + vl.x;
-            EntityGrapple entityGrapple2 = grapple;
-            entityGrapple2.getZ() += pz + vl.y;
+            grapple.setPos(grapple.getX() + px + vl.x, grapple.getY(), grapple.getZ() + pz + vl.y);
             if (world.addFreshEntity(grapple)) {
                 RechargeHelper.consumeCharge(player.getItemInHand(hand), player, 1);
                 { ItemStack _s = player.getItemInHand(hand); net.minecraft.nbt.CompoundTag _t = _s.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.putByte("loaded", (byte)1); _s.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t)); }

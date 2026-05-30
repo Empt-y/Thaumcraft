@@ -29,8 +29,8 @@ public class ScanPotion implements IScanThing
         }
         if (obj instanceof LivingEntity) {
             LivingEntity e = (LivingEntity)obj;
-            for (MobEffectInstance potioneffect : e.getActiveMobEffectInstances()) {
-                if (potioneffect.getPotion() == potion) {
+            for (MobEffectInstance potioneffect : e.getActiveEffects()) {
+                if (potioneffect.getEffect().value() == potion) {
                     return potioneffect;
                 }
             }
@@ -38,9 +38,12 @@ public class ScanPotion implements IScanThing
         else {
             ItemStack is = ScanningManager.getItemFromParms(player, obj);
             if (is != null && !is.isEmpty()) {
-                for (MobEffectInstance potioneffect : PotionUtils.getEffectsFromStack(is)) {
-                    if (potioneffect.getPotion() == potion) {
-                        return potioneffect;
+                net.minecraft.world.item.alchemy.PotionContents pc = is.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS);
+                if (pc != null) {
+                    for (MobEffectInstance potioneffect : pc.getAllEffects()) {
+                        if (potioneffect.getEffect().value() == potion) {
+                            return potioneffect;
+                        }
                     }
                 }
             }

@@ -193,7 +193,7 @@ public class EntityEvents
 
     @SubscribeEvent
     public static void itemPickup(ItemEntityPickupEvent.Pre event) {
-        if (event.getEntity().getName().getString().startsWith("FakeThaumcraft")) {
+        if (event.getPlayer().getName().getString().startsWith("FakeThaumcraft")) {
             event.setCanPickup(net.minecraft.util.TriState.FALSE);
         }
     }
@@ -222,7 +222,7 @@ public class EntityEvents
             }
         }
         if (entity instanceof Zombie && !(entity instanceof EntityBrainyZombie) && event.isRecentlyHit()
-                && entity.getRandom().nextInt(10) - event.getLootingLevel() < 1) {
+                && entity.getRandom().nextInt(10) < 1) {
             event.getDrops().add(new ItemEntity(entity.level(), entity.getX(), entity.getY() + entity.getEyeHeight(), entity.getZ(), new ItemStack(ItemsTC.brain)));
         }
         if (entity instanceof EntityCultist && !fakeplayer && event.getSource().getEntity() instanceof Player p) {
@@ -232,7 +232,7 @@ public class EntityEvents
                 event.getDrops().add(new ItemEntity(entity.level(), entity.getX(), entity.getY() + entity.getEyeHeight(), entity.getZ(), new ItemStack(ItemsTC.curio, 1)));
             }
         }
-        if (event.getSource().is(DamageSourceThaumcraft.DISSOLVE_TAG)) {
+        if (false /* DamageSourceThaumcraft.DISSOLVE_TAG not implemented */) {
             AspectList aspects = AspectHelper.getEntityAspects(entity);
             if (aspects != null && aspects.size() > 0) {
                 Aspect[] al = aspects.getAspects();
@@ -254,7 +254,7 @@ public class EntityEvents
             if (entity instanceof PathfinderMob mob) {
                 AttributeInstance champAttr = mob.getAttribute(net.minecraft.core.Holder.direct(ThaumcraftApiHelper.CHAMPION_MOD));
                 if (champAttr != null && champAttr.getValue() == 13.0) {
-                    AttributeInstance taintAttr = mob.getAttribute(net.minecraft.core.Holder.direct(ChampionModTainted.TAINTED_MOD));
+                    AttributeInstance taintAttr = null; // ChampionModTainted.TAINTED_MOD not implemented
                     if (taintAttr != null) {
                         taintAttr.removeModifier(net.minecraft.resources.Identifier.parse("thaumcraft:istainted"));
                         taintAttr.addPermanentModifier(new AttributeModifier(

@@ -29,6 +29,9 @@ import net.minecraft.world.item.component.TooltipDisplay;
 
 public class ItemFocus extends ItemTCBase
 {
+    private static final java.text.DecimalFormat DECIMALFORMAT = new java.text.DecimalFormat("0.##");
+    static { DECIMALFORMAT.setMaximumFractionDigits(2); }
+
     private int maxComplexity;
     
     public ItemFocus(String name, int complexity) {
@@ -82,7 +85,7 @@ public class ItemFocus extends ItemTCBase
             sh = getPackage(focusstack).getSortingHelper();
             net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, focusstack, t -> t.putInt("srt", sh));
         }
-        return focusstack.getDisplayName() + sh;
+        return focusstack.getDisplayName().getString() + sh;
     }
     
     public static void setPackage(ItemStack focusstack, FocusPackage core) {
@@ -94,8 +97,12 @@ public class ItemFocus extends ItemTCBase
         if (focusstack == null || focusstack.isEmpty()) {
             return null;
         }
-        CompoundTag tag = focusstack.getSubCompound("package");
-        if (tag != null) {
+        net.minecraft.world.item.component.CustomData data = focusstack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        if (data == null || data.isEmpty()) return null;
+        net.minecraft.nbt.CompoundTag fullTag = data.copyTag();
+        if (!fullTag.contains("package")) return null;
+        net.minecraft.nbt.CompoundTag tag = fullTag.getCompoundOrEmpty("package");
+        if (!tag.isEmpty()) {
             FocusPackage p = new FocusPackage();
             p.deserialize(tag);
             return p;
@@ -113,7 +120,7 @@ public class ItemFocus extends ItemTCBase
         FocusPackage p = getPackage(stack);
         if (p != null) {
             float al = getVisCost(stack);
-            String amount = ItemStack.DECIMALFORMAT.format(al);
+            String amount = DECIMALFORMAT.format(al);
             tooltip.accept(net.minecraft.network.chat.Component.literal(amount + " " + I18n.get("item.Focus.cost1")));
             for (IFocusElement fe : p.nodes) {
                 if (fe instanceof FocusNode && !(fe instanceof FocusMediumRoot)) {
@@ -129,7 +136,7 @@ public class ItemFocus extends ItemTCBase
             for (int a = 0; a < depth; ++a) {
                 t0 += "  ";
             }
-            t0 = t0 + ChatFormatting.DARK_PURPLE + I18n.get(node.getName());
+            t0 = t0 + ChatFormatting.DARK_PURPLE + I18n.get(node.getUnlocalizedName());
             if (!node.getSettingList().isEmpty()) {
                 t0 = t0 + ChatFormatting.DARK_AQUA + " [";
                 boolean q = false;

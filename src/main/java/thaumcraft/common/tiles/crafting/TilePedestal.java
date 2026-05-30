@@ -21,7 +21,6 @@ public class TilePedestal extends TileThaumcraftInventory
         syncedSlots = new int[] { 0 };
     }
     
-    @Override
     public int getInventoryStackLimit() {
         return 1;
     }
@@ -45,8 +44,8 @@ public class TilePedestal extends TileThaumcraftInventory
     }
     
     public BlockPos findInstabilityMitigator() {
-        if (getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING) > 0) {
-            BlockPos pp = seekSourceRecursive(getBlockPos(), getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING));
+        if (getBlockState().hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING)) {
+            BlockPos pp = seekSourceRecursive(getBlockPos(), 0);
             if (pp != null) {
                 return pp;
             }
@@ -62,7 +61,7 @@ public class TilePedestal extends TileThaumcraftInventory
                 return pp;
             }
             BlockState bs = getLevel().getBlockState(pp);
-            if (bs.getProperties().containsKey(BlockInlay.CHARGE)) {
+            if (bs.hasProperty(BlockInlay.CHARGE)) {
                 int charge = (int)bs.getValue(LiquidBlock.LEVEL);
                 if (charge > lastCharge) {
                     BlockPos ob = seekSourceRecursive(pp, charge);

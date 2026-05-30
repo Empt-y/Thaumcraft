@@ -54,7 +54,7 @@ public class AIArrowAttack extends RangedAttackGoal
             return;
         }
         double d0 = entityHost.distanceToSqr(entityHost.getTarget().getX(), entityHost.getTarget().getBoundingBox().minY, entityHost.getTarget().getZ());
-        boolean flag = entityHost.getSensing().canSee(entityHost.getTarget());
+        boolean flag = entityHost.getSensing().hasLineOfSight(entityHost.getTarget());
         if (flag) {
             ++seeTime;
         }
@@ -74,13 +74,13 @@ public class AIArrowAttack extends RangedAttackGoal
             if (d0 > maxAttackDistance || !flag) {
                 return;
             }
-            float f = Mth.sqrt(d0) / attackRadius;
+            float f = Mth.sqrt((float)d0) / attackRadius;
             float lvt_5_1_ = Mth.clamp(f, 0.1f, 1.0f);
-            rangedAttackEntityHost.attackEntityWithRangedAttack(entityHost.getTarget(), lvt_5_1_);
+            rangedAttackEntityHost.performRangedAttack(entityHost.getTarget(), lvt_5_1_);
             this.rangedAttackTime = Mth.floor(f * (maxRangedAttackTime - attackIntervalMin) + attackIntervalMin);
         }
         else if (this.rangedAttackTime < 0) {
-            float f2 = Mth.sqrt(d0) / attackRadius;
+            float f2 = Mth.sqrt((float)d0) / attackRadius;
             this.rangedAttackTime = Mth.floor(f2 * (maxRangedAttackTime - attackIntervalMin) + attackIntervalMin);
         }
     }
