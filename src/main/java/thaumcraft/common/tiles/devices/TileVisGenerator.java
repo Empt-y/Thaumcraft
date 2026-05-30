@@ -16,6 +16,10 @@ import thaumcraft.common.world.aura.AuraHandler;
 
 public class TileVisGenerator extends TileThaumcraft implements IEnergyStorage
 {
+    public TileVisGenerator(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
+
     protected int energy;
     protected int capacity = 1000;
     protected int maxExtract = 20;

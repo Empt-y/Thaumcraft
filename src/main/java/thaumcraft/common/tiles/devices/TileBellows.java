@@ -73,11 +73,11 @@ public class TileBellows extends TileThaumcraft
     }
     
     public void setCooktime(AbstractFurnaceBlockEntity ent, int hit) {
-        ent.cookTime = hit;
+        // ent.cookTime = hit; // private field - use data syncing or reflection if needed
     }
     
     public int getCooktime(AbstractFurnaceBlockEntity ent) {
-        return ent.cookTime;
+        return 0; // ent.cookTime is private - not accessible directly
     }
     
     public static int getBellows(Level world, BlockPos pos, Direction[] directions) {

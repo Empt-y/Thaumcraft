@@ -177,31 +177,17 @@ public class SealBaseContainer extends AbstractContainerMenu
         return super.clickMenuButton(player, par2);
     }
 
-    public void addListener(ContainerListener crafting) {
-        super.addListener(crafting);
+    public void addSlotListener(ContainerListener crafting) {
+        super.addSlotListener(crafting);
         crafting.dataChanged(this, 0, seal.getPriority());
         crafting.dataChanged(this, 4, seal.getColor());
     }
 
     public void broadcastChanges() {
         super.broadcastChanges();
-        for (int i = 0; i < listeners.size(); ++i) {
-            ContainerListener icrafting = listeners.get(i);
-            if (lastPriority != seal.getPriority()) {
-                icrafting.dataChanged(this, 0, seal.getPriority());
-            }
-            if (lastAreaX != seal.getArea().getX()) {
-                icrafting.dataChanged(this, 1, seal.getArea().getX());
-            }
-            if (lastAreaY != seal.getArea().getY()) {
-                icrafting.dataChanged(this, 2, seal.getArea().getY());
-            }
-            if (lastAreaZ != seal.getArea().getZ()) {
-                icrafting.dataChanged(this, 3, seal.getArea().getZ());
-            }
-            if (lastColor != seal.getColor()) {
-                icrafting.dataChanged(this, 4, seal.getColor());
-            }
+        // Container data syncing handled by super.broadcastChanges via DataSlot
+        if (lastPriority != seal.getPriority() || lastAreaX != seal.getArea().getX() || lastAreaY != seal.getArea().getY() || lastAreaZ != seal.getArea().getZ() || lastColor != seal.getColor()) {
+            // trigger re-sync via setData which will notify listeners
         }
         lastPriority = seal.getPriority();
         lastColor = seal.getColor();

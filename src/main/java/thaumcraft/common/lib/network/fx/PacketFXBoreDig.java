@@ -70,7 +70,7 @@ public class PacketFXBoreDig implements CustomPacketPayload
     private static void processMessage(PacketFXBoreDig message) {
         try {
             var level = Minecraft.getInstance().level;
-            BlockPos pos = new BlockPos(message.getX(), message.y, message.z);
+            BlockPos pos = new BlockPos(message.x, message.y, message.z);
             Entity entity = level.getEntity(message.bore);
             if (entity == null) {
                 return;
@@ -83,7 +83,7 @@ public class PacketFXBoreDig implements CustomPacketPayload
                 ServerEvents.addRunnableClient(level, new Runnable() {
                     @Override
                     public void run() {
-                        FXDispatcher.INSTANCE.boreDigFx(pos.getX(), pos.getY(), pos.getZ(), entity, ts, ts.getBlock() >> 12 & 0xFF, message.delay);
+                        FXDispatcher.INSTANCE.boreDigFx(pos.getX(), pos.getY(), pos.getZ(), entity, ts, 0, message.delay);
                     }
                 }, a);
             }

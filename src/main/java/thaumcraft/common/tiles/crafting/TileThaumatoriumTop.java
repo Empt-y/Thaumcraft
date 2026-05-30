@@ -231,8 +231,14 @@ public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContai
         return 0;
     }
     
-    public void clear() {
-        thaumatorium.clear();
+    @Override
+    public void clearContent() {
+        thaumatorium.clearContent();
+    }
+
+    @Override
+    public boolean stillValid(net.minecraft.world.entity.player.Player player) {
+        return true;
     }
     
     public String getName() {

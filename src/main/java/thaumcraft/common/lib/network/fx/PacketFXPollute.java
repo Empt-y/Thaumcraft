@@ -31,7 +31,7 @@ public class PacketFXPollute implements CustomPacketPayload
     }
 
     public PacketFXPollute(BlockPos pos, float amt) {
-        this.getX() = pos.getX();
+        this.x = pos.getX();
         this.y = pos.getY();
         this.z = pos.getZ();
         if (amt < 1.0f && amt > 0.0f) {
@@ -62,7 +62,7 @@ public class PacketFXPollute implements CustomPacketPayload
     public static void handle(PacketFXPollute msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             for (int a = 0; a < Math.min(40, msg.amount); ++a) {
-                FXDispatcher.INSTANCE.drawPollutionParticles(new BlockPos(msg.getX(), msg.y, msg.z));
+                FXDispatcher.INSTANCE.drawPollutionParticles(new BlockPos(msg.x, msg.y, msg.z));
             }
         });
     }

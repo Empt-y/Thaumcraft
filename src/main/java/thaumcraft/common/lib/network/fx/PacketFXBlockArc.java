@@ -43,9 +43,9 @@ public class PacketFXBlockArc implements CustomPacketPayload
 
     public PacketFXBlockArc(BlockPos pos, Entity source, float r, float g, float b) {
         this(pos.getX(), pos.getY(), pos.getZ(),
-             (float) source.x,
+             (float) source.getX(),
              (float) (source.getBoundingBox().minY + source.getBbHeight() / 2.0f),
-             (float) source.z,
+             (float) source.getZ(),
              r, g, b);
     }
 

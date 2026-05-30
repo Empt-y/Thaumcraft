@@ -99,7 +99,7 @@ public class TileTubeValve extends TileTube
     @Override
     public void readSyncNBT(CompoundTag nbttagcompound) {
         super.readSyncNBT(nbttagcompound);
-        allowFlow = nbttagcompound.getBooleanOr("flow");
+        allowFlow = nbttagcompound.getBooleanOr("flow", true);
         wasPoweredLastTick = nbttagcompound.getBooleanOr("hadpower", false);
     }
     
@@ -125,6 +125,6 @@ public class TileTubeValve extends TileTube
     
     @Override
     public boolean gettingPower() {
-        return getLevel().hasNeighborSignal(getBlockPos()) > 0;
+        return getLevel().hasNeighborSignal(getBlockPos());
     }
 }

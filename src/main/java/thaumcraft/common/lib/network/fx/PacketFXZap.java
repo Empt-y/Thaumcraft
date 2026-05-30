@@ -41,7 +41,7 @@ public class PacketFXZap implements CustomPacketPayload
         buf.writeDouble(pkt.target.y);
         buf.writeDouble(pkt.target.z);
         buf.writeInt(pkt.color);
-        buf.writeFloat(pkt.getBbWidth());
+        buf.writeFloat(pkt.width);
     }
 
     private static PacketFXZap decode(FriendlyByteBuf buf) {
@@ -56,7 +56,7 @@ public class PacketFXZap implements CustomPacketPayload
     public static void handle(PacketFXZap msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             Color c = new Color(msg.color);
-            FXDispatcher.INSTANCE.arcBolt(msg.source.x, msg.source.y, msg.source.z, msg.target.x, msg.target.y, msg.target.z, c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f, msg.getBbWidth());
+            FXDispatcher.INSTANCE.arcBolt(msg.source.x, msg.source.y, msg.source.z, msg.target.x, msg.target.y, msg.target.z, c.getRed() / 255.0f, c.getGreen() / 255.0f, c.getBlue() / 255.0f, msg.width);
         });
     }
 

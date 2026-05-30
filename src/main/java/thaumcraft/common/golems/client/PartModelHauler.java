@@ -21,16 +21,8 @@ public class PartModelHauler extends PartModel
         if (golem.getCarrying().size() > 1 && golem.getCarrying().get(1) != null) {
             ItemStack itemstack = golem.getCarrying().get(1);
             if (itemstack != null && !itemstack.isEmpty()) {
-                RenderSystem.pushMatrix();
-                Item item = itemstack.getItem();
-                Minecraft minecraft = Minecraft.getInstance();
-                RenderSystem.scale(0.375, 0.375, 0.375);
-                /* TODO: use PoseStack */ // RenderSystem.translate(0.0f, 0.33f, 0.825f);
-                if (!(item instanceof BlockItem)) {
-                    /* TODO: use PoseStack */ // RenderSystem.translate(0.0f, 0.0f, -0.25f);
-                }
-                /* TODO: renderItem with ItemDisplayContext */ // minecraft.getItemRenderer().renderItem(...);
-                RenderSystem.popMatrix();
+                // TODO: Rewrite for MC 1.21.5 using PoseStack-based rendering
+                // pushMatrix/popMatrix/scale removed; use com.mojang.blaze3d.vertex.PoseStack
             }
         }
     }

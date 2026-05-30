@@ -60,7 +60,7 @@ public class TileBanner extends TileThaumcraft
     @Override
     public CompoundTag writeSyncNBT(CompoundTag nbttagcompound) {
         nbttagcompound.putByte("facing", facing);
-        nbttagcompound.putString("aspect", (getAspect() == null) ? "" : getAspect().get());
+        nbttagcompound.putString("aspect", (getAspect() == null) ? "" : getAspect().getTag());
         nbttagcompound.putBoolean("wall", onWall);
         return nbttagcompound;
     }

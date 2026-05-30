@@ -64,7 +64,7 @@ public class ItemHandMirror extends ItemTCBase
         }
         BlockEntity tm = world.getBlockEntity(pos);
         if (tm instanceof TileMirror) {
-            int dimHash = (world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().location().hashCode() : 0);
+            int dimHash = (world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0);
             CustomData.update(DataComponents.CUSTOM_DATA, player.getItemInHand(hand), nbt -> {
                 nbt.putInt("linkX", pos.getX());
                 nbt.putInt("linkY", pos.getY());
@@ -140,7 +140,7 @@ public class ItemHandMirror extends ItemTCBase
         TileMirror tm = (TileMirror)te;
         if (tm.transportDirect(items)) {
             items = ItemStack.EMPTY;
-            player.playSound(SoundEvents.ENDERMEN_TELEPORT, 0.1f, 1.0f);
+            player.playSound(SoundEvents.ENDERMAN_TELEPORT, 0.1f, 1.0f);
         }
         return true;
     }

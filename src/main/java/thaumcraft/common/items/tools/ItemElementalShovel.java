@@ -137,22 +137,22 @@ public class ItemElementalShovel extends ShovelItem implements IArchitect, IThau
                     BlockPos p2 = pos.relative(side).offset(xx, yy, zz);
                     BlockState b2 = world.getBlockState(p2);
                     if (b2.canSurvive(world, p2)) {
-                        if (player.getAbilities().instabuild || InventoryUtils.consumePlayerItem(player, Item.getItemFromBlock(bs.getBlock()), bs.getBlock())) {
+                        if (player.getAbilities().instabuild || InventoryUtils.consumePlayerItem(player, bs.getBlock().asItem(), bs.getBlock())) {
                             world.playSound(null, p2, bs.getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.6f, 0.9f + net.minecraft.util.RandomSource.create().nextFloat() * 0.2f);
                             world.setBlockAndUpdate(p2, bs);
                             if (!world.isClientSide() && world instanceof net.minecraft.server.level.ServerLevel sl) {
-                                player.getItemInHand(hand).hurtAndBreak(1, sl, null, i -> {});
+                                player.getItemInHand(hand).hurtAndBreak(1, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
                             }
                             if (world.isClientSide()) {
                                 FXDispatcher.INSTANCE.drawBamf(p2, 8401408, false, false, side);
                             }
                             player.swing(hand);
                         }
-                        else if (bs.getBlock() == Blocks.GRASS_BLOCK && (player.getAbilities().instabuild || InventoryUtils.consumePlayerItem(player, Item.getItemFromBlock(Blocks.DIRT), 0))) {
+                        else if (bs.getBlock() == Blocks.GRASS_BLOCK && (player.getAbilities().instabuild || InventoryUtils.consumePlayerItem(player, Blocks.DIRT.asItem(), 0))) {
                             world.playSound(null, p2, bs.getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.6f, 0.9f + net.minecraft.util.RandomSource.create().nextFloat() * 0.2f);
                             world.setBlockAndUpdate(p2, Blocks.DIRT.defaultBlockState());
                             if (!world.isClientSide() && world instanceof net.minecraft.server.level.ServerLevel sl) {
-                                player.getItemInHand(hand).hurtAndBreak(1, sl, null, i -> {});
+                                player.getItemInHand(hand).hurtAndBreak(1, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
                             }
                             if (world.isClientSide()) {
                                 FXDispatcher.INSTANCE.drawBamf(p2, 8401408, false, false, side);

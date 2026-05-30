@@ -66,7 +66,7 @@ public class TileLevitator extends TileThaumcraft
             boolean lifted = false;
             if (targets.size() > 0) {
                 for (Entity e : targets) {
-                    if (!(e instanceof ItemEntity) && !e.canBePushed() && !(e instanceof EntityHorse)) {
+                    if (!(e instanceof ItemEntity) && !e.isPushable() && !(e instanceof net.minecraft.world.entity.animal.equine.AbstractHorse)) {
                         continue;
                     }
                     lifted = true;
