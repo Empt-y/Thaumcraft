@@ -20,6 +20,7 @@ import thaumcraft.common.lib.SoundsTC;
 
 public class EntityThaumicSlime extends Slime implements ITaintedMob
 {
+    public static net.minecraft.world.entity.EntityType<EntityThaumicSlime> TYPE;
     private boolean localWasOnGround = false;
     int launched;
     int spitCounter;

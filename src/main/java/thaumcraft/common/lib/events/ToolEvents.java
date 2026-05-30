@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -53,7 +53,7 @@ public class ToolEvents
 
     @SubscribeEvent
     public static void playerAttack(AttackEntityEvent event) {
-        Player player = event.getEntity();
+        Player player = event.getPlayer();
         if (player.getUsedItemHand() == null) {
             return;
         }
@@ -64,7 +64,7 @@ public class ToolEvents
                 int rank = EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldItem, EnumInfusionEnchantment.ARCING);
                 List<Entity> targets = player.level().getEntitiesOfClass(
                     Entity.class,
-                    event.getTarget().getBoundingBox().grow(1.5 + rank, 1.0f + rank / 2.0f, 1.5 + rank),
+                    event.getTarget().getBoundingBox().inflate(1.5 + rank, 1.0 + rank / 2.0, 1.5 + rank),
                     e -> true
                 );
                 int count = 0;
@@ -75,7 +75,7 @@ public class ToolEvents
                                 if (!(var10 instanceof Player) || !var10.getName().getString().equals(player.getName())) {
                                     float f = player.getAttribute(Attributes.ATTACK_DAMAGE) != null
                                         ? (float) player.getAttribute(Attributes.ATTACK_DAMAGE).getValue() : 1.0f;
-                                    if (var10.hurt(player.level().damageSources().playerAttack(player), f * 0.5f)) {
+                                    var10.hurt(player.level().damageSources().playerAttack(player), f * 0.5f); if (true) {
                                         try {
                                             if (var10 instanceof LivingEntity le) {
                                                 // Thorn enchantment application removed in 1.21 refactor
@@ -105,8 +105,8 @@ public class ToolEvents
 
     @SubscribeEvent
     public static void playerRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        if (!event.getLevel().isClientSide() && event.getEntity() != null) {
-            Player player = event.getEntity();
+        if (!event.getLevel().isClientSide() && event.getPlayer() != null) {
+            Player player = event.getPlayer();
             ItemStack heldItem = player.getItemInHand(
                 player.getUsedItemHand() == null ? InteractionHand.MAIN_HAND : player.getUsedItemHand()
             );
@@ -114,7 +114,7 @@ public class ToolEvents
                 List<EnumInfusionEnchantment> list = EnumInfusionEnchantment.getInfusionEnchantments(heldItem);
                 if (list.contains(EnumInfusionEnchantment.SOUNDING) && player.isCrouching()) {
                     heldItem.hurtAndBreak(5, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-                    event.getLevel().playSound(null, event.getPos().x + 0.5, event.getPos().getY() + 0.5, event.getPos().z + 0.5, SoundsTC.wandfail, SoundSource.BLOCKS, 0.2f, 0.2f + event.getLevel().getRandom().nextFloat() * 0.2f);
+                    event.getLevel().playSound(null, event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, SoundsTC.wandfail, SoundSource.BLOCKS, 0.2f, 0.2f + event.getLevel().getRandom().nextFloat() * 0.2f);
                     if (player instanceof ServerPlayer sp) {
                         PacketHandler.sendToPlayer(
                             new PacketFXScanSource(event.getPos(), EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldItem, EnumInfusionEnchantment.SOUNDING)),
@@ -128,8 +128,8 @@ public class ToolEvents
 
     @SubscribeEvent
     public static void playerInteract(PlayerInteractEvent.LeftClickBlock event) {
-        if (event.getEntity() != null) {
-            ToolEvents.lastFaceClicked.put(event.getEntity().getId(), event.getFace());
+        if (event.getPlayer() != null) {
+            ToolEvents.lastFaceClicked.put(event.getPlayer().getId(), event.getFace());
         }
     }
 
@@ -156,7 +156,7 @@ public class ToolEvents
         if (blockedList != null && blockedList.contains(event.getPos())) {
             event.setCanceled(true);
         }
-        Player player = event.getEntity();
+        Player player = event.getPlayer();
         if (!level.isClientSide() && player != null) {
             ItemStack heldItem = player.getItemInHand(player.getUsedItemHand());
             if (heldItem != null && !heldItem.isEmpty()) {
@@ -179,7 +179,7 @@ public class ToolEvents
     @SubscribeEvent
     public static void harvestBlockEvent(net.neoforged.neoforge.event.level.BlockDropsEvent event) {
         Level level = event.getLevel();
-        boolean isSilk = EnchantmentHelper.hasSilkTouch(event.getTool());
+        boolean isSilk = event.getTool().getEnchantmentLevel(net.minecraft.core.registries.BuiltInRegistries.ENCHANTMENT.get(net.minecraft.resources.ResourceLocation.withDefaultNamespace("silk_touch"))) > 0;
         // Vis nugget drop from ores
         if (!level.isClientSide() && !isSilk && event.getState().getBlock() != null) {
             boolean isVisOre = (event.getState().is(Blocks.DIAMOND_ORE) && level.getRandom().nextFloat() < 0.05f)
@@ -191,7 +191,7 @@ public class ToolEvents
                 || (event.getState().is(BlocksTC.oreQuartz) && level.getRandom().nextFloat() < 0.05f);
             if (isVisOre) {
                 ItemStack nugget = new ItemStack(ItemsTC.nuggets, 1);
-                event.getDrops().add(new ItemEntity(level, event.getPos().x + 0.5, event.getPos().getY() + 0.5, event.getPos().z + 0.5, nugget));
+                event.getDrops().add(new ItemEntity(level, event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, nugget));
             }
         }
         // Infusion enchantment processing
@@ -200,7 +200,7 @@ public class ToolEvents
             ItemStack heldItem = harvesterPlayer.getItemInHand(harvesterPlayer.getUsedItemHand());
             if (heldItem != null && !heldItem.isEmpty()) {
                 List<EnumInfusionEnchantment> list = EnumInfusionEnchantment.getInfusionEnchantments(heldItem);
-                boolean effectiveTool = isSilk || heldItem.getItem() instanceof net.minecraft.world.item.DiggerItem;
+                boolean effectiveTool = isSilk || heldItem.getItem() instanceof net.minecraft.world.item.SwordItem || heldItem.getItem() instanceof net.minecraft.world.item.DiggerItem || heldItem.getItem() instanceof net.minecraft.world.item.HoeItem;
                 if (effectiveTool) {
                     if (list.contains(EnumInfusionEnchantment.REFINING)) {
                         int fortune = 1 + EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldItem, EnumInfusionEnchantment.REFINING);
@@ -231,7 +231,7 @@ public class ToolEvents
                                     else { zz = aa; yy = bb; }
                                     BlockPos adjPos = event.getPos().offset(xx, yy, zz);
                                     BlockState bl = level.getBlockState(adjPos);
-                                    if (bl.getDestroySpeed(level, adjPos) >= 0.0f && heldItem.getItem() instanceof net.minecraft.world.item.DiggerItem) {
+                                    if (bl.getDestroySpeed(level, adjPos) >= 0.0f && heldItem.getItem() instanceof net.minecraft.world.item.SwordItem || heldItem.getItem() instanceof net.minecraft.world.item.DiggerItem || heldItem.getItem() instanceof net.minecraft.world.item.HoeItem) {
                                         if (!harvesterPlayer.getName().getString().equals("FakeThaumcraftBore")) {
                                             heldItem.hurtAndBreak(1, harvesterPlayer, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
                                         }
@@ -270,7 +270,7 @@ public class ToolEvents
                     for (int a = 0; a < event.getDrops().size(); ++a) {
                         ItemEntity ei = event.getDrops().get(a);
                         ItemStack is = ei.getItem().copy();
-                        ItemEntity nei = new EntityFollowingItem(event.getEntity().level(), ei.getX(), ei.getY(), ei.getZ(), is, player, 10);
+                        ItemEntity nei = new EntityFollowingItem(event.getPlayer().level(), ei.getX(), ei.getY(), ei.getZ(), is, player, 10);
                         nei.setDeltaMovement(ei.getDeltaMovement());
                         nei.setPickUpDelay(10);
                         ei.discard();
@@ -278,13 +278,13 @@ public class ToolEvents
                     }
                 }
                 if (list.contains(EnumInfusionEnchantment.ESSENCE)) {
-                    AspectList as = AspectHelper.getEntityAspects(event.getEntity());
+                    AspectList as = AspectHelper.getEntityAspects(event.getPlayer());
                     if (as != null && as.size() > 0) {
                         AspectList aspects = as.copy();
                         int q = EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldItem, EnumInfusionEnchantment.ESSENCE);
                         Aspect[] al = aspects.getAspects();
-                        for (int b = (event.getEntity().getRandom().nextInt(5) < q) ? 0 : 99; b < q && al != null && al.length > 0; b += 1 + event.getEntity().getRandom().nextInt(2)) {
-                            Aspect aspect = al[event.getEntity().getRandom().nextInt(al.length)];
+                        for (int b = (event.getPlayer().getRandom().nextInt(5) < q) ? 0 : 99; b < q && al != null && al.length > 0; b += 1 + event.getPlayer().getRandom().nextInt(2)) {
+                            Aspect aspect = al[event.getPlayer().getRandom().nextInt(al.length)];
                             if (aspects.getAmount(aspect) > 0) {
                                 aspects.remove(aspect, 1);
                                 ItemStack stack = ThaumcraftApiHelper.makeCrystal(aspect);

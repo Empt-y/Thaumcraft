@@ -123,7 +123,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
         if (mop != null) {
             if (getSpecial() == 1 && mop.getType() == HitResult.Type.BLOCK) {
                 BlockState bs = level().getBlockState(((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos());
-                AABB bb = bs.getCollisionBoundingBox(world, ((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos());
+                AABB bb = bs.getCollisionShape(level(), ((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos()).isEmpty() ? null : bs.getCollisionShape(level(), ((net.minecraft.world.phys.BlockHitResult)mop).getBlockPos()).bounds();
                 if (bb == null) {
                     return;
                 }
@@ -142,7 +142,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
                 setDeltaMovement(getDeltaMovement().x * 0.9, getDeltaMovement().y, getDeltaMovement().z);
                 setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y * 0.9, getDeltaMovement().z);
                 setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z * 0.9);
-                float var20 = Mth.sqrt(getDeltaMovement().x * getDeltaMovement().x + getDeltaMovement().y * getDeltaMovement().y + getDeltaMovement().z * getDeltaMovement().z);
+                float var20 = (float)Math.sqrt(getDeltaMovement().x * getDeltaMovement().x + getDeltaMovement().y * getDeltaMovement().y + getDeltaMovement().z * getDeltaMovement().z);
                 setPos(getDeltaMovement().x / var20 * 0.05000000074505806, getY(), getZ());
                 setPos(getX(), getDeltaMovement().y / var20 * 0.05000000074505806, getZ());
                 setPos(getX(), getY(), getDeltaMovement().z / var20 * 0.05000000074505806);
@@ -155,7 +155,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
             }
             else if (!level().isClientSide()) {
                 if (((net.minecraft.world.phys.EntityHitResult)mop).getEntity() != null) {
-                    mop.getLocation() = position();
+                    // mop.getLocation() = position(); // EntityHitResult location is immutable
                 }
                 Vec3 pv = new Vec3(xo, yo, zo);
                 Vec3 vf = new Vec3(getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z);

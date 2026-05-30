@@ -55,7 +55,7 @@ public class AuraHandler
         if (aw == null) {
             aw = new AuraWorld(dim);
         }
-        aw.getAuraChunks().put(new PosXY(chunk.getPos().x, chunk.getPos().z), new AuraChunk(chunk, base, vis, flux));
+        aw.getAuraChunks().put(new PosXY(chunk.getPos().x(), chunk.getPos().z()), new AuraChunk(chunk, base, vis, flux));
         AuraHandler.auras.put(dim, aw);
     }
     
@@ -164,8 +164,8 @@ public class AuraHandler
     }
     
     public static void generateAura(LevelChunk chunk, net.minecraft.world.level.Level level, Random rand) {
-        int cx = chunk.getPos().x;
-        int cz = chunk.getPos().z;
+        int cx = chunk.getPos().x();
+        int cz = chunk.getPos().z();
         Biome bgb = level.getBiome(new BlockPos(cx * 16 + 8, 50, cz * 16 + 8)).value();
         if (BiomeHandler.getBiomeBlacklist(0) != -1) {
             return;
