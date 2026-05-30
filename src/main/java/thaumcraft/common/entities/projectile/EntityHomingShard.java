@@ -54,7 +54,7 @@ public class EntityHomingShard extends ThrowableProjectile
         persistant = b;
         setStrength(strength);
         Vec3 v = p.getLookAngle();
-        moveTo(p.getX() + v.x / 2.0, p.getY() + p.getEyeHeight() + v.y / 2.0, p.getZ() + v.z / 2.0, p.getYRot(), p.getXRot());
+        setPos(p.getX() + v.x / 2.0, p.getY() + p.getEyeHeight() + v.y / 2.0, p.getZ() + v.z / 2.0); setYRot(p.getYRot()); setXRot(p.getXRot());
         float f = 0.5f;
         float ry = p.getYRot() + (getRandom().nextFloat() - getRandom().nextFloat()) * 60.0f;
         float rp = p.getXRot() + (getRandom().nextFloat() - getRandom().nextFloat()) * 60.0f;
@@ -111,7 +111,7 @@ public class EntityHomingShard extends ThrowableProjectile
     }
     
     public void tick() {
-        vl.add(0, new UtilsFX.Vector((float) lastTickPosX, (float) lastTickPosY, (float) lastTickPosZ));
+        vl.add(0, new UtilsFX.Vector((float) xo, (float) yo, (float) zo));
         if (vl.size() > 6) {
             vl.remove(vl.size() - 1);
         }

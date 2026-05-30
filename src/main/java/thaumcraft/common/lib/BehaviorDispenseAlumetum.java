@@ -10,6 +10,6 @@ import thaumcraft.common.entities.projectile.EntityAlumentum;
 public class BehaviorDispenseAlumetum extends ProjectileDispenseBehavior
 {
     protected Projectile getProjectileEntity(Level worldIn, net.minecraft.core.dispenser.BlockSource /* IPosition removed */ position, ItemStack stackIn) {
-        return new EntityAlumentum(worldIn, position.getX(), position.getY(), position.getZ());
+        return new EntityAlumentum(worldIn, position.center().x, position.center().y, position.center().z);
     }
 }

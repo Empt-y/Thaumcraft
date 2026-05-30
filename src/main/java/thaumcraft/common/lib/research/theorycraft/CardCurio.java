@@ -32,7 +32,7 @@ public class CardCurio extends TheorycraftCard
     @Override
     public void deserialize(CompoundTag nbt) {
         super.deserialize(nbt);
-        curio = ItemStack.OPTIONAL_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, nbt.getCompoundOrEmpty("stack")).result().orElse(ItemStack.EMPTY);
+        curio = ItemStack.OPTIONAL_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, nbt.read("stack", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag())).result().orElse(ItemStack.EMPTY);
     }
     
     @Override

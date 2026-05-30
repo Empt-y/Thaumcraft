@@ -65,7 +65,7 @@ public class EntityTaintacle extends Monster implements ITaintedMob
 
     @Override
     public void move(MoverType mt, Vec3 vec) {
-        super.move(mt, new Vec3(0, Math.min(0, vec.getY()), 0));
+        super.move(mt, new Vec3(0, Math.min(0, vec.y), 0));
     }
 
     @Override

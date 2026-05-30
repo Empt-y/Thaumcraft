@@ -201,7 +201,7 @@ public class TileMirror extends TileThaumcraft implements Container
     public boolean spawnItem(ItemStack stack) {
         try {
             Direction face = getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING);
-            ItemEntity ie2 = new ItemEntity(world, getBlockPos().getX() + 0.5, getBlockPos().getY() + 0.25, getBlockPos().getZ() + 0.5, stack);
+            ItemEntity ie2 = new ItemEntity(level, getBlockPos().getX() + 0.5, getBlockPos().getY() + 0.25, getBlockPos().getZ() + 0.5, stack);
             ie2.setDeltaMovement(face.getStepX() * 0.15f, ie2.getDeltaMovement().y, ie2.getDeltaMovement().z);
             ie2.setDeltaMovement(ie2.getDeltaMovement().x, face.getStepY() * 0.15f, ie2.getDeltaMovement().z);
             ie2.setDeltaMovement(ie2.getDeltaMovement().x, ie2.getDeltaMovement().y, face.getStepZ() * 0.15f);
@@ -287,7 +287,7 @@ public class TileMirror extends TileThaumcraft implements Container
     
     public void checkInstability() {
         if (instability > 128) {
-            AuraHelper.polluteAura(world, getBlockPos(), 1.0f, true);
+            AuraHelper.polluteAura(level, getBlockPos(), 1.0f, true);
             instability -= 128;
             setChanged();
         }

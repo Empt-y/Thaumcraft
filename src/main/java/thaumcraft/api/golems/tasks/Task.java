@@ -188,7 +188,7 @@ public class Task {
 //		task.completed = nbt.getBooleanOr("completed", false);
 //		task.expireTime = System.currentTimeMillis() + 300000;		
 //		if (nbt.child("sealpos").isPresent()) {
-//			CompoundTag sealpos = nbt.getCompoundOrEmpty("sealpos");
+//			CompoundTag sealpos = nbt.read("sealpos", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag());
 //			SealPos sp = new SealPos(BlockPos.of(nbt.getLongOr("pos", 0L)), Direction.values()[nbt.getByteOr("face", (byte)0)]);
 //			TaskHandler.sealTaskCrossRef.put(task.id, sp);
 //		}

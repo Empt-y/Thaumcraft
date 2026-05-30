@@ -63,16 +63,4 @@ public class ItemElementalPickaxe extends Object /* ItemPickaxe removed */ imple
         }
         return super.onLeftClickEntity(stack, player, entity);
     }
-    
-    public void getSubItems(CreativeModeTab tab, NonNullList<ItemStack> items) {
-        if (tab == ConfigItems.TABTC || tab == null /* SEARCH tab removed */) {
-            ItemStack w1 = new ItemStack(this);
-            EnumInfusionEnchantment.addInfusionEnchantment(w1, EnumInfusionEnchantment.REFINING, 1);
-            EnumInfusionEnchantment.addInfusionEnchantment(w1, EnumInfusionEnchantment.SOUNDING, 2);
-            items.add(w1);
-        }
-        else {
-            super.getSubItems(tab, items);
-        }
-    }
 }

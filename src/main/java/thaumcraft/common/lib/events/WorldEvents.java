@@ -40,14 +40,14 @@ public class WorldEvents
     
     @SubscribeEvent
     public static void placeBlockEvent(BlockEvent.EntityPlaceEvent event) {
-        if (isNearActiveBoss(event.getLevel(), event.getEntity(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ())) {
+        if (isNearActiveBoss(event.getLevel(), event.getEntity(), event.getPos().x, event.getPos().getY(), event.getPos().z)) {
             event.setCanceled(true);
         }
     }
     
     @SubscribeEvent
     public static void placeBlockEvent(BlockEvent.EntityMultiPlaceEvent event) {
-        if (isNearActiveBoss(event.getLevel(), event.getEntity(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ())) {
+        if (isNearActiveBoss(event.getLevel(), event.getEntity(), event.getPos().x, event.getPos().getY(), event.getPos().z)) {
             event.setCanceled(true);
         }
     }
@@ -65,7 +65,7 @@ public class WorldEvents
             TileArcaneEar.noteBlockEvents.put(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */, new ArrayList<Integer[]>());
         }
         ArrayList<Integer[]> list = TileArcaneEar.noteBlockEvents.get(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */);
-        list.add(new Integer[] { event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), event.getInstrument().ordinal(), event.getVanillaNoteId() });
+        list.add(new Integer[] { event.getPos().x, event.getPos().getY(), event.getPos().z, event.getInstrument().ordinal(), event.getVanillaNoteId() });
         TileArcaneEar.noteBlockEvents.put(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */, list);
     }
     

@@ -63,7 +63,7 @@ public class BlockBarrier extends BlockTC
             if (world.getBlockState(pos.below(a)).getBlock() != BlocksTC.pavingStoneBarrier) {
                 ++a;
             }
-            if (world.getBestNeighborSignal(pos.below(a)) == 0) {
+            if (!((net.minecraft.world.level.Level)world).hasNeighborSignal(pos.below(a))) {
                 list.add(FULL_BLOCK_AABB.move(pos));
             }
         }
@@ -79,7 +79,7 @@ public class BlockBarrier extends BlockTC
         for (int a = 1; a < 3; ++a) {
             BlockEntity te = worldIn.getBlockEntity(pos.below(a));
             if (te instanceof TileBarrierStone) {
-                return te.world.getBestNeighborSignal(pos.below(a)) > 0;
+                return ((net.minecraft.world.level.Level)te.getLevel()).hasNeighborSignal(pos.below(a)) > 0;
             }
         }
         return true;

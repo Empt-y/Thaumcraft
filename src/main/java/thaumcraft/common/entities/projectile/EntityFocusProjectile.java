@@ -53,7 +53,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
     }
     
     public EntityFocusProjectile(FocusPackage pack, float speed, Trajectory trajectory, int special) {
-        super(TYPE, pack.getCaster(), pack.world);
+        super(TYPE, pack.world);
         noTouchy = false;
         firstParticle = false;
         lastRenderTick = 0.0f;
@@ -63,8 +63,6 @@ public class EntityFocusProjectile extends ThrowableProjectile
         shoot(trajectory.direction.x, trajectory.direction.y, trajectory.direction.z, speed, 0.0f);
         // FIXME: setSize removed; dimensions set in EntityType builder
         setSpecial(special);
-        ignoreEntity = pack.getCaster();
-        setOwner(getOwner().getId());
     }
     
     protected float getGravityVelocity() {
@@ -106,7 +104,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
 
     public void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput nbt) {
         super.addAdditionalSaveData(nbt);
-        nbt.put("pack", focusPackage.serialize());
+        nbt.store("pack", net.minecraft.nbt.CompoundTag.CODEC, focusPackage.serialize());
         nbt.putInt("special", getSpecial());
     }
     
@@ -114,11 +112,10 @@ public class EntityFocusProjectile extends ThrowableProjectile
         super.readAdditionalSaveData(nbt);
         setSpecial(nbt.getIntOr("special", 0));
         try {
-            (focusPackage = new FocusPackage()).deserialize(nbt.getCompoundOrEmpty("pack"));
+            (focusPackage = new FocusPackage()).deserialize(nbt.read("pack", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag()));
         }
         catch (Exception ex) {}
         if (getOwner() != null) {
-            setOwner(getOwner().getId());
         }
     }
     

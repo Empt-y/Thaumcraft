@@ -140,7 +140,7 @@ public class FocusPackage implements IFocusElement {
 			if (ut!=null) {
 				if (ut==EnumUnitType.PACKAGE) {
 					FocusPackage fp = new FocusPackage();
-					fp.deserialize(nodenbt.getCompoundOrEmpty("package"));
+					fp.deserialize(nodenbt.read("package", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag()));
 					nodes.add(fp);
 					break;
 				} else {
@@ -154,7 +154,7 @@ public class FocusPackage implements IFocusElement {
 								}
 							
 							if (fn instanceof FocusModSplit) {								
-								((FocusModSplit)fn).deserialize(nodenbt.getCompoundOrEmpty("packages"));		
+								((FocusModSplit)fn).deserialize(nodenbt.read("packages", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag()));		
 							}
 						}
 						addNode(fn);
@@ -183,7 +183,7 @@ public class FocusPackage implements IFocusElement {
 				nodenbt.putString("type", node.getType().name());
 				nodenbt.putString("key", node.getKey());
 				if (node.getType() ==EnumUnitType.PACKAGE) {
-					nodenbt.put("package", ((FocusPackage)node).serialize());
+					nodenbt.store("package", net.minecraft.nbt.CompoundTag.CODEC, ((FocusPackage)node).serialize());
 					nodelist.add(nodenbt);
 					break;
 				} else {				
@@ -192,7 +192,7 @@ public class FocusPackage implements IFocusElement {
 							nodenbt.putInt("setting."+ns, ((FocusNode)node).getSettingValue(ns));
 						}
 					if (node instanceof FocusModSplit) {	
-						nodenbt.put("packages", ((FocusModSplit)node).serialize());	
+						nodenbt.store("packages", net.minecraft.nbt.CompoundTag.CODEC, ((FocusModSplit)node).serialize());	
 					}
 					nodelist.add(nodenbt);
 				}			

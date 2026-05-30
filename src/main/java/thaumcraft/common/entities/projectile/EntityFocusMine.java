@@ -72,7 +72,7 @@ public class EntityFocusMine extends ThrowableProjectile
     public void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput nbt) {
         super.addAdditionalSaveData(nbt);
         nbt.putBoolean("armed", getIsArmed());
-        nbt.put("pack", focusPackage.serialize());
+        nbt.store("pack", net.minecraft.nbt.CompoundTag.CODEC, focusPackage.serialize());
         nbt.putBoolean("friendly", friendly);
     }
     
@@ -84,7 +84,7 @@ public class EntityFocusMine extends ThrowableProjectile
             counter = 0;
         }
         try {
-            (focusPackage = new FocusPackage()).deserialize(nbt.getCompoundOrEmpty("pack"));
+            (focusPackage = new FocusPackage()).deserialize(nbt.read("pack", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag()));
         }
         catch (Exception ex) {}
     }

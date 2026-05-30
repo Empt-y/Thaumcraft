@@ -38,7 +38,7 @@ public class ContainerThaumatorium extends AbstractContainerMenu
     @Override
     public void removed(Player par1Player) {
         super.removed(par1Player);
-        if (!thaumatorium.world.isClientSide()) {
+        if (!thaumatorium.getLevel().isClientSide()) {
             thaumatorium.eventHandler = null;
         }
     }

@@ -54,7 +54,7 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
             float var11 = (float)(-(Math.atan2(var7, var9) * 180.0 / 3.141592653589793));
             double var12 = var6 / var9;
             double var13 = var8 / var9;
-            moveTo(par2Mob.getX() + var12, getY(), par2Mob.getZ() + var13, var10, var11);
+            setPos(par2Mob.getX() + var12, getY(), par2Mob.getZ() + var13); setYRot(var10); setXRot(var11);
             float var14 = (float)var9 * 0.2f;
             shoot(var6, var7 + var14, var8, 1.5f, 1.0f);
         }
@@ -170,7 +170,7 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
                 float f = (k % 2 - 0.5f) * i / 4.0f;
                 float f2 = (k / 2 - 0.5f) * i / 4.0f;
                 EntityThaumicSlime entityslime = createInstance();
-                                entityslime.moveTo(getX() + f, getY() + 0.5, getZ() + f2, getRandom().nextFloat() * 360.0f, 0.0f);
+                                entityslime.setPos(getX() + f, getY() + 0.5, getZ() + f2); entityslime.setYRot(getRandom().nextFloat() * 360.0f);
                 level().addFreshEntity(entityslime);
             }
         }

@@ -129,7 +129,7 @@ public class ItemVoidRobeArmor extends net.minecraft.world.item.Item implements 
 
     public void removeColor(ItemStack stack1) {
         net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack1, nbt -> {
-            CompoundTag display = nbt.getCompoundOrEmpty("display");
+            CompoundTag display = nbt.read("display", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag());
             display.remove("color");
             if (!display.isEmpty()) {
                 nbt.put("display", display);
@@ -139,7 +139,7 @@ public class ItemVoidRobeArmor extends net.minecraft.world.item.Item implements 
 
     public void setColor(ItemStack stack1, int par2) {
         net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack1, nbt -> {
-            CompoundTag display = nbt.getCompoundOrEmpty("display");
+            CompoundTag display = nbt.read("display", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag());
             display.putInt("color", par2);
             nbt.put("display", display);
         });

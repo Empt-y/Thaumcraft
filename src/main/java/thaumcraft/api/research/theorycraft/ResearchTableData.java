@@ -159,7 +159,7 @@ public class ResearchTableData
 		nbt.putBoolean("aid", mc.fromAid); 
 		nbt.putBoolean("select", mc.selected);
 		try {
-			nbt.put("cardNBT", mc.card.serialize());
+			nbt.store("cardNBT", net.minecraft.nbt.CompoundTag.CODEC, mc.card.serialize());
 		} catch (Exception e) {	}
 		return nbt;
 	}
@@ -218,14 +218,14 @@ public class ResearchTableData
 			if (cc!=null) cardChoices.add(cc);
 		}
 		
-		lastDraw = deserializeCardChoice(nbt.getCompoundOrEmpty("lastDraw"));
+		lastDraw = deserializeCardChoice(nbt.read("lastDraw", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag()));
 		
 	}
 	
 	public CardChoice deserializeCardChoice(CompoundTag nbt) {	
 		if (nbt == null) return null;	
 		String key = nbt.getStringOr("cardChoice", "");			
-		TheorycraftCard tc=generateCardWithNBT(nbt.getStringOr("cardChoice", ""), nbt.getCompoundOrEmpty("cardNBT"));				
+		TheorycraftCard tc=generateCardWithNBT(nbt.getStringOr("cardChoice", ""), nbt.read("cardNBT", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag()));				
 		if (tc==null) return null;
 		return new CardChoice(key,tc,nbt.getBooleanOr("aid", false),nbt.getBooleanOr("select", false));
 	}

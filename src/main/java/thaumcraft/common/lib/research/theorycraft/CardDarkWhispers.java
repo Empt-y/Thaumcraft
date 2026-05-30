@@ -40,7 +40,7 @@ public class CardDarkWhispers extends TheorycraftCard
     @Override
     public boolean activate(Player player, ResearchTableData data) {
         int l = player.experienceLevel;
-        player.addExperienceLevel(-(10 + l));
+        player.giveExperienceLevels(-(10 + l));
         if (l > 0) {
             for (String k : ResearchCategories.researchCategories.keySet()) {
                 if (player.getRandom().nextBoolean()) {

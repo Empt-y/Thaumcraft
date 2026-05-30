@@ -54,19 +54,7 @@ public class ItemElementalSword extends Item /* ItemSword removed */ implements 
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }
-    
-    public void getSubItems(CreativeModeTab tab, NonNullList<ItemStack> items) {
-        if (tab == ConfigItems.TABTC || tab == null /* SEARCH tab removed */) {
-            ItemStack w1 = new ItemStack(this);
-            EnumInfusionEnchantment.addInfusionEnchantment(w1, EnumInfusionEnchantment.ARCING, 2);
-            items.add(w1);
-        }
-        else {
-            super.getSubItems(tab, items);
-        }
-    }
-    
-    public Rarity getRarity(ItemStack itemstack) {
+public Rarity getRarity(ItemStack itemstack) {
         return Rarity.RARE;
     }
     

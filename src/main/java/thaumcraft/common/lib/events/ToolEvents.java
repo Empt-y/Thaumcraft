@@ -113,7 +113,7 @@ public class ToolEvents
                 List<EnumInfusionEnchantment> list = EnumInfusionEnchantment.getInfusionEnchantments(heldItem);
                 if (list.contains(EnumInfusionEnchantment.SOUNDING) && player.isCrouching()) {
                     heldItem.hurtAndBreak(5, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-                    event.getLevel().playSound(null, event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, SoundsTC.wandfail, SoundSource.BLOCKS, 0.2f, 0.2f + event.getLevel().getRandom().nextFloat() * 0.2f);
+                    event.getLevel().playSound(null, event.getPos().x + 0.5, event.getPos().getY() + 0.5, event.getPos().z + 0.5, SoundsTC.wandfail, SoundSource.BLOCKS, 0.2f, 0.2f + event.getLevel().getRandom().nextFloat() * 0.2f);
                     if (player instanceof ServerPlayer sp) {
                         PacketHandler.sendToPlayer(
                             new PacketFXScanSource(event.getPos(), EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldItem, EnumInfusionEnchantment.SOUNDING)),
@@ -190,7 +190,7 @@ public class ToolEvents
                 || (event.getState().is(BlocksTC.oreQuartz) && level.getRandom().nextFloat() < 0.05f);
             if (isVisOre) {
                 ItemStack nugget = new ItemStack(ItemsTC.nuggets, 1);
-                event.getDrops().add(new ItemEntity(level, event.getPos().getX() + 0.5, event.getPos().getY() + 0.5, event.getPos().getZ() + 0.5, nugget));
+                event.getDrops().add(new ItemEntity(level, event.getPos().x + 0.5, event.getPos().getY() + 0.5, event.getPos().z + 0.5, nugget));
             }
         }
         // Infusion enchantment processing

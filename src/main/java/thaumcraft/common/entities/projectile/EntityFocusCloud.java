@@ -116,7 +116,7 @@ public class EntityFocusCloud extends Entity
         if (ownerUniqueId != null) {
             nbt.putIntArray("OwnerUUID", net.minecraft.core.UUIDUtil.uuidToIntArray(ownerUniqueId));
         }
-        nbt.put("pack", focusPackage.serialize());
+        nbt.store("pack", net.minecraft.nbt.CompoundTag.CODEC, focusPackage.serialize());
     }
     
     public void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput nbt) {
@@ -125,7 +125,7 @@ public class EntityFocusCloud extends Entity
         setRadius(nbt.getFloatOr("Radius", 0.0f));
         ownerUniqueId = net.minecraft.core.UUIDUtil.uuidFromIntArray(nbt.getIntArray("OwnerUUID").orElse(new int[4]));
         try {
-            (focusPackage = new FocusPackage()).deserialize(nbt.getCompoundOrEmpty("pack"));
+            (focusPackage = new FocusPackage()).deserialize(nbt.read("pack", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag()));
         }
         catch (Exception ex) {}
     }

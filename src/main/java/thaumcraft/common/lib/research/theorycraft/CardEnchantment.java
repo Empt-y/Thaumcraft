@@ -31,7 +31,7 @@ public class CardEnchantment extends TheorycraftCard
     @Override
     public boolean activate(Player player, ResearchTableData data) {
         if (player.experienceLevel >= 5) {
-            player.addExperienceLevel(-5);
+            player.giveExperienceLevels(-5);
             data.addTotal("INFUSION", Mth.randomBetweenInclusive(player.getRandom(), 15, 20));
             data.addTotal("AUROMANCY", Mth.randomBetweenInclusive(player.getRandom(), 15, 20));
             return true;

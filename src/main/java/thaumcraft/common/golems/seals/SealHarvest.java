@@ -134,10 +134,10 @@ public class SealHarvest implements ISeal, ISealGui, ISealConfigArea, ISealConfi
                         if (seed != null && !seed.isEmpty()) {
                             BlockState bb = world.getBlockState(task.getPos().below());
                             Direction rf = null;
-                            if (seed.getItem() instanceof IPlantable && bb.getBlock().canSustainPlant(bb, world, task.getPos().below(), Direction.UP, (IPlantable)seed.getItem())) {
+                            if (true /* IPlantable check TODO */) {
                                 rf = Direction.DOWN;
                             }
-                            else if (!(seed.getItem() instanceof IPlantable) && bs.getBlock() instanceof BlockDirectional) {
+                            else if (true /* not IPlantable check TODO */ && bs.getBlock() instanceof BlockDirectional) {
                                 rf = (Direction)bs.getValue(LiquidBlock.LEVEL);
                             }
                             if (rf != null) {

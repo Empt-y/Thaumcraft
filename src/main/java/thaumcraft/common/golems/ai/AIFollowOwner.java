@@ -80,14 +80,14 @@ public class AIFollowOwner extends Goal
         this.timeToRecalcPath = timeToRecalcPath;
         if (timeToRecalcPath <= 0) {
             this.timeToRecalcPath = 10;
-            if (!petPathfinder.moveTo(theOwner, followSpeed) && !thePet.getLeashed() && thePet.distanceToSqr(theOwner.getX() + 0.5, theOwner.getY() + 0.5, theOwner.getZ() + 0.5) >= 144.0) {
+            if (!petPathfinder.moveTo(theOwner, followSpeed) && !thePet.isLeashed() && thePet.distanceToSqr(theOwner.getX() + 0.5, theOwner.getY() + 0.5, theOwner.getZ() + 0.5) >= 144.0) {
                 int i = Mth.floor(theOwner.getX()) - 2;
                 int j = Mth.floor(theOwner.getZ()) - 2;
                 int k = Mth.floor(theOwner.getBoundingBox().minY);
                 for (int l = 0; l <= 4; ++l) {
                     for (int i2 = 0; i2 <= 4; ++i2) {
                         if ((l < 1 || i2 < 1 || l > 3 || i2 > 3) && theWorld.getBlockState(new BlockPos(i + l, k - 1, j + i2)).isCollisionShapeFullBlock(null, null) && func_181065_a(new BlockPos(i + l, k, j + i2)) && func_181065_a(new BlockPos(i + l, k + 1, j + i2))) {
-                            thePet.moveTo(i + l + 0.5f, k, j + i2 + 0.5f, thePet.getYRot(), thePet.getXRot());
+                            thePet.setPos(i + l + 0.5f, k, j + i2 + 0.5f);
                             petPathfinder.stop();
                             return;
                         }

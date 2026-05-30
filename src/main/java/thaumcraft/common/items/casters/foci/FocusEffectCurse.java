@@ -64,7 +64,7 @@ public class FocusEffectCurse extends FocusEffect
             if (eff < 0) {
                 eff = 0;
             }
-            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(world.damageSources().indirectMagic((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
+            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(getPackage().world.damageSources().indirectMagic((((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()), damage);
             if (((net.minecraft.world.phys.EntityHitResult)target).getEntity() instanceof LivingEntity) {
                 ((LivingEntity)((net.minecraft.world.phys.EntityHitResult)target).getEntity()).addEffect(new MobEffectInstance(MobEffects.POISON, duration, Math.round((float)eff)));
                 float c = 0.85f;

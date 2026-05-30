@@ -77,7 +77,7 @@ public class PacketNote implements CustomPacketPayload
                     BlockEntity tile2 = level.getBlockEntity(new BlockPos(msg.x, msg.y, msg.z));
                     byte note = -1;
                     if (tile2 != null && tile2 instanceof net.minecraft.world.level.block.entity.NoteBlockBlockEntity) {
-                        note = (byte)((net.minecraft.world.level.block.entity.NoteBlockBlockEntity)tile2).getNote();
+                        note = (byte)0 /* NoteBlockBlockEntity.getNote() */;
                     }
                     else if (tile2 != null && tile2 instanceof TileArcaneEar) {
                         note = ((TileArcaneEar)tile2).note;
@@ -86,12 +86,12 @@ public class PacketNote implements CustomPacketPayload
                         final byte finalNote = note;
                         /* sendToAllAround stub */
                     }
-                    if (tile != null && tile instanceof net.minecraft.world.level.block.entity.NoteBlockBlockEntity) {
+                    if (tile2 != null && tile2 instanceof net.minecraft.world.level.block.entity.NoteBlockBlockEntity) {
                         // NoteBlockBlockEntity.setNote is not directly settable via a simple field in NeoForge 26.1.2
                         // TODO: verify correct API for setting note on NoteBlockBlockEntity client-side
                     }
-                    else if (tile != null && tile instanceof TileArcaneEar) {
-                        ((TileArcaneEar)tile).note = msg.note;
+                    else if (tile2 != null && tile2 instanceof TileArcaneEar) {
+                        ((TileArcaneEar)tile2).note = msg.note;
                     }
                 }
             }

@@ -47,13 +47,14 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
             return false;
         }
         if (!enchantment.toolClasses.contains("all")) {
-            Multimap<String, AttributeModifier> itemMods = central.getAttributeModifiers(EquipmentSlot.MAINHAND);
             boolean cool = false;
-            if (itemMods != null && itemMods.containsKey(Attributes.ATTACK_DAMAGE.getName()) && enchantment.toolClasses.contains("weapon")) {
+            // Modern MC: use item tags for tool class checks instead of Forge's old toolClasses system
+            if (central.getItem() instanceof net.minecraft.world.item.SwordItem && enchantment.toolClasses.contains("weapon")) {
                 cool = true;
             }
             if (!cool && central.getItem() instanceof net.minecraft.world.item.DiggerItem) {
-                Set<String> tcs = central.getItem().getToolClasses(central);
+                // TODO: tool class checking via tags
+                Set<String> tcs = new java.util.HashSet<>();
                 for (String tc : tcs) {
                     if (enchantment.toolClasses.contains(tc)) {
                         cool = true;
