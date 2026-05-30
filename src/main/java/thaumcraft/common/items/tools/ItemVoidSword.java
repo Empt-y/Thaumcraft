@@ -73,8 +73,8 @@ public class ItemVoidSword extends Item /* ItemSword removed */ implements IWarp
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
-        tooltip.add(ChatFormatting.GOLD + I18n.get("enchantment.special.sapless"));
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("enchantment.special.sapless")));
+        super.appendHoverText(stack, context, tooltip, flagIn);
     }
 }

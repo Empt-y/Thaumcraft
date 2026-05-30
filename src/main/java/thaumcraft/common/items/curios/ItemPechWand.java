@@ -36,8 +36,8 @@ public class ItemPechWand extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
-        tooltip.add(I18n.get("item.curio.text"));
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(net.minecraft.network.chat.Component.literal(I18n.get("item.curio.text")));
     }
     
     public InteractionResult use(Level worldIn, Player player, InteractionHand hand) {

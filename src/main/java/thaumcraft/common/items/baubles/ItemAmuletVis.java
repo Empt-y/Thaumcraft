@@ -67,7 +67,7 @@ public class ItemAmuletVis extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
-        tooltip.add(ChatFormatting.AQUA + I18n.get("item.amulet_vis.text"));
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.AQUA + I18n.get("item.amulet_vis.text")));
     }
 }

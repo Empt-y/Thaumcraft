@@ -80,14 +80,14 @@ public class ItemFortressArmor extends net.minecraft.world.item.Item implements 
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains("goggles")) {
-            tooltip.add(ChatFormatting.DARK_PURPLE + I18n.get("item.goggles.name"));
+            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.DARK_PURPLE + I18n.get("item.goggles.name")));
         }
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains("mask")) {
-            tooltip.add(ChatFormatting.GOLD + I18n.get("item.fortress_helm.mask." + stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getIntOr("mask", 0)));
+            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("item.fortress_helm.mask." + stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getIntOr("mask", 0))));
         }
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        super.appendHoverText(stack, context, tooltip, flagIn);
     }
     
     public boolean isValidRepairItem(ItemStack repairItem) {

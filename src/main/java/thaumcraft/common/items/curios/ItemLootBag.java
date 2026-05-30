@@ -38,9 +38,9 @@ public class ItemLootBag extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(I18n.get("tc.lootbag"));
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
+        tooltip.add(net.minecraft.network.chat.Component.literal(I18n.get("tc.lootbag")));
     }
     
     public InteractionResult use(Level world, Player player, InteractionHand hand) {

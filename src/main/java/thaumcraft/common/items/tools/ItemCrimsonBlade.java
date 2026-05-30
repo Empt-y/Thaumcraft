@@ -81,9 +81,9 @@ public class ItemCrimsonBlade extends Item /* ItemSword removed */ implements IW
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
-        tooltip.add(ChatFormatting.GOLD + I18n.get("enchantment.special.sapgreat"));
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("enchantment.special.sapgreat")));
+        super.appendHoverText(stack, context, tooltip, flagIn);
     }
     
     static {

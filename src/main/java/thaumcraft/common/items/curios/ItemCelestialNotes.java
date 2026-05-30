@@ -22,9 +22,9 @@ public class ItemCelestialNotes extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
         try {
-            tooltip.add(ChatFormatting.AQUA + I18n.get("item.celestial_notes." + getVariantNames()[stack.getDamageValue()] + ".text"));
+            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.AQUA + I18n.get("item.celestial_notes." + getVariantNames()[stack.getDamageValue()] + ".text")));
         }
         catch (Exception ex) {}
     }

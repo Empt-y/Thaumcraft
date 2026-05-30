@@ -27,11 +27,11 @@ public class BlockBannerTCItem extends BlockItem
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
         if (stack.has(DataComponents.CUSTOM_DATA)) {
             String tag = stack.get(DataComponents.CUSTOM_DATA).copyTag().getStringOr("aspect", "");
             if (!tag.isEmpty() && Aspect.getAspect(tag) != null) {
-                tooltip.add(Aspect.getAspect(tag).getName());
+                tooltip.add(net.minecraft.network.chat.Component.literal(Aspect.getAspect(tag).getName()));
             }
         }
     }

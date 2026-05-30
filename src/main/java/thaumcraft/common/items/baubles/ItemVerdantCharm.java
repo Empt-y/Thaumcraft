@@ -60,12 +60,12 @@ public class ItemVerdantCharm extends ItemTCBase implements IRechargable
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getByteOr("type", (byte)0) == 1) {
-            tooltip.add(ChatFormatting.GOLD + I18n.get("item.verdant_charm.life.text"));
+            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("item.verdant_charm.life.text")));
         }
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getByteOr("type", (byte)0) == 2) {
-            tooltip.add(ChatFormatting.GOLD + I18n.get("item.verdant_charm.sustain.text"));
+            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("item.verdant_charm.sustain.text")));
         }
     }
     

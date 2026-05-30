@@ -63,25 +63,25 @@ public class ItemGolemPlacer extends ItemTCBase implements ISealDisplayer
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains("props")) {
             IGolemProperties props = GolemProperties.fromLong(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getLongOr("props", 0L));
             if (props.hasTrait(EnumGolemTrait.SMART)) {
                 if (props.getRank() >= 10) {
-                    tooltip.add("§6" + I18n.get("golem.rank") + " " + props.getRank());
+                    tooltip.add(net.minecraft.network.chat.Component.literal("§6" + I18n.get("golem.rank") + " " + props.getRank()));
                 }
                 else {
                     int rx = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getIntOr("xp", 0);
                     int xn = (props.getRank() + 1) * (props.getRank() + 1) * 1000;
-                    tooltip.add("§6" + I18n.get("golem.rank") + " " + props.getRank() + " §2(" + rx + "/" + xn + ")");
+                    tooltip.add(net.minecraft.network.chat.Component.literal("§6" + I18n.get("golem.rank") + " " + props.getRank() + " §2(" + rx + "/" + xn + ")"));
                 }
             }
-            tooltip.add("§a" + props.getMaterial().getLocalizedName());
+            tooltip.add(net.minecraft.network.chat.Component.literal("§a" + props.getMaterial().getLocalizedName()));
             for (EnumGolemTrait tag : props.getTraits()) {
-                tooltip.add("§9-" + tag.getLocalizedName());
+                tooltip.add(net.minecraft.network.chat.Component.literal("§9-" + tag.getLocalizedName()));
             }
         }
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        super.appendHoverText(stack, context, tooltip, flagIn);
     }
     
     /* TODO: port to useOn(UseOnContext)

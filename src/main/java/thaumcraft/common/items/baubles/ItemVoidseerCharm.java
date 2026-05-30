@@ -36,9 +36,9 @@ public class ItemVoidseerCharm extends ItemTCBase implements IVisDiscountGear, I
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
-        tooltip.add(ChatFormatting.DARK_BLUE + "" + ChatFormatting.ITALIC + I18n.get("item.voidseer_charm.text"));
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.DARK_BLUE + "" + ChatFormatting.ITALIC + I18n.get("item.voidseer_charm.text")));
+        super.appendHoverText(stack, context, tooltip, flagIn);
     }
     
     public int getVisDiscount(ItemStack stack, Player player) {
