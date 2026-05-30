@@ -180,7 +180,7 @@ public class PlayerEvents
     }
     
     private static void handleMisc(Player player) {
-        if (player.level().dimension().location().hashCode() == ModConfig.CONFIG_WORLD.dimensionOuterId && player.tickCount % 20 == 0 && !player.isSpectator() && !player.getAbilities().instabuild && player.getAbilities().flying) {
+        if (player.level().dimension().identifier().hashCode() == ModConfig.CONFIG_WORLD.dimensionOuterId && player.tickCount % 20 == 0 && !player.isSpectator() && !player.getAbilities().instabuild && player.getAbilities().flying) {
             player.getAbilities().flying = false;
             player.sendSystemMessage(net.minecraft.network.chat.Component.literal("" + ChatFormatting.ITALIC + ChatFormatting.GRAY + I18n.get("tc.break.fly")));
         }
@@ -339,7 +339,7 @@ public class PlayerEvents
     
     @SubscribeEvent
     public static void droppedItem(ItemTossEvent event) {
-        CompoundTag itemData = event.getItemEntity().getEntityData();
+        CompoundTag itemData = event.getItemEntity().getPersistentData();
         itemData.putString("thrower", event.getEntity().getName().getString());
     }
     
@@ -353,7 +353,6 @@ public class PlayerEvents
                 event.getEntity().removeEffect(net.minecraft.core.Holder.direct(PotionUnnaturalHunger.instance));
                 if (duration > 0 && amp >= 0) {
                     pe = new MobEffectInstance(net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.wrapAsHolder(PotionUnnaturalHunger.instance), duration, amp, true, false);
-                    pe.addCurativeItem(new ItemStack(Items.ROTTEN_FLESH));
                     event.getEntity().addEffect(pe);
                 }
                 if (event.getEntity() instanceof net.minecraft.server.level.ServerPlayer) {
@@ -426,24 +425,7 @@ public class PlayerEvents
     
     @SubscribeEvent
     public static void onDeath(LivingDeathEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player)event.getEntity();
-            int slot = null /* call removed */;
-            if (slot >= 0) {
-                if (player instanceof net.minecraft.server.level.ServerPlayer) {
-                    net.minecraft.server.level.ServerPlayer entityplayermp = (net.minecraft.server.level.ServerPlayer)player;
-                    entityplayermp.addStat(Stats.getObjectUseStats(Items.TOTEM_OF_UNDYING));
-                    CriteriaTriggers.USED_TOTEM.trigger(entityplayermp.getBaubles(player).getItem(slot));
-                }
-                null /* call removed */.extractItem(slot, 1, false);
-                player.setHealth(1.0f);
-                player.removeAllEffects();
-                player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 900, 1));
-                player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1));
-                player.level().setEntityState(player, (byte)35);
-                event.setCanceled(true);
-            }
-        }
+        // baubles totem check removed - vanilla handles totem of undying
     }
     
     static {

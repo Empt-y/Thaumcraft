@@ -41,7 +41,7 @@ public class EntityFocusMine extends ThrowableProjectile
     }
     
     public EntityFocusMine(FocusPackage pack, Trajectory trajectory, boolean friendly) {
-        super(pack.world, pack.getCaster());
+        super(thaumcraft.api.entities.EntitiesTC.FOCUS_MINE.get(), pack.world);
         this.friendly = false;
         counter = 40;
         effects = null;
@@ -97,11 +97,7 @@ public class EntityFocusMine extends ThrowableProjectile
     
     public void tick() {
         super.tick();
-        if (pushOutOfBlocks(getX(), getY(), getZ())) {
-            setDeltaMovement(getDeltaMovement().x * 0.25, getDeltaMovement().y, getDeltaMovement().z);
-            setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y * 0.25, getDeltaMovement().z);
-            setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z * 0.25);
-        }
+        // pushOutOfBlocks removed in modern MC
         if (tickCount > 1200 || (!level().isClientSide() && getOwner() == null)) {
             discard();
         }
@@ -135,11 +131,11 @@ public class EntityFocusMine extends ThrowableProjectile
                             continue;
                         }
                         Vec3 epv = e.position().add(0.0, e.getBbHeight() / 2.0f, 0.0);
+                        final LivingEntity targetEntity = e;
                         ServerEvents.addRunnableServer(level(), new Runnable() {
                             @Override
                             public void run() {
-                                HitResult ray = null /* new HitResult removed */;
-                                ray.getLocation() = e.position().add(0.0, e.getBbHeight() / 2.0f, 0.0);
+                                net.minecraft.world.phys.EntityHitResult ray = new net.minecraft.world.phys.EntityHitResult(targetEntity);
                                 FocusEngine.runFocusPackage(focusPackage.copy(getOwner()), new Trajectory[] { new Trajectory(position(), epv.subtract(position()).normalize()) }, new HitResult[] { ray });
                             }
                         }, d++);

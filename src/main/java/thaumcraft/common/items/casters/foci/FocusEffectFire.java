@@ -55,22 +55,23 @@ public class FocusEffectFire extends FocusEffect
                 BlockPos pos = ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos();
                 pos = pos.relative(((net.minecraft.world.phys.BlockHitResult)target).getDirection());
                 if (getPackage().world.isEmptyBlock(pos) && getPackage().world.getRandom().nextFloat() < finalPower) {
-                    getPackage().world.playSound(null, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0f, getPackage().world.getRandom().nextFloat() * 0.4f + 0.8f);
+                    getPackage().world.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0f, getPackage().world.getRandom().nextFloat() * 0.4f + 0.8f);
                     getPackage().world.setBlock(pos, Blocks.FIRE.defaultBlockState(), 11);
                     return true;
                 }
             }
             return false;
         }
-        if (((net.minecraft.world.phys.EntityHitResult)target).getEntity().isImmuneToFire()) {
+        if (((net.minecraft.world.phys.EntityHitResult)target).getEntity().fireImmune()) {
             return false;
         }
         float fire = (float)(1 + getSettingValue("duration") * getSettingValue("duration"));
         float damage = getDamageForDisplay(finalPower);
         fire *= finalPower;
-        ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(new DamageSource("fireball", (((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)target).getEntity() : getPackage().getCaster(), getPackage().getCaster()).setFireDamage(), damage);
+        Entity hitEntity = ((net.minecraft.world.phys.EntityHitResult)target).getEntity();
+        hitEntity.hurt(getPackage().world.damageSources().fireball(null, getPackage().getCaster()), damage);
         if (fire > 0.0f) {
-            ((net.minecraft.world.phys.EntityHitResult)target).getEntity().setFire(Math.round(fire));
+            hitEntity.setRemainingFireTicks((int)(fire * 20));
         }
         return true;
     }
@@ -97,6 +98,6 @@ public class FocusEffectFire extends FocusEffect
     
     @Override
     public void onCast(Entity caster) {
-        caster.level().playSound(null, caster.blockPosition().above(), SoundEvents.ITEM_FIRECHARGE_USE, SoundSource.PLAYERS, 1.0f, 1.0f + (float)(caster.level().getRandom().nextGaussian() * 0.05000000074505806));
+        caster.level().playSound(null, caster.blockPosition().above(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0f, 1.0f + (float)(caster.level().getRandom().nextGaussian() * 0.05000000074505806));
     }
 }

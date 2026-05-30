@@ -26,7 +26,7 @@ public class EntityEldritchOrb extends ThrowableProjectile
         super(null, par1World);
         setOwner(p);
         setPos(p.getX(), p.getEyeY() - 0.1, p.getZ());
-        shoot(p, p.getXRot(), p.getYRot(), -5.0f, 0.75f, 0.0f);
+        shootFromRotation(p, p.getXRot(), p.getYRot(), -5.0f, 0.75f, 0.0f);
     }
     
     protected float getGravityVelocity() {
@@ -42,11 +42,13 @@ public class EntityEldritchOrb extends ThrowableProjectile
     
     protected void onImpact(HitResult mop) {
         if (!level().isClientSide() && getOwner() != null) {
-            List<Entity> list = level().getEntitiesOfClass(net.minecraft.world.entity.Entity.class, getOwner(), getBoundingBox().inflate(2.0, 2.0, 2.0));
+            Entity ownerEnt = getOwner();
+            float dmg = (ownerEnt instanceof LivingEntity le) ? (float)(le.getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.666) : 0.666f;
+            List<Entity> list = level().getEntities(this, getBoundingBox().inflate(2.0, 2.0, 2.0), e -> e != ownerEnt);
             for (int i = 0; i < list.size(); ++i) {
                 Entity entity1 = list.get(i);
                 if (entity1 != null && entity1 instanceof LivingEntity && !((LivingEntity)entity1).getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
-                    entity1.hurt(level().damageSources().indirectMagic(this, getOwner()), (float) getOwner() instanceof net.minecraft.world.entity.LivingEntity _le ? _le.getAttributeValue(Attributes.ATTACK_DAMAGE) : 1.0 * 0.666f);
+                    entity1.hurt(level().damageSources().indirectMagic(this, ownerEnt), dmg);
                     try {
                         ((LivingEntity)entity1).addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 160, 0));
                     }

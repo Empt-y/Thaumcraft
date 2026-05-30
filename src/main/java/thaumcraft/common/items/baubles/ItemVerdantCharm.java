@@ -75,15 +75,15 @@ public class ItemVerdantCharm extends ItemTCBase implements IRechargable
     public void onWornTick(ItemStack itemstack, LivingEntity player) {
         if (!player.level().isClientSide() && player.tickCount % 20 == 0 && player instanceof Player) {
             if (player.getEffect(MobEffects.WITHER) != null && RechargeHelper.consumeCharge(itemstack, player, 20)) {
-                player.removeMobEffectInstance(MobEffects.WITHER);
+                player.removeEffect(MobEffects.WITHER);
                 return;
             }
             if (player.getEffect(MobEffects.POISON) != null && RechargeHelper.consumeCharge(itemstack, player, 10)) {
-                player.removeMobEffectInstance(MobEffects.POISON);
+                player.removeEffect(MobEffects.POISON);
                 return;
             }
             if (player.getEffect(net.minecraft.core.Holder.direct(PotionFluxTaint.instance)) != null && RechargeHelper.consumeCharge(itemstack, player, 5)) {
-                player.removeEffect(net.minecraft.core.Holder.direct(net.minecraft.core.Holder.direct(PotionFluxTaint.instance)));
+                player.removeEffect(net.minecraft.core.Holder.direct(PotionFluxTaint.instance));
                 return;
             }
             if (!itemstack.isEmpty() && itemstack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getByteOr("type", (byte)0) == 1 && player.getHealth() < player.getMaxHealth() && RechargeHelper.consumeCharge(itemstack, player, 5)) {
@@ -91,12 +91,12 @@ public class ItemVerdantCharm extends ItemTCBase implements IRechargable
                 return;
             }
             if (!itemstack.isEmpty() && itemstack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getByteOr("type", (byte)0) == 2) {
-                if (player.getAir() < 100 && RechargeHelper.consumeCharge(itemstack, player, 1)) {
-                    player.setAir(300);
+                if (player.getAirSupply() < 100 && RechargeHelper.consumeCharge(itemstack, player, 1)) {
+                    player.setAirSupply(300);
                     return;
                 }
                 if (player instanceof Player && ((Player)player).canEat(false) && RechargeHelper.consumeCharge(itemstack, player, 1)) {
-                    ((Player)player).getFoodData().addStats(1, 0.3f);
+                    ((Player)player).getFoodData().eat(1, 0.3f);
                 }
             }
         }
