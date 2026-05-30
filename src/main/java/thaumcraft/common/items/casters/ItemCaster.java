@@ -113,7 +113,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
                 tot = 0.0f;
                 for (int xx = -1; xx <= 1; ++xx) {
                     for (int zz = -1; zz <= 1; ++zz) {
-                        tot += AuraHandler.getVis(player.level(), player.blockPosition().add(xx * 16, 0, zz * 16));
+                        tot += AuraHandler.getVis(player.level(), new net.minecraft.core.BlockPos(player.blockPosition().getX() + xx * 16, player.blockPosition().getY() + 0, player.blockPosition().getZ() + zz * 16));
                     }
                 }
                 break;
@@ -168,7 +168,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
                         }
                         for (int xx = -1; xx <= 1; ++xx) {
                             for (int zz = -1; zz <= 1; ++zz) {
-                                amount -= AuraHandler.drainVis(player.level(), player.blockPosition().add(xx * 16, 0, zz * 16), i, sim);
+                                amount -= AuraHandler.drainVis(player.level(), new net.minecraft.core.BlockPos(player.blockPosition().getX() + xx * 16, player.blockPosition().getY() + 0, player.blockPosition().getZ() + zz * 16), i, sim);
                                 if (amount <= 0.0f) {
                                     break Label_0309;
                                 }
@@ -215,7 +215,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
     @Override
     public void setFocus(ItemStack stack, ItemStack focus) {
         if (focus == null || focus.isEmpty()) {
-            stack.get().removeTag("focus");
+            { net.minecraft.nbt.CompoundTag _t = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.remove("focus"); if (!_t.isEmpty()) stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t)); else stack.remove(net.minecraft.core.component.DataComponents.CUSTOM_DATA); }
         }
         else {
             net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("focus", focus.saveAdditional(new CompoundTag())));
@@ -307,7 +307,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
                 break;
             }
         }
-        PacketHandler.sendToPlayer(new PacketAuraToClient(new AuraChunk(null, (net.minecraft.server.level.ServerPlayer)bv, cv, cf)), player);
+        PacketHandler.sendToPlayer(new PacketAuraToClient(new AuraChunk(null, bv, cv, cf)), player);
     }
     
     public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
@@ -328,7 +328,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
             for (IFocusElement fe : core.nodes) {
                 if (fe instanceof IFocusBlockPicker && player.isCrouching() && world.getBlockEntity(pos) == null) {
                     if (!world.isClientSide()) {
-                        ItemStack isout = new ItemStack(bs.getBlock(), 1, bs.getBlock());
+                        ItemStack isout = new ItemStack(bs.getBlock());
                         try {
                             if (bs.getBlock() != Blocks.AIR) {
                                 ItemStack is = BlockUtils.getSilkTouchDrop(bs);
@@ -363,7 +363,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
         double x = -Mth.cos((e.getYRot() - 0.5f) / 180.0f * 3.141593f) * 0.20000000298023224 * (mainhand ? 1 : -1);
         double z = -Mth.sin((e.getYRot() - 0.5f) / 180.0f * 3.141593f) * 0.30000001192092896 * (mainhand ? 1 : -1);
         Vec3 vl = e.getLookAngle();
-        v = v.add(getX(), e.getEyeHeight() - 0.4000000014901161, getZ());
+        v = v.add(x, e.getEyeHeight() - 0.4000000014901161, z);
         v = v.add(vl);
         return null /* new HitResult removed */;
     }

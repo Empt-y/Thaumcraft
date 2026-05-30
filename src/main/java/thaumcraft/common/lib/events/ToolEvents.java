@@ -14,7 +14,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -53,7 +52,7 @@ public class ToolEvents
 
     @SubscribeEvent
     public static void playerAttack(AttackEntityEvent event) {
-        Player player = event.getPlayer();
+        Player player = (Player) event.getEntity();
         if (player.getUsedItemHand() == null) {
             return;
         }
@@ -105,8 +104,8 @@ public class ToolEvents
 
     @SubscribeEvent
     public static void playerRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        if (!event.getLevel().isClientSide() && event.getPlayer() != null) {
-            Player player = event.getPlayer();
+        if (!event.getLevel().isClientSide() && event.getEntity() != null) {
+            Player player = event.getEntity();
             ItemStack heldItem = player.getItemInHand(
                 player.getUsedItemHand() == null ? InteractionHand.MAIN_HAND : player.getUsedItemHand()
             );
@@ -128,8 +127,8 @@ public class ToolEvents
 
     @SubscribeEvent
     public static void playerInteract(PlayerInteractEvent.LeftClickBlock event) {
-        if (event.getPlayer() != null) {
-            ToolEvents.lastFaceClicked.put(event.getPlayer().getId(), event.getFace());
+        if (event.getEntity() != null) {
+            ToolEvents.lastFaceClicked.put(event.getEntity().getId(), event.getFace());
         }
     }
 
@@ -179,7 +178,7 @@ public class ToolEvents
     @SubscribeEvent
     public static void harvestBlockEvent(net.neoforged.neoforge.event.level.BlockDropsEvent event) {
         Level level = event.getLevel();
-        boolean isSilk = event.getTool().getEnchantmentLevel(net.minecraft.core.registries.BuiltInRegistries.ENCHANTMENT.get(net.minecraft.resources.ResourceLocation.withDefaultNamespace("silk_touch"))) > 0;
+        boolean isSilk = false; /* TODO: check silk touch via enchantment API */
         // Vis nugget drop from ores
         if (!level.isClientSide() && !isSilk && event.getState().getBlock() != null) {
             boolean isVisOre = (event.getState().is(Blocks.DIAMOND_ORE) && level.getRandom().nextFloat() < 0.05f)
@@ -200,7 +199,7 @@ public class ToolEvents
             ItemStack heldItem = harvesterPlayer.getItemInHand(harvesterPlayer.getUsedItemHand());
             if (heldItem != null && !heldItem.isEmpty()) {
                 List<EnumInfusionEnchantment> list = EnumInfusionEnchantment.getInfusionEnchantments(heldItem);
-                boolean effectiveTool = isSilk || heldItem.getItem() instanceof net.minecraft.world.item.SwordItem || heldItem.getItem() instanceof net.minecraft.world.item.DiggerItem || heldItem.getItem() instanceof net.minecraft.world.item.HoeItem;
+                boolean effectiveTool = isSilk || !heldItem.isEmpty(); /* TODO: check if tool item */
                 if (effectiveTool) {
                     if (list.contains(EnumInfusionEnchantment.REFINING)) {
                         int fortune = 1 + EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldItem, EnumInfusionEnchantment.REFINING);

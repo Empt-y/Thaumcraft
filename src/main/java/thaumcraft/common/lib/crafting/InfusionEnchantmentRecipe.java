@@ -11,7 +11,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 // import net.minecraft.world.item.Item /* ArmorItem removed */; // removed
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TieredItem;
 // import net.minecraft.world.item.Item /* DiggerItem removed */;; // broken import
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.nbt.Tag;
@@ -53,7 +52,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
             if (central.getItem() instanceof net.minecraft.world.item.SwordItem && enchantment.toolClasses.contains("weapon")) {
                 cool = true;
             }
-            if (!cool && central.getItem() instanceof net.minecraft.world.item.TieredItem) {
+            if (!cool && !central.isEmpty() /* TODO: TieredItem check */) {
                 // TODO: tool class checking via tags
                 Set<String> tcs = new java.util.HashSet<>();
                 for (String tc : tcs) {
