@@ -2,7 +2,7 @@ package thaumcraft.common.lib.crafting;
 import java.util.ArrayList;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.DyeColor;
-// import net.minecraft.world.item.Item /* ArmorItem removed */; // removed
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 // import net.minecraft.world.item.crafting.RecipesArmorDyes; // removed
 import net.minecraft.world.level.Level;

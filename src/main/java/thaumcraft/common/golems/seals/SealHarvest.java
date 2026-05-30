@@ -200,7 +200,7 @@ public class SealHarvest implements ISeal, ISealGui, ISealConfigArea, ISealConfi
             long loc = nbttagcompound1.getLongOr("taskloc", 0L);
             byte face = nbttagcompound1.getByteOr("taskface", (byte)0);
             boolean farmland = nbttagcompound1.getBooleanOr("farmland", false);
-            ItemStack stack = net.minecraft.world.item.ItemStack.parseOptional(null, nbttagcompound1).orElse(ItemStack.EMPTY);
+            ItemStack stack = ItemStack.OPTIONAL_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, nbttagcompound1).result().orElse(ItemStack.EMPTY);
             replantTasks.put(loc, new ReplantInfo(BlockPos.of(loc), Direction.values()[face], 0, stack, farmland));
         }
     }
@@ -215,7 +215,7 @@ public class SealHarvest implements ISeal, ISealGui, ISealConfigArea, ISealConfi
                 nbttagcompound1.putLong("taskloc", info.pos.asLong());
                 nbttagcompound1.putByte("taskface", (byte)info.face.ordinal());
                 nbttagcompound1.putBoolean("farmland", info.farmland);
-                info.stack.saveAdditional(nbttagcompound1);
+                { net.minecraft.nbt.Tag _tag = ItemStack.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, info.stack).getOrThrow(); if (_tag instanceof net.minecraft.nbt.CompoundTag _ct) nbttagcompound1.merge(_ct); }
                 nbttaglist.add(nbttagcompound1);
             }
             nbt.put("replant", nbttaglist);

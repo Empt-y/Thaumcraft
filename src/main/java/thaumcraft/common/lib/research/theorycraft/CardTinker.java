@@ -28,14 +28,14 @@ public class CardTinker extends TheorycraftCard
     @Override
     public CompoundTag serialize() {
         CompoundTag nbt = super.serialize();
-        nbt.put("stack", stack.serializeNBT());
+        nbt.put("stack", (net.minecraft.nbt.CompoundTag) ItemStack.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, stack).getOrThrow());
         return nbt;
     }
     
     @Override
     public void deserialize(CompoundTag nbt) {
         super.deserialize(nbt);
-        stack = new ItemStack(nbt.getCompoundOrEmpty("stack"));
+        stack = ItemStack.OPTIONAL_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, nbt.getCompoundOrEmpty("stack")).result().orElse(ItemStack.EMPTY);
     }
     
     @Override

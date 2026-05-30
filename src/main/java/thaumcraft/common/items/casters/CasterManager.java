@@ -325,25 +325,25 @@ public class CasterManager
     
     public static void setAreaX(ItemStack stack, int area) {
         if (!stack.isEmpty()) {
-            stack.putInt("areax", area);
+            {net.minecraft.nbt.CompoundTag _t = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.putInt("areax", area); stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t));}
         }
     }
     
     public static void setAreaY(ItemStack stack, int area) {
         if (!stack.isEmpty()) {
-            stack.putInt("areay", area);
+            {net.minecraft.nbt.CompoundTag _t = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.putInt("areay", area); stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t));}
         }
     }
     
     public static void setAreaZ(ItemStack stack, int area) {
         if (!stack.isEmpty()) {
-            stack.putInt("areaz", area);
+            {net.minecraft.nbt.CompoundTag _t = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.putInt("areaz", area); stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t));}
         }
     }
     
     public static void setAreaDim(ItemStack stack, int dim) {
         if (!stack.isEmpty()) {
-            stack.putInt("aread", dim);
+            {net.minecraft.nbt.CompoundTag _t = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.putInt("aread", dim); stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t));}
         }
     }
     

@@ -63,12 +63,12 @@ public class ItemMagicDust extends ItemTCBase
         v2 = v2.subtract(v1);
         for (int cnt = 50, a = 0; a < cnt; ++a) {
             boolean floaty = a < cnt / 3;
-            float r = Mth.floor(world.getRandom(), 255, 255) / 255.0f;
-            float g = Mth.floor(world.getRandom(), 189, 255) / 255.0f;
-            float b = Mth.floor(world.getRandom(), 64, 255) / 255.0f;
-            FXDispatcher.INSTANCE.drawSimpleSparkle(world.getRandom(), v1.x, v1.y, v1.z, v2.x / 6.0 + random.nextGaussian() * 0.05, v2.y / 6.0 + random.nextGaussian() * 0.05 + (floaty ? 0.05 : 0.15), v2.z / 6.0 + random.nextGaussian() * 0.05, 0.5f, r, g, b, net.minecraft.util.RandomSource.create().nextInt(5), floaty ? (0.3f + net.minecraft.util.RandomSource.create().nextFloat() * 0.5f) : 0.85f, floaty ? 0.2f : 0.5f, 16);
+            float r = Mth.randomBetweenInclusive(world.getRandom(), 255, 255) / 255.0f;
+            float g = Mth.randomBetweenInclusive(world.getRandom(), 189, 255) / 255.0f;
+            float b = Mth.randomBetweenInclusive(world.getRandom(), 64, 255) / 255.0f;
+            FXDispatcher.INSTANCE.drawSimpleSparkle(world.getRandom(), v1.x, v1.y, v1.z, v2.x / 6.0 + world.getRandom().nextGaussian() * 0.05, v2.y / 6.0 + world.getRandom().nextGaussian() * 0.05 + (floaty ? 0.05 : 0.15), v2.z / 6.0 + world.getRandom().nextGaussian() * 0.05, 0.5f, r, g, b, net.minecraft.util.RandomSource.create().nextInt(5), floaty ? (0.3f + net.minecraft.util.RandomSource.create().nextFloat() * 0.5f) : 0.85f, floaty ? 0.2f : 0.5f, 16);
         }
-        world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundsTC.dust, SoundSource.PLAYERS, 0.33f, 1.0f + (float)random.nextGaussian() * 0.05f, false);
+        world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundsTC.dust, SoundSource.PLAYERS, 0.33f, 1.0f + (float)world.getRandom().nextGaussian() * 0.05f, false);
         List<BlockPos> sparkles = trigger.sparkle(world, player, pos, place);
         if (sparkles != null) {
             Vec3 v3 = new Vec3(pos).add(hitX, hitY, hitZ);

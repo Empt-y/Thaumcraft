@@ -42,7 +42,7 @@ public class ItemCurio extends ItemTCBase
     }
     
     public InteractionResult use(Level worldIn, Player player, InteractionHand hand) {
-        worldIn.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundsTC.learn, SoundSource.NEUTRAL, 0.5f, 0.4f / (ItemCurio.getRandom().nextFloat() * 0.4f + 0.8f));
+        worldIn.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundsTC.learn, SoundSource.NEUTRAL, 0.5f, 0.4f / (net.minecraft.util.RandomSource.create().nextFloat() * 0.4f + 0.8f));
         if (!worldIn.isClientSide()) {
             int oProg = IPlayerKnowledge.EnumKnowledgeType.OBSERVATION.getProgression();
             int tProg = IPlayerKnowledge.EnumKnowledgeType.THEORY.getProgression();

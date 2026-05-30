@@ -83,7 +83,7 @@ public class ItemElementalSword extends Item /* ItemSword removed */ implements 
     }
     
     public InteractionResult use(Level worldIn, Player playerIn, InteractionHand hand) {
-        playerIn.setActiveHand(hand);
+        playerIn.startUsingItem(hand);
         return InteractionResult.SUCCESS;
     }
     

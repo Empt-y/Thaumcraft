@@ -75,7 +75,7 @@ public class ItemElementalAxe extends Item /* ItemAxe removed */ implements ITha
     }
     
     public InteractionResult use(Level worldIn, Player playerIn, InteractionHand hand) {
-        playerIn.setActiveHand(hand);
+        playerIn.startUsingItem(hand);
         return InteractionResult.SUCCESS;
     }
     

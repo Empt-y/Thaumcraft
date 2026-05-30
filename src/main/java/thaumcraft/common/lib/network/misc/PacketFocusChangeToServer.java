@@ -1,4 +1,6 @@
+
 package thaumcraft.common.lib.network.misc;
+import net.minecraft.server.level.ServerLevel;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;

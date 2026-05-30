@@ -160,7 +160,7 @@ public class EntityEvents
                 }
             }
         } else {
-            if (!entity.level().isClientSide() && entity.getHealth() < 2.0f && !entity.getType() == net.minecraft.world.entity.MobType.UNDEAD && !!entity.isAlive()
+            if (!entity.level().isClientSide() && entity.getHealth() < 2.0f && !entity.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD) && !!entity.isAlive()
                     && !(entity instanceof EntityOwnedConstruct) && !(entity instanceof ITaintedMob)
                     && entity.hasEffect(net.minecraft.core.Holder.direct(PotionFluxTaint.instance))
                     && entity.getRandom().nextBoolean()) {

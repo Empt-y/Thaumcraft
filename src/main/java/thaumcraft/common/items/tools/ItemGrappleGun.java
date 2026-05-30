@@ -64,7 +64,7 @@ public class ItemGrappleGun extends ItemTCBase implements IRechargable
             entityGrapple2.getZ() += pz + vl.y;
             if (world.addFreshEntity(grapple)) {
                 RechargeHelper.consumeCharge(player.getItemInHand(hand), player, 1);
-                player.getItemInHand(hand).setTagInfo("loaded", net.minecraft.nbt.ByteTag.valueOf((byte)1));
+                { ItemStack _s = player.getItemInHand(hand); net.minecraft.nbt.CompoundTag _t = _s.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.putByte("loaded", (byte)1); _s.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t)); }
             }
         }
         return InteractionResult.SUCCESS;

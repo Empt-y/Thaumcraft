@@ -43,11 +43,11 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
                         /* TODO: port to NetworkHooks.openScreen */ 
                     }
                 }
-                return InteractionResult.sidedSuccess(worldIn.isClientSide());
+                return InteractionResult.SUCCESS;
             }
             if (playerIn.isCrouching() && ThaumcraftCapabilities.knowsResearch(playerIn, "GOLEMLOGISTICS")) {
                 /* TODO: port to NetworkHooks.openScreen */ 
-                return InteractionResult.sidedSuccess(worldIn.isClientSide());
+                return InteractionResult.SUCCESS;
             }
         }
         else {

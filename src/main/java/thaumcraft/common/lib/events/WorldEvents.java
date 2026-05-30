@@ -20,7 +20,7 @@ public class WorldEvents
     @SubscribeEvent
     public static void worldLoad(net.neoforged.neoforge.event.level.LevelEvent.Load event) {
         if (!event.getLevel().isClientSide()) {
-            AuraHandler.addAuraWorld(event.getLevel().dimension().identifier().hashCode() /* getDimension removed */);
+            AuraHandler.addAuraWorld(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */);
         }
     }
     
@@ -34,8 +34,8 @@ public class WorldEvents
         if (event.getLevel().isClientSide()) {
             return;
         }
-        SealHandler.sealEntities.remove(event.getLevel().dimension().identifier().hashCode() /* getDimension removed */);
-        AuraHandler.removeAuraWorld(event.getLevel().dimension().identifier().hashCode() /* getDimension removed */);
+        SealHandler.sealEntities.remove(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */);
+        AuraHandler.removeAuraWorld(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */);
     }
     
     @SubscribeEvent
@@ -61,12 +61,12 @@ public class WorldEvents
         if (event.getLevel().isClientSide()) {
             return;
         }
-        if (!TileArcaneEar.noteBlockEvents.containsKey(event.getLevel().dimension().identifier().hashCode() /* getDimension removed */)) {
-            TileArcaneEar.noteBlockEvents.put(event.getLevel().dimension().identifier().hashCode() /* getDimension removed */, new ArrayList<Integer[]>());
+        if (!TileArcaneEar.noteBlockEvents.containsKey(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */)) {
+            TileArcaneEar.noteBlockEvents.put(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */, new ArrayList<Integer[]>());
         }
-        ArrayList<Integer[]> list = TileArcaneEar.noteBlockEvents.get(event.getLevel().dimension().identifier().hashCode() /* getDimension removed */);
+        ArrayList<Integer[]> list = TileArcaneEar.noteBlockEvents.get(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */);
         list.add(new Integer[] { event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), event.getInstrument().ordinal(), event.getVanillaNoteId() });
-        TileArcaneEar.noteBlockEvents.put(event.getLevel().dimension().identifier().hashCode() /* getDimension removed */, list);
+        TileArcaneEar.noteBlockEvents.put(event.getLevel() instanceof net.minecraft.world.level.Level _l ? _l.dimension().identifier().hashCode() : 0 /* getDimension removed */, list);
     }
     
     static {

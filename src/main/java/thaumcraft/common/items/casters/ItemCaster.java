@@ -195,7 +195,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
     public ItemFocus getFocus(ItemStack stack) {
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains("focus")) {
             CompoundTag nbt = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompoundOrEmpty("focus");
-            ItemStack fs = net.minecraft.world.item.ItemStack.parseOptional(null, nbt).orElse(ItemStack.EMPTY);
+            ItemStack fs = ItemStack.OPTIONAL_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, nbt).result().orElse(ItemStack.EMPTY);
             if (fs != null && !fs.isEmpty()) {
                 return (ItemFocus)fs.getItem();
             }
@@ -207,7 +207,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
     public ItemStack getFocusStack(ItemStack stack) {
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains("focus")) {
             CompoundTag nbt = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompoundOrEmpty("focus");
-            return net.minecraft.world.item.ItemStack.parseOptional(null, nbt).orElse(ItemStack.EMPTY);
+            return ItemStack.OPTIONAL_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, nbt).result().orElse(ItemStack.EMPTY);
         }
         return null;
     }
@@ -391,7 +391,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
             player.swing(hand);
             return InteractionResult.SUCCESS;
         }
-        return InteractionResult.sidedSuccess(world.isClientSide());
+        return InteractionResult.SUCCESS;
     }
     
     public int getMaxItemUseDuration(ItemStack itemstack) {

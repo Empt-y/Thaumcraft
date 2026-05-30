@@ -132,7 +132,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
             if (!input.isEmpty()) {
                 base += input.getByteOr("TC.WARP", (byte)0);
             }
-            out.setTagInfo("TC.WARP", net.minecraft.nbt.ByteTag.valueOf((byte)base));
+            { net.minecraft.nbt.CompoundTag _t = out.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.putByte("TC.WARP", (byte)base); out.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t)); }
         }
         EnumInfusionEnchantment.addInfusionEnchantment(out, enchantment, cl + 1);
         return out;

@@ -27,6 +27,5 @@ public class TileJar extends TileThaumcraft
     }
 
     static {
-        TileJar.getRandom() = new Random();
     }
 }

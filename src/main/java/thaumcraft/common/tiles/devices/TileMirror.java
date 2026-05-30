@@ -303,7 +303,7 @@ public class TileMirror extends TileThaumcraft implements Container
         for (int i = 0; i < nbttaglist.size(); ++i) {
             CompoundTag nbttagcompound1 = nbttaglist.getCompoundOrEmpty(i);
             byte b0 = nbttagcompound1.getByteOr("Slot", (byte)0);
-            outputStacks.add(net.minecraft.world.item.ItemStack.parseOptional(null, nbttagcompound1).orElse(ItemStack.EMPTY));
+            outputStacks.add(ItemStack.OPTIONAL_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, nbttagcompound1).result().orElse(ItemStack.EMPTY));
         }
     }
     
@@ -314,7 +314,7 @@ public class TileMirror extends TileThaumcraft implements Container
             if (outputStacks.get(i) != null && outputStacks.get(i).getCount() > 0) {
                 CompoundTag nbttagcompound1 = new CompoundTag();
                 nbttagcompound1.putByte("Slot", (byte)i);
-                outputStacks.get(i).saveAdditional(nbttagcompound1);
+                { net.minecraft.nbt.Tag _tag = ItemStack.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, outputStacks.get(i)).getOrThrow(); if (_tag instanceof net.minecraft.nbt.CompoundTag _ct) nbttagcompound1.merge(_ct); }
                 nbttaglist.add(nbttagcompound1);
             }
         }

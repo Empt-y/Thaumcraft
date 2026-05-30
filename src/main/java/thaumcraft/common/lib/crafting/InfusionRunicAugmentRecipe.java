@@ -53,7 +53,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe
         }
         ItemStack out = input.copy();
         int base = PlayerEvents.getRunicCharge(input) + 1;
-        out.setTagInfo("TC.RUNIC", net.minecraft.nbt.ByteTag.valueOf((byte)base));
+        { net.minecraft.nbt.CompoundTag _t = out.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.putByte("TC.RUNIC", (byte)base); out.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t)); }
         return out;
     }
     

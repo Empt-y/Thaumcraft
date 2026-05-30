@@ -35,7 +35,7 @@ public class ItemSanitySoap extends ItemTCBase
     }
     
     public InteractionResult use(Level p_77659_2_, Player player, InteractionHand hand) {
-        player.setActiveHand(hand);
+        player.startUsingItem(hand);
         return InteractionResult.SUCCESS;
     }
     

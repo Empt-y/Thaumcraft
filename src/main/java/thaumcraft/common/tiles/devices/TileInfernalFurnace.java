@@ -154,7 +154,7 @@ public class TileInfernalFurnace extends TileThaumcraftInventory
     }
     
     private void destroyItem() {
-        getLevel().playLocalSound(getBlockPos(), SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.3f, 2.6f + (random.nextFloat() - random.nextFloat()) * 0.8f, false);
+        getLevel().playLocalSound(getBlockPos(), SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.3f, 2.6f + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.8f, false);
         // spawnParticle removed
     }
     
@@ -196,7 +196,7 @@ public class TileInfernalFurnace extends TileThaumcraftInventory
         ArrayList<ItemStack> out = new ArrayList<ItemStack>();
         for (ThaumcraftApi.SmeltBonus bonus : CommonInternals.smeltingBonus) {
             if (bonus.in instanceof ItemStack) {
-                if (in.getItem() != ((ItemStack)bonus.in).getItem() || (in.getDamageValue() != ((ItemStack)bonus.in).getDamageValue() && ((ItemStack)bonus.in).getDamageValue() != 32767) || random.nextFloat() > bonus.chance) {
+                if (in.getItem() != ((ItemStack)bonus.in).getItem() || (in.getDamageValue() != ((ItemStack)bonus.in).getDamageValue() && ((ItemStack)bonus.in).getDamageValue() != 32767) || level.getRandom().nextFloat() > bonus.chance) {
                     continue;
                 }
                 ItemStack is = bonus.out.copy();
@@ -227,7 +227,7 @@ public class TileInfernalFurnace extends TileThaumcraftInventory
             if (getLevel().isClientSide()) {
                 for (int a = 0; a < 5; ++a) {
                     FXDispatcher.INSTANCE.furnaceLavaFx(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), facingX, facingZ);
-                    getLevel().playLocalSound(getBlockPos(), SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.1f + random.nextFloat() * 0.1f, 0.9f + random.nextFloat() * 0.15f, false);
+                    getLevel().playLocalSound(getBlockPos(), SoundEvents.LAVA_POP, SoundSource.BLOCKS, 0.1f + level.getRandom().nextFloat() * 0.1f, 0.9f + level.getRandom().nextFloat() * 0.15f, false);
                 }
             }
             return true;

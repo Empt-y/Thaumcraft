@@ -51,7 +51,7 @@ public class ItemPechWand extends ItemTCBase
         if (!player.getAbilities().instabuild) {
             player.getItemInHand(hand).shrink(1);
         }
-        worldIn.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundsTC.learn, SoundSource.NEUTRAL, 0.5f, 0.4f / (ItemPechWand.getRandom().nextFloat() * 0.4f + 0.8f));
+        worldIn.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundsTC.learn, SoundSource.NEUTRAL, 0.5f, 0.4f / (net.minecraft.util.RandomSource.create().nextFloat() * 0.4f + 0.8f));
         if (!worldIn.isClientSide()) {
             if (!knowledge.isResearchKnown("FOCUSPECH")) {
                 ThaumcraftApi.internalMethods.progressResearch(player, "FOCUSPECH");

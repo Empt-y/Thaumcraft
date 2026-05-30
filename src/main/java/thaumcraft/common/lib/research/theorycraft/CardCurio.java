@@ -25,14 +25,14 @@ public class CardCurio extends TheorycraftCard
     @Override
     public CompoundTag serialize() {
         CompoundTag nbt = super.serialize();
-        nbt.put("stack", curio.serializeNBT());
+        nbt.put("stack", (net.minecraft.nbt.CompoundTag) ItemStack.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, curio).getOrThrow());
         return nbt;
     }
     
     @Override
     public void deserialize(CompoundTag nbt) {
         super.deserialize(nbt);
-        curio = new ItemStack(nbt.getCompoundOrEmpty("stack"));
+        curio = ItemStack.OPTIONAL_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, nbt.getCompoundOrEmpty("stack")).result().orElse(ItemStack.EMPTY);
     }
     
     @Override
