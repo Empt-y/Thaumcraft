@@ -82,7 +82,7 @@ public class SealBreaker extends SealFiltered implements ISealConfigArea, ISealC
                 if (ts != null && !ts.isEmpty()) {
                     ItemStack fs = BlockUtils.getSilkTouchDrop(bs);
                     if (fs == null || !fs.isEmpty()) {
-                        fs = new ItemStack(bs.getBlock(), 1, getToggles()[0].value ? bs.getBlock() : 32767);
+                        fs = new ItemStack(bs.getBlock(), 1);
                     }
                     if (!getToggles()[0].value) {
                         fs.setDamageValue(32767);

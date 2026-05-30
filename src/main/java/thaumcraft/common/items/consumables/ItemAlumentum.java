@@ -25,7 +25,7 @@ public class ItemAlumentum extends ItemTCBase
         player.playSound(SoundEvents.EGG_THROW, 0.3f, 0.4f / (net.minecraft.util.RandomSource.create().nextFloat() * 0.4f + 0.8f));
         if (!world.isClientSide()) {
             EntityAlumentum alumentum = new EntityAlumentum(world, player);
-            alumentum.shoot(player, player.getXRot(), player.getYRot(), -5.0f, 0.4f, 2.0f);
+            alumentum.shootFromRotation(player, player.getXRot(), player.getYRot(), -5.0f, 0.4f, 2.0f);
             world.addFreshEntity(alumentum);
         }
         return InteractionResult.SUCCESS;

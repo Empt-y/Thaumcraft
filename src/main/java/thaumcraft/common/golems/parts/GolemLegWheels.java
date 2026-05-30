@@ -17,7 +17,7 @@ public class GolemLegWheels implements GolemLeg.ILegFunction
     @Override
     public void onUpdateTick(IGolemAPI golem) {
         if (golem.getGolemWorld().isClientSide()) {
-            double dist = golem.getGolemEntity().distanceTo(golem.getGolemEntity().xOld, golem.getGolemEntity().yOld, golem.getGolemEntity().zOld);
+            double dist = Math.sqrt(golem.getGolemEntity().distanceToSqr(golem.getGolemEntity().xOld, golem.getGolemEntity().yOld, golem.getGolemEntity().zOld));
             float lastRot = 0.0f;
             if (GolemLegWheels.ani.containsKey(golem.getGolemEntity().getId())) {
                 lastRot = GolemLegWheels.ani.get(golem.getGolemEntity().getId());

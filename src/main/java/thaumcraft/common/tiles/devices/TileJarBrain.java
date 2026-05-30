@@ -29,7 +29,7 @@ public class TileJarBrain extends TileJar
     long lastsigh;
 
     public TileJarBrain(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(type, pos, state);
         xp = 0;
         xpMax = 2000;
         eatDelay = 0;

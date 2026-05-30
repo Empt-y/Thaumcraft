@@ -76,7 +76,7 @@ public class SealProvide extends SealFiltered implements ISealConfigToggles
                     if (pr2.getLinkedTask() != null) {
                         continue;
                     }
-                    if ((pr2.getSeal() == null || pr2.getSeal().getSealPos().pos.distSqr(seal.getSealPos().pos) >= 4096.0) && (pr2.getEntity() == null || seal.getSealPos().pos.distSqr(pr2.getEntity().getX(), pr2.getEntity().getY(), pr2.getEntity().getZ()) >= 4096.0) && (pr2.getPos() == null || seal.getSealPos().pos.distSqr(pr2.getPos()) >= 4096.0)) {
+                    if ((pr2.getSeal() == null || pr2.getSeal().getSealPos().pos.distSqr(seal.getSealPos().pos) >= 4096.0) && (pr2.getEntity() == null || seal.getSealPos().pos.distToCenterSqr(pr2.getEntity().position()) >= 4096.0) && (pr2.getPos() == null || seal.getSealPos().pos.distSqr(pr2.getPos()) >= 4096.0)) {
                         continue;
                     }
                     NonNullList<ItemStack> stacks = NonNullList.withSize(1, pr2.getStack());

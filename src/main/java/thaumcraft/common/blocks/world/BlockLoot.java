@@ -18,11 +18,11 @@ import thaumcraft.common.lib.utils.Utils;
 public class BlockLoot extends BlockTC
 {
     LootType type;
-    Random rand;
+    net.minecraft.util.RandomSource rand;
     
     public BlockLoot(Object mat /* Material removed */, String name, LootType type) {
         super(mat, name);
-        rand = new Random();
+        rand = net.minecraft.util.RandomSource.create();
         setHardness(0.15f);
         setResistance(0.0f);
         this.type = type;

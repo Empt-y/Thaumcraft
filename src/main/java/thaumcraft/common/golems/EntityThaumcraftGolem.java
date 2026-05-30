@@ -239,10 +239,10 @@ public class EntityThaumcraftGolem extends EntityOwnedConstruct implements IGole
     public int getTotalArmorValue() {
         int armor = getProperties().getMaterial().armor;
         if (getProperties().hasTrait(EnumGolemTrait.ARMORED)) {
-            0 /* armor field removed */ = (int)Math.max(0 /* armor field removed */ * 1.5, 0 /* armor field removed */ + 1);
+            armor = (int)Math.max(armor * 1.5, armor + 1);
         }
         if (getProperties().hasTrait(EnumGolemTrait.FRAGILE)) {
-            0 /* armor field removed */ *= (int)0.75;
+            armor = (int)(armor * 0.75);
         }
         return armor;
     }

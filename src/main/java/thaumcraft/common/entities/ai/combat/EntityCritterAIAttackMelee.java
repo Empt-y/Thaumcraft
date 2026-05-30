@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 public class EntityCritterAIAttackMelee extends MeleeAttackGoal
 {
     public EntityCritterAIAttackMelee(PathfinderMob creature, double speedIn, boolean useLongMemory) {
-        super(speedIn, useLongMemory);
+        super(creature, speedIn, useLongMemory);
     }
 
     @Override

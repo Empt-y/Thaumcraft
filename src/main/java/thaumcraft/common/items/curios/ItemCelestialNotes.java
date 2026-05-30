@@ -16,10 +16,7 @@ public class ItemCelestialNotes extends ItemTCBase
         super("celestial_notes", "sun", "stars_1", "stars_2", "stars_3", "stars_4", "moon_1", "moon_2", "moon_3", "moon_4", "moon_5", "moon_6", "moon_7", "moon_8");
     }
     
-    @Override
-    public String getDescriptionId() {
-        return "item.celestial_notes";
-    }
+    // getDescriptionId() is final in Item - can't override
     
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {

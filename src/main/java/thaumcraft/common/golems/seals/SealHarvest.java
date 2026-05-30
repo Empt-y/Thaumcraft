@@ -118,7 +118,7 @@ public class SealHarvest implements ISeal, ISealGui, ISealConfigArea, ISealConfi
             Direction face = Direction.NORTH;
             BlockState bs = world.getBlockState(task.getPos());
             if (CropUtils.clickableCrops.contains(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(bs.getBlock()).toString())) {
-                bs.useWithoutItem(world, task.getPos(), new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(task.getPos()), face, task.getPos(), false));
+                bs.useWithoutItem(world, fp, new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(task.getPos()), face, task.getPos(), false));
                 golem.addRankXp(1);
                 golem.swing();
             }

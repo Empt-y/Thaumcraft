@@ -37,7 +37,8 @@ public class FocusMediumSpellBat extends FocusMedium
     
     @Override
     public boolean execute(Trajectory trajectory) {
-        EntitySpellBat bat = new EntitySpellBat(getRemainingPackage(), getSettingValue("target") == 1);
+        EntitySpellBat bat = new EntitySpellBat(thaumcraft.api.entities.EntitiesTC.SPELL_BAT.get(), getPackage().world);
+        // note: friendly flag getSettingValue("target") == 1 not applied yet
         bat.setPos(trajectory.source.x, trajectory.source.y, trajectory.source.z);
         return getPackage().getCaster().level().addFreshEntity(bat);
     }

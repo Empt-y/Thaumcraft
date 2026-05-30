@@ -41,7 +41,7 @@ public class BlockPavingStone extends BlockTC
     }
 
     public BlockEntity createBlockEntity(Level world, BlockState state) {
-        return (state.getBlock() == BlocksTC.pavingStoneBarrier) ? new TileBarrierStone() : null;
+        return (state.getBlock() == BlocksTC.pavingStoneBarrier) ? new TileBarrierStone(null, pos, state) : null;
     }
 
     public void stepOn(Level worldIn, BlockPos pos, BlockState state, Entity e) {

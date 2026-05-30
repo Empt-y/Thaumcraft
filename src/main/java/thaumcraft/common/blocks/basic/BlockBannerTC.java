@@ -82,7 +82,7 @@ public class BlockBannerTC extends BlockTC implements EntityBlock
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new TileBanner();
+        return new TileBanner(null, pos, state);
     }
 
     public boolean onBlockActivated(Level w, BlockPos pos, BlockState state, Player p, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {

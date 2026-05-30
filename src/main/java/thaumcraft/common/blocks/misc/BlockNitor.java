@@ -31,7 +31,7 @@ public class BlockNitor extends BlockTC implements EntityBlock
 
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-        return new TileNitor();
+        return new TileNitor(null, pos, state);
     }
     
     public boolean hasBlockEntity(BlockState state) {

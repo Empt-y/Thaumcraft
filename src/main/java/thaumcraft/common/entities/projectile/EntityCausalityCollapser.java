@@ -48,7 +48,7 @@ public class EntityCausalityCollapser extends ThrowableProjectile
     
     protected void onImpact(HitResult par1HitResult) {
         if (!level().isClientSide()) {
-            level().explode(this, getX(), getY(), getZ(), 2.0f, true);
+            level().explode(this, getX(), getY(), getZ(), 2.0f, true, net.minecraft.world.level.Level.ExplosionInteraction.TNT);
             List<EntityFluxRift> list = EntityUtils.getEntitiesInRange(level(), getX(), getY(), getZ(), this, EntityFluxRift.class, 3.0);
             for (EntityFluxRift fr : list) {
                 fr.setCollapse(true);

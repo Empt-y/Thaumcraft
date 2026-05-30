@@ -102,7 +102,7 @@ public class EntityFollowingItem extends EntitySpecialItem
                 noPhysics = false;
             }
             if (level().isClientSide()) {
-                float h = (float)((getBoundingBox().maxY - getBoundingBox().minY) / 2.0) + Mth.sin(getAge() / 10.0f + hoverStart) * 0.1f + 0.1f;
+                float h = (float)((getBoundingBox().maxY - getBoundingBox().minY) / 2.0) + Mth.sin(getAge() / 10.0f) * 0.1f + 0.1f;
                 if (type != 10) {
                     FXDispatcher.INSTANCE.drawNitorCore((float) xo + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.125f, (float) yo + h + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.125f, (float) zo + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.125f, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582, getRandom().nextGaussian() * 0.009999999776482582);
                 }

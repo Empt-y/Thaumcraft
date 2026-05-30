@@ -39,7 +39,9 @@ public class EntitySpecialItem extends ItemEntity
         }
     }
     
-    public boolean attackEntityFrom(DamageSource source, float damage) {
-        return !source.is(net.minecraft.tags.DamageTypeTags.IS_EXPLOSION) && super.hurt(source, damage);
+    @Override
+    public boolean hurtServer(net.minecraft.server.level.ServerLevel level, DamageSource source, float damage) {
+        if (source.is(net.minecraft.tags.DamageTypeTags.IS_EXPLOSION)) return false;
+        return super.hurtServer(level, source, damage);
     }
 }

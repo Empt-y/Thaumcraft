@@ -164,18 +164,19 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
     }
     
     @Override
-    public void discard() {
+    public void remove(RemovalReason reason) {
         int i = getSize();
-        if (!level().isClientSide() && i > 1 && getHealth() <= 0.0f) {
+        if (!level().isClientSide() && i > 1 && getHealth() <= 0.0f && reason == RemovalReason.KILLED) {
             for (int k = 0; k < i; ++k) {
                 float f = (k % 2 - 0.5f) * i / 4.0f;
                 float f2 = (k / 2 - 0.5f) * i / 4.0f;
                 EntityThaumicSlime entityslime = createInstance();
-                                entityslime.setPos(getX() + f, getY() + 0.5, getZ() + f2); entityslime.setYRot(getRandom().nextFloat() * 360.0f);
+                entityslime.setPos(getX() + f, getY() + 0.5, getZ() + f2);
+                entityslime.setYRot(getRandom().nextFloat() * 360.0f);
                 level().addFreshEntity(entityslime);
             }
         }
-        discard();
+        super.remove(reason);
     }
     
     @Override

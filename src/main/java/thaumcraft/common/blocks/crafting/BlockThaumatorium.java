@@ -31,7 +31,7 @@ public class BlockThaumatorium extends BlockTCDevice implements IBlockFacingHori
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return top ? new TileThaumatoriumTop() : new TileThaumatorium();
+        return top ? new TileThaumatoriumTop(null, pos, state) : new TileThaumatorium(null, pos, state);
     }
 
     public boolean isOpaqueCube(BlockState state) {

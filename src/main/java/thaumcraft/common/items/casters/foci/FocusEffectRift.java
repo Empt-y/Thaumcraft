@@ -78,7 +78,7 @@ public class FocusEffectRift extends FocusEffect
     
     public static boolean createHole(Level world, BlockPos pos, Direction side, byte count, int max) {
         BlockState bs = world.getBlockState(pos);
-        if (!world.isClientSide() && world.getBlockEntity(pos) == null && !BlockUtils.isPortableHoleBlackListed(bs) && bs.getBlock() != Blocks.BEDROCK && bs.getBlock() != BlocksTC.hole && (bs.getBlock().isAir() || !bs.getBlock().canSurvive(world.getBlockState(pos), world, pos)) && bs.getDestroySpeed(null, net.minecraft.core.BlockPos.ZERO) != -1.0f) {
+        if (!world.isClientSide() && world.getBlockEntity(pos) == null && !BlockUtils.isPortableHoleBlackListed(bs) && bs.getBlock() != Blocks.BEDROCK && bs.getBlock() != BlocksTC.hole && (bs.isAir() || !bs.isSolid()) && bs.getDestroySpeed(null, net.minecraft.core.BlockPos.ZERO) != -1.0f) {
             if (world.setBlockAndUpdate(pos, BlocksTC.hole.defaultBlockState())) {
                 TileHole ts = (TileHole)world.getBlockEntity(pos);
                 ts.oldblock = bs;

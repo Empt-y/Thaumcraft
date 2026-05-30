@@ -25,7 +25,7 @@ public class ItemCausalityCollapser extends ItemTCBase
         player.playSound(SoundEvents.EGG_THROW, 0.3f, 0.4f / (net.minecraft.util.RandomSource.create().nextFloat() * 0.4f + 0.8f));
         if (!world.isClientSide()) {
             EntityCausalityCollapser proj = new EntityCausalityCollapser(world, player);
-            proj.shoot(player, player.getXRot(), player.getYRot(), -5.0f, 0.8f, 2.0f);
+            proj.shootFromRotation(player, player.getXRot(), player.getYRot(), -5.0f, 0.8f, 2.0f);
             world.addFreshEntity(proj);
         }
         return InteractionResult.SUCCESS;

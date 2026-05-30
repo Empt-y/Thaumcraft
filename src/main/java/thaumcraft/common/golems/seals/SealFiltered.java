@@ -34,7 +34,15 @@ public abstract class SealFiltered implements ISeal, ISealGui, ISealConfigFilter
     
     @Override
     public void readCustomNBT(CompoundTag nbt) {
-        net.minecraft.world.ContainerHelper.loadAllItems(nbt, filter = NonNullList.withSize(getFilterSize(), ItemStack.EMPTY));
+        filter = NonNullList.withSize(getFilterSize(), ItemStack.EMPTY);
+        net.minecraft.nbt.ListTag filterItems = nbt.getListOrEmpty("FilterItems");
+        for (int i = 0; i < filterItems.size(); i++) {
+            net.minecraft.nbt.CompoundTag slotTag = filterItems.getCompoundOrEmpty(i);
+            int slot = slotTag.getByteOr("Slot", (byte)0) & 255;
+            if (slot >= 0 && slot < filter.size()) {
+                filter.set(slot, net.minecraft.world.item.ItemStack.OPTIONAL_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, slotTag).result().orElse(ItemStack.EMPTY));
+            }
+        }
         for (ItemStack s : filter) {
             if (s.getCount() > 1) {
                 s.setCount(1);
@@ -54,7 +62,17 @@ public abstract class SealFiltered implements ISeal, ISealGui, ISealConfigFilter
     
     @Override
     public void writeCustomNBT(CompoundTag nbt) {
-        net.minecraft.world.ContainerHelper.saveAllItems(nbt, filter);
+        net.minecraft.nbt.ListTag filterItems = new net.minecraft.nbt.ListTag();
+        for (int i = 0; i < filter.size(); i++) {
+            ItemStack s = filter.get(i);
+            if (!s.isEmpty()) {
+                net.minecraft.nbt.CompoundTag slotTag = new net.minecraft.nbt.CompoundTag();
+                slotTag.putByte("Slot", (byte)i);
+                net.minecraft.world.item.ItemStack.OPTIONAL_CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, s).result().ifPresent(tag -> { if (tag instanceof net.minecraft.nbt.CompoundTag ct) slotTag.merge(ct); });
+                filterItems.add(slotTag);
+            }
+        }
+        nbt.put("FilterItems", filterItems);
         nbt.putBoolean("bl", blacklist);
         ListTag nbttaglist = new ListTag();
         for (int i = 0; i < filterSize.size(); ++i) {
