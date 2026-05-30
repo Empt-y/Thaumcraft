@@ -13,6 +13,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemThaumiumShovel extends ShovelItem implements IThaumcraftItems
 {
     public ItemThaumiumShovel(ToolMaterial enumtoolmaterial) {
+        super(enumtoolmaterial, -3, -1.0f, new net.minecraft.world.item.Item.Properties());
         // Entity requires EntityType; use factory method
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

@@ -60,7 +60,9 @@ public class EntityRiftBlast extends ThrowableProjectile
     
     protected void onImpact(HitResult mop) {
         if (!level().isClientSide() && getOwner() != null && mop.getType() == HitResult.Type.ENTITY) {
-            ((net.minecraft.world.phys.EntityHitResult)mop).getEntity().hurt(level().damageSources().indirectMagic(this, getOwner()), (float) getOwner() instanceof net.minecraft.world.entity.LivingEntity _le ? _le.getAttributeValue(Attributes.ATTACK_DAMAGE) : 1.0 * (red ? 1.0f : 0.6f));
+            Entity ownerEnt = getOwner();
+            float dmg = (ownerEnt instanceof net.minecraft.world.entity.LivingEntity le) ? (float)(le.getAttributeValue(Attributes.ATTACK_DAMAGE) * (red ? 1.0f : 0.6f)) : (red ? 1.0f : 0.6f);
+            ((net.minecraft.world.phys.EntityHitResult)mop).getEntity().hurt(level().damageSources().indirectMagic(this, ownerEnt), dmg);
         }
         playSound(SoundsTC.shock, 1.0f, 1.0f + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
         if (level().isClientSide()) {

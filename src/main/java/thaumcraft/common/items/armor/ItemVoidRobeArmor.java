@@ -34,15 +34,8 @@ import thaumcraft.common.items.IThaumcraftItems;
 
 public class ItemVoidRobeArmor extends net.minecraft.world.item.Item implements IVisDiscountGear, IGoggles, IRevealer, IWarpingGear, IThaumcraftItems
 {
-    HumanoidModel model1;
-    HumanoidModel model2;
-    HumanoidModel model;
-
     public ItemVoidRobeArmor(String name, Object enumarmormaterial, int j, EquipmentSlot k) {
         super(new net.minecraft.world.item.Item.Properties());
-        model1 = null;
-        model2 = null;
-        model = null;
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
 
@@ -102,17 +95,6 @@ public class ItemVoidRobeArmor extends net.minecraft.world.item.Item implements 
 
     public int getVisDiscount(ItemStack stack, Player player) {
         return 5;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public HumanoidModel getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel _default) {
-        if (model1 == null) {
-            model1 = new ModelRobe();
-        }
-        if (model2 == null) {
-            model2 = new ModelRobe();
-        }
-        return model = CustomArmorHelper.getCustomArmorModel(entityLiving, itemStack, armorSlot, model, model1, model2);
     }
 
     public boolean hasColor(ItemStack stack1) {

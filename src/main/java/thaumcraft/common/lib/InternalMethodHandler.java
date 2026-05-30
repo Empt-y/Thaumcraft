@@ -46,13 +46,13 @@ public class InternalMethodHandler implements IInternalMethodHandler
         }
         pw.add(type, amount);
         if (type == IPlayerWarp.EnumWarpType.PERMANENT) {
-            PacketHandler.sendToPlayer(new PacketWarpMessage(player, (net.minecraft.server.level.ServerPlayer)(byte)0, amount), (net.minecraft.server.level.ServerPlayer)player);
+            PacketHandler.sendToPlayer(new PacketWarpMessage(player, (byte)0, amount), (net.minecraft.server.level.ServerPlayer)player);
         }
         if (type == IPlayerWarp.EnumWarpType.NORMAL) {
-            PacketHandler.sendToPlayer(new PacketWarpMessage(player, (net.minecraft.server.level.ServerPlayer)(byte)1, amount), (net.minecraft.server.level.ServerPlayer)player);
+            PacketHandler.sendToPlayer(new PacketWarpMessage(player, (byte)1, amount), (net.minecraft.server.level.ServerPlayer)player);
         }
         if (type == IPlayerWarp.EnumWarpType.TEMPORARY) {
-            PacketHandler.sendToPlayer(new PacketWarpMessage(player, (net.minecraft.server.level.ServerPlayer)(byte)2, amount), (net.minecraft.server.level.ServerPlayer)player);
+            PacketHandler.sendToPlayer(new PacketWarpMessage(player, (byte)2, amount), (net.minecraft.server.level.ServerPlayer)player);
         }
         if (amount > 0) {
             pw.setCounter(pw.get(IPlayerWarp.EnumWarpType.TEMPORARY) + pw.get(IPlayerWarp.EnumWarpType.PERMANENT) + pw.get(IPlayerWarp.EnumWarpType.NORMAL));

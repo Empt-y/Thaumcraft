@@ -18,15 +18,8 @@ import thaumcraft.common.items.IThaumcraftItems;
 
 public class ItemCultistLeaderArmor extends net.minecraft.world.item.Item implements IThaumcraftItems
 {
-    HumanoidModel model1;
-    HumanoidModel model2;
-    HumanoidModel model;
-    
     public ItemCultistLeaderArmor(String name, int j, EquipmentSlot k) {
         super(new net.minecraft.world.item.Item.Properties());
-        model1 = null;
-        model2 = null;
-        model = null;
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     
@@ -63,14 +56,4 @@ public class ItemCultistLeaderArmor extends net.minecraft.world.item.Item implem
         return ItemStack.isSameItem(repairItem, new ItemStack(Items.IRON_INGOT)) || false;
     }
     
-    @OnlyIn(Dist.CLIENT)
-    public HumanoidModel getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel _default) {
-        if (model1 == null) {
-            model1 = new ModelLeaderArmor(1.0f);
-        }
-        if (model2 == null) {
-            model2 = new ModelLeaderArmor(0.5f);
-        }
-        return model = CustomArmorHelper.getCustomArmorModel(entityLiving, itemStack, armorSlot, model, model1, model2);
-    }
 }

@@ -11,7 +11,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemThaumiumHoe extends HoeItem implements IThaumcraftItems
 {
     public ItemThaumiumHoe(ToolMaterial enumtoolmaterial) {
-        // Entity requires EntityType; use factory method
+        super(enumtoolmaterial, -3, -1.0f, new net.minecraft.world.item.Item.Properties());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     

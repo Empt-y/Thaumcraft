@@ -30,7 +30,7 @@ public class EntityFollowingItem extends EntitySpecialItem
         targetX = 0.0;
         targetY = 0.0;
         targetZ = 0.0;
-        type = 3;
+        this.type = 3;
         target = null;
         age = 20;
         gravity = 0.03999999910593033;
@@ -63,7 +63,7 @@ public class EntityFollowingItem extends EntitySpecialItem
         targetX = 0.0;
         targetY = 0.0;
         targetZ = 0.0;
-        type = 3;
+        this.type = 3;
         target = null;
         age = 20;
         gravity = 0.03999999910593033;

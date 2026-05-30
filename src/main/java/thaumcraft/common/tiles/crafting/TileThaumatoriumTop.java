@@ -250,4 +250,14 @@ public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContai
     public boolean isEmpty() {
         return thaumatorium.isEmpty();
     }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int slot, net.minecraft.world.item.ItemStack itemStack, @javax.annotation.Nullable net.minecraft.core.Direction direction) {
+        return false;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int slot, net.minecraft.world.item.ItemStack itemStack, net.minecraft.core.Direction direction) {
+        return false;
+    }
 }
