@@ -1,0 +1,72 @@
+package thaumcraft.api.research.theorycraft;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+
+
+public class CardInspired extends TheorycraftCard {
+	
+	String cat = null;
+	int amt;
+	
+	@Override
+	public CompoundTag serialize() {
+		CompoundTag nbt = super.serialize();
+		nbt.putString("cat", cat);
+		nbt.putInt("amt", amt);
+		return nbt;
+	}
+
+	@Override
+	public void deserialize(CompoundTag nbt) {
+		super.deserialize(nbt);
+		cat = nbt.getStringOr("cat", "");
+		amt = nbt.getIntOr("amt", 0);
+	}
+	
+	@Override
+	public String getResearchCategory() {
+		return cat;
+	}
+	
+	@Override
+	public boolean initialize(Player player, ResearchTableData data) { 
+		if (data.categoryTotals.size()<1) return false;
+		int hVal=0;
+		String hKey="";
+		for (String category:data.categoryTotals.keySet()) {
+			int q = data.getTotal(category);
+			if (q>hVal) {
+				hVal = q;
+				hKey = category;
+			}
+		}
+		cat=hKey;
+		amt = 10 + (hVal / 2);
+		return true;
+	}
+
+	@Override
+	public int getInspirationCost() {
+		return 2;
+	}
+	
+	@Override
+	public String getLocalizedName() {
+		return Component.translatable("card.inspired.name").getString();
+	}
+	
+	@Override
+	public String getLocalizedText() {
+		return Component.translatable("card.inspired.text", amt, ChatFormatting.BOLD+Component.translatable("tc.research_category."+cat).getString()+ChatFormatting.RESET).getString();
+	}
+	
+	@Override
+	public boolean activate(Player player, ResearchTableData data) {
+		data.addTotal(cat, amt);
+		return true;
+	}
+	
+	
+}

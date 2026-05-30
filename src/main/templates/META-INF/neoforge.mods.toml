@@ -1,0 +1,25 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "${mod_license}"
+
+[[mods]]
+    modId = "${mod_id}"
+    version = "${mod_version}"
+    displayName = "${mod_name}"
+    description = '''
+Thaumcraft - the art of combining magic with technology. Discover the mysteries of vis and essentia, research new knowledge, and craft magical tools of incredible power.
+'''
+
+[[dependencies.thaumcraft]]
+    modId = "neoforge"
+    type = "required"
+    versionRange = "[21.1,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.thaumcraft]]
+    modId = "minecraft"
+    type = "required"
+    versionRange = "[${minecraft_version},)"
+    ordering = "NONE"
+    side = "BOTH"

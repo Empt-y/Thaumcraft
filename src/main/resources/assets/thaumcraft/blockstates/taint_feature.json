@@ -1,0 +1,30 @@
+{
+    "variants": {
+        "facing=up": {
+            "model": "thaumcraft:block/taint_orb_0"
+        },
+        "facing=down": {
+            "model": "thaumcraft:block/taint_orb_0",
+            "x": 180
+        },
+        "facing=north": {
+            "model": "thaumcraft:block/taint_orb_0",
+            "x": 90
+        },
+        "facing=south": {
+            "model": "thaumcraft:block/taint_orb_0",
+            "x": 90,
+            "y": 180
+        },
+        "facing=east": {
+            "model": "thaumcraft:block/taint_orb_0",
+            "x": 90,
+            "y": 90
+        },
+        "facing=west": {
+            "model": "thaumcraft:block/taint_orb_0",
+            "x": 90,
+            "y": 270
+        }
+    }
+}

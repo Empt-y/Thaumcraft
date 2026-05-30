@@ -1,0 +1,59 @@
+package thaumcraft.common.entities.projectile;
+import java.util.Iterator;
+import java.util.List;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
+import thaumcraft.client.fx.FXDispatcher;
+import thaumcraft.common.entities.EntityFluxRift;
+import thaumcraft.common.lib.utils.EntityUtils;
+
+
+public class EntityCausalityCollapser extends ThrowableProjectile
+{
+    @Override
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
+        }
+
+    public EntityCausalityCollapser(net.minecraft.world.entity.EntityType<? extends EntityCausalityCollapser> type, Level par1World) {
+        super(type, par1World);
+    }
+    
+    public EntityCausalityCollapser(Level par1World, LivingEntity par2Mob) {
+        super(null, par1World);
+        setOwner(par2Mob);
+        setPos(par2Mob.getX(), par2Mob.getEyeY() - 0.1, par2Mob.getZ());
+    }
+    
+    public EntityCausalityCollapser(Level par1World, double par2, double par4, double par6) {
+        super(null, par1World);
+    }
+    
+    public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
+        super.shoot(x, y, z, 0.8f, inaccuracy);
+    }
+    
+    public void tick() {
+        super.tick();
+        if (level().isClientSide()) {
+            for (double i = 0.0; i < 3.0; ++i) {
+                double coeff = i / 3.0;
+                FXDispatcher.INSTANCE.drawAlumentum((float)(xo + (getX() - xo) * coeff), (float)(yo + (getY() - yo) * coeff) + getBbHeight() / 2.0f, (float)(zo + (getZ() - zo) * coeff), 0.0125f * (random.nextFloat() - 0.5f), 0.0125f * (random.nextFloat() - 0.5f), 0.0125f * (random.nextFloat() - 0.5f), 0.8f + random.nextFloat() * 0.2f, 0.3f + random.nextFloat() * 0.1f, random.nextFloat() * 0.1f, 0.5f, 4.0f);
+                FXDispatcher.INSTANCE.drawGenericParticles(getX() + random.nextGaussian() * 0.20000000298023224, getY() + random.nextGaussian() * 0.20000000298023224, getZ() + random.nextGaussian() * 0.20000000298023224, 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.7f, false, 448, 8, 1, 8, 0, 0.3f, 0.0f, 1);
+            }
+        }
+    }
+    
+    protected void onImpact(HitResult par1HitResult) {
+        if (!level().isClientSide()) {
+            level().explode(this, getX(), getY(), getZ(), 2.0f, true);
+            List<EntityFluxRift> list = EntityUtils.getEntitiesInRange(world, getX(), getY(), getZ(), this, EntityFluxRift.class, 3.0);
+            for (EntityFluxRift fr : list) {
+                fr.setCollapse(true);
+            }
+            discard();
+        }
+    }
+}

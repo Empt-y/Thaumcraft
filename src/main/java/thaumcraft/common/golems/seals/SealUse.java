@@ -1,0 +1,194 @@
+package thaumcraft.common.golems.seals;
+import java.util.Random;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import thaumcraft.api.ThaumcraftInvHelper;
+import thaumcraft.api.golems.EnumGolemTrait;
+import thaumcraft.api.golems.GolemHelper;
+import thaumcraft.api.golems.IGolemAPI;
+import thaumcraft.api.golems.seals.ISealConfigToggles;
+import thaumcraft.api.golems.seals.ISealEntity;
+import thaumcraft.api.golems.tasks.Task;
+import thaumcraft.common.golems.GolemInteractionHelper;
+import thaumcraft.common.golems.client.gui.SealBaseContainer;
+import thaumcraft.common.golems.client.gui.SealBaseGUI;
+import thaumcraft.common.golems.tasks.TaskHandler;
+import thaumcraft.common.lib.utils.InventoryUtils;
+
+
+public class SealUse extends SealFiltered implements ISealConfigToggles
+{
+    int delay;
+    int watchedTask;
+    Identifier icon;
+    protected SealToggle[] props;
+    
+    public SealUse() {
+        delay = new Random(System.nanoTime()).nextInt(49);
+        watchedTask = Integer.MIN_VALUE;
+        icon = Identifier.fromNamespaceAndPath("thaumcraft", "items/seals/seal_use");
+        props = new SealToggle[] { new SealToggle(true, "pmeta", "golem.prop.meta"), new SealToggle(true, "pnbt", "golem.prop.nbt"), new SealToggle(false, "pore", "golem.prop.ore"), new SealToggle(false, "pmod", "golem.prop.mod"), new SealToggle(false, "pleft", "golem.prop.left"), new SealToggle(false, "pempty", "golem.prop.empty"), new SealToggle(false, "pemptyhand", "golem.prop.emptyhand"), new SealToggle(false, "psneak", "golem.prop.sneak"), new SealToggle(false, "ppro", "golem.prop.provision.wl") };
+    }
+    
+    @Override
+    public String getKey() {
+        return "thaumcraft:use";
+    }
+    
+    @Override
+    public void tickSeal(Level world, ISealEntity seal) {
+        if (delay++ % 5 != 0) {
+            return;
+        }
+        Task oldTask = TaskHandler.getTask((world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0), watchedTask);
+        if (oldTask == null || oldTask.isSuspended() || oldTask.isCompleted()) {
+            if (getToggles()[5].value != world.isEmptyBlock(seal.getSealPos().pos)) {
+                return;
+            }
+            Task task = new Task(seal.getSealPos(), seal.getSealPos().pos);
+            task.setPriority(seal.getPriority());
+            TaskHandler.addTask((world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0), task);
+            watchedTask = task.getId();
+        }
+    }
+    
+    @Override
+    public void onTaskStarted(Level world, IGolemAPI golem, Task task) {
+    }
+    
+    public boolean mayPlace(Level world, Block blockIn, BlockPos pos, Direction side) {
+        BlockState block = world.getBlockState(pos);
+        AABB axisalignedbb = blockIn.getBoundingBox(blockIn.defaultBlockState(), world, pos);
+        return axisalignedbb == null || world.noCollision(axisalignedbb);
+    }
+    
+    @Override
+    public boolean onTaskCompletion(Level world, IGolemAPI golem, Task task) {
+        if (getToggles()[5].value == world.isEmptyBlock(task.getPos())) {
+            ItemStack clickStack = golem.getCarrying().get(0);
+            if (!filter.get(0).isEmpty()) {
+                clickStack = InventoryUtils.findFirstMatchFromFilter(filter, filterSize, blacklist, golem.getCarrying(), new ThaumcraftInvHelper.InvFilter(!props[0].value, !props[1].value, props[2].value, props[3].value));
+            }
+            if (!clickStack.isEmpty() || props[6].value) {
+                ItemStack ss = ItemStack.EMPTY;
+                if (!clickStack.isEmpty()) {
+                    ss = clickStack.copy();
+                    golem.dropItem(clickStack.copy());
+                }
+                GolemInteractionHelper.golemClick(world, golem, task.getPos(), task.getSealPos().face, props[6].value ? ItemStack.EMPTY : ss, props[7].value, !getToggles()[4].value);
+            }
+        }
+        task.setSuspended(true);
+        return true;
+    }
+    
+    private void dropSomeItems(FakePlayer fp2, IGolemAPI golem) {
+        for (int i = 0; i < fp2.getInventory().getContainerSize(); ++i) {
+            if (!fp2.getInventory().getItem(i).isEmpty()) {
+                if (golem.canCarry(fp2.getInventory().getItem(i), true)) {
+                    fp2.getInventory().setItem(i, golem.holdItem(fp2.getInventory().getItem(i)));
+                }
+                if (!fp2.getInventory().getItem(i).isEmpty() && fp2.getInventory().getItem(i).getCount() > 0) {
+                    InventoryUtils.dropItemAtEntity(golem.getGolemWorld(), fp2.getInventory().getItem(i), golem.getGolemEntity());
+                }
+                fp2.getInventory().setItem(i, ItemStack.EMPTY);
+            }
+        }
+        for (int i = 0; i < fp2.getInventory().armor.size(); ++i) {
+            if (!fp2.getInventory().getItem(36 + i).isEmpty()) {
+                if (golem.canCarry(fp2.getInventory().getItem(36 + i), true)) {
+                    fp2.getInventory().armor.set(i, golem.holdItem(fp2.getInventory().getItem(36 + i)));
+                }
+                if (!fp2.getInventory().getItem(i).isEmpty() && fp2.getInventory().getItem(36 + i).getCount() > 0) {
+                    InventoryUtils.dropItemAtEntity(golem.getGolemWorld(), fp2.getInventory().getItem(36 + i), golem.getGolemEntity());
+                }
+                fp2.getInventory().armor.set(i, ItemStack.EMPTY);
+            }
+        }
+    }
+    
+    @Override
+    public boolean canGolemPerformTask(IGolemAPI golem, Task task) {
+        if (!props[6].value) {
+            boolean found = !InventoryUtils.findFirstMatchFromFilter(filter, filterSize, blacklist, golem.getCarrying(), new ThaumcraftInvHelper.InvFilter(!props[0].value, !props[1].value, props[2].value, props[3].value)).isEmpty();
+            if (!found && getToggles()[8].value && !blacklist && getInv().get(0) != null) {
+                ISealEntity se = SealHandler.getSealEntity(golem.getGolemWorld().dimension().identifier().hashCode() /* getDimension removed */, task.getSealPos());
+                if (se != null) {
+                    ItemStack stack = getInv().get(0).copy();
+                    if (!props[0].value) {
+                        stack.setDamageValue(32767);
+                    }
+                    GolemHelper.requestProvisioning(golem.getGolemWorld(), se, stack);
+                }
+            }
+            return found;
+        }
+        return true;
+    }
+    
+    @Override
+    public void onTaskSuspension(Level world, Task task) {
+    }
+    
+    @Override
+    public boolean canPlaceAt(Level world, BlockPos pos, Direction side) {
+        return true;
+    }
+    
+    @Override
+    public Identifier getSealIcon() {
+        return icon;
+    }
+    
+    @Override
+    public void onRemoval(Level world, BlockPos pos, Direction side) {
+    }
+    
+    @Override
+    public Object returnContainer(Level world, Player player, BlockPos pos, Direction side, ISealEntity seal) {
+        return new SealBaseContainer(player.getInventory(), world, seal);
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public Object returnGui(Level world, Player player, BlockPos pos, Direction side, ISealEntity seal) {
+        return new thaumcraft.common.golems.client.gui.SealBaseGUI(new thaumcraft.common.golems.client.gui.SealBaseContainer(player.getInventory(), world, seal), player.getInventory(), net.minecraft.network.chat.Component.empty());
+    }
+    
+    @Override
+    public int[] getGuiCategories() {
+        return new int[] { 1, 3, 0, 4 };
+    }
+    
+    @Override
+    public EnumGolemTrait[] getRequiredTags() {
+        return new EnumGolemTrait[] { EnumGolemTrait.DEFT, EnumGolemTrait.SMART };
+    }
+    
+    @Override
+    public EnumGolemTrait[] getForbiddenTags() {
+        return null;
+    }
+    
+    @Override
+    public SealToggle[] getToggles() {
+        return props;
+    }
+    
+    @Override
+    public void setToggle(int indx, boolean value) {
+        props[indx].setValue(value);
+    }
+}

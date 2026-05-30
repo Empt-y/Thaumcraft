@@ -1,0 +1,102 @@
+package thaumcraft.common.blocks.crafting;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.redstone.Orientation;
+import thaumcraft.api.blocks.BlocksTC;
+import thaumcraft.common.blocks.BlockTCDevice;
+import thaumcraft.common.blocks.IBlockFacingHorizontal;
+import thaumcraft.common.tiles.crafting.TileThaumatorium;
+import thaumcraft.common.tiles.crafting.TileThaumatoriumTop;
+
+
+public class BlockThaumatorium extends BlockTCDevice implements IBlockFacingHorizontal
+{
+    boolean top;
+
+    public BlockThaumatorium(boolean top) {
+        super(null /*  null   Material removed    */, null, top ? "thaumatorium_top" : "thaumatorium");
+        setSoundType(SoundType.METAL);
+        this.top = top;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return top ? new TileThaumatoriumTop() : new TileThaumatorium();
+    }
+
+    public boolean isOpaqueCube(BlockState state) {
+        return false;
+    }
+
+    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
+        return null;
+    }
+
+    public boolean isFullCube(BlockState state) {
+        return false;
+    }
+
+    public RenderShape getRenderShape(BlockState state) {
+        return top ? RenderShape.INVISIBLE : RenderShape.MODEL;
+    }
+
+    public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
+        if (!world.isClientSide() && !player.isCrouching()) {
+            if (!top) {
+                // TODO: open GUI id=3
+            } else {
+                // TODO: open GUI id=3 at pos.below()
+            }
+        }
+        return true;
+    }
+
+    public int damageDropped(BlockState state) {
+        return 0;
+    }
+
+    @Override
+    public void destroy(LevelAccessor worldIn, BlockPos pos, BlockState state) {
+        if (worldIn instanceof Level level) {
+            if (top && level.getBlockState(pos.below()).getBlock() == BlocksTC.thaumatorium) {
+                level.setBlock(pos.below(), BlocksTC.metalAlchemical.defaultBlockState(), 3);
+            }
+            if (!top && level.getBlockState(pos.above()).getBlock() == BlocksTC.thaumatoriumTop) {
+                level.setBlock(pos.above(), BlocksTC.metalAlchemical.defaultBlockState(), 3);
+            }
+        }
+        super.destroy(worldIn, pos, state);
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, Orientation orientation, boolean isMoving) {
+        if (!top && worldIn.getBlockState(pos.below()).getBlock() != BlocksTC.crucible) {
+            worldIn.setBlock(pos, BlocksTC.metalAlchemical.defaultBlockState(), 3);
+            if (worldIn.getBlockState(pos.above()).getBlock() == BlocksTC.thaumatoriumTop) {
+                worldIn.setBlock(pos.above(), BlocksTC.metalAlchemical.defaultBlockState(), 3);
+            }
+        }
+    }
+
+    public boolean hasComparatorInputOverride(BlockState state) {
+        return !top;
+    }
+
+    public int getComparatorInputOverride(BlockState state, Level world, BlockPos pos) {
+        BlockEntity tile = world.getBlockEntity(pos);
+        if (tile instanceof TileThaumatorium) {
+            return 0; // Container.calcRedstoneFromInventory removed
+        }
+        return 0;
+    }
+}
