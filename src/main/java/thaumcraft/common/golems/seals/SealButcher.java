@@ -59,7 +59,7 @@ public class SealButcher implements ISeal, ISealGui, ISealConfigArea
             for (Object e : list) {
                 LivingEntity target = (LivingEntity)e;
                 if (isValidTarget(target)) {
-                    List<LivingEntity> var55 = world.getEntitiesOfClass(target.getClass(), area);
+                    List<LivingEntity> var55 = world.getEntities(net.minecraft.world.entity.EntityTypeTest.forClass(LivingEntity.class), area, e2 -> e2.getClass() == target.getClass());
                     Iterator<LivingEntity> var56;
                     int count;
                     LivingEntity var57;
@@ -82,7 +82,7 @@ public class SealButcher implements ISeal, ISealGui, ISealConfigArea
     }
     
     private boolean isValidTarget(LivingEntity target) {
-        return (target instanceof net.minecraft.world.entity.animal.Animal || target instanceof Animal) && !(target instanceof Object /* IMob removed */) && (!(target instanceof TamableAnimal) || !((TamableAnimal)target).isTamed()) && !(target instanceof AbstractGolem) && (!(target instanceof net.minecraft.world.entity.animal.Animal) || !target.isChild());
+        return (target instanceof net.minecraft.world.entity.animal.Animal || target instanceof Animal) && !(target instanceof Object /* IMob removed */) && (!(target instanceof TamableAnimal) || ((TamableAnimal)target).getOwner() == null) && !(target instanceof AbstractGolem) && (!(target instanceof net.minecraft.world.entity.animal.Animal) || !target.isBaby());
     }
     
     @Override

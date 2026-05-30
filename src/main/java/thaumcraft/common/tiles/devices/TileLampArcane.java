@@ -18,13 +18,13 @@ public class TileLampArcane extends TileThaumcraft
     }
     
     public void update() {
-        if (!getLevel().isClientSide() && getLevel().getTotalWorldTime() % 5L == 0L && !gettingPower()) {
+        if (!getLevel().isClientSide() && getLevel().getGameTime() % 5L == 0L && !gettingPower()) {
             int x = net.minecraft.util.RandomSource.create().nextInt(16) - net.minecraft.util.RandomSource.create().nextInt(16);
             int y = net.minecraft.util.RandomSource.create().nextInt(16) - net.minecraft.util.RandomSource.create().nextInt(16);
             int z = net.minecraft.util.RandomSource.create().nextInt(16) - net.minecraft.util.RandomSource.create().nextInt(16);
             BlockPos bp = getBlockPos().offset(x, y, z);
-            if (bp.getY() > getLevel().getPrecipitationHeight(bp).getY() + 4) {
-                bp = getLevel().getPrecipitationHeight(bp).above(4);
+            if (bp.getY() > getLevel().getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, bp).getY() + 4) {
+                bp = getLevel().getHeightmapPos(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING, bp).above(4);
             }
             if (bp.getY() < 5) {
                 bp = new BlockPos(bp.getX(), 5, bp.getZ());

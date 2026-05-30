@@ -9,9 +9,10 @@ import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.IThaumcraftItems;
 
 
-public class ItemThaumiumPickaxe extends Object /* ItemPickaxe removed */ implements IThaumcraftItems
+public class ItemThaumiumPickaxe extends net.minecraft.world.item.Item implements IThaumcraftItems
 {
     public ItemThaumiumPickaxe(ToolMaterial enumtoolmaterial) {
+        super(new net.minecraft.world.item.Item.Properties());
         // Entity requires EntityType; use factory method
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

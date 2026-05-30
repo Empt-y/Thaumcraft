@@ -36,11 +36,9 @@ public class TileLampFertility extends TileThaumcraft implements IEssentiaTransp
     }
     
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-        if (level != null && getLevel().isClientSide()) {
-            this.level.checkLightFor(LightLayer.BLOCK, getBlockPos());
-        }
+    public void handleUpdateTag(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookupProvider) {
+        super.handleUpdateTag(tag, lookupProvider);
+        // Light update happens automatically in modern MC
     }
     
     public void update() {

@@ -52,8 +52,8 @@ public class RecipesVoidRobeArmorDyes
                     }
                     itemstack = itemstack2.copy();
                     itemstack.setCount(1);
-                    if (((ItemRobeArmor)itemarmor).hasColor(itemstack2)) {
-                        int l = ((ItemRobeArmor)itemarmor).getColor(itemstack);
+                    if (((ItemVoidRobeArmor)itemarmor).hasColor(itemstack2)) {
+                        int l = ((ItemVoidRobeArmor)itemarmor).getColor(itemstack);
                         float f = (l >> 16 & 0xFF) / 255.0f;
                         float f2 = (l >> 8 & 0xFF) / 255.0f;
                         float f3 = (l & 0xFF) / 255.0f;
@@ -102,7 +102,7 @@ public class RecipesVoidRobeArmorDyes
         l = (int)(l * f / f2);
         int i2 = (k << 8) + l2;
         i2 = (i2 << 8) + l;
-        ((ItemRobeArmor)itemarmor).setColor(itemstack, i2);
+        ((ItemVoidRobeArmor)itemarmor).setColor(itemstack, i2);
         return itemstack;
     }
 }

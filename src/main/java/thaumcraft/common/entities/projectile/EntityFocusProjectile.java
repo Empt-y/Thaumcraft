@@ -147,7 +147,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
                 setPos(getX(), getDeltaMovement().y / var20 * 0.05000000074505806, getZ());
                 setPos(getX(), getY(), getDeltaMovement().z / var20 * 0.05000000074505806);
                 if (!level().isClientSide()) {
-                    playSound(SoundEvents.LEASHKNOT_PLACE, 0.25f, 1.0f);
+                    playSound(SoundEvents.LEAD_TIED, 0.25f, 1.0f);
                 }
                 if (!level().isClientSide() && new Vec3(getDeltaMovement().x, getDeltaMovement().y, getDeltaMovement().z).length() < 0.2) {
                     discard();
@@ -180,7 +180,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
             List<LivingEntity> list = EntityUtils.getEntitiesInRangeSorted(level(), this, LivingEntity.class, 16.0);
             for (LivingEntity pt : list) {
                 if (!!pt.isAlive() && EntityUtils.isVisibleTo(1.75f, this, pt, 16.0f)) {
-                    if (!EntityUtils.getSensing().hasLineOfSight(this, pt)) {
+                    if (!this.hasLineOfSight(pt)) {
                         continue;
                     }
                     boolean f = EntityUtils.isFriendly(getOwner(), pt);
@@ -210,7 +210,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
             setDeltaMovement(mv.x, getDeltaMovement().y, getDeltaMovement().z);
             setDeltaMovement(getDeltaMovement().x, mv.y, getDeltaMovement().z);
             setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, mv.z);
-            if (tickCount % 5 == 0 && (!target.isAlive() || !EntityUtils.isVisibleTo(1.75f, this, target, 16.0f) || !EntityUtils.getSensing().hasLineOfSight(this, target))) {
+            if (tickCount % 5 == 0 && (!target.isAlive() || !EntityUtils.isVisibleTo(1.75f, this, target, 16.0f) || !this.hasLineOfSight(target))) {
                 target = null;
             }
         }

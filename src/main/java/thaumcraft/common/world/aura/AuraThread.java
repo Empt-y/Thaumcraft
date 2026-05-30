@@ -53,8 +53,8 @@ public class AuraThread implements Runnable
                 if (lastWorldTime != world.getGameTime()) {
                     lastWorldTime = world.getGameTime();
                     if (world != null) {
-                        phaseVis = phaseTable[world.dimensionType().getMoonPhase(world.getLevelData().getGameTime())];
-                        phaseMax = 1.0f + maxTable[world.dimensionType().getMoonPhase(world.getLevelData().getGameTime())];
+                        phaseVis = phaseTable[(int)((world.getLevelData().getGameTime() / 24000L) % 8)];
+                        phaseMax = 1.0f + maxTable[(int)((world.getLevelData().getGameTime() / 24000L) % 8)];
                         phaseFlux = 0.25f - phaseVis;
                     }
                     for (AuraChunk auraChunk : auraWorld.auraChunks.values()) {

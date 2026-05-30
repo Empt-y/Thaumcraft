@@ -17,9 +17,10 @@ import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.IThaumcraftItems;
 
 
-public class ItemVoidPickaxe extends Object /* ItemPickaxe removed */ implements IWarpingGear, IThaumcraftItems
+public class ItemVoidPickaxe extends net.minecraft.world.item.Item implements IWarpingGear, IThaumcraftItems
 {
     public ItemVoidPickaxe(ToolMaterial enumtoolmaterial) {
+        super(new net.minecraft.world.item.Item.Properties());
         // Entity requires EntityType; use factory method
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

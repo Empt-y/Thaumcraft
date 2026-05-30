@@ -54,7 +54,7 @@ public class BlockUtils
 
     private static boolean removeBlock(Player player, BlockPos pos, boolean canHarvest) {
         BlockState iblockstate = player.level().getBlockState(pos);
-        boolean flag = iblockstate.getBlock().removedByPlayer(iblockstate, player.level(), pos, player, canHarvest, player.level().getFluidState(pos));
+        boolean flag = player.level().removeBlock(pos, canHarvest);
         if (flag) {
             iblockstate.getBlock().destroy(player.level(), pos, iblockstate);
         }
@@ -267,7 +267,7 @@ public class BlockUtils
         for (String key : list) {
             String[] splitString = key.split(";");
             if (splitString[0].contains(":")) {
-                ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(blockstate.getBlock());
+                Identifier blockId = BuiltInRegistries.BLOCK.getKey(blockstate.getBlock());
                 if (!blockId.toString().equals(splitString[0])) {
                     continue;
                 }
@@ -337,7 +337,7 @@ public class BlockUtils
     }
 
     static {
-        BlockUtils.lastPos = BlockPos.ORIGIN;
+        BlockUtils.lastPos = BlockPos.ZERO;
         BlockUtils.lasty = 0;
         BlockUtils.lastz = 0;
         BlockUtils.lastdistance = 0.0;

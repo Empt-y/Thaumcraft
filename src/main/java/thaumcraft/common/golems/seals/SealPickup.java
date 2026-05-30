@@ -58,7 +58,7 @@ public class SealPickup extends SealFiltered implements ISealConfigArea
         if (list.size() > 0) {
             for (Object e : list) {
                 ItemEntity ent = (ItemEntity)e;
-                if (ent != null && ent.onGround() && !ent.cannotPickup() && !ent.isEmpty() && !itemEntities.containsValue(ent.getId())) {
+                if (ent != null && ent.onGround() && !ent.getItem().isEmpty() && !itemEntities.containsValue(ent.getId())) {
                     ItemStack stack = InventoryUtils.findFirstMatchFromFilter(filter, filterSize, isBlacklist(), NonNullList.withSize(1, ent.getItem()), new ThaumcraftInvHelper.InvFilter(!props[0].value, !props[1].value, props[2].value, props[3].value));
                     if (stack != null && !stack.isEmpty()) {
                         Task task = new Task(seal.getSealPos(), ent);
@@ -136,7 +136,7 @@ public class SealPickup extends SealFiltered implements ISealConfigArea
     @Override
     public boolean canGolemPerformTask(IGolemAPI golem, Task task) {
         ItemEntity ei = getItemEntity(golem.getGolemWorld(), task);
-        if (ei == null || ei.isEmpty()) {
+        if (ei == null || ei.getItem().isEmpty()) {
             return false;
         }
         if (!ei.isAlive()) {

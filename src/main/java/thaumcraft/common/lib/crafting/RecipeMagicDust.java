@@ -73,7 +73,6 @@ public class RecipeMagicDust implements CraftingRecipe {
         return width * height >= 6;
     }
 
-    @Override
     public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider provider) {
         return new ItemStack(ItemsTC.salisMundus);
     }

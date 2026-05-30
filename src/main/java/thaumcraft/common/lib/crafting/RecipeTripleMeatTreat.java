@@ -49,7 +49,6 @@ public class RecipeTripleMeatTreat implements CraftingRecipe {
         return width * height >= 4;
     }
 
-    @Override
     public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider provider) {
         return new ItemStack(ItemsTC.tripleMeatTreat);
     }

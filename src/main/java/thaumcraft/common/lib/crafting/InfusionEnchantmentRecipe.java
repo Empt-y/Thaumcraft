@@ -49,7 +49,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
         if (!enchantment.toolClasses.contains("all")) {
             boolean cool = false;
             // Modern MC: use item tags for tool class checks instead of Forge's old toolClasses system
-            if (central.getItem() instanceof net.minecraft.world.item.SwordItem /* or TieredItem */ && enchantment.toolClasses.contains("weapon")) {
+            if (central.getItem() instanceof net.minecraft.world.item.TieredItem && enchantment.toolClasses.contains("weapon")) {
                 cool = true;
             }
             if (!cool && !central.isEmpty() /* TODO: TieredItem check */) {
@@ -62,7 +62,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
                     }
                 }
             }
-            if (!cool && central.getItem() instanceof Item /* ItemArmor removed */) {
+            if (!cool && central.getItem() instanceof net.minecraft.world.item.ArmorItem) {
                 String at = "none";
                 switch (EquipmentSlot.CHEST /* armorType removed */) {
                     case HEAD: {
@@ -97,7 +97,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
                 return false;
             }
         }
-        if (!(getRecipeInput() == null || getRecipeInput().items().isEmpty() || getRecipeInput().test(central))) return false;
+        if (!(getRecipeInput() == null || !getRecipeInput().items().findAny().isPresent() || getRecipeInput().test(central))) return false;
         if (input == null || getComponents() == null) return true;
         List<ItemStack> comps = new java.util.ArrayList<>(input);
         for (net.minecraft.world.item.crafting.Ingredient comp : getComponents()) {

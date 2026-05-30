@@ -44,7 +44,7 @@ public class InfusionRunicAugmentRecipe extends InfusionRecipe
     @Override
     public boolean matches(List<ItemStack> input, ItemStack central, Level world, Player player) {
         if (!ThaumcraftCapabilities.getKnowledge(player).isResearchKnown(research)) return false;
-        if (getRecipeInput() != null && !getRecipeInput().items().isEmpty() && !getRecipeInput().test(central)) return false;
+        if (getRecipeInput() != null && getRecipeInput().items().findAny().isPresent() && !getRecipeInput().test(central)) return false;
         List<ItemStack> comps = new java.util.ArrayList<>(input);
         for (Ingredient comp : getComponents(central)) {
             boolean found = false;

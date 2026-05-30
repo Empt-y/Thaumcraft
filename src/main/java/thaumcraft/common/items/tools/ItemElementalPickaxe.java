@@ -16,9 +16,10 @@ import thaumcraft.common.items.IThaumcraftItems;
 import thaumcraft.common.lib.enchantment.EnumInfusionEnchantment;
 
 
-public class ItemElementalPickaxe extends Object /* ItemPickaxe removed */ implements IThaumcraftItems
+public class ItemElementalPickaxe extends net.minecraft.world.item.Item implements IThaumcraftItems
 {
     public ItemElementalPickaxe(ToolMaterial enumtoolmaterial) {
+        super(new net.minecraft.world.item.Item.Properties());
         // Entity requires EntityType; use factory method
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

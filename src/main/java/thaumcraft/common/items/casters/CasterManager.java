@@ -130,7 +130,7 @@ public class CasterManager
                 newkey = foci.firstKey();
             }
             if (foci.get(newkey) < 1000 && foci.get(newkey) >= 0) {
-                item = player.getInventory() /* items list */.get(foci.get(newkey)).copy();
+                item = player.getInventory().getItem(foci.get(newkey)).copy();
             }
             else {
                 int pid = foci.get(newkey) / 1000;
@@ -151,7 +151,7 @@ public class CasterManager
                 return;
             }
             if (foci.get(newkey) < 1000 && foci.get(newkey) >= 0) {
-                player.getInventory().setInventorySlotContents(foci.get(newkey), ItemStack.EMPTY);
+                player.getInventory().setItem(foci.get(newkey), ItemStack.EMPTY);
             }
             player.playSound(SoundsTC.ticks, 0.3f, 1.0f);
             if (wand.getFocus(is) != null && (addFocusToPouch(player, wand.getFocusStack(is).copy(), pouches) || player.getInventory().add(wand.getFocusStack(is).copy()))) {
@@ -181,7 +181,7 @@ public class CasterManager
             else {
                 Container baubles = null /* call removed */;
                 baubles.setItem(pouchslot + 4, pouch);
-                null /* call removed */.setChanged(pouchslot + 4, true);
+                
                 baubles.setChanged();
             }
         }
@@ -210,7 +210,7 @@ public class CasterManager
                     }
                     else {
                         baubles.setItem(pouchslot + 4, pouch);
-                        null /* call removed */.setChanged(pouchslot + 4, true);
+                        
                         baubles.setChanged();
                     }
                     return true;
