@@ -31,7 +31,14 @@ public class ItemMagicDust extends ItemTCBase
         return Rarity.UNCOMMON;
     }
     
-    public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, net.minecraft.world.item.context.UseOnContext context) {
+        Player player = context.getPlayer();
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Direction side = context.getClickedFace();
+        InteractionHand hand = context.getHand();
+        if (player == null) return InteractionResult.PASS;
         if (!player.mayUseItemAt(pos, side, player.getItemInHand(hand))) {
             return InteractionResult.FAIL;
         }
@@ -39,6 +46,7 @@ public class ItemMagicDust extends ItemTCBase
             return InteractionResult.PASS;
         }
         player.swing(hand);
+        net.minecraft.world.phys.Vec3 hit = context.getClickLocation();
         for (IDustTrigger trigger : IDustTrigger.triggers) {
             IDustTrigger.Placement place = trigger.getValidFace(world, player, pos, side);
             if (place != null) {
@@ -47,13 +55,13 @@ public class ItemMagicDust extends ItemTCBase
                 }
                 trigger.execute(world, player, pos, place, side);
                 if (world.isClientSide()) {
-                    doSparkles(player, world, pos, hitX, hitY, hitZ, hand, trigger, place);
+                    doSparkles(player, world, pos, (float)hit.x, (float)hit.y, (float)hit.z, hand, trigger, place);
                     break;
                 }
                 return InteractionResult.SUCCESS;
             }
         }
-        return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+        return InteractionResult.PASS;
     }
     
     private void doSparkles(Player player, Level world, BlockPos pos, float hitX, float hitY, float hitZ, InteractionHand hand, IDustTrigger trigger, IDustTrigger.Placement place) {

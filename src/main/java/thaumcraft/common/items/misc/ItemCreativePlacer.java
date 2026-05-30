@@ -32,7 +32,14 @@ public class ItemCreativePlacer extends ItemTCBase
         tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.DARK_PURPLE + "Creative only"));
     }
     
-    public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, net.minecraft.world.item.context.UseOnContext context) {
+        Player player = context.getPlayer();
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Direction side = context.getClickedFace();
+        InteractionHand hand = context.getHand();
+        if (player == null) return InteractionResult.PASS;
         BlockState bs = world.getBlockState(pos);
         if (!bs.isSolid()) {
             return InteractionResult.FAIL;
@@ -45,14 +52,13 @@ public class ItemCreativePlacer extends ItemTCBase
         if (!player.mayUseItemAt(pos, side, player.getItemInHand(hand))) {
             return InteractionResult.FAIL;
         }
-        if (!bs.getBlock().canBeReplaced()) {
+        if (!bs.canBeReplaced()) {
             return InteractionResult.FAIL;
         }
         if (player.getItemInHand(hand).getDamageValue() == 0 && !world.getBlockState(pos.below()).isSolid()) {
             return InteractionResult.FAIL;
         }
         world.removeBlock(pos, false);
-        player.getItemInHand(hand).getDamageValue();
         return InteractionResult.SUCCESS;
     }
     

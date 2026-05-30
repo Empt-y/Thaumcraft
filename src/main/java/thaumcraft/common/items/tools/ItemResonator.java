@@ -37,14 +37,21 @@ public class ItemResonator extends ItemTCBase
         return !stack1.isEmpty();
     }
     
-    public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, net.minecraft.world.item.context.UseOnContext context) {
+        Player player = context.getPlayer();
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Direction side = context.getClickedFace();
+        InteractionHand hand = context.getHand();
+        if (player == null) return InteractionResult.PASS;
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile == null || !(tile instanceof IEssentiaTransport)) {
             return InteractionResult.FAIL;
         }
         if (world.isClientSide()) {
             player.swing(hand);
-            return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+            return InteractionResult.PASS;
         }
         IEssentiaTransport et = (IEssentiaTransport)tile;
         HitResult hit = RayTracer.retraceBlock(world, player, pos);

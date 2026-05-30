@@ -67,7 +67,14 @@ public class ItemSealPlacer extends ItemTCBase implements ISealDisplayer
         return null;
     }
     
-    public InteractionResult onItemUseFirst(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, net.minecraft.world.item.context.UseOnContext context) {
+        Player player = context.getPlayer();
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Direction side = context.getClickedFace();
+        InteractionHand hand = context.getHand();
+        if (player == null) return InteractionResult.PASS;
         if (world.isClientSide() || player.getItemInHand(hand).getDamageValue() == 0 || player.isCrouching()) {
             return InteractionResult.PASS;
         }

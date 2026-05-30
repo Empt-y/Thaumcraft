@@ -109,7 +109,7 @@ public class ItemFocus extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void addFocusInformation(ItemStack stack, Level worldIn, List<String> tooltip, TooltipFlag flagIn) {
+    public void addFocusInformation(ItemStack stack, Level worldIn, java.util.function.Consumer<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
         FocusPackage p = getPackage(stack);
         if (p != null) {
             float al = getVisCost(stack);
@@ -122,8 +122,8 @@ public class ItemFocus extends ItemTCBase
             }
         }
     }
-    
-    private void buildInfo(List list, FocusNode node, int depth) {
+
+    private void buildInfo(java.util.function.Consumer<net.minecraft.network.chat.Component> list, FocusNode node, int depth) {
         if (node instanceof FocusNode && !(node instanceof FocusMediumRoot)) {
             String t0 = "";
             for (int a = 0; a < depth; ++a) {
@@ -140,7 +140,7 @@ public class ItemFocus extends ItemTCBase
                 }
                 t0 += "]";
             }
-            list.add(t0);
+            list.accept(net.minecraft.network.chat.Component.literal(t0));
             if (node instanceof FocusModSplit) {
                 FocusModSplit split = (FocusModSplit)node;
                 for (FocusPackage p : split.getSplitPackages()) {

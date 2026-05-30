@@ -49,7 +49,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
         if (!enchantment.toolClasses.contains("all")) {
             boolean cool = false;
             // Modern MC: use item tags for tool class checks instead of Forge's old toolClasses system
-            if (central.getItem() instanceof net.minecraft.world.item.SwordItem && enchantment.toolClasses.contains("weapon")) {
+            if (central.getItem() instanceof net.minecraft.world.item.SwordItem /* or TieredItem */ && enchantment.toolClasses.contains("weapon")) {
                 cool = true;
             }
             if (!cool && !central.isEmpty() /* TODO: TieredItem check */) {
@@ -86,25 +86,9 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
                     cool = true;
                 }
             }
-            if (!cool && central.getItem() instanceof Object /* IBauble removed */) {
-                String at = "none";
-                switch (((Object /* IBauble removed */)central.getItem()).getBaubleType(central)) {
-                    case AMULET: {
-                        at = "amulet";
-                        break;
-                    }
-                    case BELT: {
-                        at = "belt";
-                        break;
-                    }
-                    case RING: {
-                        at = "ring";
-                        break;
-                    }
-                }
-                if (enchantment.toolClasses.contains("bauble") || enchantment.toolClasses.contains(at)) {
-                    cool = true;
-                }
+            // baubles removed - skip bauble check
+            if (!cool && enchantment.toolClasses.contains("bauble")) {
+                cool = true;
             }
             if (!cool && central.getItem() instanceof IRechargable && enchantment.toolClasses.contains("chargable")) {
                 cool = true;
@@ -113,7 +97,17 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
                 return false;
             }
         }
-        return (getRecipeInput() == Ingredient.of(net.minecraft.world.item.Items.AIR) || getRecipeInput().apply(central)) && RecipeMatcher.findMatches((List)input, (List) getComponents()) != null;
+        if (!(getRecipeInput() == null || getRecipeInput().items().isEmpty() || getRecipeInput().test(central))) return false;
+        if (input == null || getComponents() == null) return true;
+        List<ItemStack> comps = new java.util.ArrayList<>(input);
+        for (net.minecraft.world.item.crafting.Ingredient comp : getComponents()) {
+            boolean found = false;
+            for (java.util.Iterator<ItemStack> it = comps.iterator(); it.hasNext(); ) {
+                if (comp.test(it.next())) { it.remove(); found = true; break; }
+            }
+            if (!found) return false;
+        }
+        return true;
     }
     
     @Override
@@ -131,7 +125,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
         if (net.minecraft.util.RandomSource.create().nextInt(10) < el.size()) {
             int base = 1;
             if (!input.isEmpty()) {
-                base += input.getByteOr("TC.WARP", (byte)0);
+                base += input.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getByteOr("TC.WARP", (byte)0);
             }
             { net.minecraft.nbt.CompoundTag _t = out.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.putByte("TC.WARP", (byte)base); out.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t)); }
         }

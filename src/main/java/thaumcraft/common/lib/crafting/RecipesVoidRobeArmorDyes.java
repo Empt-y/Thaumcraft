@@ -52,8 +52,8 @@ public class RecipesVoidRobeArmorDyes
                     }
                     itemstack = itemstack2.copy();
                     itemstack.setCount(1);
-                    if (itemarmor.hasColor(itemstack2)) {
-                        int l = itemarmor.getColor(itemstack);
+                    if (((ItemRobeArmor)itemarmor).hasColor(itemstack2)) {
+                        int l = ((ItemRobeArmor)itemarmor).getColor(itemstack);
                         float f = (l >> 16 & 0xFF) / 255.0f;
                         float f2 = (l >> 8 & 0xFF) / 255.0f;
                         float f3 = (l & 0xFF) / 255.0f;
@@ -68,7 +68,9 @@ public class RecipesVoidRobeArmorDyes
                     if (!(itemstack2.getItem() instanceof net.minecraft.world.item.DyeItem dyeItem)) {
                         return ItemStack.EMPTY;
                     }
-                    int dyeRgb = dyeItem.getDyeColor().getFireworkColor();
+                    net.minecraft.world.item.DyeColor dyeColor2 = itemstack2.get(net.minecraft.core.component.DataComponents.DYE);
+                    if (dyeColor2 == null) return ItemStack.EMPTY;
+                    int dyeRgb = dyeColor2.getFireworkColor();
                     float[] afloat = new float[]{((dyeRgb >> 16) & 0xFF) / 255.0f, ((dyeRgb >> 8) & 0xFF) / 255.0f, (dyeRgb & 0xFF) / 255.0f};
                     int j2 = (int)(afloat[0] * 255.0f);
                     int k2 = (int)(afloat[1] * 255.0f);
@@ -100,7 +102,7 @@ public class RecipesVoidRobeArmorDyes
         l = (int)(l * f / f2);
         int i2 = (k << 8) + l2;
         i2 = (i2 << 8) + l;
-        itemarmor.setColor(itemstack, i2);
+        ((ItemRobeArmor)itemarmor).setColor(itemstack, i2);
         return itemstack;
     }
 }

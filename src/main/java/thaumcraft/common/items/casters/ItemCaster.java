@@ -221,7 +221,10 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
             { net.minecraft.nbt.CompoundTag _t = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag(); _t.remove("focus"); if (!_t.isEmpty()) stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(_t)); else stack.remove(net.minecraft.core.component.DataComponents.CUSTOM_DATA); }
         }
         else {
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("focus", focus.saveAdditional(new CompoundTag())));
+            net.minecraft.nbt.Tag focusTag = ItemStack.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, focus).result().orElse(null);
+            if (focusTag instanceof CompoundTag) {
+                net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("focus", focusTag));
+            }
         }
     }
     
@@ -249,15 +252,16 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
     }
     
     public void onArmorTick(Level world, Player player, ItemStack itemStack) {
-        super.onArmorTick(world, player, itemStack);
     }
     
     public void onUpdate(ItemStack is, Level w, Entity e, int slot, boolean currentItem) {
         if (!w.isClientSide() && e.tickCount % 10 == 0 && e instanceof net.minecraft.server.level.ServerPlayer) {
-            for (ItemStack h : e.getHeldEquipment()) {
-                if (h != null && !h.isEmpty() && h.getItem() instanceof ICaster) {
+            outer:
+            for (net.minecraft.world.entity.EquipmentSlot eSlot : net.minecraft.world.entity.EquipmentSlot.values()) {
+                ItemStack h = ((net.minecraft.world.entity.LivingEntity)e).getItemBySlot(eSlot);
+                if (!h.isEmpty() && h.getItem() instanceof ICaster) {
                     updateAura(is, w, (net.minecraft.server.level.ServerPlayer)e);
-                    break;
+                    break outer;
                 }
             }
         }
@@ -455,8 +459,10 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
     }
     
     public void storePickedBlock(ItemStack stack, ItemStack stackout) {
-        CompoundTag item = new CompoundTag();
-        net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("picked", stackout.saveAdditional(item)));
+        net.minecraft.nbt.Tag pickedTag = ItemStack.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, stackout).result().orElse(null);
+        if (pickedTag != null) {
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("picked", pickedTag));
+        }
     }
     
     @Override
@@ -473,7 +479,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
                     if (fe instanceof IFocusBlockPicker) {
                         out = new ItemStack(Blocks.AIR);
                         try {
-                            out = new ItemStack(stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompoundOrEmpty("picked"));
+                            out = ItemStack.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompoundOrEmpty("picked")).result().orElse(ItemStack.EMPTY);
                         }
                         catch (Exception ex) {}
                         break;
