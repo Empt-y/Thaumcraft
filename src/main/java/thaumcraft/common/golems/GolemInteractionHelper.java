@@ -1,26 +1,23 @@
 package thaumcraft.common.golems;
 import com.mojang.authlib.GameProfile;
 import java.util.UUID;
-import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.Connection;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import thaumcraft.api.golems.IGolemAPI;
-import thaumcraft.common.lib.network.FakeNetHandlerPlayServer;
 import thaumcraft.common.lib.utils.InventoryUtils;
 
 
@@ -28,14 +25,14 @@ public class GolemInteractionHelper
 {
     public static void golemClick(Level world, IGolemAPI golem, BlockPos pos, Direction face, ItemStack clickStack, boolean sneaking, boolean rightClick) {
         FakePlayer fp = FakePlayerFactory.get((ServerLevel)world, new GameProfile(null, "FakeThaumcraftGolem"));
-        // fp.connection setup removed (FakeNetHandler)
-        fp.setPositionAndRotation(golem.getGolemEntity().getX(), golem.getGolemEntity().getY(), golem.getGolemEntity().getZ(), golem.getGolemEntity().getYRot(), golem.getGolemEntity().getXRot());
-        BlockState bs = world.getBlockState(pos);
-        fp.setHeldItem(InteractionHand.MAIN_HAND, clickStack);
-        fp.setSneaking(sneaking);
+        fp.setPos(golem.getGolemEntity().getX(), golem.getGolemEntity().getY(), golem.getGolemEntity().getZ());
+        fp.setItemInHand(InteractionHand.MAIN_HAND, clickStack);
+        fp.setShiftKeyDown(sneaking);
         if (!rightClick) {
             try {
-                fp.interactionManager.onBlockClicked(pos, face);
+                if (world instanceof ServerLevel sl) {
+                    fp.gameMode.destroyBlock(pos);
+                }
             }
             catch (Exception ex) {}
         }
@@ -44,13 +41,17 @@ public class GolemInteractionHelper
                 golem.getGolemEntity().setPos(golem.getGolemEntity().getX() + face.getStepX(), golem.getGolemEntity().getY() + face.getStepY(), golem.getGolemEntity().getZ() + face.getStepZ());
             }
             try {
-                fp.interactionManager.processRightClickBlock(fp, world, fp.getMainHandItem(), InteractionHand.MAIN_HAND, pos, face, 0.5f, 0.5f, 0.5f);
+                if (world instanceof ServerLevel) {
+                    Vec3 hitVec = Vec3.atCenterOf(pos);
+                    BlockHitResult hit = new BlockHitResult(hitVec, face, pos, false);
+                    fp.gameMode.useItemOn(fp, world, fp.getMainHandItem(), InteractionHand.MAIN_HAND, hit);
+                }
             }
             catch (Exception ex2) {}
         }
         golem.addRankXp(1);
         if (!fp.getMainHandItem().isEmpty() && fp.getMainHandItem().getCount() <= 0) {
-            fp.setHeldItem(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+            fp.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         }
         dropSomeItems(fp, golem);
         golem.swing();

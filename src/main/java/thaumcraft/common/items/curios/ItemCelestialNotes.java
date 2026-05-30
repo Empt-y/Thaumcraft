@@ -17,14 +17,14 @@ public class ItemCelestialNotes extends ItemTCBase
     }
     
     @Override
-    public String getUnlocalizedName(ItemStack itemStack) {
+    public String getDescriptionId() {
         return "item.celestial_notes";
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay tooltipDisplay, java.util.function.Consumer<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
         try {
-            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.AQUA + I18n.get("item.celestial_notes." + getVariantNames()[stack.getDamageValue()] + ".text")));
+            tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.AQUA + I18n.get("item.celestial_notes." + getVariantNames()[stack.getDamageValue()] + ".text")));
         }
         catch (Exception ex) {}
     }

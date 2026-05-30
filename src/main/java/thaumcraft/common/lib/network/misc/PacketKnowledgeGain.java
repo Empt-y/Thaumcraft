@@ -59,7 +59,7 @@ public class PacketKnowledgeGain implements CustomPacketPayload
         IPlayerKnowledge.EnumKnowledgeType type = IPlayerKnowledge.EnumKnowledgeType.values()[message.type];
         ResearchCategory cat = (message.cat.length() > 0) ? ResearchCategories.getResearchCategory(message.cat) : null;
         RenderEventHandler instance = RenderEventHandler.INSTANCE;
-        RenderEventHandler.hudHandler.knowledgeGainTrackers.add(new HudHandler.KnowledgeGainTracker(type, cat, 40 + p.level.getRandom().nextInt(20), p.level.getRandom().nextLong()));
+        RenderEventHandler.hudHandler.knowledgeGainTrackers.add(new HudHandler.KnowledgeGainTracker(type, cat, 40 + p.level().getRandom().nextInt(20), p.level().getRandom().nextLong()));
         p.level().playSound(p, p.getX(), p.getY(), p.getZ(), SoundsTC.learn, SoundSource.AMBIENT, 1.0f, 1.0f);
     }
 

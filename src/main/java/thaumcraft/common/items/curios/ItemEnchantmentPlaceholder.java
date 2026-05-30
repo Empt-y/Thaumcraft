@@ -10,7 +10,10 @@ import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.items.ItemTCBase;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 
 public class ItemEnchantmentPlaceholder extends ItemTCBase
@@ -33,9 +36,9 @@ public class ItemEnchantmentPlaceholder extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
-        tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.ITALIC + "" + ChatFormatting.DARK_AQUA + I18n.get("item.enchanted_placeholder.text")));
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);
+        tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.ITALIC + "" + ChatFormatting.DARK_AQUA + I18n.get("item.enchanted_placeholder.text")));
     }
     
     public boolean canHarvestBlock(BlockState blockIn) {

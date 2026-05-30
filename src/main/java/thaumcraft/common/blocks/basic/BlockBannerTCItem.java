@@ -1,7 +1,10 @@
 package thaumcraft.common.blocks.basic;
 import java.util.List;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -27,11 +30,11 @@ public class BlockBannerTCItem extends BlockItem
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         if (stack.has(DataComponents.CUSTOM_DATA)) {
             String tag = stack.get(DataComponents.CUSTOM_DATA).copyTag().getStringOr("aspect", "");
             if (!tag.isEmpty() && Aspect.getAspect(tag) != null) {
-                tooltip.add(net.minecraft.network.chat.Component.literal(Aspect.getAspect(tag).getName()));
+                tooltip.accept(net.minecraft.network.chat.Component.literal(Aspect.getAspect(tag).getName()));
             }
         }
     }

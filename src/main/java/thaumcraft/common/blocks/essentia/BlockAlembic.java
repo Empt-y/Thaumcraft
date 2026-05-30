@@ -69,7 +69,7 @@ public class BlockAlembic extends BlockTCTile implements ILabelable
             ((TileAlembic)te).aspect = null;
             if (world.isClientSide()) {
                 world.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundsTC.jar, SoundSource.BLOCKS, 0.4f, 1.0f, false);
-                world.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.5f, 1.0f + (world.getRandom().nextFloat() - world.getRandom().nextFloat()) * 0.3f);
+                world.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.5f, 1.0f + (world.getRandom().nextFloat() - world.getRandom().nextFloat()) * 0.3f, false);
             }
             else {
                 AuraHelper.polluteAura(world, pos, (float)((TileAlembic)te).amount, true);

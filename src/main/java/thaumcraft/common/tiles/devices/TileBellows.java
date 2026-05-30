@@ -52,7 +52,7 @@ public class TileBellows extends TileThaumcraft
                 }
                 if (inflation >= 1.0f && direction) {
                     direction = false;
-                    getLevel().playSound(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), SoundEvents.GHAST_SHOOT, SoundSource.BLOCKS, 0.01f, 0.5f + (net.minecraft.util.RandomSource.create().nextFloat() - net.minecraft.util.RandomSource.create().nextFloat()) * 0.2f, false);
+                    getLevel().playSound(null, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), SoundEvents.GHAST_SHOOT, SoundSource.BLOCKS, 0.01f, 0.5f + (net.minecraft.util.RandomSource.create().nextFloat() - net.minecraft.util.RandomSource.create().nextFloat()) * 0.2f);
                 }
             }
         }

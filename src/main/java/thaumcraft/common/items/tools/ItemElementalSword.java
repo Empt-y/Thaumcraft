@@ -75,11 +75,12 @@ public Rarity getRarity(ItemStack itemstack) {
         return InteractionResult.SUCCESS;
     }
     
-    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        super.onUsingTick(stack, player, count);
-        int ticks = getMaxItemUseDuration(stack) - count;
+    @Override
+    public void onUseTick(net.minecraft.world.level.Level level, LivingEntity player, ItemStack stack, int count) {
+        super.onUseTick(level, player, stack, count);
+        int ticks = getMaxItemUseDuration(stack, player) - count;
         if (player.getDeltaMovement().y < 0.0) {
-            player.setDeltaMovement(player.getDeltaMovement().multiply(1));  // FIXME: /= not supported on Vec3
+            player.setDeltaMovement(player.getDeltaMovement().x, player.getDeltaMovement().y / 1.2, player.getDeltaMovement().z);
             player.fallDistance /= 1.2f;
         }
         player.setDeltaMovement(player.getDeltaMovement().x, player.getDeltaMovement().y + 0.07999999821186066, player.getDeltaMovement().z);
@@ -89,14 +90,14 @@ public Rarity getRarity(ItemStack itemstack) {
         if (player instanceof net.minecraft.server.level.ServerPlayer) {
             EntityUtils.resetFloatCounter((net.minecraft.server.level.ServerPlayer)player);
         }
-        List<Entity> targets = player.level().getEntitiesWithinAABBExcludingEntity(player, player.getBoundingBox().inflate(2.5, 2.5, 2.5));
+        List<Entity> targets = player.level().getEntities(player, player.getBoundingBox().inflate(2.5, 2.5, 2.5), e -> true);
         if (targets.size() > 0) {
             for (int var9 = 0; var9 < targets.size(); ++var9) {
                 Entity entity = targets.get(var9);
                 if (!(entity instanceof Player)) {
                     if (entity instanceof LivingEntity) {
                         if (((LivingEntity)entity).isAlive()) {
-                            if (player.getRidingEntity() == null || player.getRidingEntity() != entity) {
+                            if (player.getVehicle() == null || player.getVehicle() != entity) {
                                 Vec3 p = new Vec3(player.getX(), player.getY(), player.getZ());
                                 Vec3 t = new Vec3(entity.getX(), entity.getY(), entity.getZ());
                                 double distance = p.distanceTo(t) + 0.1;
@@ -125,14 +126,14 @@ public Rarity getRarity(ItemStack itemstack) {
                 float r2 = player.level().getRandom().nextFloat() * 360.0f;
                 float mx = -Mth.sin(r2 / 180.0f * 3.1415927f) / 5.0f;
                 float mz = Mth.cos(r2 / 180.0f * 3.1415927f) / 5.0f;
-                player.level().spawnParticle(null /* nested removed */, player.getX(), player.getBoundingBox().minY + 0.10000000149011612, player.getZ(), mx, 0.0, mz);
+                player.level().addParticle(net.minecraft.core.particles.ParticleTypes.CLOUD, player.getX(), player.getBoundingBox().minY + 0.1, player.getZ(), mx, 0.0, mz);
             }
         }
         else if (ticks == 0 || ticks % 20 == 0) {
             player.playSound(SoundsTC.wind, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f);
         }
         if (ticks % 20 == 0) {
-            stack.hurtAndBreak(1, player, null, (i) -> {});
+            stack.hurtAndBreak(1, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
         }
     }
 }

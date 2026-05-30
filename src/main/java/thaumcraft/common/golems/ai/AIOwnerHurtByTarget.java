@@ -26,16 +26,16 @@ public class AIOwnerHurtByTarget extends TargetGoal
             return false;
         }
         theOwnerAttacker = entitylivingbase.getLastHurtByMob();
-        int i = entitylivingbase.getRevengeTimer();
-        return i != timestamp && isSuitableTarget(theOwnerAttacker, false);
+        int i = entitylivingbase.getLastHurtByMobTimestamp();
+        return i != timestamp && theOwnerAttacker != null && mob.canAttack(theOwnerAttacker);
     }
     
     public void start() {
         mob.setTarget(theOwnerAttacker);
         LivingEntity entitylivingbase = theDefendingTameable.getOwnerEntity();
         if (entitylivingbase != null) {
-            timestamp = entitylivingbase.getRevengeTimer();
+            timestamp = entitylivingbase.getLastHurtByMobTimestamp();
         }
-        super.startExecuting();
+        super.start();
     }
 }

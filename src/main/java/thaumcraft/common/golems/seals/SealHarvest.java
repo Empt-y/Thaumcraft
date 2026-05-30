@@ -114,12 +114,11 @@ public class SealHarvest implements ISeal, ISealGui, ISealConfigArea, ISealConfi
     public boolean onTaskCompletion(Level world, IGolemAPI golem, Task task) {
         if (CropUtils.isGrownCrop(world, task.getPos())) {
             FakePlayer fp = FakePlayerFactory.get((ServerLevel)world, new GameProfile(null, "FakeThaumcraftGolem"));
-            fp.connection = new FakeNetHandlerPlayServer(fp.mcServer, new Connection(PacketFlow.CLIENTBOUND), fp);
             fp.setPos(golem.getGolemEntity().getX(), golem.getGolemEntity().getY(), golem.getGolemEntity().getZ());
             Direction face = Direction.NORTH;
             BlockState bs = world.getBlockState(task.getPos());
-            if (CropUtils.clickableCrops.contains(bs.getBlock().getName() + bs.getBlock())) {
-                bs.getBlock().onBlockActivated(world, task.getPos(), bs, fp, InteractionHand.MAIN_HAND, face, 0.0f, 0.0f, 0.0f);
+            if (CropUtils.clickableCrops.contains(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(bs.getBlock()).toString())) {
+                bs.useWithoutItem(world, task.getPos(), new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(task.getPos()), face, task.getPos(), false));
                 golem.addRankXp(1);
                 golem.swing();
             }
@@ -137,14 +136,11 @@ public class SealHarvest implements ISeal, ISealGui, ISealConfigArea, ISealConfi
                             if (true /* IPlantable check TODO */) {
                                 rf = Direction.DOWN;
                             }
-                            else if (true /* not IPlantable check TODO */ && bs.getBlock() instanceof BlockDirectional) {
-                                rf = (Direction)bs.getValue(LiquidBlock.LEVEL);
-                            }
                             if (rf != null) {
                                 Task tt = new Task(task.getSealPos(), task.getPos());
                                 tt.setPriority(task.getPriority());
                                 tt.setLifespan((short)300);
-                                replantTasks.put(tt.getPos().asLong(), new ReplantInfo(tt.getPos(), rf, tt.getId(), seed.copy(), bb.getBlock() instanceof BlockFarmland));
+                                replantTasks.put(tt.getPos().asLong(), new ReplantInfo(tt.getPos(), rf, tt.getId(), seed.copy(), bb.getBlock() instanceof net.minecraft.world.level.block.FarmlandBlock));
                                 TaskHandler.addTask((world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0), tt);
                             }
                         }
@@ -157,12 +153,15 @@ public class SealHarvest implements ISeal, ISealGui, ISealConfigArea, ISealConfi
             fp.setPos(golem.getGolemEntity().getX(), golem.getGolemEntity().getY(), golem.getGolemEntity().getZ());
             BlockState bb2 = world.getBlockState(task.getPos().below());
             ReplantInfo ri = replantTasks.get(task.getPos().asLong());
-            if ((bb2.getBlock() instanceof BlockDirt || bb2.getBlock() instanceof GrassBlock) && ri.farmland) {
-                Items.DIAMOND_HOE.onItemUse(fp, world, task.getPos().below(), InteractionHand.MAIN_HAND, Direction.UP, 0.5f, 0.5f, 0.5f);
+            if ((bb2.is(net.minecraft.tags.BlockTags.DIRT) || bb2.getBlock() instanceof GrassBlock) && ri.farmland) {
+                net.minecraft.world.item.context.UseOnContext hoeCtx = new net.minecraft.world.item.context.UseOnContext(world, fp, InteractionHand.MAIN_HAND, fp.getItemInHand(InteractionHand.MAIN_HAND), new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(task.getPos().below()), Direction.UP, task.getPos().below(), false));
+                Items.DIAMOND_HOE.useOn(hoeCtx);
             }
             ItemStack seed = ri.stack.copy();
             seed.setCount(1);
-            if (seed.getItem().onItemUse(fp, world, task.getPos().relative(ri.face), InteractionHand.MAIN_HAND, ri.face.getOpposite(), 0.5f, 0.5f, 0.5f) == InteractionResult.SUCCESS) {
+            net.minecraft.world.phys.BlockHitResult seedHit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(task.getPos().relative(ri.face)), ri.face.getOpposite(), task.getPos().relative(ri.face), false);
+            net.minecraft.world.item.context.UseOnContext seedCtx = new net.minecraft.world.item.context.UseOnContext(world, fp, InteractionHand.MAIN_HAND, seed, seedHit);
+            if (seed.getItem().useOn(seedCtx) == InteractionResult.SUCCESS) {
                 world.levelEvent(2001, task.getPos(), Block.getId(world.getBlockState(task.getPos())));
                 golem.dropItem(seed);
                 golem.addRankXp(1);

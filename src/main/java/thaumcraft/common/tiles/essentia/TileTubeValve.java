@@ -63,7 +63,7 @@ public class TileTubeValve extends TileTube
             return false;
         }
         if (hit.getType() != net.minecraft.world.phys.HitResult.Type.MISS && true) {
-            player.level().playSound(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f, false);
+            player.level().playSound(null, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f);
             player.swing(hand);
             setChanged();
             syncTile(true);
@@ -78,7 +78,7 @@ public class TileTubeValve extends TileTube
             return true;
         }
         if (0 == 6) {
-            player.level().playSound(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f, false);
+            player.level().playSound(null, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f);
             player.swing(hand);
             int a = facing.ordinal();
             setChanged();

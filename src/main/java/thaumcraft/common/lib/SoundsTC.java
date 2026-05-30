@@ -153,9 +153,9 @@ public class SoundsTC
     }
     
     private static SoundEvent getRegisteredSoundEvent(RegisterEvent event, String id) {
-        SoundEvent soundevent = new SoundEvent(new net.minecraft.resources.Identifier(id));
-        // setRegistryName removed
-        event.getRegistry().register(soundevent);
+        net.minecraft.resources.Identifier identifier = net.minecraft.resources.Identifier.parse(id);
+        SoundEvent soundevent = SoundEvent.createVariableRangeEvent(identifier);
+        event.register(net.minecraft.core.registries.Registries.SOUND_EVENT, identifier, () -> soundevent);
         return soundevent;
     }
 }

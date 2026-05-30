@@ -25,17 +25,17 @@ public class AIOwnerHurtTarget extends TargetGoal
         if (entitylivingbase == null) {
             return false;
         }
-        theTarget = entitylivingbase.getLastAttackedEntity();
-        int i = entitylivingbase.getLastAttackedEntityTime();
-        return i != timestamp && isSuitableTarget(theTarget, false);
+        theTarget = entitylivingbase.getLastHurtMob();
+        int i = entitylivingbase.getLastHurtMobTimestamp();
+        return i != timestamp && theTarget != null && mob.canAttack(theTarget);
     }
     
     public void start() {
         mob.setTarget(theTarget);
         LivingEntity entitylivingbase = theEntityTameable.getOwnerEntity();
         if (entitylivingbase != null) {
-            timestamp = entitylivingbase.getLastAttackedEntityTime();
+            timestamp = entitylivingbase.getLastHurtMobTimestamp();
         }
-        super.startExecuting();
+        super.start();
     }
 }

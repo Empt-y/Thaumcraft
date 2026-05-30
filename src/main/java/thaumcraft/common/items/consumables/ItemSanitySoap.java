@@ -46,7 +46,7 @@ public class ItemSanitySoap extends ItemTCBase
         }
         if (player.level().isClientSide()) {
             if (player.level().getRandom().nextFloat() < 0.2f) {
-                player.level().playSound(player.getX(), player.getY(), player.getZ(), SoundEvents.CHORUS_FLOWER_DEATH, SoundSource.PLAYERS, 0.1f, 1.5f + player.level().getRandom().nextFloat() * 0.2f, false);
+                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.CHORUS_FLOWER_DEATH, SoundSource.PLAYERS, 0.1f, 1.5f + player.level().getRandom().nextFloat() * 0.2f);
             }
             for (int a = 0; a < 10; ++a) {
                 FXDispatcher.INSTANCE.crucibleBubble((float)player.getX() - 0.5f + player.level().getRandom().nextFloat(), (float)player.getBoundingBox().minY + player.level().getRandom().nextFloat() * player.getBbHeight(), (float)player.getZ() - 0.5f + player.level().getRandom().nextFloat(), 1.0f, 0.8f, 0.9f);
@@ -78,7 +78,7 @@ public class ItemSanitySoap extends ItemTCBase
                 }
             }
             else {
-                player.level().playSound(player.getX(), player.getY(), player.getZ(), SoundsTC.craftstart, SoundSource.PLAYERS, 0.25f, 1.0f, false);
+                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundsTC.craftstart, SoundSource.PLAYERS, 0.25f, 1.0f);
                 for (int a = 0; a < 40; ++a) {
                     FXDispatcher.INSTANCE.crucibleBubble((float)player.getX() - 0.5f + player.level().getRandom().nextFloat() * 1.5f, (float)player.getBoundingBox().minY + player.level().getRandom().nextFloat() * player.getBbHeight(), (float)player.getZ() - 0.5f + player.level().getRandom().nextFloat() * 1.5f, 1.0f, 0.7f, 0.9f);
                 }

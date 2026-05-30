@@ -17,7 +17,7 @@ public class AIGotoHome extends Goal
     public AIGotoHome(EntityThaumcraftGolem g) {
         idleCounter = 10;
         golem = g;
-        setFlags(5);
+        setFlags(java.util.EnumSet.of(net.minecraft.world.entity.ai.goal.Goal.Flag.MOVE, net.minecraft.world.entity.ai.goal.Goal.Flag.JUMP));
     }
     
     public boolean canUse() {
@@ -26,7 +26,7 @@ public class AIGotoHome extends Goal
             return false;
         }
         idleCounter = 50;
-        double dd = golem.distanceToSqr(golem.getHomePosition());
+        double dd = golem.distanceToSqr(golem.getHomePosition().getX() + 0.5, golem.getHomePosition().getY() + 0.5, golem.getHomePosition().getZ() + 0.5);
         if (dd < 5.0) {
             return false;
         }
@@ -51,7 +51,7 @@ public class AIGotoHome extends Goal
     }
     
     public boolean canContinueToUse() {
-        return golem.getTask() == null && !golem.getNavigation().isDone() && golem.distanceToSqr(golem.getHomePosition()) > 3.0;
+        return golem.getTask() == null && !golem.getNavigation().isDone() && golem.distanceToSqr(golem.getHomePosition().getX() + 0.5, golem.getHomePosition().getY() + 0.5, golem.getHomePosition().getZ() + 0.5) > 3.0;
     }
     
     public void stop() {

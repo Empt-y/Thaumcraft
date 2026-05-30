@@ -13,6 +13,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 // FML FMLCommonHandler removed
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -20,7 +21,10 @@ import thaumcraft.api.items.IWarpingGear;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.IThaumcraftItems;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 
 public class ItemCrimsonBlade extends Item /* ItemSword removed */ implements IWarpingGear, IThaumcraftItems
@@ -56,8 +60,8 @@ public class ItemCrimsonBlade extends Item /* ItemSword removed */ implements IW
         return Rarity.EPIC;
     }
     
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
-        super.inventoryTick(stack, world, entity, p_77663_4_, p_77663_5_);
+    public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @javax.annotation.Nullable net.minecraft.world.entity.EquipmentSlot p_77663_4_) {
+        super.inventoryTick(stack, world, entity, p_77663_4_);
         if ((stack.getDamageValue() > 0) && entity != null && entity.tickCount % 20 == 0 && entity instanceof LivingEntity) {
             if (stack.isDamageableItem()) stack.setDamageValue(Math.max(0, stack.getDamageValue() - 1));
         }
@@ -81,9 +85,9 @@ public class ItemCrimsonBlade extends Item /* ItemSword removed */ implements IW
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("enchantment.special.sapgreat")));
-        super.appendHoverText(stack, context, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("enchantment.special.sapgreat")));
+        super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);
     }
     
     static {

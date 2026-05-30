@@ -230,7 +230,7 @@ public class ToolEvents
                                     else { zz = aa; yy = bb; }
                                     BlockPos adjPos = event.getPos().offset(xx, yy, zz);
                                     BlockState bl = level.getBlockState(adjPos);
-                                    if (bl.getDestroySpeed(level, adjPos) >= 0.0f && heldItem.getItem() instanceof net.minecraft.world.item.SwordItem || heldItem.getItem() instanceof net.minecraft.world.item.DiggerItem || heldItem.getItem() instanceof net.minecraft.world.item.HoeItem) {
+                                    if (bl.getDestroySpeed(level, adjPos) >= 0.0f && heldItem.has(net.minecraft.core.component.DataComponents.TOOL)) {
                                         if (!harvesterPlayer.getName().getString().equals("FakeThaumcraftBore")) {
                                             heldItem.hurtAndBreak(1, harvesterPlayer, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
                                         }
@@ -266,24 +266,25 @@ public class ToolEvents
             if (heldItem != null && !heldItem.isEmpty()) {
                 List<EnumInfusionEnchantment> list = EnumInfusionEnchantment.getInfusionEnchantments(heldItem);
                 if (list.contains(EnumInfusionEnchantment.COLLECTOR)) {
-                    for (int a = 0; a < event.getDrops().size(); ++a) {
-                        ItemEntity ei = event.getDrops().get(a);
+                    List<ItemEntity> dropsCopy = new ArrayList<>(event.getDrops());
+                    event.getDrops().clear();
+                    for (ItemEntity ei : dropsCopy) {
                         ItemStack is = ei.getItem().copy();
-                        ItemEntity nei = new EntityFollowingItem(event.getPlayer().level(), ei.getX(), ei.getY(), ei.getZ(), is, player, 10);
+                        ItemEntity nei = new EntityFollowingItem(player.level(), ei.getX(), ei.getY(), ei.getZ(), is, player, 10);
                         nei.setDeltaMovement(ei.getDeltaMovement());
                         nei.setPickUpDelay(10);
                         ei.discard();
-                        event.getDrops().set(a, nei);
+                        event.getDrops().add(nei);
                     }
                 }
                 if (list.contains(EnumInfusionEnchantment.ESSENCE)) {
-                    AspectList as = AspectHelper.getEntityAspects(event.getPlayer());
+                    AspectList as = AspectHelper.getEntityAspects(player);
                     if (as != null && as.size() > 0) {
                         AspectList aspects = as.copy();
                         int q = EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldItem, EnumInfusionEnchantment.ESSENCE);
                         Aspect[] al = aspects.getAspects();
-                        for (int b = (event.getPlayer().getRandom().nextInt(5) < q) ? 0 : 99; b < q && al != null && al.length > 0; b += 1 + event.getPlayer().getRandom().nextInt(2)) {
-                            Aspect aspect = al[event.getPlayer().getRandom().nextInt(al.length)];
+                        for (int b = (player.getRandom().nextInt(5) < q) ? 0 : 99; b < q && al != null && al.length > 0; b += 1 + player.getRandom().nextInt(2)) {
+                            Aspect aspect = al[player.getRandom().nextInt(al.length)];
                             if (aspects.getAmount(aspect) > 0) {
                                 aspects.remove(aspect, 1);
                                 ItemStack stack = ThaumcraftApiHelper.makeCrystal(aspect);

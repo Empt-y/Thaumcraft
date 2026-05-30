@@ -14,7 +14,10 @@ import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.items.ItemTCBase;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.Utils;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 
 public class ItemLootBag extends ItemTCBase
@@ -38,9 +41,9 @@ public class ItemLootBag extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
-        tooltip.add(net.minecraft.network.chat.Component.literal(I18n.get("tc.lootbag")));
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);
+        tooltip.accept(net.minecraft.network.chat.Component.literal(I18n.get("tc.lootbag")));
     }
     
     public InteractionResult use(Level world, Player player, InteractionHand hand) {

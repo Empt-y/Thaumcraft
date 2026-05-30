@@ -38,7 +38,7 @@ public class BlockOreTC extends BlockTC
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
         List<ItemStack> drops = super.getDrops(state, params);
-        if (this.getBlock() == BlocksTC.oreAmber && drops != null) {
+        if (this == BlocksTC.oreAmber && drops != null) {
             RandomSource rand = RandomSource.create();
             for (int a = 0; a < drops.size(); ++a) {
                 ItemStack is = drops.get(a);
@@ -54,7 +54,7 @@ public class BlockOreTC extends BlockTC
     public int getExpDrop(BlockState state, LevelAccessor level, BlockPos pos,
             @Nullable BlockEntity blockEntity, @Nullable Entity breaker, ItemStack tool) {
         if (getItemDropped(state) != state.getBlock().asItem()
-                && (this.getBlock() == BlocksTC.oreAmber || this.getBlock() == BlocksTC.oreQuartz)
+                && (this == BlocksTC.oreAmber || this == BlocksTC.oreQuartz)
                 && level instanceof ServerLevel sl) {
             int xp = Mth.randomBetweenInclusive(level.getRandom(), 1, 4);
             return EnchantmentHelper.processBlockExperience(sl, tool, xp);

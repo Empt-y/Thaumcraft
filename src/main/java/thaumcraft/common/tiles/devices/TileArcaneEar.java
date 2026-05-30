@@ -61,7 +61,7 @@ public class TileArcaneEar extends BlockEntity
                     this.level.updateNeighborsAt(this.worldPosition, getBlockState().getBlock());
                     this.level.updateNeighborsAt(this.worldPosition.relative(facing), getBlockState().getBlock());
                     BlockState state = this.level.getBlockState(this.worldPosition);
-                    this.level.markAndNotifyBlock(this.worldPosition, this.level.getChunkAt(this.worldPosition), state, state, 3);
+                    this.level.markAndNotifyBlock(this.worldPosition, this.level.getChunkAt(this.worldPosition), state, state, 3, 512);
                 }
             }
             ArrayList<Integer[]> nbe = TileArcaneEar.noteBlockEvents.get((this.level instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)this.level).dimension().identifier().hashCode() : 0));
@@ -85,7 +85,7 @@ public class TileArcaneEar extends BlockEntity
                         this.level.updateNeighborsAt(this.worldPosition, getBlockState().getBlock());
                         this.level.updateNeighborsAt(this.worldPosition.relative(facing2), getBlockState().getBlock());
                         BlockState state3 = this.level.getBlockState(this.worldPosition);
-                        this.level.markAndNotifyBlock(this.worldPosition, this.level.getChunkAt(this.worldPosition), state3, state3, 3);
+                        this.level.markAndNotifyBlock(this.worldPosition, this.level.getChunkAt(this.worldPosition), state3, state3, 3, 512);
                         break;
                     }
                 }

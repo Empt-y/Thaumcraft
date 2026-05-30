@@ -333,7 +333,7 @@ public class TileTube extends TileThaumcraft implements IEssentiaTransport, IInt
             return false;
         }
         if (hit.getType() != net.minecraft.world.phys.HitResult.Type.MISS && true) {
-            player.level().playSound(bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f, false);
+            player.level().playSound(null, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f);
             player.swing(hand);
             setChanged();
             syncTile(true);
@@ -348,7 +348,7 @@ public class TileTube extends TileThaumcraft implements IEssentiaTransport, IInt
             return true;
         }
         if (0 == 6) {
-            player.level().playSound(bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f, false);
+            player.level().playSound(null, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f);
             player.swing(hand);
             int a = facing.ordinal();
             setChanged();

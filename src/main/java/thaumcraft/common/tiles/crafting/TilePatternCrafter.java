@@ -74,7 +74,7 @@ public class TilePatternCrafter extends TileThaumcraft
             if (rotTicks > 0) {
                 --rotTicks;
                 if (rotTicks % Math.floor(Math.max(1.0f, rp)) == 0.0) {
-                    getLevel().playSound(getBlockPos().getX() + 0.5, getBlockPos().getY() + 0.5, getBlockPos().getZ() + 0.5, SoundsTC.clack, SoundSource.BLOCKS, 0.2f, 1.7f, false);
+                    getLevel().playSound(null, getBlockPos().getX() + 0.5, getBlockPos().getY() + 0.5, getBlockPos().getZ() + 0.5, SoundsTC.clack, SoundSource.BLOCKS, 0.2f, 1.7f);
                 }
                 ++rp;
             }

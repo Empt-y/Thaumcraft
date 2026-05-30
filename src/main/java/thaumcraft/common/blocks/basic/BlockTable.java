@@ -46,7 +46,7 @@ public class BlockTable extends BlockTC
         if (world.isClientSide()) {
             return true;
         }
-        if (this.getBlock() == BlocksTC.tableWood && player.getItemInHand(hand).getItem() instanceof IScribeTools) {
+        if (this == BlocksTC.tableWood && player.getItemInHand(hand).getItem() instanceof IScribeTools) {
             BlockState bs = BlocksTC.researchTable.defaultBlockState();
             bs = bs.setValue((Property)IBlockFacingHorizontal.FACING, player.getDirection());
             world.setBlock(pos, bs, 3);

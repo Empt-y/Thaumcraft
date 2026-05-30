@@ -98,7 +98,7 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
         Vec3 vec3 = new Vec3(f7 * d4, f6 * d4, f8 * d4);
         Vec3 vec4 = vec0.add(vec3.x / 10.0, vec3.y / 10.0, vec3.z / 10.0);
         for (int a = 0; a < vec3.length() * 10.0; ++a) {
-            BlockPos pos = new BlockPos(vec4);
+            BlockPos pos = BlockPos.containing(vec4);
             HitResult mop = collisionRayTrace(playerIn.level(), pos, vec0, vec2);
             if (mop != null) {
                 ISealEntity se = SealHandler.getSealEntity((playerIn.level() instanceof net.minecraft.server.level.ServerLevel ? ((playerIn.level() instanceof net.minecraft.server.level.ServerLevel) ? ((net.minecraft.server.level.ServerLevel)playerIn.level()).dimension().identifier().hashCode() : 0) : 0), new SealPos(pos, ((net.minecraft.world.phys.BlockHitResult)mop).getDirection()));
@@ -123,13 +123,26 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
         return point != null && (point.x >= pos.getX() && point.x <= pos.getX() + 1 && point.y >= pos.getY() && point.y <= pos.getY() + 1);
     }
     
+    private static Vec3 intermediateWithX(Vec3 s, Vec3 e, double x) {
+        double t = (x - s.x) / (e.x - s.x);
+        return (t < 0.0 || t > 1.0) ? null : new Vec3(x, s.y + (e.y - s.y) * t, s.z + (e.z - s.z) * t);
+    }
+    private static Vec3 intermediateWithY(Vec3 s, Vec3 e, double y) {
+        double t = (y - s.y) / (e.y - s.y);
+        return (t < 0.0 || t > 1.0) ? null : new Vec3(s.x + (e.x - s.x) * t, y, s.z + (e.z - s.z) * t);
+    }
+    private static Vec3 intermediateWithZ(Vec3 s, Vec3 e, double z) {
+        double t = (z - s.z) / (e.z - s.z);
+        return (t < 0.0 || t > 1.0) ? null : new Vec3(s.x + (e.x - s.x) * t, s.y + (e.y - s.y) * t, z);
+    }
+
     private static HitResult collisionRayTrace(Level worldIn, BlockPos pos, Vec3 start, Vec3 end) {
-        Vec3 vec3 = start.getIntermediateWithXValue(end, pos.getX());
-        Vec3 vec4 = start.getIntermediateWithXValue(end, pos.getX() + 1);
-        Vec3 vec5 = start.getIntermediateWithYValue(end, pos.getY());
-        Vec3 vec6 = start.getIntermediateWithYValue(end, pos.getY() + 1);
-        Vec3 vec7 = start.getIntermediateWithZValue(end, pos.getZ());
-        Vec3 vec8 = start.getIntermediateWithZValue(end, pos.getZ() + 1);
+        Vec3 vec3 = intermediateWithX(start, end, pos.getX());
+        Vec3 vec4 = intermediateWithX(start, end, pos.getX() + 1);
+        Vec3 vec5 = intermediateWithY(start, end, pos.getY());
+        Vec3 vec6 = intermediateWithY(start, end, pos.getY() + 1);
+        Vec3 vec7 = intermediateWithZ(start, end, pos.getZ());
+        Vec3 vec8 = intermediateWithZ(start, end, pos.getZ() + 1);
         if (!isVecInsideYZBounds(vec3, pos)) {
             vec3 = null;
         }

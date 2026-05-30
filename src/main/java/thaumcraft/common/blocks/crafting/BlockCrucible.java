@@ -51,7 +51,7 @@ public class BlockCrucible extends BlockTCTile
                 delay = 0;
                 if (entity instanceof LivingEntity && tile != null && tile.heat > 150 && tile.tank.getFluidAmount() > 0) {
                     entity.hurt(world.damageSources().inFire(), 1.0f);
-                    world.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.4f, 2.0f + world.getRandom().nextFloat() * 0.4f);
+                    world.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.4f, 2.0f + world.getRandom().nextFloat() * 0.4f, false);
                 }
             }
         }
@@ -89,7 +89,7 @@ public class BlockCrucible extends BlockTCTile
                             if (FluidUtil.interactWithFluidHandler(player, hand, tile.tank)) {
                                 te.setChanged();
                                 world.sendBlockUpdated(pos, state, state, 3);
-                                world.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.33f, 1.0f + (world.getRandom().nextFloat() - world.getRandom().nextFloat()) * 0.3f);
+                                world.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.33f, 1.0f + (world.getRandom().nextFloat() - world.getRandom().nextFloat()) * 0.3f, false);
                             }
                             return true;
                         }

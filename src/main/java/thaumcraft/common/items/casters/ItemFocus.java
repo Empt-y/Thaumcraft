@@ -21,7 +21,10 @@ import thaumcraft.api.casters.FocusPackage;
 import thaumcraft.api.casters.IFocusElement;
 import thaumcraft.api.casters.NodeSetting;
 import thaumcraft.common.items.ItemTCBase;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 
 public class ItemFocus extends ItemTCBase
@@ -101,8 +104,8 @@ public class ItemFocus extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
-        addFocusInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        addFocusInformation(stack, null, tooltip, flagIn);
     }
     
     @OnlyIn(Dist.CLIENT)
@@ -111,7 +114,7 @@ public class ItemFocus extends ItemTCBase
         if (p != null) {
             float al = getVisCost(stack);
             String amount = ItemStack.DECIMALFORMAT.format(al);
-            tooltip.add(net.minecraft.network.chat.Component.literal(amount + " " + I18n.get("item.Focus.cost1")));
+            tooltip.accept(net.minecraft.network.chat.Component.literal(amount + " " + I18n.get("item.Focus.cost1")));
             for (IFocusElement fe : p.nodes) {
                 if (fe instanceof FocusNode && !(fe instanceof FocusMediumRoot)) {
                     buildInfo(tooltip, (FocusNode)fe, 0);

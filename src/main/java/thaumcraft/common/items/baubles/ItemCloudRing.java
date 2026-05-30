@@ -40,14 +40,15 @@ public class ItemCloudRing extends ItemTCBase
     
     public void onWornTick(ItemStack itemstack, LivingEntity player) {
         if (player.level().isClientSide()) {
-            boolean spacePressed = Minecraft.getInstance().gameSettings.keyBindJump.isPressed();
-            if (spacePressed && !ItemCloudRing.jumpList.containsKey(player.getName())) {
-                ItemCloudRing.jumpList.put(player.getName(), true);
+            String playerKey = player.getUUID().toString();
+            boolean spacePressed = Minecraft.getInstance().options.keyJump.isDown();
+            if (spacePressed && !ItemCloudRing.jumpList.containsKey(playerKey)) {
+                ItemCloudRing.jumpList.put(playerKey, true);
             }
-            if (spacePressed && !player.onGround() && !player.isInWater() && player.jumpTicks == 0 && ItemCloudRing.jumpList.containsKey(player.getName()) && ItemCloudRing.jumpList.get(player.getName())) {
+            if (spacePressed && !player.onGround() && !player.isInWater() && ItemCloudRing.jumpList.containsKey(playerKey) && ItemCloudRing.jumpList.get(playerKey)) {
                 FXDispatcher.INSTANCE.drawBamf(player.getX(), player.getY() + 0.5, player.getZ(), 1.0f, 1.0f, 1.0f, false, false, Direction.UP);
-                player.level().playSound(player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 0.1f, 1.0f + (float)player.level().getRandom().nextGaussian() * 0.05f, false);
-                ItemCloudRing.jumpList.put(player.getName());
+                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 0.1f, 1.0f + (float)player.level().getRandom().nextGaussian() * 0.05f);
+                ItemCloudRing.jumpList.put(playerKey, false);
                 player.setDeltaMovement(player.getDeltaMovement().x, 0.75, player.getDeltaMovement().z);
                 if (player.hasEffect(MobEffects.JUMP_BOOST)) {
                     player.setDeltaMovement(player.getDeltaMovement().x, player.getDeltaMovement().y + (player.getEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1f, player.getDeltaMovement().z);
@@ -59,10 +60,9 @@ public class ItemCloudRing extends ItemTCBase
                 }
                 player.fallDistance = 0.0f;
                 PacketHandler.sendToServer(new PacketPlayerFlagToServer(player, 1));
-                ForgeHooks.onLivingJump(player);
             }
-            if (player.onGround() && player.jumpTicks == 0) {
-                ItemCloudRing.jumpList.remove(player.getName());
+            if (player.onGround()) {
+                ItemCloudRing.jumpList.remove(playerKey);
             }
         }
     }

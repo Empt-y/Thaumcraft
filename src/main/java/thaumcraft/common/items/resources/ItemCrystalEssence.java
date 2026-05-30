@@ -27,7 +27,11 @@ public class ItemCrystalEssence extends ItemTCEssentiaContainer
         }
     }
     
-    public String getItemStackDisplayName(ItemStack stack) {
-        return (getAspects(stack) != null && !getAspects(stack).aspects.isEmpty()) ? String.format(super.getName(), getAspects(stack).getAspects()[0].getName()) : super.getName();
+    @Override
+    public net.minecraft.network.chat.Component getName(ItemStack stack) {
+        if (getAspects(stack) != null && !getAspects(stack).aspects.isEmpty()) {
+            return super.getName(stack).copy().append(" (" + getAspects(stack).getAspects()[0].getName() + ")");
+        }
+        return super.getName(stack);
     }
 }

@@ -20,6 +20,8 @@ import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.EntityUtils;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 public class ItemCreativeFluxSponge extends ItemTCBase {
 
@@ -29,13 +31,13 @@ public class ItemCreativeFluxSponge extends ItemTCBase {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
-        tooltip.add(Component.literal(ChatFormatting.GREEN + "Right-click to drain all"));
-        tooltip.add(Component.literal(ChatFormatting.GREEN + "flux from 9x9 chunk area"));
-        tooltip.add(Component.literal(ChatFormatting.DARK_AQUA + "Also removes flux rifts"));
-        tooltip.add(Component.literal(ChatFormatting.DARK_AQUA + "if used while sneaking."));
-        tooltip.add(Component.literal(ChatFormatting.DARK_PURPLE + "Creative only"));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);
+        tooltip.accept(Component.literal(ChatFormatting.GREEN + "Right-click to drain all"));
+        tooltip.accept(Component.literal(ChatFormatting.GREEN + "flux from 9x9 chunk area"));
+        tooltip.accept(Component.literal(ChatFormatting.DARK_AQUA + "Also removes flux rifts"));
+        tooltip.accept(Component.literal(ChatFormatting.DARK_AQUA + "if used while sneaking."));
+        tooltip.accept(Component.literal(ChatFormatting.DARK_PURPLE + "Creative only"));
     }
 
     @Override

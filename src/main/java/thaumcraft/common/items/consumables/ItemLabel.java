@@ -23,9 +23,6 @@ public class ItemLabel extends ItemTCEssentiaContainer
         super("label", 1, "blank", "filled");
     }
     
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getName() + "." + getVariantNames()[stack.getDamageValue()];
-    }
     
     
     public void getSubItems(CreativeModeTab tab, NonNullList<ItemStack> items) {

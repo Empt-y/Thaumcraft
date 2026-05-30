@@ -24,7 +24,10 @@ import thaumcraft.api.items.RechargeHelper;
 import thaumcraft.api.potions.PotionFluxTaint;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.ItemTCBase;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 
 public class ItemVerdantCharm extends ItemTCBase implements IRechargable
@@ -60,12 +63,12 @@ public class ItemVerdantCharm extends ItemTCBase implements IRechargable
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getByteOr("type", (byte)0) == 1) {
-            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("item.verdant_charm.life.text")));
+            tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("item.verdant_charm.life.text")));
         }
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getByteOr("type", (byte)0) == 2) {
-            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("item.verdant_charm.sustain.text")));
+            tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("item.verdant_charm.sustain.text")));
         }
     }
     

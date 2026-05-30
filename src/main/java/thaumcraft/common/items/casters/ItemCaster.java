@@ -46,7 +46,10 @@ import thaumcraft.common.lib.network.misc.PacketAuraToClient;
 import thaumcraft.common.lib.utils.BlockUtils;
 import thaumcraft.common.world.aura.AuraChunk;
 import thaumcraft.common.world.aura.AuraHandler;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.util.Mth;
 
 
@@ -227,7 +230,7 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         if (!stack.isEmpty()) {
             String text = "";
             ItemStack focus = getFocusStack(stack);
@@ -237,11 +240,11 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
                     text = "§r" + myFormatter.format(amt) + " " + I18n.get("item.Focus.cost1");
                 }
             }
-            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.ITALIC + "" + ChatFormatting.AQUA + I18n.get("tc.vis.cost") + " " + text));
+            tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.ITALIC + "" + ChatFormatting.AQUA + I18n.get("tc.vis.cost") + " " + text));
         }
         if (getFocus(stack) != null) {
-            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.BOLD + "" + ChatFormatting.ITALIC + "" + ChatFormatting.GREEN + getFocus(stack).getDescriptionId(getFocusStack(stack))));
-            getFocus(stack).addFocusInformation(getFocusStack(stack), worldIn, tooltip, flagIn);
+            tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.BOLD + "" + ChatFormatting.ITALIC + "" + ChatFormatting.GREEN + getFocus(stack).getDescriptionId(getFocusStack(stack))));
+            getFocus(stack).addFocusInformation(getFocusStack(stack), null, tooltip, flagIn);
         }
     }
     

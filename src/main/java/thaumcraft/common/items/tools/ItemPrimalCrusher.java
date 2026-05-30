@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 // import net.minecraft.world.item.Item /* DiggerItem removed */;; // broken import
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.items.IWarpingGear;
 import thaumcraft.api.items.ItemsTC;
@@ -27,8 +28,8 @@ import thaumcraft.common.lib.enchantment.EnumInfusionEnchantment;
 
 public class ItemPrimalCrusher extends net.minecraft.world.item.Item implements IWarpingGear, IThaumcraftItems
 {
-    public static ToolMaterial material;
-    private static Set isEffective;
+    private static final float EFFICIENCY = 8.0f;
+    private static Set<Block> isEffective;
 
     public ItemPrimalCrusher() {
         super(new net.minecraft.world.item.Item.Properties());
@@ -59,7 +60,7 @@ public class ItemPrimalCrusher extends net.minecraft.world.item.Item implements 
     }
     
     public float getDestroySpeed(ItemStack stack, BlockState state) {
-        return (true /* getMaterial check removed */ && true /* getMaterial check removed */ && true /* getMaterial check removed */) ? super.getDestroySpeed(stack, state) : efficiency;
+        return isEffective.contains(state.getBlock()) ? EFFICIENCY : super.getDestroySpeed(stack, state);
     }
     
     public Set<String> getToolClasses(ItemStack stack) {
@@ -67,12 +68,7 @@ public class ItemPrimalCrusher extends net.minecraft.world.item.Item implements 
     }
     
     private boolean isEffectiveAgainst(Block block) {
-        for (Object b : ItemPrimalCrusher.isEffective) {
-            if (b == block) {
-                return true;
-            }
-        }
-        return false;
+        return ItemPrimalCrusher.isEffective.contains(block);
     }
     
     public int getItemEnchantability() {
@@ -83,8 +79,8 @@ public class ItemPrimalCrusher extends net.minecraft.world.item.Item implements 
         return 2;
     }
     
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
-        super.inventoryTick(stack, world, entity, p_77663_4_, p_77663_5_);
+    public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @javax.annotation.Nullable net.minecraft.world.entity.EquipmentSlot p_77663_4_) {
+        super.inventoryTick(stack, world, entity, p_77663_4_);
         if ((stack.getDamageValue() > 0) && entity != null && entity.tickCount % 20 == 0 && entity instanceof LivingEntity) {
             if (stack.isDamageableItem()) stack.setDamageValue(Math.max(0, stack.getDamageValue() - 1));
         }
@@ -100,7 +96,14 @@ public class ItemPrimalCrusher extends net.minecraft.world.item.Item implements 
     }
     
     static {
-        ItemPrimalCrusher.material = EnumHelper.addToolMaterial("PRIMALVOID", 5, 500, 8.0f, 4.0f, 20).setRepairItem(new ItemStack(ItemsTC.ingots, 1));
-        isEffective = Sets.newHashSet((Object[])new Block[] { Blocks.COBBLESTONE, Blocks.DOUBLE_STONE_SLAB, Blocks.STONE_SLAB, Blocks.STONE, Blocks.SANDSTONE, Blocks.MOSSY_COBBLESTONE, Blocks.IRON_ORE, Blocks.IRON_BLOCK, Blocks.COAL_ORE, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.DIAMOND_ORE, Blocks.DIAMOND_BLOCK, Blocks.ICE, Blocks.NETHERRACK, Blocks.LAPIS_ORE, Blocks.LAPIS_BLOCK, Blocks.REDSTONE_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.RAIL, Blocks.DETECTOR_RAIL, Blocks.GOLDEN_RAIL, Blocks.ACTIVATOR_RAIL, Blocks.GRASS, Blocks.DIRT, Blocks.SAND, Blocks.GRAVEL, Blocks.SNOW_LAYER, Blocks.SNOW, Blocks.CLAY, Blocks.FARMLAND, Blocks.SOUL_SAND, Blocks.MYCELIUM, BlocksTC.taintCrust, BlocksTC.taintRock, BlocksTC.taintSoil, BlocksTC.taintFeature, BlocksTC.taintLog, BlocksTC.taintFibre, Blocks.OBSIDIAN });
+        isEffective = Sets.newHashSet(Blocks.COBBLESTONE, Blocks.STONE, Blocks.SANDSTONE, Blocks.MOSSY_COBBLESTONE,
+            Blocks.IRON_ORE, Blocks.IRON_BLOCK, Blocks.COAL_ORE, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE,
+            Blocks.DIAMOND_ORE, Blocks.DIAMOND_BLOCK, Blocks.ICE, Blocks.NETHERRACK, Blocks.LAPIS_ORE,
+            Blocks.LAPIS_BLOCK, Blocks.REDSTONE_ORE, Blocks.DEEPSLATE_REDSTONE_ORE, Blocks.RAIL,
+            Blocks.DETECTOR_RAIL, Blocks.POWERED_RAIL, Blocks.ACTIVATOR_RAIL, Blocks.GRASS_BLOCK,
+            Blocks.DIRT, Blocks.SAND, Blocks.GRAVEL, Blocks.SNOW, Blocks.CLAY, Blocks.FARMLAND,
+            Blocks.SOUL_SAND, Blocks.MYCELIUM,
+            BlocksTC.taintCrust, BlocksTC.taintRock, BlocksTC.taintSoil, BlocksTC.taintFeature,
+            BlocksTC.taintLog, BlocksTC.taintFibre, Blocks.OBSIDIAN);
     }
 }

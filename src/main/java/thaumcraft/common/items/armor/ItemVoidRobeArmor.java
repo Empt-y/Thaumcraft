@@ -19,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.IGoggles;
@@ -79,8 +80,8 @@ public class ItemVoidRobeArmor extends net.minecraft.world.item.Item implements 
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, net.minecraft.world.level.Level world, Entity entity, int slot, boolean selected) {
-        super.inventoryTick(stack, world, entity, slot, selected);
+    public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @javax.annotation.Nullable net.minecraft.world.entity.EquipmentSlot slot) {
+        super.inventoryTick(stack, world, entity, slot);
         if (!world.isClientSide() && (stack.getDamageValue() > 0) && entity.tickCount % 20 == 0 && entity instanceof LivingEntity) {
             // Self-repair: negative damage = heal durability. Use hurtAndBreak with -1 if on server.
             if (!world.isClientSide() && world instanceof net.minecraft.server.level.ServerLevel serverLevel) {

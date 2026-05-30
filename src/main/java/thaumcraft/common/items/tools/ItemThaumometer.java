@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ScanningManager;
@@ -42,7 +43,7 @@ public class ItemThaumometer extends ItemTCBase
     public InteractionResult use(Level world, Player p, InteractionHand hand) {
         if (world.isClientSide()) {
             drawFX(world, p);
-            p.level().playSound(p.getX(), p.getY(), p.getZ(), SoundsTC.scan, SoundSource.PLAYERS, 0.5f, 1.0f, false);
+            p.level().playSound(null, p.getX(), p.getY(), p.getZ(), SoundsTC.scan, SoundSource.PLAYERS, 0.5f, 1.0f);
         }
         else {
             doScan(world, p);
@@ -50,7 +51,7 @@ public class ItemThaumometer extends ItemTCBase
         return InteractionResult.SUCCESS;
     }
     
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @javax.annotation.Nullable net.minecraft.world.entity.EquipmentSlot itemSlot) {
         boolean held = isSelected || itemSlot == 0;
         if (held && !world.isClientSide() && entity.tickCount % 20 == 0 && entity instanceof net.minecraft.server.level.ServerPlayer) {
             updateAura(stack, world, (net.minecraft.server.level.ServerPlayer)entity);

@@ -27,7 +27,10 @@ import thaumcraft.common.items.ItemTCBase;
 import thaumcraft.common.lib.CommandThaumcraft;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.research.ResearchManager;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 
 public class ItemThaumonomicon extends ItemTCBase
@@ -47,10 +50,10 @@ public class ItemThaumonomicon extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);
         if (stack.getDamageValue() == 1) {
-            tooltip.add(net.minecraft.network.chat.Component.literal("" + ChatFormatting.DARK_PURPLE + "Creative only"));
+            tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.DARK_PURPLE + "Creative only"));
         }
     }
     
@@ -83,7 +86,7 @@ public class ItemThaumonomicon extends ItemTCBase
             ThaumcraftCapabilities.getKnowledge(player).sync((net.minecraft.server.level.ServerPlayer)player);
         }
         else {
-            world.playSound(player.getX(), player.getY(), player.getZ(), SoundsTC.page, SoundSource.PLAYERS, 1.0f, 1.0f, false);
+            world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundsTC.page, SoundSource.PLAYERS, 1.0f, 1.0f);
         }
         /* TODO: port to NetworkHooks.openScreen */ 
         return InteractionResult.SUCCESS;

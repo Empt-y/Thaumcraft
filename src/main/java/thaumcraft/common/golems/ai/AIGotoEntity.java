@@ -54,11 +54,11 @@ public class AIGotoEntity extends AIGoto
         if (golem.distanceToSqr(e.getX() + 0.5, e.getY() + 0.5, e.getZ() + 0.5) < minDist) {
             return true;
         }
-        Path pathentity = golem.getNavigation().createPath(e);
+        Path pathentity = golem.getNavigation().createPath(e, 1);
         if (pathentity == null) {
             return false;
         }
-        Node pathpoint = pathentity.getFinalPathPoint();
+        Node pathpoint = pathentity.getEndNode();
         if (pathpoint == null) {
             return false;
         }

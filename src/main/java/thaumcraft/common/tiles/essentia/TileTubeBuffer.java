@@ -255,7 +255,7 @@ public class TileTubeBuffer extends TileTube implements IAspectContainer
         if (hit.getType() != net.minecraft.world.phys.HitResult.Type.MISS && true) {
             player.swing(hand);
             if (player.isCrouching()) {
-                player.level().playSound(bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, SoundsTC.squeek, SoundSource.BLOCKS, 0.6f, 2.0f + this.level.getRandom().nextFloat() * 0.2f, false);
+                player.level().playSound(null, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, SoundsTC.squeek, SoundSource.BLOCKS, 0.6f, 2.0f + this.level.getRandom().nextFloat() * 0.2f);
                 if (!this.level.isClientSide()) {
                     byte[] chokedSides = this.chokedSides;
                     int subHit = 0;
@@ -268,7 +268,7 @@ public class TileTubeBuffer extends TileTube implements IAspectContainer
                 }
             }
             else {
-                player.level().playSound(bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f, false);
+                player.level().playSound(null, bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, SoundsTC.tool, SoundSource.BLOCKS, 0.5f, 0.9f + player.level().getRandom().nextFloat() * 0.2f);
                 openSides[0] = !openSides[0];
                 Direction dir = Direction.values()[0];
                 BlockEntity tile = this.level.getBlockEntity(getBlockPos().relative(dir));

@@ -55,7 +55,7 @@ public class BlockLeavesTC extends LeavesBlock
     /** Silverwood leaves slowly regenerate aura while persistent (player-placed). */
     @Override
     protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
-        if (this.getBlock() == BlocksTC.leafSilverwood
+        if (this == BlocksTC.leafSilverwood
                 && state.getValue(PERSISTENT)
                 && AuraHandler.getVis(world, pos) < AuraHandler.getAuraBase(world, pos)) {
             AuraHandler.addVis(world, pos, 0.01f);
@@ -65,7 +65,7 @@ public class BlockLeavesTC extends LeavesBlock
 
     @Override
     protected void spawnFallingLeavesParticle(Level world, BlockPos pos, RandomSource rand) {
-        if (this.getBlock() == BlocksTC.leafSilverwood) {
+        if (this == BlocksTC.leafSilverwood) {
             float x = pos.getX() + rand.nextFloat();
             float y = pos.getY() - 0.05f;
             float z = pos.getZ() + rand.nextFloat();

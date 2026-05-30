@@ -37,7 +37,7 @@ public abstract class AIGoto extends Goal
         pause = 0;
         golem = g;
         this.type = type;
-        setFlags(5);
+        setFlags(java.util.EnumSet.of(net.minecraft.world.entity.ai.goal.Goal.Flag.MOVE, net.minecraft.world.entity.ai.goal.Goal.Flag.JUMP));
     }
     
     public boolean canUse() {
@@ -77,7 +77,8 @@ public abstract class AIGoto extends Goal
             return;
         }
         if (pause-- <= 0) {
-            double dist = (golem.getTask().getType() == 0) ? golem.distanceToSqr((targetBlock == null) ? golem.getTask().getPos() : targetBlock) : golem.distanceToSqr(golem.getTask().getEntity());
+            BlockPos _tpos = (targetBlock == null) ? golem.getTask().getPos() : targetBlock;
+            double dist = (golem.getTask().getType() == 0) ? golem.distanceToSqr(_tpos.getX() + 0.5, _tpos.getY() + 0.5, _tpos.getZ() + 0.5) : golem.distanceToSqr(golem.getTask().getEntity());
             if (dist > minDist) {
                 golem.getTask().setCompletion(false);
                 ++taskCounter;

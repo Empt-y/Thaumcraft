@@ -25,7 +25,7 @@ public class AIGotoBlock extends AIGoto
     public void tick() {
         super.tick();
         if (golem.getLookControl() != null) {
-            golem.getLookControl().setLookPosition(golem.getTask().getPos().x + 0.5, golem.getTask().getPos().getY() + 0.5, golem.getTask().getPos().z + 0.5, 10.0f, (float) 40);
+            golem.getLookControl().setLookPosition(golem.getTask().getPos().getX() + 0.5, golem.getTask().getPos().getY() + 0.5, golem.getTask().getPos().getZ() + 0.5, 10.0f, (float) 40);
         }
     }
     
@@ -35,7 +35,7 @@ public class AIGotoBlock extends AIGoto
             golem.getNavigation().moveTo(targetBlock.getX() + 0.5, targetBlock.getY() + 0.5, targetBlock.getZ() + 0.5, golem.getGolemMoveSpeed());
         }
         else {
-            golem.getNavigation().moveTo(golem.getTask().getPos().x + 0.5, golem.getTask().getPos().getY() + 0.5, golem.getTask().getPos().z + 0.5, golem.getGolemMoveSpeed());
+            golem.getNavigation().moveTo(golem.getTask().getPos().getX() + 0.5, golem.getTask().getPos().getY() + 0.5, golem.getTask().getPos().getZ() + 0.5, golem.getGolemMoveSpeed());
         }
     }
     
@@ -76,11 +76,11 @@ public class AIGotoBlock extends AIGoto
         if (golem.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < minDist) {
             return true;
         }
-        Path pathentity = golem.getNavigation().getPathToXYZ(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+        Path pathentity = golem.getNavigation().createPath(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1);
         if (pathentity == null) {
             return false;
         }
-        Node pathpoint = pathentity.getFinalPathPoint();
+        Node pathpoint = pathentity.getEndNode();
         if (pathpoint == null) {
             return false;
         }

@@ -8,6 +8,7 @@ import net.minecraft.world.item.Item;
 // import net.minecraft.world.item.Item /* ArmorItem removed */; // removed
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.IWarpingGear;
@@ -62,8 +63,8 @@ public class ItemVoidArmor extends net.minecraft.world.item.Item implements IWar
         return ItemStack.isSameItem(repairItem, new ItemStack(ItemsTC.ingots, 1)) || false;
     }
     
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
-        super.inventoryTick(stack, world, entity, p_77663_4_, p_77663_5_);
+    public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @javax.annotation.Nullable net.minecraft.world.entity.EquipmentSlot p_77663_4_) {
+        super.inventoryTick(stack, world, entity, p_77663_4_);
         if (!world.isClientSide() && (stack.getDamageValue() > 0) && entity.tickCount % 20 == 0 && entity instanceof LivingEntity) {
             if (stack.isDamageableItem()) stack.setDamageValue(Math.max(0, stack.getDamageValue() - 1));
         }

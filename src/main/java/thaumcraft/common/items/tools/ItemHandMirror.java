@@ -25,6 +25,8 @@ import thaumcraft.common.items.ItemTCBase;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.tiles.devices.TileMirror;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 
 public class ItemHandMirror extends ItemTCBase
@@ -101,7 +103,7 @@ public class ItemHandMirror extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         if (!stack.isEmpty()) {
             CompoundTag nbt = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
             if (nbt.contains("linkX")) {
@@ -109,7 +111,7 @@ public class ItemHandMirror extends ItemTCBase
                 int ly = nbt.getIntOr("linkY", 0);
                 int lz = nbt.getIntOr("linkZ", 0);
                 int ldim = nbt.getIntOr("linkDim", 0);
-                tooltip.add(Component.literal(I18n.get("tc.handmirrorlinkedto") + " " + lx + "," + ly + "," + lz + " in " + ldim));
+                tooltip.accept(Component.literal(I18n.get("tc.handmirrorlinkedto") + " " + lx + "," + ly + "," + lz + " in " + ldim));
             }
         }
     }

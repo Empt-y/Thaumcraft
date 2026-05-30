@@ -23,6 +23,8 @@ import thaumcraft.common.items.ItemTCBase;
 import thaumcraft.common.lib.SoundsTC;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.TooltipFlag;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 
 public class ItemPechWand extends ItemTCBase
@@ -36,8 +38,8 @@ public class ItemPechWand extends ItemTCBase
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(net.minecraft.network.chat.Component.literal(I18n.get("item.curio.text")));
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.accept(net.minecraft.network.chat.Component.literal(I18n.get("item.curio.text")));
     }
     
     public InteractionResult use(Level worldIn, Player player, InteractionHand hand) {
@@ -51,7 +53,7 @@ public class ItemPechWand extends ItemTCBase
         if (!player.getAbilities().instabuild) {
             player.getItemInHand(hand).shrink(1);
         }
-        worldIn.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundsTC.learn, SoundSource.NEUTRAL, 0.5f, 0.4f / (net.minecraft.util.RandomSource.create().nextFloat() * 0.4f + 0.8f));
+        worldIn.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundsTC.learn, SoundSource.NEUTRAL, 0.5f, 0.4f / (net.minecraft.util.RandomSource.create().nextFloat() * 0.4f + 0.8f), false);
         if (!worldIn.isClientSide()) {
             if (!knowledge.isResearchKnown("FOCUSPECH")) {
                 ThaumcraftApi.internalMethods.progressResearch(player, "FOCUSPECH");

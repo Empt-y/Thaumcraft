@@ -63,7 +63,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
         if (am > 0 && aspectOut == null) {
             aspectOut = tt;
             setChanged();
-            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3, 512);
             --am;
         }
         return am;
@@ -74,7 +74,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
         if (aspectOut != null && tt == aspectOut) {
             aspectOut = null;
             setChanged();
-            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3, 512);
             return true;
         }
         return false;
@@ -165,7 +165,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
             aspectIn = aspect;
             process = 39;
             setChanged();
-            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+            getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3, 512);
             return 1;
         }
         return 0;
@@ -195,7 +195,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
             int pr = (int) rotation;
             rotation += rotationSpeed;
             if (rotation % 180.0f <= 20.0f && pr % 180 >= 160 && rotationSpeed > 0.0f) {
-                getLevel().playSound(getBlockPos().getX() + 0.5, getBlockPos().getY() + 0.5, getBlockPos().getZ() + 0.5, SoundsTC.pump, SoundSource.BLOCKS, 1.0f, 1.0f, false);
+                getLevel().playSound(null, getBlockPos().getX() + 0.5, getBlockPos().getY() + 0.5, getBlockPos().getZ() + 0.5, SoundsTC.pump, SoundSource.BLOCKS, 1.0f, 1.0f);
             }
         }
     }
@@ -205,7 +205,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
         aspectOut = comps[net.minecraft.util.RandomSource.create().nextInt(2)];
         aspectIn = null;
         setChanged();
-        getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+        getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3, 512);
     }
     
     void drawEssentia() {
@@ -223,7 +223,7 @@ public class TileCentrifuge extends TileThaumcraft implements IAspectContainer, 
                 aspectIn = ta;
                 process = 39;
                 setChanged();
-                getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3);
+                getLevel().markAndNotifyBlock(getBlockPos(), getLevel().getChunkAt(getBlockPos()), getLevel().getBlockState(getBlockPos()), getLevel().getBlockState(getBlockPos()), 3, 512);
             }
         }
     }

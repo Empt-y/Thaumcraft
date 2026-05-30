@@ -30,16 +30,6 @@ public class ItemPrimordialPearl extends ItemTCBase
         return false;
     }
     
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        if (stack.getDamageValue() < 3) {
-            return super.getName() + ".pearl";
-        }
-        if (stack.getDamageValue() < 6) {
-            return super.getName() + ".nodule";
-        }
-        return super.getName() + ".mote";
-    }
     
     public ItemStack getContainerItem(ItemStack itemStack) {
         if (!hasContainerItem(itemStack)) {
