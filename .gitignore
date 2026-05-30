@@ -23,3 +23,9 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
+
+# Example/guide folders
+GUIDE CODE MOD/
+
+# Temporary fix scripts
+fix_*.py
