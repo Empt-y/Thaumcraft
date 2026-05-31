@@ -33,6 +33,7 @@ public class BlockFluidPure extends Block
 {
     public BlockFluidPure() {
         super(BlockBehaviour.Properties.of()
+                .sound(net.minecraft.world.level.block.SoundType.STONE)
                 .mapColor(MapColor.WATER)
                 .noCollision()
                 .strength(100.0f)

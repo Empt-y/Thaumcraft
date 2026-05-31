@@ -313,7 +313,7 @@ public class ConfigBlocks
         BlocksTC.redstoneRelay = registerBlock(new BlockRedstoneRelay());
         BlocksTC.patternCrafter = registerBlock(new BlockPatternCrafter());
         BlocksTC.potionSprayer = registerBlock(new BlockPotionSprayer());
-        BlocksTC.activatorRail = registerBlock("activator_rail", () -> new PoweredRailBlock(thaumcraft.common.blocks.BlockTC.autoProps(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().strength(0.7f))));
+        BlocksTC.activatorRail = registerBlock("activator_rail", () -> new PoweredRailBlock(thaumcraft.common.blocks.BlockTC.autoProps(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(net.minecraft.world.level.block.SoundType.METAL).strength(0.7f))));
         BlocksTC.stabilizer = registerBlock(new BlockStabilizer());
         BlocksTC.visGenerator = registerBlock(new BlockVisGenerator());
         BlocksTC.condenser = registerBlock(new BlockCondenser());

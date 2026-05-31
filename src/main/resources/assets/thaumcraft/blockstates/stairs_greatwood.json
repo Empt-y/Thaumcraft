@@ -1,8 +1,5 @@
 {
   "variants": {
-    "inventory": {
-      "model": "thaumcraft:block/greatwood_stairs"
-    },
     "facing=east,half=bottom,shape=straight": {
       "model": "thaumcraft:block/greatwood_stairs"
     },

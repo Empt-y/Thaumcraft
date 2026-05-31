@@ -14,14 +14,6 @@
     "facing=east": {
       "model": "thaumcraft:block/hungry_chest",
       "y": 90
-    },
-    "facing=up": {
-      "model": "thaumcraft:block/hungry_chest",
-      "x": -90
-    },
-    "facing=down": {
-      "model": "thaumcraft:block/hungry_chest",
-      "x": 90
     }
   }
 }

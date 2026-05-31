@@ -14,9 +14,6 @@
     },
     "charge=4": {
       "model": "thaumcraft:block/pedestal_eldritch"
-    },
-    "inventory": {
-      "model": "thaumcraft:block/pedestal_eldritch"
     }
   }
 }

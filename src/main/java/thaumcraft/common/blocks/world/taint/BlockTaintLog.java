@@ -26,6 +26,7 @@ public class BlockTaintLog extends RotatedPillarBlock implements ITaintBlock
 
     public static BlockBehaviour.Properties defaultProps() {
         return BlockBehaviour.Properties.of()
+                .sound(net.minecraft.world.level.block.SoundType.WOOD)
                 .strength(3.0f, 100.0f)
                 .randomTicks()
                 .noLootTable();

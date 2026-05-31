@@ -43,6 +43,7 @@ public class BlockFluxGoo extends Block
 
     public static BlockBehaviour.Properties defaultProps() {
         return BlockBehaviour.Properties.of()
+                .sound(net.minecraft.world.level.block.SoundType.SLIME_BLOCK)
                 .strength(100.0f, 100.0f)
                 .noCollision()
                 .randomTicks()

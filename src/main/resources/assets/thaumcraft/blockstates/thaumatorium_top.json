@@ -14,14 +14,6 @@
     "facing=east": {
       "model": "thaumcraft:block/thaumatorium_top",
       "y": 90
-    },
-    "facing=up": {
-      "model": "thaumcraft:block/thaumatorium_top",
-      "x": -90
-    },
-    "facing=down": {
-      "model": "thaumcraft:block/thaumatorium_top",
-      "x": 90
     }
   }
 }

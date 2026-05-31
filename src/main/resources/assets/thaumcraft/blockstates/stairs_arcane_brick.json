@@ -1,8 +1,5 @@
 {
   "variants": {
-    "inventory": {
-      "model": "thaumcraft:block/arcane_brick_stairs"
-    },
     "facing=east,half=bottom,shape=straight": {
       "model": "thaumcraft:block/arcane_brick_stairs"
     },

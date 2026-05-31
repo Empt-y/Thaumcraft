@@ -6,6 +6,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 public class BlockFluidDeath extends Block
 {
     public BlockFluidDeath() {
-        super(BlockBehaviour.Properties.of().liquid());
+        super(BlockBehaviour.Properties.of().sound(net.minecraft.world.level.block.SoundType.STONE).liquid());
     }
 }

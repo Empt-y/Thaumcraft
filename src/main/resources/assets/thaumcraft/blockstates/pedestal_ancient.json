@@ -14,9 +14,6 @@
     },
     "charge=4": {
       "model": "thaumcraft:block/pedestal_ancient"
-    },
-    "inventory": {
-      "model": "thaumcraft:block/pedestal_ancient"
     }
   }
 }

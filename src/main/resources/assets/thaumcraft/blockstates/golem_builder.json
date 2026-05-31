@@ -14,14 +14,6 @@
     "facing=east": {
       "model": "thaumcraft:block/golem_builder",
       "y": 90
-    },
-    "facing=up": {
-      "model": "thaumcraft:block/golem_builder",
-      "x": -90
-    },
-    "facing=down": {
-      "model": "thaumcraft:block/golem_builder",
-      "x": 90
     }
   }
 }
