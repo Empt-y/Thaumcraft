@@ -30,8 +30,9 @@ public class BlockTC extends Block
     public static final ThreadLocal<String> PENDING_NAME = ThreadLocal.withInitial(() -> null);
 
     protected static BlockBehaviour.Properties propsWithId(String name) {
-        return BlockBehaviour.Properties.of().setId(
-            net.minecraft.resources.ResourceKey.create(
+        return BlockBehaviour.Properties.of()
+            .sound(SoundType.STONE)
+            .setId(net.minecraft.resources.ResourceKey.create(
                 net.minecraft.core.registries.Registries.BLOCK,
                 net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name)));
     }
