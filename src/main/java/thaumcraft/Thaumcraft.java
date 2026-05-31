@@ -9,6 +9,8 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.entities.EntitiesTC;
+import thaumcraft.common.lib.crafting.RecipeMagicDust;
 import thaumcraft.common.config.ConfigAspects;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigEntities;
@@ -40,6 +42,12 @@ public class Thaumcraft {
         modEventBus.addListener(SoundsTC::registerSounds);
         TCMenuTypes.register(modEventBus);
         TCBlockEntityTypes.register(modEventBus);
+        EntitiesTC.register(modEventBus);
+        // Recipe serializers
+        net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> recipeSerializers =
+            net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.RECIPE_SERIALIZER, MODID);
+        recipeSerializers.register("magic_dust", () -> RecipeMagicDust.SERIALIZER);
+        recipeSerializers.register(modEventBus);
 
         ThaumcraftApi.internalMethods = new InternalMethodHandler();
         PlayerKnowledge.preInit();

@@ -94,7 +94,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe {
         if (val instanceof ItemStack s) return Ingredient.of(s.getItem());
         if (val instanceof Item) return Ingredient.of((Item) val);
         if (val instanceof ItemLike) return Ingredient.of((ItemLike) val);
-        if (val instanceof String) return Ingredient.of(net.minecraft.world.item.Items.AIR); // ore dict key – TODO: use tags
+        if (val instanceof String key) return OreDictCompat.fromOreDict(key);
         return Ingredient.of(net.minecraft.world.item.Items.AIR);
     }
 

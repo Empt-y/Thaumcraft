@@ -55,13 +55,13 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
             if (arg instanceof ItemStack s) ing.add(Ingredient.of(s.getItem()));
             else if (arg instanceof Item) ing.add(Ingredient.of((Item) arg));
             else if (arg instanceof ItemLike) ing.add(Ingredient.of((ItemLike) arg));
-            else if (arg instanceof String) ing.add(Ingredient.of(net.minecraft.world.item.Items.AIR)); // ore dict tag – TODO
+            else if (arg instanceof String key) ing.add(OreDictCompat.fromOreDict(key));
             else if (arg instanceof Object[]) {
                 for (Object sub : (Object[]) arg) {
                     if (sub instanceof ItemStack s2) ing.add(Ingredient.of(s2.getItem()));
                     else if (sub instanceof Item) ing.add(Ingredient.of((Item) sub));
                     else if (sub instanceof ItemLike) ing.add(Ingredient.of((ItemLike) sub));
-                    else if (sub instanceof String) ing.add(Ingredient.of(net.minecraft.world.item.Items.AIR));
+                    else if (sub instanceof String key2) ing.add(OreDictCompat.fromOreDict(key2));
                 }
             }
         }

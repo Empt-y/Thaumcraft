@@ -1,7 +1,10 @@
 package thaumcraft.common.lib.crafting;
 
 import java.util.ArrayList;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.NonNullList;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -15,6 +18,12 @@ import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.items.resources.ItemCrystalEssence;
 
 public class RecipeMagicDust implements CraftingRecipe {
+
+    public static final MapCodec<RecipeMagicDust> MAP_CODEC = MapCodec.unit(new RecipeMagicDust());
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipeMagicDust> STREAM_CODEC =
+            StreamCodec.unit(new RecipeMagicDust());
+    public static final RecipeSerializer<RecipeMagicDust> SERIALIZER =
+            new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     @Override
     public boolean matches(CraftingInput inv, Level level) {
@@ -94,5 +103,5 @@ public class RecipeMagicDust implements CraftingRecipe {
     public String group() { return ""; }
 
     @Override
-    public RecipeSerializer<RecipeMagicDust> getSerializer() { return null; }
+    public RecipeSerializer<RecipeMagicDust> getSerializer() { return SERIALIZER; }
 }

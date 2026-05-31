@@ -53,7 +53,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
     }
     
     public EntityFocusProjectile(FocusPackage pack, float speed, Trajectory trajectory, int special) {
-        super(TYPE, pack.world);
+        super(thaumcraft.api.entities.EntitiesTC.FOCUS_PROJECTILE.get(), pack.world);
         noTouchy = false;
         firstParticle = false;
         lastRenderTick = 0.0f;

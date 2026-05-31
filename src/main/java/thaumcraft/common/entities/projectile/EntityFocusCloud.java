@@ -55,7 +55,7 @@ public class EntityFocusCloud extends Entity
     }
     
     public EntityFocusCloud(FocusPackage pack, Trajectory trajectory, float rad, int dur) {
-        super(TYPE, pack.world);
+        super(thaumcraft.api.entities.EntitiesTC.FOCUS_CLOUD.get(), pack.world);
         effects = null;
         focusPackage = pack;
         setPos(trajectory.source.x, trajectory.source.y, trajectory.source.z);
