@@ -11,7 +11,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemThaumiumSword extends Item /* ItemSword removed */ implements IThaumcraftItems
 {
     public ItemThaumiumSword(ToolMaterial enumtoolmaterial) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         // ItemTCBase constructor
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

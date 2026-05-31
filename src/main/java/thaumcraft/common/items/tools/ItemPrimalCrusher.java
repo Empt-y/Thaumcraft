@@ -32,7 +32,7 @@ public class ItemPrimalCrusher extends net.minecraft.world.item.Item implements 
     private static Set<Block> isEffective;
 
     public ItemPrimalCrusher() {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
     }
     
     public Item getItem() {

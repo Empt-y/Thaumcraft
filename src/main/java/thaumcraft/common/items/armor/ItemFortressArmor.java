@@ -27,7 +27,7 @@ import net.minecraft.network.chat.Component;
 public class ItemFortressArmor extends net.minecraft.world.item.Item implements IGoggles, IRevealer, IThaumcraftItems
 {
     public ItemFortressArmor(String name, Object material, int renderIndex, EquipmentSlot armorType) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
 

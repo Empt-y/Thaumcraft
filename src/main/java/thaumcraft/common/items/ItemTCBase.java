@@ -11,7 +11,7 @@ public class ItemTCBase extends Item implements IThaumcraftItems
     protected int[] VARIANTS_META;
 
     public ItemTCBase(String name, String... variants) {
-        super(new Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         BASE_NAME = name;
         if (variants.length == 0) {
             VARIANTS = new String[] { name };

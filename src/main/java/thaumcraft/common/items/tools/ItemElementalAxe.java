@@ -30,7 +30,7 @@ import thaumcraft.common.lib.utils.EntityUtils;
 public class ItemElementalAxe extends Item /* ItemAxe removed */ implements IThaumcraftItems
 {
     public ItemElementalAxe(ToolMaterial enumtoolmaterial) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     

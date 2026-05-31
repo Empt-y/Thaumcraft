@@ -32,7 +32,7 @@ public class ItemCrimsonBlade extends Item /* ItemSword removed */ implements IW
     public static ToolMaterial toolMatCrimsonVoid;
     
     public ItemCrimsonBlade() {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     

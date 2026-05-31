@@ -13,7 +13,7 @@ public class ItemChunksEdible extends Item /* ItemFood removed */ implements ITh
     private String[] variants;
     
     public ItemChunksEdible() {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         variants = new String[] { "beef", "chicken", "pork", "fish", "rabbit", "mutton" };
         itemUseDuration = 10;
         /* setMaxDamage removed - use Item.Properties */;

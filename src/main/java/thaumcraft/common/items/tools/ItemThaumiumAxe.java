@@ -13,7 +13,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemThaumiumAxe extends Item /* ItemAxe removed */ implements IThaumcraftItems
 {
     public ItemThaumiumAxe(ToolMaterial enumtoolmaterial) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     

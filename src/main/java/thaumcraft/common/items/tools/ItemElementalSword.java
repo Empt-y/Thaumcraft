@@ -30,7 +30,7 @@ import thaumcraft.common.lib.utils.EntityUtils;
 public class ItemElementalSword extends Item /* ItemSword removed */ implements IThaumcraftItems
 {
     public ItemElementalSword(ToolMaterial enumtoolmaterial) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         // ItemTCBase constructor
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

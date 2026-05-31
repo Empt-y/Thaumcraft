@@ -19,7 +19,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemCultistLeaderArmor extends net.minecraft.world.item.Item implements IThaumcraftItems
 {
     public ItemCultistLeaderArmor(String name, int j, EquipmentSlot k) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     

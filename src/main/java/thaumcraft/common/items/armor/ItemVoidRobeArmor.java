@@ -35,7 +35,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemVoidRobeArmor extends net.minecraft.world.item.Item implements IVisDiscountGear, IGoggles, IRevealer, IWarpingGear, IThaumcraftItems
 {
     public ItemVoidRobeArmor(String name, Object enumarmormaterial, int j, EquipmentSlot k) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
 

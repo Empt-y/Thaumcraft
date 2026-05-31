@@ -28,7 +28,7 @@ public class ItemRobeArmor extends net.minecraft.world.item.Item implements IVis
     private final EquipmentSlot armorType;
 
     public ItemRobeArmor(String name, Object enumarmormaterial, int j, EquipmentSlot k) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         this.armorType = k;
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

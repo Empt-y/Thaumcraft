@@ -12,7 +12,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemThaumiumPickaxe extends net.minecraft.world.item.Item implements IThaumcraftItems
 {
     public ItemThaumiumPickaxe(ToolMaterial enumtoolmaterial) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         // Entity requires EntityType; use factory method
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

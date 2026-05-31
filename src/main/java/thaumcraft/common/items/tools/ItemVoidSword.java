@@ -28,7 +28,7 @@ import net.minecraft.world.item.component.TooltipDisplay;
 public class ItemVoidSword extends Item /* ItemSword removed */ implements IWarpingGear, IThaumcraftItems
 {
     public ItemVoidSword(ToolMaterial enumtoolmaterial) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         // ItemTCBase constructor
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

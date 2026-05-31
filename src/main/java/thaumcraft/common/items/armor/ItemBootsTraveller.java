@@ -24,7 +24,7 @@ import thaumcraft.common.lib.events.PlayerEvents;
 public class ItemBootsTraveller extends net.minecraft.world.item.Item implements IThaumcraftItems, IRechargable
 {
     public ItemBootsTraveller() {
-        super(new Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         /* setMaxDamage removed - use Item.Properties */;
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

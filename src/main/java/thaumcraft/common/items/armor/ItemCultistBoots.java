@@ -18,7 +18,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemCultistBoots extends net.minecraft.world.item.Item implements IWarpingGear, IVisDiscountGear, IThaumcraftItems
 {
     public ItemCultistBoots() {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     

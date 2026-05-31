@@ -21,7 +21,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemVoidAxe extends Item /* ItemAxe removed */ implements IWarpingGear, IThaumcraftItems
 {
     public ItemVoidAxe(ToolMaterial enumtoolmaterial) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     

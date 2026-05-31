@@ -20,7 +20,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemVoidArmor extends net.minecraft.world.item.Item implements IWarpingGear, IThaumcraftItems
 {
     public ItemVoidArmor(String name, Object /* nested class removed */ enumarmormaterial, int j, EquipmentSlot k) {
-        super(new net.minecraft.world.item.Item.Properties());
+        super(thaumcraft.common.config.TCItemInit.take());
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     
