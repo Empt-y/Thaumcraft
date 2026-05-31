@@ -1,6 +1,4 @@
 package thaumcraft.codechicken.lib.vec;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
 public abstract class VariableTransformation extends Transformation
@@ -21,7 +19,6 @@ public abstract class VariableTransformation extends Transformation
         mat.multiply(this.mat);
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void glApply() {
         mat.glApply();

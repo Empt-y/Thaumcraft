@@ -26,8 +26,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.redstone.Orientation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.IInfusionStabiliserExt;
 import thaumcraft.client.fx.FXDispatcher;
@@ -141,7 +139,6 @@ public class BlockInlay extends BlockTC implements IInfusionStabiliserExt
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         int charge = (int)stateIn.getValue(CHARGE);
         if (charge > 0 && rand.nextInt(20 - charge) == 0) {
@@ -163,7 +160,6 @@ public class BlockInlay extends BlockTC implements IInfusionStabiliserExt
         return 1;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static int colorMultiplier(int meta) {
         float f = meta / 15.0f;
         float f2 = f * 0.5f + 0.5f;

@@ -9,8 +9,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.IWarpingGear;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.config.ConfigItems;
@@ -36,7 +34,6 @@ public class ItemVoidArmor extends net.minecraft.world.item.Item implements IWar
         return new int[] { 0 };
     }
     
-    @OnlyIn(Dist.CLIENT)    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }

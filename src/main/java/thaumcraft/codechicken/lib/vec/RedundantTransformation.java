@@ -1,6 +1,4 @@
 package thaumcraft.codechicken.lib.vec;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
 public class RedundantTransformation extends Transformation
@@ -22,7 +20,6 @@ public class RedundantTransformation extends Transformation
         return this;
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void glApply() {
     }

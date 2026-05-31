@@ -12,8 +12,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.casters.FocusEffect;
@@ -99,7 +97,6 @@ public class FocusEffectRift extends FocusEffect
         return new NodeSetting[] { new NodeSetting("depth", "focus.rift.depth", new NodeSetting.NodeSettingIntList(depth, depthDesc)), new NodeSetting("duration", "focus.common.duration", new NodeSetting.NodeSettingIntRange(2, 10)) };
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderParticleFX(Level world, double x, double y, double z, double vx, double vy, double vz) {
         FXGeneric fb = new FXGeneric(world, x, y, z, vx, vy, vz);

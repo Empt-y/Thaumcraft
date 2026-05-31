@@ -7,8 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.ThaumcraftInvHelper;
 import thaumcraft.api.aura.AuraHelper;
@@ -28,7 +26,6 @@ public class TileInfernalFurnace extends TileThaumcraftInventory
     public int facingX;
     public int facingZ;
     
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(getBlockPos().getX() - 1.3, getBlockPos().getY() - 1.3, getBlockPos().getZ() - 1.3, getBlockPos().getX() + 2.3, getBlockPos().getY() + 2.3, getBlockPos().getZ() + 2.3);
     }

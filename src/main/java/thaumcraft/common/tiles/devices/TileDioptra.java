@@ -3,8 +3,6 @@ import java.util.Arrays;
 import net.minecraft.nbt.CompoundTag;
 // ITickable removed - use BlockEntityTicker<T>
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.tiles.TileThaumcraft;
 import thaumcraft.common.world.aura.AuraChunk;
@@ -26,7 +24,6 @@ public class TileDioptra extends TileThaumcraft
         Arrays.fill(grid_amt_p, (byte)0);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(getBlockPos().getX() - 0.3, getBlockPos().getY() - 0.3, getBlockPos().getZ() - 0.3, getBlockPos().getX() + 1.3, getBlockPos().getY() + 2.3, getBlockPos().getZ() + 1.3);
     }

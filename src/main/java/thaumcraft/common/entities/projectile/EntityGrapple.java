@@ -10,8 +10,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import io.netty.buffer.ByteBuf;
 
 
@@ -184,7 +182,6 @@ public class EntityGrapple extends ThrowableProjectile
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void handleStatusUpdate(byte id) {
         if (id == 6) {
             setPulling();

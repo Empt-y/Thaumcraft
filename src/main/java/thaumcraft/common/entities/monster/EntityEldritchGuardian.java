@@ -23,8 +23,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
@@ -141,7 +139,6 @@ public class EntityEldritchGuardian extends Monster implements RangedAttackMob, 
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte event) {
         if (event == 15) {
             armLiftL = 0.5f;

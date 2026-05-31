@@ -37,8 +37,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -185,7 +183,6 @@ public class PlayerEvents
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void tooltipEvent(ItemTooltipEvent event) {
         try {

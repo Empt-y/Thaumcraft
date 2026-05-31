@@ -6,11 +6,8 @@ import net.minecraft.world.item.ItemUseAnimation;
 // import net.minecraft.world.item.Item /* ArmorItem removed */; // removed
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.HumanoidArm;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
-@OnlyIn(Dist.CLIENT)
 public class CustomArmorHelper
 {
     protected static HumanoidModel getCustomArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel model, HumanoidModel model1, HumanoidModel model2) {

@@ -14,8 +14,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.blocks.BlockTCDevice;
 import thaumcraft.common.blocks.IBlockEnabled;
@@ -58,7 +56,6 @@ public class BlockVisGenerator extends BlockTCDevice implements IBlockFacing, IB
         return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState state, Level world, BlockPos pos, Random rand) {
         BlockEntity tileentity = world.getBlockEntity(pos);
         if (tileentity instanceof TileVisGenerator tileVis) {

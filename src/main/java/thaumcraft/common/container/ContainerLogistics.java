@@ -13,8 +13,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
 import thaumcraft.api.ThaumcraftInvHelper;
 import thaumcraft.common.container.slot.SlotGhostFull;
@@ -151,7 +149,6 @@ public class ContainerLogistics extends AbstractContainerMenu
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void setData(int par1, int par2) {
         if (par1 == 0) {

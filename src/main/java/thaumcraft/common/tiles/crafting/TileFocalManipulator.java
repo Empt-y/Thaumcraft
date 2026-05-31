@@ -9,8 +9,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -90,7 +88,6 @@ public class TileFocalManipulator extends TileThaumcraftInventory implements Men
         return nbt;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
                         worldPosition.getX() + 1, worldPosition.getY() + 1, worldPosition.getZ() + 1);

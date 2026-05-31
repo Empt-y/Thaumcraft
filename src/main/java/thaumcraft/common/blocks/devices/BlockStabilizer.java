@@ -7,8 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.crafting.IInfusionStabiliserExt;
 import thaumcraft.common.blocks.BlockTCDevice;
 import thaumcraft.common.tiles.devices.TileStabilizer;
@@ -33,7 +31,6 @@ public class BlockStabilizer extends BlockTCDevice implements IInfusionStabilise
         return 0;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public static int colorMultiplier(int meta) {
         float f = meta / 15.0f;
         float f2 = f * 0.5f + 0.5f;

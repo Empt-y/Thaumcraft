@@ -5,8 +5,6 @@ import java.math.RoundingMode;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.lwjgl.opengl.GL11;
 import thaumcraft.codechicken.lib.util.Copyable;
 import io.netty.buffer.ByteBuf;
@@ -326,7 +324,6 @@ public class Matrix4 extends Transformation implements Copyable<Matrix4>
         return this;
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void glApply() {
         Matrix4.glBuf.put(m00).put(m10).put(m20).put(m30).put(m01).put(m11).put(m21).put(m31).put(m02).put(m12).put(m22).put(m32).put(m03).put(m13).put(m23).put(m33);

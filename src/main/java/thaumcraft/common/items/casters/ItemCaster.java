@@ -29,8 +29,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.casters.CasterTriggerRegistry;
 import thaumcraft.api.casters.FocusEngine;
 import thaumcraft.api.casters.FocusPackage;
@@ -93,7 +91,6 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
         return false;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public boolean isFull3D() {
         return true;
     }
@@ -232,7 +229,6 @@ public class ItemCaster extends ItemTCBase implements IArchitect, ICaster
         return Rarity.UNCOMMON;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         if (!stack.isEmpty()) {
             String text = "";

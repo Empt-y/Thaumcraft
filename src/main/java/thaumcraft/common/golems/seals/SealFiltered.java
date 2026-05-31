@@ -10,8 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.golems.seals.ISeal;
 import thaumcraft.api.golems.seals.ISealConfigFilter;
 import thaumcraft.api.golems.seals.ISealEntity;
@@ -92,7 +90,6 @@ public abstract class SealFiltered implements ISeal, ISealGui, ISealConfigFilter
         return new SealBaseContainer(player.getInventory(), world, seal);
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public Object returnGui(Level world, Player player, BlockPos pos, Direction side, ISealEntity seal) {
         return new thaumcraft.common.golems.client.gui.SealBaseGUI(new thaumcraft.common.golems.client.gui.SealBaseContainer(player.getInventory(), world, seal), player.getInventory(), net.minecraft.network.chat.Component.empty());

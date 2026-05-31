@@ -8,8 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.other.FXShieldRunes;
 import io.netty.buffer.ByteBuf;
 
@@ -41,7 +39,6 @@ public class PacketFXShield implements CustomPacketPayload
         return new PacketFXShield(source, target);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void handle(PacketFXShield msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             var level = Minecraft.getInstance().level;

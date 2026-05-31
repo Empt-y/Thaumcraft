@@ -34,8 +34,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.event.level.BlockDropsEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.ThaumcraftInvHelper;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.items.ItemsTC;
@@ -273,7 +271,6 @@ public class EntityArcaneBore extends EntityOwnedConstruct
         super.move(type, new Vec3(movement.x / 5.0, movement.y, movement.z / 5.0));
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 16) {

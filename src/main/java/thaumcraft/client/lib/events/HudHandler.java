@@ -6,8 +6,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
@@ -35,42 +33,34 @@ public class HudHandler
         TAGBACK = Identifier.fromNamespaceAndPath("thaumcraft", "textures/aspects/_back.png");
     }
 
-    @OnlyIn(Dist.CLIENT)
     void renderHuds(Minecraft mc, float renderTickTime, Player player, long time) {
         // TODO: rewrite with modern rendering API
     }
 
-    @OnlyIn(Dist.CLIENT)
     void renderHudsInGUI(Minecraft mc, float renderTickTime, Player player, long time, int ww, int hh) {
         // TODO: rewrite with modern rendering API
     }
 
-    @OnlyIn(Dist.CLIENT)
     void renderKnowledgeGains(Minecraft mc, float renderTickTime, Player player, long time, int ww, int hh) {
         // TODO: rewrite with modern rendering API
     }
 
-    @OnlyIn(Dist.CLIENT)
     void renderThaumometerHud(Minecraft mc, float partialTicks, Player player, long time, int ww, int hh, int shifty) {
         // TODO: rewrite with modern rendering API
     }
 
-    @OnlyIn(Dist.CLIENT)
     void renderSanityHud(Minecraft mc, Float partialTicks, Player player, long time, int shifty) {
         // TODO: rewrite with modern rendering API
     }
 
-    @OnlyIn(Dist.CLIENT)
     void renderChargeMeters(Minecraft mc, float renderTickTime, Player player, long time, int ww, int hh) {
         // TODO: rewrite with modern rendering API
     }
 
-    @OnlyIn(Dist.CLIENT)
     void renderCastingWandHud(Minecraft mc, float partialTicks, Player player, long time, ItemStack wandstack, int shifty) {
         // TODO: rewrite with modern rendering API
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void renderWandTradeHud(float partialTicks, Player player, long time, ItemStack picked) {
         // TODO: rewrite with modern rendering API
     }

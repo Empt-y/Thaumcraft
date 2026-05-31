@@ -16,8 +16,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 // FML FMLCommonHandler removed
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.golems.EnumGolemTrait;
 import thaumcraft.api.golems.GolemHelper;
 import thaumcraft.api.golems.IGolemAPI;
@@ -150,7 +148,6 @@ public class SealGuard implements ISeal, ISealGui, ISealConfigArea
         return new SealBaseContainer(player.getInventory(), world, seal);
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public Object returnGui(Level world, Player player, BlockPos pos, Direction side, ISealEntity seal) {
         return new thaumcraft.common.golems.client.gui.SealBaseGUI(new thaumcraft.common.golems.client.gui.SealBaseContainer(player.getInventory(), world, seal), player.getInventory(), net.minecraft.network.chat.Component.empty());

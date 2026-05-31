@@ -8,8 +8,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.casters.FocusEffect;
 import thaumcraft.api.casters.NodeSetting;
@@ -69,7 +67,6 @@ public class FocusEffectFlux extends FocusEffect
         caster.level().playSound(null, caster.blockPosition().above(), SoundEvents.CHORUS_FLOWER_GROW, SoundSource.PLAYERS, 2.0f, 2.0f + (float)(caster.level().getRandom().nextGaussian() * 0.10000000149011612));
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderParticleFX(Level world, double x, double y, double z, double vx, double vy, double vz) {
         FXGeneric fb = new FXGeneric(world, x, y, z, vx + getPackage().world.getRandom().nextGaussian() * 0.01, vy + getPackage().world.getRandom().nextGaussian() * 0.01, vz + getPackage().world.getRandom().nextGaussian() * 0.01);

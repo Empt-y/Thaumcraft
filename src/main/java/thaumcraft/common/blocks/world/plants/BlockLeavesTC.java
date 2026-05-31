@@ -11,8 +11,6 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.world.aura.AuraHandler;

@@ -6,8 +6,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.lwjgl.opengl.GL11;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -308,17 +306,14 @@ public class Vector3 implements Copyable<Vector3>
         return (x == 0.0) ? (y == 0.0 || z == 0.0) : (y == 0.0 && z == 0.0);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public Vector3f vector3f() {
         return new Vector3f((float) x, (float) y, (float) z);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public Vector4f vector4f() {
         return new Vector4f((float) x, (float) y, (float) z, 1.0f);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void glVertex() {
         GL11.glVertex3d(x, y, z);
     }

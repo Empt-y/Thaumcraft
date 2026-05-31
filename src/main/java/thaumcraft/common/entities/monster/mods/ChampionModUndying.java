@@ -2,8 +2,6 @@ package thaumcraft.common.entities.monster.mods;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.damagesource.DamageSource;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 
 
@@ -17,7 +15,6 @@ public class ChampionModUndying implements IChampionModifierEffect
         return amount;
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void showFX(LivingEntity boss) {
         if (boss.level().getRandom().nextBoolean()) {

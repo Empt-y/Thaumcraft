@@ -6,7 +6,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
 import thaumcraft.common.lib.network.playerdata.PacketSyncKnowledge;
 import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 

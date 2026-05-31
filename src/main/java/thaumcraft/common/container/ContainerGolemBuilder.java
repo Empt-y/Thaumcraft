@@ -5,8 +5,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.container.slot.SlotOutput;
 import thaumcraft.common.tiles.crafting.TileGolemBuilder;
 
@@ -69,7 +67,6 @@ public class ContainerGolemBuilder extends AbstractContainerMenu
         lastMaxCost = builder.maxCost;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void setData(int par1, int par2) {
         if (par1 == 0) {

@@ -16,8 +16,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.common.blocks.BlockTCDevice;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
@@ -50,7 +48,6 @@ public class BlockInfernalFurnace extends BlockTCDevice implements IBlockFacingH
         return new AABB(0.0, 0.0, 0.0, 1.0, 0.5, 1.0);
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public BlockState getStateForPlacement(Level worldIn, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         return defaultBlockState().setValue(IBlockFacingHorizontal.FACING, placer.getDirection().getOpposite());

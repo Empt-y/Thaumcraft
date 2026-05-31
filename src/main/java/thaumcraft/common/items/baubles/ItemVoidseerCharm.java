@@ -8,8 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.capabilities.IPlayerWarp;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.items.IVisDiscountGear;
@@ -38,7 +36,6 @@ public class ItemVoidseerCharm extends ItemTCBase implements IVisDiscountGear, I
         return null /* nested removed */;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.DARK_BLUE + "" + ChatFormatting.ITALIC + I18n.get("item.voidseer_charm.text")));
         super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);

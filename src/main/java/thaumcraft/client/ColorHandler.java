@@ -12,8 +12,6 @@ import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.common.blocks.devices.BlockInlay;
 import thaumcraft.common.blocks.devices.BlockStabilizer;
@@ -23,7 +21,6 @@ import thaumcraft.common.tiles.devices.TileStabilizer;
 import thaumcraft.common.tiles.essentia.TileTubeFilter;
 
 
-@OnlyIn(Dist.CLIENT)
 public class ColorHandler
 {
     public static void registerColourHandlers() {

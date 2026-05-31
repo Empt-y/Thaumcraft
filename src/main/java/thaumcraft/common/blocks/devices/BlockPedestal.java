@@ -21,8 +21,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.redstone.Orientation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.IInfusionStabiliserExt;
 import thaumcraft.client.fx.FXDispatcher;
@@ -93,7 +91,6 @@ public class BlockPedestal extends BlockTCTile implements IInfusionStabiliserExt
 
     /* createBlockState() removed */
 
-    @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
         int charge = (int)stateIn.getValue(LiquidBlock.LEVEL);
         if (charge > 0) {

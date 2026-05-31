@@ -5,8 +5,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.golems.EnumGolemTrait;
 import thaumcraft.api.golems.IGolemAPI;
 import thaumcraft.api.golems.tasks.Task;
@@ -50,7 +48,6 @@ public interface ISeal {
 	
 	public Object returnContainer(Level world, Player player, BlockPos pos, Direction side, ISealEntity seal);
 	
-	@OnlyIn(Dist.CLIENT)
 	public Object returnGui(Level world, Player player, BlockPos pos, Direction side, ISealEntity seal);
 	
 	public EnumGolemTrait[] getRequiredTags();

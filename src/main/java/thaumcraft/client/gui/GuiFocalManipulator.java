@@ -9,15 +9,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.gui.plugins.GuiImageButton;
 import thaumcraft.client.gui.plugins.GuiSliderTC;
 import thaumcraft.common.container.ContainerFocalManipulator;
 import thaumcraft.common.tiles.crafting.TileFocalManipulator;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiFocalManipulator extends AbstractContainerScreen<ContainerFocalManipulator>
 {
     private TileFocalManipulator table;

@@ -22,8 +22,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.lib.SoundsTC;
@@ -93,7 +91,6 @@ public class EntityTurretCrossbow extends EntityOwnedConstruct implements Ranged
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 16 || id == 17) {
@@ -106,7 +103,6 @@ public class EntityTurretCrossbow extends EntityOwnedConstruct implements Ranged
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public float getLoadProgress(float pt) {
         float f1 = loadProgress - prevLoadProgress;
         if (f1 < 0.0f) ++f1;

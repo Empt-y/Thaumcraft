@@ -6,14 +6,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.container.ContainerPotionSprayer;
 import thaumcraft.common.tiles.devices.TilePotionSprayer;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiPotionSprayer extends AbstractContainerScreen<ContainerPotionSprayer>
 {
     private TilePotionSprayer inventory;

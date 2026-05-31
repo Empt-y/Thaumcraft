@@ -8,8 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.lib.events.RenderEventHandler;
 import thaumcraft.common.config.ModConfig;
 import thaumcraft.common.lib.SoundsTC;
@@ -57,14 +55,12 @@ public class PacketMiscEvent implements CustomPacketPayload
         return new PacketMiscEvent(type, value);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void handle(PacketMiscEvent msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             processMessage(msg);
         });
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static void processMessage(PacketMiscEvent message) {
         Player p = Minecraft.getInstance().player;
         switch (message.type) {

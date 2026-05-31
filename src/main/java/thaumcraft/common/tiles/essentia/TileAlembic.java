@@ -5,8 +5,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
@@ -43,7 +41,6 @@ public class TileAlembic extends TileThaumcraft implements IAspectContainer, IEs
     public void setAspects(AspectList aspects) {
     }
     
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(getBlockPos().getX() - 0.1, getBlockPos().getY() - 0.1, getBlockPos().getZ() - 0.1, getBlockPos().getX() + 1.1, getBlockPos().getY() + 1.1, getBlockPos().getZ() + 1.1);
     }

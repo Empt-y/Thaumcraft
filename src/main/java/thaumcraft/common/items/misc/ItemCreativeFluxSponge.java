@@ -11,8 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.items.ItemTCBase;
@@ -30,7 +28,6 @@ public class ItemCreativeFluxSponge extends ItemTCBase {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);
         tooltip.accept(Component.literal(ChatFormatting.GREEN + "Right-click to drain all"));

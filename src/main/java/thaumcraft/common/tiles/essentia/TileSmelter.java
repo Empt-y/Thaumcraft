@@ -11,8 +11,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.blocks.BlocksTC;
@@ -173,18 +171,15 @@ public class TileSmelter extends TileThaumcraftInventory implements MenuProvider
         return false;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getCookProgressScaled(int par1) {
         if (smeltTime <= 0) smeltTime = 1;
         return furnaceCookTime * par1 / smeltTime;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getVisScaled(int par1) {
         return vis * par1 / maxVis;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getBurnTimeRemainingScaled(int par1) {
         if (currentItemBurnTime == 0) currentItemBurnTime = 200;
         return furnaceBurnTime * par1 / currentItemBurnTime;

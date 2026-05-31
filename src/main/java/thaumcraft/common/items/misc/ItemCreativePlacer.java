@@ -11,8 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.items.ItemTCBase;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
@@ -26,7 +24,6 @@ public class ItemCreativePlacer extends ItemTCBase
         super("creative_placer", "obelisk", "node", "caster");
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);
         tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.DARK_PURPLE + "Creative only"));

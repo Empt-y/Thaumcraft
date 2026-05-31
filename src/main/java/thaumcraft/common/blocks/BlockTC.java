@@ -12,8 +12,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockTC extends Block
 {
@@ -95,7 +93,6 @@ public class BlockTC extends Block
     protected boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) { return false; }
     protected void breakBlock(Level worldIn, BlockPos pos, BlockState state) {}
 
-    @OnlyIn(Dist.CLIENT)
     public void getSubBlocks(CreativeModeTab tab, NonNullList<ItemStack> list) {
         list.add(new ItemStack(this, 1));
     }

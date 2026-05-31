@@ -4,11 +4,8 @@ import java.util.Collection;
 import java.util.Map;
 import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
-@OnlyIn(Dist.CLIENT)
 public class AdvancedModelLoader
 {
     private static Map<String, IModelCustomLoader> instances;

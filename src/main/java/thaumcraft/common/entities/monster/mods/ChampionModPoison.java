@@ -4,8 +4,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.lwjgl.opengl.GL11;
 import thaumcraft.client.fx.FXDispatcher;
 
@@ -20,7 +18,6 @@ public class ChampionModPoison implements IChampionModifierEffect
         return amount;
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void showFX(LivingEntity boss) {
         if (boss.level().getRandom().nextBoolean()) {

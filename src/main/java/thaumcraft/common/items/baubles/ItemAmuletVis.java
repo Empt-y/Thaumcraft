@@ -13,8 +13,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.RechargeHelper;
 import thaumcraft.common.items.ItemTCBase;
 import net.minecraft.network.chat.Component;
@@ -57,7 +55,6 @@ public class ItemAmuletVis extends ItemTCBase
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.AQUA + I18n.get("item.amulet_vis.text")));
     }

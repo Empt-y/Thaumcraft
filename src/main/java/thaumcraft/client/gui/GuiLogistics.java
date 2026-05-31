@@ -10,8 +10,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.gui.plugins.GuiImageButton;
 import thaumcraft.client.gui.plugins.GuiPlusMinusButton;
 import thaumcraft.client.gui.plugins.GuiScrollButton;
@@ -19,7 +17,6 @@ import thaumcraft.client.gui.plugins.GuiSliderTC;
 import thaumcraft.common.container.ContainerLogistics;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiLogistics extends AbstractContainerScreen<ContainerLogistics>
 {
     int selectedSlot;

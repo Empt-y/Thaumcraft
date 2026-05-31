@@ -20,8 +20,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.IGoggles;
 import thaumcraft.api.items.IRevealer;
 import thaumcraft.api.items.IVisDiscountGear;
@@ -51,7 +49,6 @@ public class ItemVoidRobeArmor extends net.minecraft.world.item.Item implements 
         return new int[] { 0 };
     }
 
-    @OnlyIn(Dist.CLIENT)
     public Object getCustomModelResourceLocation(String variant) {
         return null;
     }

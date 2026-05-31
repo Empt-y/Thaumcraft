@@ -8,8 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.lib.utils.Utils;
 import io.netty.buffer.ByteBuf;
@@ -84,7 +82,6 @@ public class PacketFXBlockBamf implements CustomPacketPayload
         });
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static void processMessage(PacketFXBlockBamf message) {
         Direction side = null;
         if (message.face >= 0) {

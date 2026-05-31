@@ -15,8 +15,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.IVisDiscountGear;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.config.ConfigItems;
@@ -45,7 +43,6 @@ public class ItemRobeArmor extends net.minecraft.world.item.Item implements IVis
         return new int[] { 0 };
     }
 
-    @OnlyIn(Dist.CLIENT)
     public Object getCustomModelResourceLocation(String variant) {
         return null;
     }

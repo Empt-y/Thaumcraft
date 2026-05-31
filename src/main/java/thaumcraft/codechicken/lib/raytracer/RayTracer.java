@@ -11,8 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.util.Mth;
 import thaumcraft.codechicken.lib.vec.BlockCoord;
 import thaumcraft.codechicken.lib.vec.Cuboid6;
@@ -117,7 +115,6 @@ public class RayTracer
         return 5.0;
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static double getBlockReachDistance_client() {
         // playerController.getBlockReachDistance() removed in modern MC
         return 5.0;

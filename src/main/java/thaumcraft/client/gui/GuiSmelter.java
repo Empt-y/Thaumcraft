@@ -5,13 +5,10 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.container.ContainerSmelter;
 import thaumcraft.common.tiles.essentia.TileSmelter;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiSmelter extends AbstractContainerScreen<ContainerSmelter>
 {
     private TileSmelter furnaceInventory;

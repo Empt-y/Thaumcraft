@@ -9,8 +9,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.items.ItemTCBase;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.Utils;
@@ -40,7 +38,6 @@ public class ItemLootBag extends ItemTCBase
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);
         tooltip.accept(net.minecraft.network.chat.Component.literal(I18n.get("tc.lootbag")));

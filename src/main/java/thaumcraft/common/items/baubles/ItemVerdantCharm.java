@@ -17,8 +17,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.IRechargable;
 import thaumcraft.api.items.RechargeHelper;
 import thaumcraft.api.potions.PotionFluxTaint;
@@ -62,7 +60,6 @@ public class ItemVerdantCharm extends ItemTCBase implements IRechargable
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         if (!stack.isEmpty() && stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getByteOr("type", (byte)0) == 1) {
             tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("item.verdant_charm.life.text")));

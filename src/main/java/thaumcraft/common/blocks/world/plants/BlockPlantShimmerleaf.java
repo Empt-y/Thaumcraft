@@ -9,8 +9,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 
 public class BlockPlantShimmerleaf extends BushBlock
@@ -30,7 +28,6 @@ public class BlockPlantShimmerleaf extends BushBlock
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
         if (rand.nextInt(3) == 0) {
             float xr = (float)(pos.getX() + 0.5f + rand.nextGaussian() * 0.1);

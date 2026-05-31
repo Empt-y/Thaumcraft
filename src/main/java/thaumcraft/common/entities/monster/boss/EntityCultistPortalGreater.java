@@ -19,8 +19,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.BossEvent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.entities.monster.cult.EntityCultist;
@@ -230,7 +228,6 @@ public class EntityCultistPortalGreater extends Monster
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte msg) {
         if (msg == 16) {
             pulse = 10;

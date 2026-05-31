@@ -13,8 +13,6 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
 public class WavefrontObject implements IModelCustom
@@ -139,18 +137,15 @@ public class WavefrontObject implements IModelCustom
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderAll() {
         // TODO: rewrite with modern rendering API (tessellator.getBuffer() / draw() removed)
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void tessellateAll(Tesselator tessellator) {
         // TODO: rewrite with modern rendering API
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderOnly(String... groupNames) {
         for (GroupObject groupObject : groupObjects) {
@@ -162,7 +157,6 @@ public class WavefrontObject implements IModelCustom
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void tessellateOnly(Tesselator tessellator, String... groupNames) {
         for (GroupObject groupObject : groupObjects) {
             for (String groupName : groupNames) {
@@ -173,7 +167,6 @@ public class WavefrontObject implements IModelCustom
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public String[] getPartNames() {
         ArrayList<String> l = new ArrayList<String>();
@@ -183,7 +176,6 @@ public class WavefrontObject implements IModelCustom
         return l.toArray(new String[0]);
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderPart(String partName) {
         for (GroupObject groupObject : groupObjects) {
@@ -193,7 +185,6 @@ public class WavefrontObject implements IModelCustom
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void tessellatePart(Tesselator tessellator, String partName) {
         for (GroupObject groupObject : groupObjects) {
             if (partName.equalsIgnoreCase(groupObject.name)) {
@@ -202,7 +193,6 @@ public class WavefrontObject implements IModelCustom
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderAllExcept(String... excludedGroupNames) {
         for (GroupObject groupObject : groupObjects) {
@@ -218,7 +208,6 @@ public class WavefrontObject implements IModelCustom
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void tessellateAllExcept(Tesselator tessellator, String... excludedGroupNames) {
         for (GroupObject groupObject : groupObjects) {
             boolean exclude = false;
@@ -483,12 +472,10 @@ public class WavefrontObject implements IModelCustom
         public Vertex faceNormal;
         public TextureCoordinate[] textureCoordinates;
         
-        @OnlyIn(Dist.CLIENT)
         public void addFaceForRender(Tesselator tessellator) {
             addFaceForRender(tessellator, 5.0E-4f);
         }
         
-        @OnlyIn(Dist.CLIENT)
         public void addFaceForRender(Tesselator tessellator, float textureOffset) {
             // TODO: rewrite with modern rendering API (tessellator.getBuffer().pos/tex/normal/endVertex removed)
         }
@@ -523,12 +510,10 @@ public class WavefrontObject implements IModelCustom
         }
 
 
-        @OnlyIn(Dist.CLIENT)
         public void render() {
             // TODO: rewrite with modern rendering API
         }
 
-        @OnlyIn(Dist.CLIENT)
         public void render(Tesselator tessellator) {
             // TODO: rewrite with modern rendering API
         }

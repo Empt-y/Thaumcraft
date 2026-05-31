@@ -14,8 +14,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.IGoggles;
 import thaumcraft.api.items.IRevealer;
 import thaumcraft.api.items.ItemsTC;
@@ -43,7 +41,6 @@ public class ItemFortressArmor extends net.minecraft.world.item.Item implements 
         return new int[] { 0 };
     }
 
-    @OnlyIn(Dist.CLIENT)
     public Object getCustomModelResourceLocation(String variant) {
         return null;
     }
@@ -56,7 +53,6 @@ public class ItemFortressArmor extends net.minecraft.world.item.Item implements 
         return Rarity.RARE;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);

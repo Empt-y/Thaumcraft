@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.casters.ICaster;
 import thaumcraft.common.golems.ItemGolemBell;
 import thaumcraft.common.lib.network.PacketHandler;
@@ -31,7 +30,6 @@ public class KeyHandler {
         keyPressedH = false;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void playerTick(PlayerTickEvent.Pre event) {
         Minecraft mc = Minecraft.getInstance();

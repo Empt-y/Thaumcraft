@@ -9,8 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.items.ItemTCBase;
 import net.minecraft.client.renderer.rendertype.RenderType;
@@ -36,7 +34,6 @@ public class ItemCuriosityBand extends ItemTCBase
         return null /* nested removed */;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void onPlayerBaubleRender(ItemStack stack, Player player, float ticks) {
         {
             boolean helmetEmpty = !player.getItemBySlot(EquipmentSlot.HEAD).isEmpty();

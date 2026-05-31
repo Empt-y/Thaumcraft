@@ -7,8 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.blocks.devices.BlockInlay;
 import thaumcraft.common.tiles.TileThaumcraftInventory;
@@ -25,7 +23,6 @@ public class TilePedestal extends TileThaumcraftInventory
         return 1;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), getBlockPos().getX() + 1, getBlockPos().getY() + 2, getBlockPos().getZ() + 1);
     }

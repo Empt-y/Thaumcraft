@@ -4,8 +4,6 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
 public class GuiSliderTC extends AbstractButton
@@ -54,7 +52,6 @@ public class GuiSliderTC extends AbstractButton
         GuiSliderTC.tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_base.png");
     }
 
-    @OnlyIn(Dist.CLIENT)
     public interface FormatHelper
     {
         String getText(int p0, String p1, float p2);

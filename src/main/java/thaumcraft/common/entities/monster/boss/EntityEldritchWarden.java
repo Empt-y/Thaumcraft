@@ -26,8 +26,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
@@ -220,7 +218,6 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements Ranged
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte event) {
         if (event == 15) {
             armLiftL = 0.5f;

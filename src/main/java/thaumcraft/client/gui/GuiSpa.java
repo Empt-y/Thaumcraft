@@ -5,13 +5,10 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.container.ContainerSpa;
 import thaumcraft.common.tiles.devices.TileSpa;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiSpa extends AbstractContainerScreen<ContainerSpa>
 {
     private TileSpa spa;

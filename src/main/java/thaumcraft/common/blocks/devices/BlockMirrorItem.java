@@ -22,8 +22,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
 import java.util.function.Consumer;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.tiles.devices.TileMirror;
@@ -106,7 +104,6 @@ public class BlockMirrorItem extends BlockItem
         return Rarity.UNCOMMON;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack item, Item.TooltipContext ctx, TooltipDisplay tooltipDisplay, Consumer<Component> adder, TooltipFlag flagIn) {
         CustomData data = item.get(DataComponents.CUSTOM_DATA);

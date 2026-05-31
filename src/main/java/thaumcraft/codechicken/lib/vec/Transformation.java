@@ -1,6 +1,4 @@
 package thaumcraft.codechicken.lib.vec;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.codechicken.lib.render.CCRenderState;
 
 
@@ -22,7 +20,6 @@ public abstract class Transformation extends ITransformation<Vector3, Transforma
         return new TransformationList(this, t);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public abstract void glApply();
     
     @Override

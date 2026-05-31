@@ -11,7 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.blocks.BlockTCDevice;
 import thaumcraft.common.blocks.IBlockEnabled;
 import thaumcraft.common.blocks.IBlockFacing;

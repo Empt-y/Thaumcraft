@@ -3,8 +3,6 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.damagesource.DamageSource;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.capabilities.IPlayerWarp;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.client.fx.FXDispatcher;
@@ -20,7 +18,6 @@ public class ChampionModWarp implements IChampionModifierEffect
         return amount;
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void showFX(LivingEntity boss) {
         if (boss.level().getRandom().nextBoolean()) {

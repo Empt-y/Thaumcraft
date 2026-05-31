@@ -7,8 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.casters.FocusEffect;
 import thaumcraft.api.casters.IFocusBlockPicker;
@@ -74,7 +72,6 @@ public class FocusEffectExchange extends FocusEffect implements IFocusBlockPicke
         return new NodeSetting[] { new NodeSetting("fortune", "focus.common.fortune", new NodeSetting.NodeSettingIntList(fortune, fortuneDesc)), new NodeSetting("silk", "focus.common.silk", new NodeSetting.NodeSettingIntList(silk, silkDesc)) };
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void renderParticleFX(Level world, double x, double y, double z, double vx, double vy, double vz) {
         FXGeneric fb = new FXGeneric(world, x, y, z, vx + getPackage().world.getRandom().nextGaussian() * 0.01, vy + getPackage().world.getRandom().nextGaussian() * 0.01, vz + getPackage().world.getRandom().nextGaussian() * 0.01);

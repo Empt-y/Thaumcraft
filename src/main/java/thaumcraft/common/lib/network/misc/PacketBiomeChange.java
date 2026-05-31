@@ -7,8 +7,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.lib.utils.Utils;
 import io.netty.buffer.ByteBuf;
 
@@ -44,7 +42,6 @@ public class PacketBiomeChange implements CustomPacketPayload
         return new PacketBiomeChange(x, z, biome);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void handle(PacketBiomeChange msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             // TODO: Biome.getBiome(id) does not exist in NeoForge 26.1.2; biome lookup requires registry access

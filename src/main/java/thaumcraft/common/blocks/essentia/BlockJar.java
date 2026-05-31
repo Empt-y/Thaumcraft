@@ -22,8 +22,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 import thaumcraft.api.aura.AuraHelper;
@@ -52,7 +50,6 @@ public class BlockJar extends BlockTCTile implements ILabelable
         return new AABB(0.1875, 0.0, 0.1875, 0.8125, 0.75, 0.8125);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public boolean isOpaqueCube(BlockState state) {
         return false;
     }
@@ -195,7 +192,6 @@ public class BlockJar extends BlockTCTile implements ILabelable
         return 0.0f;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState state, Level world, BlockPos pos, Random rand) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile != null && tile instanceof TileJarBrain && ((TileJarBrain)tile).xp >= ((TileJarBrain)tile).xpMax) {

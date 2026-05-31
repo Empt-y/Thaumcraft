@@ -13,8 +13,6 @@ import net.minecraft.world.item.Item;
 // import net.minecraft.world.item.Item /* ArmorItem removed */; // removed
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.ThaumcraftMaterials;
 import thaumcraft.api.items.IGoggles;
 import thaumcraft.api.items.IRevealer;
@@ -49,7 +47,6 @@ public class ItemGoggles extends net.minecraft.world.item.Item implements IVisDi
         return new int[] { 0 };
     }
     
-    @OnlyIn(Dist.CLIENT)    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }
@@ -82,7 +79,6 @@ public class ItemGoggles extends net.minecraft.world.item.Item implements IVisDi
         return null /* nested removed */;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void onPlayerBaubleRender(ItemStack stack, Player player, float ticks) {
         {
             boolean helmetEmpty = player.getItemBySlot(EquipmentSlot.HEAD) != null;

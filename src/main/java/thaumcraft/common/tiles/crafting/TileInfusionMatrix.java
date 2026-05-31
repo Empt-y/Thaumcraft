@@ -41,8 +41,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
 // FML FMLCommonHandler removed
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.ThaumcraftInvHelper;
 import thaumcraft.api.aspects.Aspect;
@@ -138,7 +136,6 @@ public class TileInfusionMatrix extends TileThaumcraft implements IInteractWithC
         tempBlockCount = new HashMap<Block, Integer>();
     }
     
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(getBlockPos().getX() - 0.1, getBlockPos().getY() - 0.1, getBlockPos().getZ() - 0.1, getBlockPos().getX() + 1.1, getBlockPos().getY() + 1.1, getBlockPos().getZ() + 1.1);
     }

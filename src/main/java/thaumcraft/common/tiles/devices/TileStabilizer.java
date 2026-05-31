@@ -5,8 +5,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 // ITickable removed - use BlockEntityTicker<T>
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.lib.utils.BlockStateUtils;
@@ -29,7 +27,6 @@ public class TileStabilizer extends TileThaumcraft
         energy = 0;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), getBlockPos().getX() + 1, getBlockPos().getY() + 1.5, getBlockPos().getZ() + 1);
     }

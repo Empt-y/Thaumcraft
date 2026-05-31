@@ -17,8 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.tiles.misc.TileBanner;
 
@@ -29,7 +27,6 @@ public class BlockBannerTCItem extends BlockItem
         super(block, thaumcraft.common.config.TCItemInit.take());
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         if (stack.has(DataComponents.CUSTOM_DATA)) {
             String tag = stack.get(DataComponents.CUSTOM_DATA).copyTag().getStringOr("aspect", "");

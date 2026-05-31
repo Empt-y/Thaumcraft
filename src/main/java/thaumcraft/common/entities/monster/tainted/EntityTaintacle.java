@@ -16,8 +16,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.entities.ITaintedMob;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.config.ConfigItems;
@@ -119,7 +117,6 @@ public class EntityTaintacle extends Monster implements ITaintedMob
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte event) {
         if (event == 16) {
             flailIntensity = 3.0f;

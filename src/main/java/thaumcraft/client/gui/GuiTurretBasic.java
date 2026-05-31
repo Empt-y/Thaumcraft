@@ -5,13 +5,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.container.ContainerTurretBasic;
 import thaumcraft.common.entities.construct.EntityTurretCrossbow;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiTurretBasic extends AbstractContainerScreen<ContainerTurretBasic>
 {
     EntityTurretCrossbow turret;

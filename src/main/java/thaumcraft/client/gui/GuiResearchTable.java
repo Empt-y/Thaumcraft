@@ -10,15 +10,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.research.theorycraft.ResearchTableData;
 import thaumcraft.client.gui.plugins.GuiImageButton;
 import thaumcraft.common.container.ContainerResearchTable;
 import thaumcraft.common.tiles.crafting.TileResearchTable;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiResearchTable extends AbstractContainerScreen<ContainerResearchTable>
 {
     private float xSize_lo;

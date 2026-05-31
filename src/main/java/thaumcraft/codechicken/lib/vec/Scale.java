@@ -3,8 +3,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
 public class Scale extends Transformation
@@ -37,7 +35,6 @@ public class Scale extends Transformation
         mat.scale(factor);
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void glApply() {
         // RenderSystem.scale removed in MC 26; use PoseStack instead

@@ -7,8 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.items.ItemTCBase;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.TooltipFlag;
@@ -22,7 +20,6 @@ public class ItemEnchantmentPlaceholder extends ItemTCBase
         super("enchanted_placeholder");
     }
     
-    @OnlyIn(Dist.CLIENT)
     public boolean hasEffect(ItemStack stack) {
         return true;
     }
@@ -35,7 +32,6 @@ public class ItemEnchantmentPlaceholder extends ItemTCBase
         return Rarity.RARE;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);
         tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.ITALIC + "" + ChatFormatting.DARK_AQUA + I18n.get("item.enchanted_placeholder.text")));

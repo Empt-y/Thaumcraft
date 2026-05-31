@@ -5,12 +5,9 @@ import java.util.LinkedList;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.research.ResearchEntry;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiResearchPage extends Screen
 {
     public static LinkedList<Identifier> history = new LinkedList<>();

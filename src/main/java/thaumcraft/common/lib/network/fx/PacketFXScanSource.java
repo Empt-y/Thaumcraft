@@ -11,8 +11,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.ParticleEngine;
 import thaumcraft.client.fx.particles.FXGeneric;
 import thaumcraft.common.lib.utils.BlockUtils;
@@ -51,7 +49,6 @@ public class PacketFXScanSource implements CustomPacketPayload
         return new PacketFXScanSource(loc, size);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void handle(PacketFXScanSource msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             var level = Minecraft.getInstance().level;
@@ -59,7 +56,6 @@ public class PacketFXScanSource implements CustomPacketPayload
         });
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static void startScan(net.minecraft.world.level.Level world, BlockPos pos, int r) {
         int range = 4 + r * 4;
         ArrayList<BlockPos> positions = new ArrayList<BlockPos>();

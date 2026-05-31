@@ -20,8 +20,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.client.fx.FXDispatcher;
@@ -89,7 +87,6 @@ public class BlockEffect extends BlockTC
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState state, Level w, BlockPos pos, Random r) {
         if (state.getBlock() != BlocksTC.effectGlimmer) {
             float h = r.nextFloat() * 0.33f;

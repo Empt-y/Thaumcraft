@@ -25,8 +25,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
@@ -143,7 +141,6 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte event) {
         if (event == 4) {
             attackTimer = 10;
@@ -177,7 +174,6 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getAttackTimer() {
         return attackTimer;
     }

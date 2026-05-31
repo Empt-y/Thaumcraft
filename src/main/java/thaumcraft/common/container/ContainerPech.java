@@ -9,8 +9,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.container.slot.SlotOutput;
 import thaumcraft.common.entities.monster.EntityPech;
 import thaumcraft.common.lib.SoundsTC;
@@ -132,7 +130,6 @@ public class ContainerPech extends AbstractContainerMenu
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void updateProgressBar(int par1, int par2) {
     }
     

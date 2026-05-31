@@ -18,8 +18,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.ai.combat.EntityCritterAIAttackMelee;
 
@@ -55,7 +53,6 @@ public class ChampionModTainted implements IChampionModifierEffect
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void showFX(LivingEntity boss) {
         float w = boss.level().getRandom().nextFloat() * boss.getBbWidth();
         float d = boss.level().getRandom().nextFloat() * boss.getBbWidth();

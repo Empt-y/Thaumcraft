@@ -7,8 +7,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.casters.FocusEffect;
 import thaumcraft.api.casters.FocusEngine;
 import thaumcraft.api.casters.IFocusElement;
@@ -68,7 +66,6 @@ public class PacketFXFocusPartImpactBurst implements CustomPacketPayload
         });
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static void processMessage(PacketFXFocusPartImpactBurst message) {
         String[] partKeys = message.parts.split("%");
         int amt = Math.max(1, 20 / partKeys.length);

@@ -1,6 +1,4 @@
 package thaumcraft.codechicken.lib.colour;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.util.Mth;
 import thaumcraft.codechicken.lib.util.Copyable;
@@ -27,12 +25,10 @@ public abstract class Colour implements Copyable<Colour>
         a = colour.a;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void glColour() {
         GL11.glColor4ub(r, g, b, a);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void glColour(int a) {
         GL11.glColor4ub(r, g, b, (byte)a);
     }

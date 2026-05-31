@@ -14,8 +14,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 // FML FMLCommonHandler removed
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.IWarpingGear;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.IThaumcraftItems;
@@ -71,7 +69,6 @@ public class ItemVoidSword extends Item /* ItemSword removed */ implements IWarp
         return 1;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         tooltip.accept(net.minecraft.network.chat.Component.literal("" + ChatFormatting.GOLD + I18n.get("enchantment.special.sapless")));
         super.appendHoverText(stack, context, tooltipDisplay, tooltip, flagIn);

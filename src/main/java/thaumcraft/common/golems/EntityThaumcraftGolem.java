@@ -42,8 +42,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 // FML FMLCommonHandler removed
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.golems.EnumGolemTrait;
 import thaumcraft.api.golems.IGolemAPI;
@@ -301,7 +299,6 @@ public class EntityThaumcraftGolem extends EntityOwnedConstruct implements IGole
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte par1) {
         if (par1 == 5) {
             FXDispatcher.INSTANCE.drawGenericParticles(getX(), getY() + getBbHeight() + 0.1, getZ(), 0.0, 0.0, 0.0, 1.0f, 1.0f, 1.0f, 0.5f, false, 704 + (getRandom().nextBoolean() ? 0 : 3), 3, 1, 6, 0, 2.0f, 0.0f, 1);

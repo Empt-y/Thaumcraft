@@ -8,8 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.lib.SoundsTC;
 import io.netty.buffer.ByteBuf;
 
@@ -46,7 +44,6 @@ public class PacketWarpMessage implements CustomPacketPayload
         return new PacketWarpMessage(data, type);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void handle(PacketWarpMessage msg, IPayloadContext ctx) {
         if (msg.data != 0) {
             ctx.enqueueWork(() -> {
@@ -55,7 +52,6 @@ public class PacketWarpMessage implements CustomPacketPayload
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static void processMessage(PacketWarpMessage message) {
         Player player = Minecraft.getInstance().player;
         if (message.type == 0 && message.data > 0) {

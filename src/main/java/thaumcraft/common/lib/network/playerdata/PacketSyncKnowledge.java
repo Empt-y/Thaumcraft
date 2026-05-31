@@ -8,8 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 import thaumcraft.api.research.ResearchCategories;
@@ -50,7 +48,6 @@ public class PacketSyncKnowledge implements CustomPacketPayload
         return new PacketSyncKnowledge(data);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void handle(PacketSyncKnowledge msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             Player player = Minecraft.getInstance().player;

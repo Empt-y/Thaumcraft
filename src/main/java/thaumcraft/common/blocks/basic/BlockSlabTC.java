@@ -13,8 +13,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
 public class BlockSlabTC extends SlabBlock
@@ -48,7 +46,6 @@ public class BlockSlabTC extends SlabBlock
         super.createBlockStateDefinition(builder);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public ItemStack getItem(net.minecraft.world.level.Level worldIn, BlockPos pos, BlockState state) {
         return new ItemStack(state.getBlock());
     }

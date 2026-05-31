@@ -17,8 +17,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
@@ -197,7 +195,6 @@ public class TileCrucible extends TileThaumcraft implements IFluidHandler, IAspe
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     private void drawEffects() {
         if (heat > 150) {
             FXDispatcher.INSTANCE.crucibleFroth(worldPosition.getX() + 0.2f + level.getRandom().nextFloat() * 0.6f, worldPosition.getY() + getFluidHeight(), worldPosition.getZ() + 0.2f + level.getRandom().nextFloat() * 0.6f);
@@ -373,7 +370,6 @@ public class TileCrucible extends TileThaumcraft implements IFluidHandler, IAspe
         return super.triggerEvent(i, j);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), worldPosition.getX() + 1, worldPosition.getY() + 1, worldPosition.getZ() + 1);
     }

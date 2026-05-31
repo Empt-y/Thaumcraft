@@ -14,8 +14,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.blocks.BlockTC;
 import thaumcraft.common.config.ConfigItems;
@@ -98,7 +96,6 @@ public class BlockVisBattery extends BlockTC
         return (int)state.getValue(LiquidBlock.LEVEL);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void getSubBlocks(CreativeModeTab tab, NonNullList<ItemStack> list) {
         list.add(new ItemStack(this));
     }

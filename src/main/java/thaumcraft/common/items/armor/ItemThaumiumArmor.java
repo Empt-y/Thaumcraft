@@ -5,8 +5,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Item;
 // import net.minecraft.world.item.Item /* ArmorItem removed */; // removed
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.items.IThaumcraftItems;
@@ -31,7 +29,6 @@ public class ItemThaumiumArmor extends net.minecraft.world.item.Item implements 
         return new int[] { 0 };
     }
     
-    @OnlyIn(Dist.CLIENT)    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }

@@ -30,8 +30,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.config.ModConfig;
@@ -68,7 +66,6 @@ public class ServerEvents
         myFormatter = new DecimalFormat("#######.##");
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void clientWorldTick(ClientTickEvent.Post event) {
         if (!ServerEvents.clientRunList.isEmpty()) {

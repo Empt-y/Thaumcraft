@@ -19,8 +19,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.server.level.ServerLevel;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.common.blocks.BlockTCDevice;
 import thaumcraft.common.blocks.IBlockEnabled;
@@ -106,7 +104,6 @@ public class BlockSmelter extends BlockTCDevice implements IBlockEnabled, IBlock
         super.destroy(worldIn, pos, state);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState state, Level w, BlockPos pos, Random r) {
         if (BlockStateUtils.isEnabled(state)) {
             float f = pos.getX() + 0.5f;

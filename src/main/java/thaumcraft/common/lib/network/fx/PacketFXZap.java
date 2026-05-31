@@ -7,8 +7,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 import io.netty.buffer.ByteBuf;
 
@@ -52,7 +50,6 @@ public class PacketFXZap implements CustomPacketPayload
         return new PacketFXZap(source, target, color, width);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void handle(PacketFXZap msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             Color c = new Color(msg.color);

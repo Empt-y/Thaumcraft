@@ -12,8 +12,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.blocks.world.taint.BlockTaint;
@@ -167,12 +165,10 @@ public class EntityFallingTaint extends Entity
         return SoundSource.BLOCKS;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public Level getLevel() {
         return level();
     }
     
-    @OnlyIn(Dist.CLIENT)
     public boolean canRenderOnFire() {
         return false;
     }

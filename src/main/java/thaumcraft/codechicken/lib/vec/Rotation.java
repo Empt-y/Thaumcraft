@@ -5,8 +5,6 @@ import java.math.RoundingMode;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.util.Mth;
 
 
@@ -112,7 +110,6 @@ public class Rotation extends Transformation
         return quat;
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void glApply() {
         // RenderSystem.rotate removed in MC 26 — GL matrix stack no longer supported

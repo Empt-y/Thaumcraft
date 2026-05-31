@@ -3,11 +3,8 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiGolemCraftButton extends Button
 {
     static Identifier tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_golembuilder.png");

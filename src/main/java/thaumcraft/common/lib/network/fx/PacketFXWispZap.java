@@ -8,8 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.monster.EntityWisp;
@@ -64,7 +62,6 @@ public class PacketFXWispZap implements CustomPacketPayload
         });
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static Entity getEntityByID(int par1, Minecraft mc, net.minecraft.client.multiplayer.ClientLevel level) {
         return (par1 == mc.player.getId()) ? mc.player : level.getEntity(par1);
     }

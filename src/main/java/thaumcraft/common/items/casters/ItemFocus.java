@@ -10,8 +10,6 @@ import net.minecraft.nbt.IntTag;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.casters.FocusEffect;
 import thaumcraft.api.casters.FocusEngine;
 import thaumcraft.api.casters.FocusMediumRoot;
@@ -112,12 +110,10 @@ public class ItemFocus extends ItemTCBase
         return null;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         addFocusInformation(stack, null, tooltip, flagIn);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void addFocusInformation(ItemStack stack, Level worldIn, java.util.function.Consumer<net.minecraft.network.chat.Component> tooltip, TooltipFlag flagIn) {
         FocusPackage p = getPackage(stack);
         if (p != null) {

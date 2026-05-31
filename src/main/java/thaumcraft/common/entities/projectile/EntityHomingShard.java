@@ -15,8 +15,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.client.lib.UtilsFX;
 import thaumcraft.common.lib.SoundsTC;
@@ -100,7 +98,6 @@ public class EntityHomingShard extends ThrowableProjectile
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte par1) {
         if (par1 == 16) {
             FXDispatcher.INSTANCE.burst(getX(), getY(), getZ(), 0.3f);

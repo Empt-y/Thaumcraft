@@ -15,8 +15,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.tiles.devices.TileJarBrain;
 
 
@@ -43,7 +41,6 @@ public class BlockJarBrainItem extends BlockItem
         return result;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> adder, TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltipDisplay, adder, flagIn);

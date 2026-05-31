@@ -10,8 +10,6 @@ import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 
 public class BlockGrassAmbient extends GrassBlock
@@ -23,7 +21,6 @@ public class BlockGrassAmbient extends GrassBlock
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
         int skyLight = world.getBrightness(LightLayer.SKY, pos.above());
         long dayTime = world.getOverworldClockTime() % 24000L;

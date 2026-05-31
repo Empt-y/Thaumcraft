@@ -14,8 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.blocks.BlockTC;
 
 
@@ -34,7 +32,6 @@ public class BlockHole extends BlockTC
         return ItemStack.EMPTY;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void getSubBlocks(CreativeModeTab par2CreativeTabs, NonNullList<ItemStack> par3List) {
     }
 

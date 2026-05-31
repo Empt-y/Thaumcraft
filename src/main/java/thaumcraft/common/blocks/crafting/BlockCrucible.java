@@ -21,8 +21,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.casters.ICaster;
 import thaumcraft.common.blocks.BlockTCTile;
 import thaumcraft.common.entities.EntitySpecialItem;
@@ -133,7 +131,6 @@ public class BlockCrucible extends BlockTCTile
         return 0;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState state, Level w, BlockPos pos, Random r) {
         if (r.nextInt(10) == 0) {
             BlockEntity te = w.getBlockEntity(pos);

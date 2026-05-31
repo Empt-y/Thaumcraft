@@ -1,8 +1,6 @@
 package thaumcraft.common.tiles.misc;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.blocks.basic.BlockBannerTC;
 import thaumcraft.common.tiles.TileThaumcraft;
@@ -21,7 +19,6 @@ public class TileBanner extends TileThaumcraft
         onWall = false;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(getBlockPos().getX(), getBlockPos().getY() - 1, getBlockPos().getZ(), getBlockPos().getX() + 1, getBlockPos().getY() + 2, getBlockPos().getZ() + 1);
     }
@@ -73,7 +70,6 @@ public class TileBanner extends TileThaumcraft
         this.aspect = aspect;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public int getColor() {
         return (getBlockState().getBlock() == null || !(getBlockState().getBlock() instanceof BlockBannerTC) || ((BlockBannerTC) getBlockState().getBlock()).dye == null) ? -1 : ((BlockBannerTC) getBlockState().getBlock()).dye.getTextureDiffuseColor();
     }

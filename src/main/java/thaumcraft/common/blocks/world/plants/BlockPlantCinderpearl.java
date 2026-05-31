@@ -10,8 +10,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockPlantCinderpearl extends BushBlock
 {
@@ -30,7 +28,6 @@ public class BlockPlantCinderpearl extends BushBlock
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
         if (rand.nextBoolean()) {
             double xr = pos.getX() + 0.5 + (rand.nextFloat() - rand.nextFloat()) * 0.1;

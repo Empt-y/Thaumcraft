@@ -2,8 +2,6 @@ package thaumcraft.codechicken.lib.vec;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
 public class Translation extends Transformation
@@ -37,7 +35,6 @@ public class Translation extends Transformation
         return this;
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void glApply() {
         // RenderSystem.translate removed in modern MC; matrix stack is gone

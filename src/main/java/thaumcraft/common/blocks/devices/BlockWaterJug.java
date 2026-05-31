@@ -24,8 +24,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.blocks.BlockTCDevice;
 import thaumcraft.common.tiles.devices.TileWaterJug;
@@ -80,7 +78,6 @@ public class BlockWaterJug extends BlockTCDevice
         return true;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState state, Level world, BlockPos pos, Random rand) {
         BlockEntity te = world.getBlockEntity(pos);
         if (te instanceof TileWaterJug) {

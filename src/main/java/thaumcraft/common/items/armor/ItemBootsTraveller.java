@@ -11,8 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.ThaumcraftMaterials;
 import thaumcraft.api.items.IRechargable;
 import thaumcraft.api.items.RechargeHelper;
@@ -41,7 +39,6 @@ public class ItemBootsTraveller extends net.minecraft.world.item.Item implements
         return new int[] { 0 };
     }
     
-    @OnlyIn(Dist.CLIENT)    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }

@@ -2,8 +2,6 @@ package thaumcraft.codechicken.lib.vec;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
 public class TransformationList extends Transformation
@@ -142,7 +140,6 @@ public class TransformationList extends Transformation
         return transformations.size() == 0;
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public void glApply() {
         for (int i = transformations.size() - 1; i >= 0; --i) {

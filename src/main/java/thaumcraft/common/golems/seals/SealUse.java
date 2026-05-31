@@ -12,8 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.ThaumcraftInvHelper;
 import thaumcraft.api.golems.EnumGolemTrait;
 import thaumcraft.api.golems.GolemHelper;
@@ -161,7 +159,6 @@ public class SealUse extends SealFiltered implements ISealConfigToggles
         return new SealBaseContainer(player.getInventory(), world, seal);
     }
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public Object returnGui(Level world, Player player, BlockPos pos, Direction side, ISealEntity seal) {
         return new thaumcraft.common.golems.client.gui.SealBaseGUI(new thaumcraft.common.golems.client.gui.SealBaseContainer(player.getInventory(), world, seal), player.getInventory(), net.minecraft.network.chat.Component.empty());

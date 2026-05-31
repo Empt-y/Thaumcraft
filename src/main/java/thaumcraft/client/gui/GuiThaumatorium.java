@@ -8,14 +8,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.crafting.CrucibleRecipe;
 import thaumcraft.common.container.ContainerThaumatorium;
 import thaumcraft.common.tiles.crafting.TileThaumatorium;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiThaumatorium extends AbstractContainerScreen<ContainerThaumatorium>
 {
     private TileThaumatorium inventory;

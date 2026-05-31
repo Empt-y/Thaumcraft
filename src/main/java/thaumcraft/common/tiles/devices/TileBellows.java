@@ -8,8 +8,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.tiles.TileThaumcraft;
 
@@ -29,7 +27,6 @@ public class TileBellows extends TileThaumcraft
         delay = 0;
     }
     
-    @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
         return new AABB(getBlockPos().getX() - 0.3, getBlockPos().getY() - 0.3, getBlockPos().getZ() - 0.3, getBlockPos().getX() + 1.3, getBlockPos().getY() + 1.3, getBlockPos().getZ() + 1.3);
     }

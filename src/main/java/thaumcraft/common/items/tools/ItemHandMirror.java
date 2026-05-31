@@ -17,8 +17,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.level.Level;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.common.items.ItemTCBase;
@@ -102,7 +100,6 @@ public class ItemHandMirror extends ItemTCBase
         return super.use(world, player, hand);
     }
     
-    @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltip, TooltipFlag flagIn) {
         if (!stack.isEmpty()) {
             CompoundTag nbt = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();

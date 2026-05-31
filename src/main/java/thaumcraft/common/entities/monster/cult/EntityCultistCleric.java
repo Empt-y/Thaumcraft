@@ -23,8 +23,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.entities.ai.combat.AICultistHurtByTarget;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
@@ -143,7 +141,6 @@ public class EntityCultistCleric extends EntityCultist implements RangedAttackMo
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte event) {
         if (event == 19) {
             // TODO: spawn particles

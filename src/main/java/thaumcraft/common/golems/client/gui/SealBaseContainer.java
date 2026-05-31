@@ -8,8 +8,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.golems.seals.ISealConfigArea;
 import thaumcraft.api.golems.seals.ISealConfigFilter;
 import thaumcraft.api.golems.seals.ISealConfigToggles;
@@ -201,7 +199,6 @@ public class SealBaseContainer extends AbstractContainerMenu
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void updateProgressBar(int par1, int par2) {
         if (par1 == 0) {
             seal.setPriority((byte)par2);

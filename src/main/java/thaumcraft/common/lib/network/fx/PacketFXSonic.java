@@ -7,8 +7,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.client.fx.other.FXSonic;
 import io.netty.buffer.ByteBuf;
 
@@ -36,7 +34,6 @@ public class PacketFXSonic implements CustomPacketPayload
         return new PacketFXSonic(source);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void handle(PacketFXSonic msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             var level = Minecraft.getInstance().level;

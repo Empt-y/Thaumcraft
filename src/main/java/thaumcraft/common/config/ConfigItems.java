@@ -14,8 +14,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.client.resources.language.I18n;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.core.Registry;
 import thaumcraft.api.OreDictionaryEntries;
 import thaumcraft.api.ThaumcraftApiHelper;
@@ -332,14 +330,12 @@ public class ConfigItems
         SealHandler.registerSeal(new SealBreakerAdvanced());
     }
     
-    @OnlyIn(Dist.CLIENT)
     public static void initModelsAndVariants() {
         for (IThaumcraftItems itemVariantHolder : ConfigItems.ITEM_VARIANT_HOLDERS) {
             initModelAndVariants(itemVariantHolder);
         }
     }
     
-    @OnlyIn(Dist.CLIENT)
     private static void initModelAndVariants(IThaumcraftItems item) {
         if (item.getCustomMesh() != null) {
             // FIXME: ModelLoader API removed in 1.21+; use data-driven item models

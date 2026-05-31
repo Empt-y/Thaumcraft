@@ -32,7 +32,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.lwjgl.opengl.GL11;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
@@ -65,11 +64,8 @@ import thaumcraft.common.tiles.devices.TileRedstoneRelay;
 public class RenderEventHandler
 {
     public static RenderEventHandler INSTANCE;
-    @OnlyIn(Dist.CLIENT)
     public static HudHandler hudHandler;
-    @OnlyIn(Dist.CLIENT)
     public static WandRenderingHandler wandHandler;
-    @OnlyIn(Dist.CLIENT)
     static ShaderHandler shaderhandler;
     public static List blockTags;
     public static float tagscale;
@@ -96,7 +92,6 @@ public class RenderEventHandler
         random = new java.util.Random();
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void playerTick(net.neoforged.neoforge.event.tick.PlayerTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
@@ -125,7 +120,6 @@ public class RenderEventHandler
         } catch (Exception ex) {}
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void clientWorldTick(net.neoforged.neoforge.client.event.ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
@@ -145,37 +139,31 @@ public class RenderEventHandler
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void renderTick(net.neoforged.neoforge.client.event.ClientTickEvent.Post event) {
         // TODO: update partial tick state via a render event
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void tooltipEvent(net.neoforged.neoforge.event.entity.player.ItemTooltipEvent event) {
         // TODO: rewrite with modern font/screen API
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void tooltipEvent(net.neoforged.neoforge.client.event.RenderTooltipEvent.Pre event) {
         // TODO: rewrite with modern tooltip API (getLines/getHeight removed)
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void renderOverlay(net.neoforged.neoforge.client.event.RenderGuiLayerEvent.Post event) {
         // TODO: rewrite with modern GUI layer API (getType/getResolution removed)
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void renderShaders(net.neoforged.neoforge.client.event.RenderGuiLayerEvent.Pre event) {
         // TODO: rewrite with modern shader API (OpenGlHelper/ShaderGroup removed)
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void renderLast(net.neoforged.neoforge.client.event.RenderLevelStageEvent.AfterLevel event) {
         if (RenderEventHandler.tagscale > 0.0f) {
@@ -184,7 +172,6 @@ public class RenderEventHandler
         // TODO: rewrite remainder with modern rendering API (getRenderViewEntity removed)
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void fogDensityEvent(net.neoforged.neoforge.client.event.ViewportEvent.RenderFog event) {
         // TODO: rewrite — GL11 fog API removed in modern OpenGL
@@ -212,7 +199,6 @@ public class RenderEventHandler
         // TODO: rewrite with modern rendering API (old tessellator/OpenGlHelper removed)
     }
 
-    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void textureStitchEventPre(net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent event) {
         // TODO: rewrite — TextureAtlasStitchedEvent.addSprite API may have changed

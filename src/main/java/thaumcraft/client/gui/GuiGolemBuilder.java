@@ -7,8 +7,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.golems.IGolemProperties;
 import thaumcraft.api.golems.parts.GolemAddon;
 import thaumcraft.api.golems.parts.GolemArm;
@@ -21,7 +19,6 @@ import thaumcraft.common.golems.client.gui.GuiGolemCraftButton;
 import thaumcraft.common.tiles.crafting.TileGolemBuilder;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiGolemBuilder extends AbstractContainerScreen<ContainerGolemBuilder>
 {
     private TileGolemBuilder builder;

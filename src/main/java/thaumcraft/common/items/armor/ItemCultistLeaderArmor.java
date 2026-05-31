@@ -8,8 +8,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Item;
 // import net.minecraft.world.item.Item /* ArmorItem removed */; // removed
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.api.ThaumcraftMaterials;
 import thaumcraft.client.renderers.models.gear.ModelLeaderArmor;
 import thaumcraft.common.config.ConfigItems;
@@ -35,7 +33,6 @@ public class ItemCultistLeaderArmor extends net.minecraft.world.item.Item implem
         return new int[] { 0 };
     }
     
-    @OnlyIn(Dist.CLIENT)    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }

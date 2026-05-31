@@ -30,7 +30,6 @@ import net.minecraft.world.level.redstone.Orientation;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import thaumcraft.codechicken.lib.raytracer.ExtendedMOP;
 import thaumcraft.codechicken.lib.raytracer.IndexedCuboid6;
 import thaumcraft.codechicken.lib.raytracer.RayTracer;
@@ -134,7 +133,6 @@ public class BlockRedstoneRelay extends BlockTCDevice implements IBlockFacingHor
         notifyNeighbors(worldIn, pos, state);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public boolean shouldSideBeRendered(BlockState state, BlockGetter worldIn, BlockPos pos, Direction side) {
         return side.getAxis() != Direction.Axis.Y;
     }
