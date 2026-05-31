@@ -25,7 +25,7 @@ public class BlockJarBrainItem extends BlockItem
     public BlockJarBrainItem(Block block, net.minecraft.world.item.Item.Properties props) {
         super(block, props);
     }
-    public BlockJarBrainItem(Block block) { this(block, new net.minecraft.world.item.Item.Properties()); }
+    public BlockJarBrainItem(Block block) { this(block, thaumcraft.common.config.TCItemInit.take()); }
 
     @Override
     public InteractionResult place(BlockPlaceContext context) {

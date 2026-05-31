@@ -21,7 +21,7 @@ import thaumcraft.common.lib.utils.Utils;
 public class ItemElementalHoe extends HoeItem implements IThaumcraftItems
 {
     public ItemElementalHoe(ToolMaterial enumtoolmaterial) {
-        super(enumtoolmaterial, -3, -1.0f, new net.minecraft.world.item.Item.Properties());
+        super(enumtoolmaterial, -3, -1.0f, thaumcraft.common.config.TCItemInit.take());
         // Entity requires EntityType; use factory method
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

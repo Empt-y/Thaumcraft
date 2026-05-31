@@ -41,7 +41,7 @@ public class ItemElementalShovel extends ShovelItem implements IArchitect, IThau
     Direction side;
 
     public ItemElementalShovel(ToolMaterial enumtoolmaterial) {
-        super(enumtoolmaterial, 1.5f, -3.0f, new net.minecraft.world.item.Item.Properties());
+        super(enumtoolmaterial, 1.5f, -3.0f, thaumcraft.common.config.TCItemInit.take());
         side = Direction.DOWN;
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }

@@ -35,7 +35,7 @@ public class BlockMirrorItem extends BlockItem
     public BlockMirrorItem(Block par1, net.minecraft.world.item.Item.Properties props) {
         super(par1, props);
     }
-    public BlockMirrorItem(Block par1) { this(par1, new net.minecraft.world.item.Item.Properties()); }
+    public BlockMirrorItem(Block par1) { this(par1, thaumcraft.common.config.TCItemInit.take()); }
 
     
     public InteractionResult useOn(UseOnContext ctx) {

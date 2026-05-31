@@ -26,7 +26,7 @@ import thaumcraft.common.tiles.misc.TileBanner;
 public class BlockBannerTCItem extends BlockItem
 {
     public BlockBannerTCItem(BlockBannerTC block) {
-        super(block, new net.minecraft.world.item.Item.Properties());
+        super(block, thaumcraft.common.config.TCItemInit.take());
     }
 
     @OnlyIn(Dist.CLIENT)
