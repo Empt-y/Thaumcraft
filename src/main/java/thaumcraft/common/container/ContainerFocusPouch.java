@@ -4,9 +4,11 @@ import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.NonNullList;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import thaumcraft.common.container.slot.SlotLimitedByClass;
 import thaumcraft.common.items.casters.ItemFocus;
@@ -15,32 +17,25 @@ import thaumcraft.common.items.casters.ItemFocusPouch;
 
 public class ContainerFocusPouch extends AbstractContainerMenu implements ContainerListener
 {
-    private Level worldObj;
-    private int posX;
-    private int posY;
-    private int posZ;
-    private int blockSlot;
     public Container input;
     ItemStack pouch;
     Player player;
 
-    public ContainerFocusPouch(Inventory iinventory, Level par2World, int par3, int par4, int par5) {
-        super(null, 0);
+    public ContainerFocusPouch(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.FOCUS_POUCH.get(), id, inv, inv.player.level());
+    }
+
+    public ContainerFocusPouch(MenuType<ContainerFocusPouch> type, int id, Inventory iinventory, Level level) {
+        super(type, id);
         input = new InventoryFocusPouch(this);
         pouch = null;
-        player = null;
-        worldObj = par2World;
-        posX = par3;
-        posY = par4;
-        posZ = par5;
         player = iinventory.player;
         pouch = iinventory.getSelectedItem();
-        blockSlot = 0;
         for (int a = 0; a < 18; ++a) {
             addSlot(new SlotLimitedByClass(ItemFocus.class, input, a, 37 + a % 6 * 18, 51 + a / 6 * 18));
         }
         bindPlayerInventory(iinventory);
-        if (!par2World.isClientSide()) {
+        if (!level.isClientSide()) {
             try {
                 NonNullList<ItemStack> list = ((ItemFocusPouch) pouch.getItem()).getInventory(pouch);
                 for (int a2 = 0; a2 < list.size(); ++a2) {
@@ -101,7 +96,7 @@ public class ContainerFocusPouch extends AbstractContainerMenu implements Contai
     @Override
     public void removed(Player par1Player) {
         super.removed(par1Player);
-        if (!worldObj.isClientSide()) {
+        if (!par1Player.level().isClientSide()) {
             NonNullList<ItemStack> list = NonNullList.withSize(18, ItemStack.EMPTY);
             for (int a = 0; a < list.size(); ++a) {
                 list.set(a, input.getItem(a));

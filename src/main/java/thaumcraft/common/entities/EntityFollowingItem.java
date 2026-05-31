@@ -34,7 +34,6 @@ public class EntityFollowingItem extends EntitySpecialItem
         target = null;
         age = 20;
         gravity = 0.03999999910593033;
-        // FIXME: setSize removed; dimensions set in EntityType builder
         setPos(par2, par4, par6);
         setItem(par8ItemStack);
         setYRot((float)(Math.random() * 360.0));
@@ -67,7 +66,6 @@ public class EntityFollowingItem extends EntitySpecialItem
         target = null;
         age = 20;
         gravity = 0.03999999910593033;
-        // FIXME: setSize removed; dimensions set in EntityType builder
     }
     
     @Override

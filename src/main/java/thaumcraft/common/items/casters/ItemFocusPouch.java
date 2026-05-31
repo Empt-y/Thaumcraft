@@ -36,10 +36,13 @@ public class ItemFocusPouch extends ItemTCBase
     }
     
     public InteractionResult use(Level worldIn, Player playerIn, InteractionHand hand) {
-        if (!worldIn.isClientSide()) {
-            /* TODO: port to NetworkHooks.openScreen */ 
+        if (!worldIn.isClientSide() && playerIn instanceof net.minecraft.server.level.ServerPlayer sp) {
+            sp.openMenu(new net.minecraft.world.SimpleMenuProvider(
+                (id, inv, player) -> new thaumcraft.common.container.ContainerFocusPouch(
+                    thaumcraft.common.container.TCMenuTypes.FOCUS_POUCH.get(), id, inv, worldIn),
+                net.minecraft.network.chat.Component.translatable("item.thaumcraft.focus_pouch")));
         }
-        return super.use(worldIn, playerIn, hand);
+        return InteractionResult.SUCCESS;
     }
     
     public NonNullList<ItemStack> getInventory(ItemStack item) {

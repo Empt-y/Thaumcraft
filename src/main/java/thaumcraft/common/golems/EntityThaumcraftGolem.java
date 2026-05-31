@@ -131,6 +131,11 @@ public class EntityThaumcraftGolem extends EntityOwnedConstruct implements IGole
     }
     
     @Override
+    public float maxUpStep() {
+        return getProperties().hasTrait(thaumcraft.api.golems.EnumGolemTrait.WHEELED) ? 0.5f : 0.6f;
+    }
+
+    @Override
     public byte getGolemColor() {
         byte[] ba = Utils.intToByteArray((int) entityData.get((EntityDataAccessor)EntityThaumcraftGolem.PROPS3));
         return ba[0];
@@ -166,7 +171,7 @@ public class EntityThaumcraftGolem extends EntityOwnedConstruct implements IGole
         }
         mh += getProperties().getRank();
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(mh);
-        /* stepHeight = (getProperties().hasTrait(EnumGolemTrait.WHEELED) ? 0.5f : 0.6f); */ // TODO: override maxUpStep()
+        // stepHeight is now via maxUpStep() override below
         setHomeTo((getHomePosition() == BlockPos.ZERO) ? blockPosition() : getHomePosition(), getProperties().hasTrait(EnumGolemTrait.SCOUT) ? 48 : 32);
         getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(getProperties().hasTrait(EnumGolemTrait.SCOUT) ? 56.0 : 40.0);
         /* navigator field removed; navigation is set via constructor */;

@@ -52,7 +52,6 @@ public class EntityTaintCrawler extends Monster implements ITaintedMob
     public EntityTaintCrawler(net.minecraft.world.entity.EntityType<? extends EntityTaintCrawler> type, Level par1World) {
         super(type, par1World);
         lastPos = new BlockPos(0, 0, 0);
-        // FIXME: setSize removed; dimensions set in EntityType builder
         xpReward = 3;
     }
     

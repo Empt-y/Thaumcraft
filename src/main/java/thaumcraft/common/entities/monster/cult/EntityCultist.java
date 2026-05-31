@@ -23,7 +23,6 @@ public class EntityCultist extends Monster
     
     public EntityCultist(net.minecraft.world.entity.EntityType<? extends EntityCultist> type, Level p_i1745_1_) {
         super(type, p_i1745_1_);
-        // FIXME: setSize removed; dimensions set in EntityType builder
         xpReward = 10;
         ((GroundPathNavigation) getNavigation()).setCanOpenDoors(true);
         setDropChance(EquipmentSlot.CHEST, 0.05f);

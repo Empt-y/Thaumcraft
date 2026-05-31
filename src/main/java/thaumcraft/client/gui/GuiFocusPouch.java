@@ -4,20 +4,16 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.Level;
 import thaumcraft.common.container.ContainerFocusPouch;
 
 
 public class GuiFocusPouch extends AbstractContainerScreen<ContainerFocusPouch>
 {
-    private int blockSlot;
-    Identifier tex;
+    private Identifier tex;
 
-    public GuiFocusPouch(Inventory par1InventoryPlayer, Level world, int x, int y, int z) {
-        super(new ContainerFocusPouch(par1InventoryPlayer, world, x, y, z), par1InventoryPlayer,
-            Component.translatable("gui.focuspouch"), 175, 232);
+    public GuiFocusPouch(ContainerFocusPouch menu, Inventory inv, Component title) {
+        super(menu, inv, title);
         tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_focuspouch.png");
-        blockSlot = 0; // hotbar slot tracking stubbed — selected field is private in newer MC
     }
 
     @Override

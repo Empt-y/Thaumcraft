@@ -74,9 +74,17 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource
         }
     }
     
+    private Level getLevelByDimHash(int dimHash) {
+        if (!(this.level instanceof net.minecraft.server.level.ServerLevel)) return null;
+        for (net.minecraft.server.level.ServerLevel sl : ((net.minecraft.server.level.ServerLevel)this.level).getServer().getAllLevels()) {
+            if (sl.dimension().identifier().hashCode() == dimHash) return sl;
+        }
+        return null;
+    }
+
     public void restoreLink() {
         if (isDestinationValid()) {
-            Level targetWorld = null /* FMLCommonHandler removed */;
+            Level targetWorld = getLevelByDimHash(linkDim);
             if (targetWorld == null) {
                 return;
             }
@@ -99,7 +107,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource
     }
     
     public void invalidateLink() {
-        Level targetWorld = null /* TODO: DimensionManager removed */;
+        Level targetWorld = getLevelByDimHash(linkDim);
         if (targetWorld == null) {
             return;
         }
@@ -121,7 +129,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource
         if (!linked) {
             return false;
         }
-        Level targetWorld = null /* TODO: DimensionManager removed */;
+        Level targetWorld = getLevelByDimHash(linkDim);
         if (targetWorld == null) {
             return false;
         }
@@ -152,7 +160,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource
         if (!linked) {
             return false;
         }
-        Level targetWorld = null /* TODO: DimensionManager removed */;
+        Level targetWorld = getLevelByDimHash(linkDim);
         if (targetWorld == null) {
             return false;
         }
@@ -165,7 +173,7 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource
     }
     
     public boolean isDestinationValid() {
-        Level targetWorld = null /* TODO: DimensionManager removed */;
+        Level targetWorld = getLevelByDimHash(linkDim);
         if (targetWorld == null) {
             return false;
         }
@@ -188,20 +196,22 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource
     }
     
     public boolean doesContainerAccept(Aspect tag) {
-        Level targetWorld = null /* TODO: DimensionManager removed */;
-        if (linkedFacing == Direction.DOWN && targetWorld != null) {
+        Level targetWorld = getLevelByDimHash(linkDim);
+        if (targetWorld == null) return false;
+        if (linkedFacing == Direction.DOWN) {
             linkedFacing = BlockStateUtils.getFacing(targetWorld.getBlockState(new BlockPos(linkX, linkY, linkZ)));
         }
         BlockEntity te = targetWorld.getBlockEntity(new BlockPos(linkX, linkY, linkZ));
         return te == null || !(te instanceof TileMirrorEssentia) || EssentiaHandler.canAcceptEssentia(te, tag, linkedFacing, 8, true);
     }
-    
+
     public int addToContainer(Aspect tag, int amount) {
         if (!isLinkValid() || amount > 1) {
             return amount;
         }
-        Level targetWorld = null /* TODO: DimensionManager removed */;
-        if (linkedFacing == Direction.DOWN && targetWorld != null) {
+        Level targetWorld = getLevelByDimHash(linkDim);
+        if (targetWorld == null) return amount;
+        if (linkedFacing == Direction.DOWN) {
             linkedFacing = BlockStateUtils.getFacing(targetWorld.getBlockState(new BlockPos(linkX, linkY, linkZ)));
         }
         BlockEntity te = targetWorld.getBlockEntity(new BlockPos(linkX, linkY, linkZ));
@@ -214,13 +224,14 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource
         }
         return amount;
     }
-    
+
     public boolean takeFromContainer(Aspect tag, int amount) {
         if (!isLinkValid() || amount > 1) {
             return false;
         }
-        Level targetWorld = null /* TODO: DimensionManager removed */;
-        if (linkedFacing == Direction.DOWN && targetWorld != null) {
+        Level targetWorld = getLevelByDimHash(linkDim);
+        if (targetWorld == null) return false;
+        if (linkedFacing == Direction.DOWN) {
             linkedFacing = BlockStateUtils.getFacing(targetWorld.getBlockState(new BlockPos(linkX, linkY, linkZ)));
         }
         BlockEntity te = targetWorld.getBlockEntity(new BlockPos(linkX, linkY, linkZ));
@@ -242,8 +253,9 @@ public class TileMirrorEssentia extends TileThaumcraft implements IAspectSource
         if (!isLinkValid() || amount > 1) {
             return false;
         }
-        Level targetWorld = null /* TODO: DimensionManager removed */;
-        if (linkedFacing == Direction.DOWN && targetWorld != null) {
+        Level targetWorld = getLevelByDimHash(linkDim);
+        if (targetWorld == null) return false;
+        if (linkedFacing == Direction.DOWN) {
             linkedFacing = BlockStateUtils.getFacing(targetWorld.getBlockState(new BlockPos(linkX, linkY, linkZ)));
         }
         BlockEntity te = targetWorld.getBlockEntity(new BlockPos(linkX, linkY, linkZ));

@@ -136,8 +136,6 @@ public class EntityThaumicSlime extends Slime implements ITaintedMob
                 }
             }
             float ff = (float) getSize();
-            // FIXME: setSize removed; dimensions set in EntityType builder
-            // FIXME: setSize removed; dimensions set in EntityType builder
         }
         else if (!isDeadOrDying()) {
             Player entityplayer = level().getNearestPlayer(this, 16.0);

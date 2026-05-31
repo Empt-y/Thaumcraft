@@ -37,6 +37,9 @@ public class TCMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<ContainerFocalManipulator>> FOCAL_MANIPULATOR =
             MENUS.register("focal_manipulator", () -> IMenuTypeExtension.create(ContainerFocalManipulator::new));
 
+    public static final DeferredHolder<MenuType<?>, MenuType<ContainerFocusPouch>> FOCUS_POUCH =
+            MENUS.register("focus_pouch", () -> IMenuTypeExtension.create(ContainerFocusPouch::new));
+
     public static void register(IEventBus bus) {
         MENUS.register(bus);
     }

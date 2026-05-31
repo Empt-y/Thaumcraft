@@ -131,9 +131,7 @@ public class SealHarvest implements ISeal, ISealGui, ISealConfigArea, ISealConfi
                         if (seed != null && !seed.isEmpty()) {
                             BlockState bb = world.getBlockState(task.getPos().below());
                             Direction rf = null;
-                            if (true /* IPlantable check TODO */) {
-                                rf = Direction.DOWN;
-                            }
+                            rf = Direction.DOWN; // IPlantable removed; DOWN is correct for all TC crops
                             if (rf != null) {
                                 Task tt = new Task(task.getSealPos(), task.getPos());
                                 tt.setPriority(task.getPriority());

@@ -307,10 +307,7 @@ public class PlayerEvents
     }
     
     private static void handleSpeedMods(Player player) {
-        if (player.level().isClientSide() && (player.isCrouching() || player.getInventory().getItem(36 + 0).getItem() != ItemsTC.travellerBoots) && PlayerEvents.prevStep.containsKey(player.getId())) {
-            /* player.stepHeight removed */ /* stepHeight = PlayerEvents.prevStep.get(player.getId()); */ // TODO: override maxUpStep()
-            PlayerEvents.prevStep.remove(player.getId());
-        }
+        // step-height boost for traveller boots not yet ported (stepHeight field removed in 1.20+)
     }
     
     @SubscribeEvent
@@ -378,8 +375,7 @@ public class PlayerEvents
         }
     }
     
-    // TODO: Player capability persistence (SaveToFile/LoadFromFile) — NeoForge 26.x API uses file paths,
-    // not NBT; needs AttachmentType serializer or manual file I/O. Capabilities reset on logout for now.
+    // Player capability persistence handled by TCPlayerData IAttachmentSerializer (warp + knowledge persist via NeoForge player data)
 
     @SubscribeEvent
     public static void cloneCapabilitiesEvent(PlayerEvent.Clone event) {

@@ -61,9 +61,17 @@ public class TileMirror extends TileThaumcraft implements Container
         outputStacks = new ArrayList<ItemStack>();
     }
     
+    private Level getLevelByDimHash(int dimHash) {
+        if (!(this.level instanceof net.minecraft.server.level.ServerLevel)) return null;
+        for (net.minecraft.server.level.ServerLevel sl : ((net.minecraft.server.level.ServerLevel)this.level).getServer().getAllLevels()) {
+            if (sl.dimension().identifier().hashCode() == dimHash) return sl;
+        }
+        return null;
+    }
+
     public void restoreLink() {
         if (isDestinationValid()) {
-            Level targetWorld = null /* FMLCommonHandler removed */;
+            Level targetWorld = getLevelByDimHash(linkDim);
             if (targetWorld == null) {
                 return;
             }
@@ -85,7 +93,7 @@ public class TileMirror extends TileThaumcraft implements Container
     }
     
     public void invalidateLink() {
-        Level targetWorld = null /* TODO: DimensionManager removed */;
+        Level targetWorld = getLevelByDimHash(linkDim);
         if (targetWorld == null) {
             return;
         }
@@ -106,7 +114,7 @@ public class TileMirror extends TileThaumcraft implements Container
         if (!linked) {
             return false;
         }
-        Level targetWorld = null /* TODO: DimensionManager removed */;
+        Level targetWorld = getLevelByDimHash(linkDim);
         if (targetWorld == null) {
             return false;
         }
@@ -137,7 +145,7 @@ public class TileMirror extends TileThaumcraft implements Container
         if (!linked) {
             return false;
         }
-        Level targetWorld = null /* TODO: DimensionManager removed */;
+        Level targetWorld = getLevelByDimHash(linkDim);
         if (targetWorld == null) {
             return false;
         }
@@ -150,7 +158,7 @@ public class TileMirror extends TileThaumcraft implements Container
     }
     
     public boolean isDestinationValid() {
-        Level targetWorld = null /* TODO: DimensionManager removed */;
+        Level targetWorld = getLevelByDimHash(linkDim);
         if (targetWorld == null) {
             return false;
         }
@@ -170,7 +178,6 @@ public class TileMirror extends TileThaumcraft implements Container
         if (!linked || !isLinkValid()) {
             return false;
         }
-        Level world = null /* FMLCommonHandler removed */;
         BlockEntity target = getLevel().getBlockEntity(new BlockPos(linkX, linkY, linkZ));
         if (target != null && target instanceof TileMirror) {
             ((TileMirror)target).addStack(items);
@@ -361,7 +368,6 @@ public class TileMirror extends TileThaumcraft implements Container
     }
     
     public void setInventorySlotContents(int par1, ItemStack stack2) {
-        Level world = null /* FMLCommonHandler removed */;
         BlockEntity target = this.level.getBlockEntity(new BlockPos(linkX, linkY, linkZ));
         if (target != null && target instanceof TileMirror) {
             ((TileMirror)target).addStack(stack2.copy());
@@ -382,7 +388,6 @@ public class TileMirror extends TileThaumcraft implements Container
     }
     
     public boolean isItemValidForSlot(int var1, ItemStack var2) {
-        Level world = null /* FMLCommonHandler removed */;
         BlockEntity target = this.level.getBlockEntity(new BlockPos(linkX, linkY, linkZ));
         return target != null && target instanceof TileMirror;
     }

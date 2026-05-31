@@ -67,7 +67,6 @@ public class InfusionRecipe implements IThaumcraftRecipe
     		return false;
     	}		
 		if (!(getRecipeInput().items().findAny().isEmpty() || getRecipeInput().test(central))) return false;
-		// TODO: replace RecipeMatcher.findMatches with a manual ingredient-matching check
 		return matchesIngredients(input, getComponents());
     }
     

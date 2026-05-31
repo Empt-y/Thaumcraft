@@ -37,7 +37,6 @@ public class EntityFocusMine extends ThrowableProjectile
         friendly = false;
         counter = 40;
         effects = null;
-        // FIXME: setSize removed; dimensions set in EntityType builder
     }
     
     public EntityFocusMine(FocusPackage pack, Trajectory trajectory, boolean friendly) {
@@ -49,7 +48,6 @@ public class EntityFocusMine extends ThrowableProjectile
         this.friendly = friendly;
         setPos(trajectory.source.x, trajectory.source.y, trajectory.source.z);
         shoot(trajectory.direction.x, trajectory.direction.y, trajectory.direction.z, 0.0f, 0.0f);
-        // FIXME: setSize removed; dimensions set in EntityType builder
     }
     
     @Override

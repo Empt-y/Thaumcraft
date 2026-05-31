@@ -203,14 +203,14 @@ public class EntityUtils
                         java.util.Optional<Vec3> intercept = axisalignedbb.clip(startVec, vec3d2);
                         if (axisalignedbb.contains(startVec)) {
                             if (0.0 < d2 || d2 == 0.0) {
-                                pointedEntityRay = null; /* TODO: EntityHitResult */
+                                pointedEntityRay = new net.minecraft.world.phys.EntityHitResult(entity, startVec);
                                 d2 = 0.0;
                             }
                         }
                         else if (intercept.isPresent()) {
                             double d3 = startVec.distanceTo(intercept.get());
                             if (d3 < d2 || d2 == 0.0) {
-                                pointedEntityRay = null; /* TODO: EntityHitResult */
+                                pointedEntityRay = new net.minecraft.world.phys.EntityHitResult(entity, intercept.get());
                                 d2 = d3;
                             }
                         }

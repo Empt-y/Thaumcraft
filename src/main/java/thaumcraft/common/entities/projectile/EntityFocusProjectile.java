@@ -49,7 +49,6 @@ public class EntityFocusProjectile extends ThrowableProjectile
         firstParticle = false;
         lastRenderTick = 0.0f;
         effects = null;
-        // FIXME: setSize removed; dimensions set in EntityType builder
     }
     
     public EntityFocusProjectile(FocusPackage pack, float speed, Trajectory trajectory, int special) {
@@ -61,7 +60,6 @@ public class EntityFocusProjectile extends ThrowableProjectile
         focusPackage = pack;
         setPos(trajectory.source.x + trajectory.direction.x * pack.getCaster().getBbWidth() * 2.1, trajectory.source.y + trajectory.direction.y * pack.getCaster().getBbWidth() * 2.1, trajectory.source.z + trajectory.direction.z * pack.getCaster().getBbWidth() * 2.1);
         shoot(trajectory.direction.x, trajectory.direction.y, trajectory.direction.z, speed, 0.0f);
-        // FIXME: setSize removed; dimensions set in EntityType builder
         setSpecial(special);
     }
     

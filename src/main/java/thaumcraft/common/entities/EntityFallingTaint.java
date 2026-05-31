@@ -50,7 +50,6 @@ public class EntityFallingTaint extends Entity
         fallHurtAmount = 2.0f;
         fallTile = par8;
         noPhysics = true;
-        // FIXME: setSize removed; dimensions set in EntityType builder
         setPos(par2, par4, par6);
         setDeltaMovement(0.0, getDeltaMovement().y, getDeltaMovement().z);
         setDeltaMovement(getDeltaMovement().x, 0.0, getDeltaMovement().z);

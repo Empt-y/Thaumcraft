@@ -24,5 +24,6 @@ public class ThaumcraftClientSetup {
         event.register(TCMenuTypes.SPA.get(),                GuiSpa::new);
         event.register(TCMenuTypes.POTION_SPRAYER.get(),     GuiPotionSprayer::new);
         event.register(TCMenuTypes.FOCAL_MANIPULATOR.get(),  GuiFocalManipulator::new);
+        event.register(TCMenuTypes.FOCUS_POUCH.get(),         GuiFocusPouch::new);
     }
 }

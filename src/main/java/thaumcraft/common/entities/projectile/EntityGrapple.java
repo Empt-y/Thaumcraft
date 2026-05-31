@@ -33,7 +33,6 @@ public class EntityGrapple extends ThrowableProjectile
         count = 0;
         added = false;
         ampl = 0.0f;
-        // FIXME: setSize removed; dimensions set in EntityType builder
     }
     
     public boolean isInRangeToRenderDist(double distance) {
@@ -54,7 +53,6 @@ public class EntityGrapple extends ThrowableProjectile
         count = 0;
         added = false;
         ampl = 0.0f;
-        // FIXME: setSize removed; dimensions set in EntityType builder
         this.hand = hand;
     }
     
@@ -66,7 +64,6 @@ public class EntityGrapple extends ThrowableProjectile
         count = 0;
         added = false;
         ampl = 0.0f;
-        // FIXME: setSize removed; dimensions set in EntityType builder
     }
     
     public LivingEntity getOwner() {

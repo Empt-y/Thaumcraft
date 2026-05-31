@@ -59,7 +59,6 @@ public class EntityFocusCloud extends Entity
         effects = null;
         focusPackage = pack;
         setPos(trajectory.source.x, trajectory.source.y, trajectory.source.z);
-        // FIXME: setSize removed; dimensions set in EntityType builder
         setOwner(pack.getCaster());
         setRadius(rad);
         setDuration(dur);
@@ -98,7 +97,6 @@ public class EntityFocusCloud extends Entity
         double d0 = getX();
         double d2 = getY();
         double d3 = getZ();
-        // FIXME: setSize removed; dimensions set in EntityType builder
         setPos(d0, d2, d3);
         if (!level().isClientSide()) {
             entityData.set(EntityFocusCloud.RADIUS, radiusIn);

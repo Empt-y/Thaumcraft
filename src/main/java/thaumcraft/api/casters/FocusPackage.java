@@ -127,7 +127,7 @@ public class FocusPackage implements IFocusElement {
 		uid = nbt.contains("uid") ? net.minecraft.core.UUIDUtil.uuidFromIntArray(nbt.getIntArray("uid").orElse(new int[4])) : null;
 		index = nbt.getIntOr("index", 0);
 		int dim = nbt.getIntOr("dim", 0);
-		world = null /* TODO: DimensionManager removed */;
+		world = null; // set by initialize(caster) before use; dim hash stored but not resolved here
 		setCasterUUID(nbt.contains("casterUUID") ? net.minecraft.core.UUIDUtil.uuidFromIntArray(nbt.getIntArray("casterUUID").orElse(new int[4])) : null);
 		power = nbt.getFloatOr("power", 0.0f);
 		complexity = nbt.getIntOr("complexity", 0);
