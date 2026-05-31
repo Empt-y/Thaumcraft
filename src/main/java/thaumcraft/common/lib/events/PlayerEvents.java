@@ -366,14 +366,6 @@ public class PlayerEvents
         }
     }
     
-    // TODO: AttachCapabilitiesEvent no longer exists in NeoForge 26.1.2.
-    // Capability attachment is handled via data attachments (AttachmentType).
-    // This method is a stub until capabilities are migrated.
-    @SubscribeEvent
-    public static void attachCapabilitiesPlayer(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent event) {
-        // stub - capabilities replaced by attachments in NeoForge 26.1.2
-    }
-    
     @SubscribeEvent
     public static void playerJoin(EntityJoinLevelEvent event) {
         if (!event.getLevel().isClientSide() && event.getEntity() instanceof net.minecraft.server.level.ServerPlayer) {

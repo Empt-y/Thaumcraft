@@ -61,6 +61,9 @@ public class Thaumcraft {
             ConfigBlocks.initTileEntities();
             ConfigBlocks.initMisc();
         }
+        if (event.getRegistryKey().equals(net.minecraft.core.registries.Registries.ITEM)) {
+            ConfigItems.initItems();
+        }
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

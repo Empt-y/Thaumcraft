@@ -178,7 +178,9 @@ public class ToolEvents
     @SubscribeEvent
     public static void harvestBlockEvent(net.neoforged.neoforge.event.level.BlockDropsEvent event) {
         Level level = event.getLevel();
-        boolean isSilk = false; /* TODO: check silk touch via enchantment API */
+        net.minecraft.world.item.ItemStack tool = event.getTool();
+        boolean isSilk = !tool.isEmpty() && tool.getEnchantments().keySet().stream()
+            .anyMatch(h -> h.is(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH));
         // Vis nugget drop from ores
         if (!level.isClientSide() && !isSilk && event.getState().getBlock() != null) {
             boolean isVisOre = (event.getState().is(Blocks.DIAMOND_ORE) && level.getRandom().nextFloat() < 0.05f)
@@ -199,7 +201,7 @@ public class ToolEvents
             ItemStack heldItem = harvesterPlayer.getItemInHand(harvesterPlayer.getUsedItemHand());
             if (heldItem != null && !heldItem.isEmpty()) {
                 List<EnumInfusionEnchantment> list = EnumInfusionEnchantment.getInfusionEnchantments(heldItem);
-                boolean effectiveTool = isSilk || !heldItem.isEmpty(); /* TODO: check if tool item */
+                boolean effectiveTool = isSilk || heldItem.get(net.minecraft.core.component.DataComponents.TOOL) != null;
                 if (effectiveTool) {
                     if (list.contains(EnumInfusionEnchantment.REFINING)) {
                         int fortune = 1 + EnumInfusionEnchantment.getInfusionEnchantmentLevel(heldItem, EnumInfusionEnchantment.REFINING);
