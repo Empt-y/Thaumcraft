@@ -42,8 +42,7 @@ public class BlockArcaneEar extends BlockTCDevice implements IBlockFacing, IBloc
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(IBlockFacing.FACING, IBlockEnabled.ENABLED);
+        super.createBlockStateDefinition(builder); // super adds IBlockFacing.FACING and IBlockEnabled.ENABLED
     }
 
     public boolean isOpaqueCube(BlockState state) {

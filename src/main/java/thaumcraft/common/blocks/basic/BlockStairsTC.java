@@ -8,9 +8,17 @@ import net.minecraft.world.level.BlockGetter;
 
 public class BlockStairsTC extends net.minecraft.world.level.block.StairBlock
 {
+    private final String tcName;
+
     public BlockStairsTC(String name, BlockState modelState) {
-        super(modelState, BlockBehaviour.Properties.ofFullCopy(modelState.getBlock()));
+        super(modelState, BlockBehaviour.Properties.ofFullCopy(modelState.getBlock()).setId(
+            net.minecraft.resources.ResourceKey.create(
+                net.minecraft.core.registries.Registries.BLOCK,
+                net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name))));
+        this.tcName = name;
     }
+
+    public String getTCRegistryName() { return tcName; }
 
     public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
         return super.getFlammability(state, world, pos, face);

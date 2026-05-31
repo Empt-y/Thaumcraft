@@ -27,16 +27,25 @@ public class BlockSlabTC extends SlabBlock
     public BlockSlabTC setHardness(float h) { return this; }
     public BlockSlabTC setResistance(float r) { return this; }
 
+    private final String tcName;
+
     protected BlockSlabTC(String name, Block b, boolean wood) {
-        super(BlockBehaviour.Properties.of().sound(wood ? SoundType.WOOD : SoundType.STONE));
+        super(BlockBehaviour.Properties.of()
+                .sound(wood ? SoundType.WOOD : SoundType.STONE)
+                .setId(net.minecraft.resources.ResourceKey.create(
+                    net.minecraft.core.registries.Registries.BLOCK,
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name))));
+        this.tcName = name;
         this.wood = wood;
         this.drop = b;
     }
 
+    public String getTCRegistryName() { return tcName; }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        // VARIANT removed — SlabBlock manages state via its own TYPE property
         super.createBlockStateDefinition(builder);
-        builder.add(VARIANT);
     }
 
     @OnlyIn(Dist.CLIENT)

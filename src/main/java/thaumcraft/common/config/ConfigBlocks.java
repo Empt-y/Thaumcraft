@@ -428,7 +428,12 @@ public class ConfigBlocks
     }
 
     private static Block registerBlock(Block block) {
-        String name = (block instanceof thaumcraft.common.blocks.BlockTC tc) ? tc.getTCRegistryName() : null;
+        String name = null;
+        if (block instanceof thaumcraft.common.blocks.BlockTC tc) name = tc.getTCRegistryName();
+        if (name == null) {
+            // For non-BlockTC blocks that expose getTCRegistryName via duck-typing
+            try { name = (String) block.getClass().getMethod("getTCRegistryName").invoke(block); } catch (Exception ignored) {}
+        }
         if (name != null) return registerBlockByName(name, block);
         return block;
     }

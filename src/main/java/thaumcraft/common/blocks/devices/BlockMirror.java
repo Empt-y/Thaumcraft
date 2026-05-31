@@ -42,8 +42,7 @@ public class BlockMirror extends BlockTCDevice implements IBlockFacing
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(IBlockFacing.FACING);
+        super.createBlockStateDefinition(builder); // super adds IBlockFacing.FACING
     }
 
     public SoundType getSoundType() {

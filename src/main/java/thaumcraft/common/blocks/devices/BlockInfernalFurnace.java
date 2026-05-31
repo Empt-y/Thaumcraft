@@ -38,8 +38,7 @@ public class BlockInfernalFurnace extends BlockTCDevice implements IBlockFacingH
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
-        builder.add(IBlockFacingHorizontal.FACING);
+        super.createBlockStateDefinition(builder); // super adds IBlockFacingHorizontal.FACING
     }
 
     @Override
