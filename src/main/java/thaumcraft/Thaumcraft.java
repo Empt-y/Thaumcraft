@@ -45,6 +45,7 @@ public class Thaumcraft {
         TCBlockEntityTypes.register(modEventBus);
         EntitiesTC.register(modEventBus);
         thaumcraft.common.world.TCFeatures.register(modEventBus);
+        modEventBus.addListener(thaumcraft.common.config.TCEntityAttributes::registerAttributes);
         // Recipe serializers
         net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> recipeSerializers =
             net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.RECIPE_SERIALIZER, MODID);
