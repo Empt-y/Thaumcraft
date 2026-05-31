@@ -27,10 +27,16 @@ import thaumcraft.api.crafting.CrucibleRecipe;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.lib.utils.InventoryUtils;
 import thaumcraft.common.tiles.TileThaumcraftInventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import thaumcraft.common.container.ContainerThaumatorium;
+import thaumcraft.common.container.TCMenuTypes;
 
 
-public class TileThaumatorium extends TileThaumcraftInventory implements IAspectContainer, IEssentiaTransport
-{
+public class TileThaumatorium extends TileThaumcraftInventory implements IAspectContainer, IEssentiaTransport, MenuProvider{
     public AspectList essentia;
     public ArrayList<Integer> recipeHash;
     public ArrayList<AspectList> recipeEssentia;
@@ -46,7 +52,7 @@ public class TileThaumatorium extends TileThaumcraftInventory implements IAspect
     public ArrayList<CrucibleRecipe> recipes;
 
     public TileThaumatorium(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(1);
+        super(type, pos, state, 1);
         essentia = new AspectList();
         recipeHash = new ArrayList<Integer>();
         recipeEssentia = new ArrayList<AspectList>();
@@ -327,5 +333,15 @@ public class TileThaumatorium extends TileThaumcraftInventory implements IAspect
             return a.getResultItem().getDisplayName().getString()
                 .compareTo(b.getResultItem().getDisplayName().getString());
         }
+    }
+
+    @Override
+    public net.minecraft.network.chat.Component getDisplayName() {
+        return net.minecraft.network.chat.Component.translatable("gui.thaumatorium");
+    }
+
+    @Override
+    public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv, net.minecraft.world.entity.player.Player player) {
+        return new thaumcraft.common.container.ContainerThaumatorium(thaumcraft.common.container.TCMenuTypes.THAUMATORIUM.get(), id, inv, this);
     }
 }

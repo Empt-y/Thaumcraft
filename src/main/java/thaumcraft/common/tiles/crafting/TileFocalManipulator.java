@@ -25,10 +25,16 @@ import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.InventoryUtils;
 import thaumcraft.common.tiles.TileThaumcraftInventory;
 import thaumcraft.common.world.aura.AuraHandler;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import thaumcraft.common.container.ContainerFocalManipulator;
+import thaumcraft.common.container.TCMenuTypes;
 
 
-public class TileFocalManipulator extends TileThaumcraftInventory
-{
+public class TileFocalManipulator extends TileThaumcraftInventory implements MenuProvider{
     public float vis;
     public HashMap<Integer, FocusElementNode> data;
     public String focusName;
@@ -41,7 +47,7 @@ public class TileFocalManipulator extends TileThaumcraftInventory
     public boolean doGuiReset;
 
     public TileFocalManipulator(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(1);
+        super(type, pos, state, 1);
         vis = 0.0f;
         data = new HashMap<Integer, FocusElementNode>();
         focusName = "";
@@ -330,5 +336,15 @@ public class TileFocalManipulator extends TileThaumcraftInventory
             return true;
         }
         return super.triggerEvent(i, j);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.focalmanipulator");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new ContainerFocalManipulator(TCMenuTypes.FOCAL_MANIPULATOR.get(), id, inv, this);
     }
 }

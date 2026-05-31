@@ -13,10 +13,16 @@ import thaumcraft.common.container.InventoryArcaneWorkbench;
 import thaumcraft.common.tiles.TileThaumcraft;
 import thaumcraft.common.world.aura.AuraChunk;
 import thaumcraft.common.world.aura.AuraHandler;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import thaumcraft.common.container.ContainerArcaneWorkbench;
+import thaumcraft.common.container.TCMenuTypes;
 
 
-public class TileArcaneWorkbench extends TileThaumcraft
-{
+public class TileArcaneWorkbench extends TileThaumcraft implements MenuProvider{
     public InventoryArcaneWorkbench inventoryCraft;
     public int auraVisServer;
     public int auraVisClient;
@@ -27,10 +33,6 @@ public class TileArcaneWorkbench extends TileThaumcraft
         auraVisServer = 0;
         auraVisClient = 0;
         inventoryCraft = new InventoryArcaneWorkbench(this, new ContainerDummy());
-    }
-
-    public TileArcaneWorkbench(BlockPos pos, BlockState state) {
-        this(TYPE, pos, state);
     }
 
     @Override
@@ -96,5 +98,15 @@ public class TileArcaneWorkbench extends TileThaumcraft
                 AuraHandler.drainVis(level, worldPosition, (float)vis, false);
             }
         }
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.arcaneworkbench");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new ContainerArcaneWorkbench(TCMenuTypes.ARCANE_WORKBENCH.get(), id, inv, this);
     }
 }

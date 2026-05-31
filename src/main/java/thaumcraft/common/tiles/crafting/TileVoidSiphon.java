@@ -12,17 +12,23 @@ import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.EntityFluxRift;
 import thaumcraft.common.lib.utils.EntityUtils;
 import thaumcraft.common.tiles.TileThaumcraftInventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import thaumcraft.common.container.ContainerVoidSiphon;
+import thaumcraft.common.container.TCMenuTypes;
 
 
-public class TileVoidSiphon extends TileThaumcraftInventory
-{
+public class TileVoidSiphon extends TileThaumcraftInventory implements MenuProvider{
     private static final int[] SLOTS = new int[] { 0 };
     int counter;
     public int progress;
     public int PROGREQ = 2000;
 
     public TileVoidSiphon(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(1);
+        super(type, pos, state, 1);
         counter = 0;
         progress = 0;
     }
@@ -130,5 +136,15 @@ public class TileVoidSiphon extends TileThaumcraftInventory
             return true;
         }
         return super.triggerEvent(i, j);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.voidsiphon");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new ContainerVoidSiphon(TCMenuTypes.VOID_SIPHON.get(), id, inv, this);
     }
 }

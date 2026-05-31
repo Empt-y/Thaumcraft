@@ -1,6 +1,11 @@
 package thaumcraft.common.tiles.essentia;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -12,12 +17,14 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.items.ItemsTC;
+import thaumcraft.common.container.ContainerSmelter;
+import thaumcraft.common.container.TCMenuTypes;
 import thaumcraft.common.lib.crafting.ThaumcraftCraftingManager;
 import thaumcraft.common.tiles.TileThaumcraftInventory;
 import thaumcraft.common.tiles.devices.TileBellows;
 
 
-public class TileSmelter extends TileThaumcraftInventory
+public class TileSmelter extends TileThaumcraftInventory implements MenuProvider
 {
     private static final int[] slots_bottom = new int[] { 1 };
     private static final int[] slots_top = new int[0];
@@ -34,7 +41,7 @@ public class TileSmelter extends TileThaumcraftInventory
     int bellows;
 
     public TileSmelter(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(2);
+        super(type, pos, state, 2);
         aspects = new AspectList();
         maxVis = 256;
         smeltTime = 100;
@@ -181,5 +188,15 @@ public class TileSmelter extends TileThaumcraftInventory
     public int getBurnTimeRemainingScaled(int par1) {
         if (currentItemBurnTime == 0) currentItemBurnTime = 200;
         return furnaceBurnTime * par1 / currentItemBurnTime;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.smelter");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new ContainerSmelter(TCMenuTypes.SMELTER.get(), id, inv, this);
     }
 }

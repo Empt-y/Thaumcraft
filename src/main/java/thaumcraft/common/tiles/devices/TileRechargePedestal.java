@@ -21,7 +21,7 @@ public class TileRechargePedestal extends TileThaumcraftInventory implements IAs
     int counter;
     
     public TileRechargePedestal(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(1);
+        super(type, pos, state, 1);
         counter = 0;
         syncedSlots = new int[] { 0 };
     }

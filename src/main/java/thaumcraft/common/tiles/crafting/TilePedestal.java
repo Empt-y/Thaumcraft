@@ -17,7 +17,7 @@ import thaumcraft.common.tiles.TileThaumcraftInventory;
 public class TilePedestal extends TileThaumcraftInventory
 {
     public TilePedestal(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(1);
+        super(type, pos, state, 1);
         syncedSlots = new int[] { 0 };
     }
     

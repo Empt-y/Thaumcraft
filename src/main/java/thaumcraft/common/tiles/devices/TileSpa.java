@@ -10,16 +10,22 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import thaumcraft.common.items.consumables.ItemBathSalts;
 import thaumcraft.common.tiles.TileThaumcraftInventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import thaumcraft.common.container.ContainerSpa;
+import thaumcraft.common.container.TCMenuTypes;
 
 
-public class TileSpa extends TileThaumcraftInventory implements IFluidHandler
-{
+public class TileSpa extends TileThaumcraftInventory implements IFluidHandler, MenuProvider{
     private boolean mix;
     private int counter;
     public FluidTank tank;
 
     public TileSpa(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(1);
+        super(type, pos, state, 1);
         mix = true;
         counter = 0;
         tank = new FluidTank(5000);
@@ -96,4 +102,14 @@ public class TileSpa extends TileThaumcraftInventory implements IFluidHandler
     @Override public int fill(FluidStack resource, FluidAction action) { return tank.fill(resource, action); }
     @Override public @Nonnull FluidStack drain(FluidStack resource, FluidAction action) { return tank.drain(resource, action); }
     @Override public @Nonnull FluidStack drain(int maxDrain, FluidAction action) { return tank.drain(maxDrain, action); }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.spa");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new ContainerSpa(TCMenuTypes.SPA.get(), id, inv, this);
+    }
 }

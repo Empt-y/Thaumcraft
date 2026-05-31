@@ -14,10 +14,16 @@ import thaumcraft.common.config.ConfigAspects;
 import thaumcraft.common.container.slot.SlotPotion;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.tiles.TileThaumcraftInventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import thaumcraft.common.container.ContainerPotionSprayer;
+import thaumcraft.common.container.TCMenuTypes;
 
 
-public class TilePotionSprayer extends TileThaumcraftInventory implements IAspectContainer, IEssentiaTransport
-{
+public class TilePotionSprayer extends TileThaumcraftInventory implements IAspectContainer, IEssentiaTransport, MenuProvider{
     public AspectList recipe;
     public AspectList recipeProgress;
     public int charges;
@@ -28,7 +34,7 @@ public class TilePotionSprayer extends TileThaumcraftInventory implements IAspec
     Aspect currentSuction;
 
     public TilePotionSprayer(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(1);
+        super(type, pos, state, 1);
         recipe = new AspectList();
         recipeProgress = new AspectList();
         charges = 0;
@@ -182,4 +188,14 @@ public class TilePotionSprayer extends TileThaumcraftInventory implements IAspec
     @Override public int getMinimumSuction() { return 0; }
     @Override public AspectList getAspects() { return recipeProgress; }
     @Override public void setAspects(AspectList aspects) { recipeProgress = aspects; }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.potionsprayer");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new ContainerPotionSprayer(TCMenuTypes.POTION_SPRAYER.get(), id, inv, this);
+    }
 }

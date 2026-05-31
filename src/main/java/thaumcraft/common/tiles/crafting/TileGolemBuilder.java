@@ -39,7 +39,7 @@ public class TileGolemBuilder extends TileThaumcraftInventory implements IEssent
     ItemStack[] components;
 
     public TileGolemBuilder(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(1);
+        super(type, pos, state, 1);
         golem = -1L;
         cost = 0;
         maxCost = 0;

@@ -34,7 +34,7 @@ public class TileInfernalFurnace extends TileThaumcraftInventory
     }
     
     public TileInfernalFurnace(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(32);
+        super(type, pos, state, 32);
         facingX = -5;
         facingZ = -5;
         furnaceCookTime = 0;

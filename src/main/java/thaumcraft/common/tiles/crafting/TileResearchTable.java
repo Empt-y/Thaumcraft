@@ -32,14 +32,20 @@ import thaumcraft.api.research.theorycraft.TheorycraftManager;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.EntityUtils;
 import thaumcraft.common.tiles.TileThaumcraftInventory;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import thaumcraft.common.container.ContainerResearchTable;
+import thaumcraft.common.container.TCMenuTypes;
 
 
-public class TileResearchTable extends TileThaumcraftInventory
-{
+public class TileResearchTable extends TileThaumcraftInventory implements MenuProvider{
     public ResearchTableData data;
     
     public TileResearchTable(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState state) {
-        super(2);
+        super(type, pos, state, 2);
         data = null;
         syncedSlots = new int[] { 0, 1 };
     }
@@ -186,5 +192,15 @@ public class TileResearchTable extends TileThaumcraftInventory
             return true;
         }
         return super.triggerEvent(i, j);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.researchtable");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new ContainerResearchTable(TCMenuTypes.RESEARCH_TABLE.get(), id, inv, this);
     }
 }
