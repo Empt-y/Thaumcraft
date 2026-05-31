@@ -111,9 +111,8 @@ public class PlayerEvents
     }
     
     @SubscribeEvent
-    public static void livingTick(LivingEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player)event.getEntity();
+    public static void livingTick(net.neoforged.neoforge.event.tick.EntityTickEvent.Post event) {
+        if (event.getEntity() instanceof Player player) {
             handleMisc(player);
             handleSpeedMods(player);
             if (!player.level().isClientSide()) {

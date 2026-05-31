@@ -57,7 +57,7 @@ public class WorldEvents
     }
     
     @SubscribeEvent
-    public static void noteEvent(net.neoforged.neoforge.event.level.NoteBlockEvent event) {
+    public static void noteEvent(net.neoforged.neoforge.event.level.NoteBlockEvent.Play event) {
         if (event.getLevel().isClientSide()) {
             return;
         }

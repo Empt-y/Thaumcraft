@@ -418,20 +418,21 @@ public class ConfigBlocks
     private static Block registerBlock(Block block) {
         return registerBlock(block, new BlockItem(block, new net.minecraft.world.item.Item.Properties()));
     }
-    
+
     private static Block registerBlock(Block block, BlockItem itemBlock) {
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(block);
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(itemBlock);
+        if (block instanceof thaumcraft.common.blocks.BlockTC tc && tc.getTCRegistryName() != null) {
+            net.minecraft.resources.Identifier rl = net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", tc.getTCRegistryName());
+            net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.BLOCK, rl, block);
+            net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.ITEM, rl, itemBlock);
+        }
         return block;
     }
-    
+
     private static Block registerBlock(Block block, Class clazz) {
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(block);
         try {
-            BlockItem itemBlock = (BlockItem)clazz.getConstructors()[0].newInstance(block, new net.minecraft.world.item.Item.Properties());
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(itemBlock);
-        }
-        catch (Exception e) {
+            BlockItem itemBlock = (BlockItem) clazz.getConstructors()[0].newInstance(block, new net.minecraft.world.item.Item.Properties());
+            registerBlock(block, itemBlock);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return block;

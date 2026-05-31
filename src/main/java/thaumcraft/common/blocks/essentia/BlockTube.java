@@ -216,11 +216,7 @@ public class BlockTube extends BlockTCDevice
         return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public void onBlockHighlight(Object event) {
-        // highlight event handling stubbed out (requires modern render event migration)
-    }
+    // onBlockHighlight: removed, use RenderHighlightEvent in client event handler
 
     static {
         NORTH = BooleanProperty.create("north");

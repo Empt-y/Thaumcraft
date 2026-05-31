@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.common.config.ConfigAspects;
+import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigEntities;
 import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigRecipes;
@@ -31,12 +32,21 @@ public class Thaumcraft {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::loadComplete);
         modEventBus.addListener(PacketHandler::register);
+        modEventBus.addListener(this::registerBlocks);
 
         ThaumcraftApi.internalMethods = new InternalMethodHandler();
         PlayerKnowledge.preInit();
         PlayerWarp.preInit();
 
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
+    }
+
+    private void registerBlocks(net.neoforged.neoforge.registries.RegisterEvent event) {
+        if (event.getRegistryKey().equals(net.minecraft.core.registries.Registries.BLOCK)) {
+            ConfigBlocks.initBlocks(null);
+            ConfigBlocks.initTileEntities();
+            ConfigBlocks.initMisc();
+        }
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

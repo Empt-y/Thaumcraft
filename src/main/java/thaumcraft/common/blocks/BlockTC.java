@@ -23,18 +23,25 @@ public class BlockTC extends Block
     public BlockTC(BlockBehaviour.Properties props) {
         super(props);
     }
+    private String tcRegistryName;
+
     // Legacy shim - Material was removed in MC 1.20
     public BlockTC(Object material, String name) {
         super(BlockBehaviour.Properties.of());
+        this.tcRegistryName = name;
     }
     // Legacy shim with SoundType
     public BlockTC(Object material, String name, SoundType st) {
         super(BlockBehaviour.Properties.of().sound(st));
+        this.tcRegistryName = name;
     }
+
+    public String getTCRegistryName() { return tcRegistryName; }
+
     // Old API stubs - these were removed in MC 1.14+
     public BlockTC setUnlocalizedName(String name) { return this; }
-    public BlockTC setRegistryName(String name) { return this; }
-    public BlockTC setRegistryName(String mod, String name) { return this; }
+    public BlockTC setRegistryName(String name) { this.tcRegistryName = name; return this; }
+    public BlockTC setRegistryName(String mod, String name) { this.tcRegistryName = name; return this; }
     public BlockTC setCreativeTab(Object tab) { return this; }
     public BlockTC setResistance(float r) { return this; }
     public BlockTC setHardness(float h) { return this; }

@@ -352,8 +352,15 @@ public class ConfigItems
         }
     }
     
+    public static ItemStack getStartBook() {
+        if (startBook == null || startBook.isEmpty()) {
+            startBook = new ItemStack(Items.WRITTEN_BOOK);
+        }
+        return startBook;
+    }
+
     static {
-        ConfigItems.startBook = new ItemStack(Items.WRITTEN_BOOK);
+        ConfigItems.startBook = ItemStack.EMPTY;
         ConfigItems.TABTC = null; // FIXME: CreativeModeTab registration changed in 1.20+; use DeferredRegister
         ITEM_VARIANT_HOLDERS = new ArrayList<IThaumcraftItems>();
     }

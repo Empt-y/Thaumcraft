@@ -15,7 +15,7 @@ import thaumcraft.common.lib.network.playerdata.PacketSyncWarp;
 public class EventHandlerNetwork
 {
     @SubscribeEvent
-    public void playerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
+    public static void playerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
         Player p = event.getEntity();
         if (p instanceof ServerPlayer sp) {
             net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(sp, new PacketSyncWarp(p));

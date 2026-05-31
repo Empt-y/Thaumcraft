@@ -165,7 +165,7 @@ public class RenderEventHandler
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public static void renderOverlay(net.neoforged.neoforge.client.event.RenderGuiLayerEvent event) {
+    public static void renderOverlay(net.neoforged.neoforge.client.event.RenderGuiLayerEvent.Post event) {
         // TODO: rewrite with modern GUI layer API (getType/getResolution removed)
     }
 
@@ -177,13 +177,7 @@ public class RenderEventHandler
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public static void blockHighlight(Object event) {
-        // TODO: rewrite — DrawHighlightEvent removed in NeoForge 26.x
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public static void renderLast(net.neoforged.neoforge.client.event.RenderLevelStageEvent event) {
+    public static void renderLast(net.neoforged.neoforge.client.event.RenderLevelStageEvent.AfterLevel event) {
         if (RenderEventHandler.tagscale > 0.0f) {
             RenderEventHandler.tagscale -= 0.005f;
         }
@@ -197,7 +191,7 @@ public class RenderEventHandler
     }
 
     @SubscribeEvent
-    public static void livingTick(net.neoforged.neoforge.event.entity.living.LivingEvent event) {
+    public static void livingTick(net.neoforged.neoforge.event.tick.EntityTickEvent.Post event) {
         // TODO: rewrite — getEntityAttribute removed
     }
 

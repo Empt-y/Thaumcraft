@@ -34,7 +34,7 @@ import net.neoforged.neoforge.event.entity.EntityEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.item.ItemExpireEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -84,8 +84,8 @@ public class EntityEvents
     }
 
     @SubscribeEvent
-    public static void livingTick(LivingEvent event) {
-        LivingEntity entity = event.getEntity();
+    public static void livingTick(EntityTickEvent.Post event) {
+        if (!(event.getEntity() instanceof LivingEntity entity)) return;
         if (entity instanceof PathfinderMob mob && !!entity.isAlive()) {
             AttributeInstance champAttr = mob.getAttribute(net.minecraft.core.Holder.direct(ThaumcraftApiHelper.CHAMPION_MOD));
             if (champAttr != null) {

@@ -279,9 +279,5 @@ public class BlockRedstoneRelay extends BlockTCDevice implements IBlockFacingHor
         return isAssociated(other);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public void onBlockHighlight(Object event) {
-        // highlight event handling stubbed out (requires modern render event migration)
-    }
+    // onBlockHighlight: block highlight event removed, use RenderHighlightEvent from client event handler
 }
