@@ -45,4 +45,14 @@ public class BlockPlantVishroom extends BushBlock
             FXDispatcher.INSTANCE.drawWispyMotes(xr, yr, zr, 0.0, 0.0, 0.0, 10, 0.5f, 0.3f, 0.8f, 0.001f);
         }
     }
+
+    @Override
+    public net.minecraft.world.level.block.SoundType getSoundType(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.LevelReader world, net.minecraft.core.BlockPos pos,
+            @javax.annotation.Nullable net.minecraft.world.entity.Entity entity) {
+        net.minecraft.world.level.block.SoundType t = super.getSoundType(state, world, pos, entity);
+        return t != null ? t : net.minecraft.world.level.block.SoundType.STONE;
+    }
+
 }

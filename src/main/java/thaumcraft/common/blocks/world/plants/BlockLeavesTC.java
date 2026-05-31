@@ -72,4 +72,14 @@ public class BlockLeavesTC extends LeavesBlock
             FXDispatcher.INSTANCE.drawWispyMotes(x, y, z, 0.0, -0.02, 0.0, 8, 0.3f, 0.7f, 1.0f, 0.0f);
         }
     }
+
+    @Override
+    public net.minecraft.world.level.block.SoundType getSoundType(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.LevelReader world, net.minecraft.core.BlockPos pos,
+            @javax.annotation.Nullable net.minecraft.world.entity.Entity entity) {
+        net.minecraft.world.level.block.SoundType t = super.getSoundType(state, world, pos, entity);
+        return t != null ? t : net.minecraft.world.level.block.SoundType.STONE;
+    }
+
 }

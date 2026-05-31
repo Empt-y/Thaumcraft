@@ -80,6 +80,14 @@ public class BlockTC extends Block
     public BlockTC setHardness(float h) { return this; }
     public BlockTC setHarvestLevel(String tool, int level) { return this; }
     public BlockTC setSoundType(SoundType s) { return this; }
+
+    @Override
+    public SoundType getSoundType(net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.LevelReader world, net.minecraft.core.BlockPos pos,
+            @javax.annotation.Nullable net.minecraft.world.entity.Entity entity) {
+        SoundType t = super.getSoundType(state, world, pos, entity);
+        return t != null ? t : SoundType.STONE;
+    }
     public BlockTC setLightLevel(Object l) { return this; }
     public BlockTC setTickRandomly(boolean b) { return this; }
     public BlockTC setLightOpacity(int i) { return this; }

@@ -265,4 +265,14 @@ public class BlockTaintFibre extends Block implements ITaintBlock
         }
         return c > 0;
     }
+
+    @Override
+    public net.minecraft.world.level.block.SoundType getSoundType(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.LevelReader world, net.minecraft.core.BlockPos pos,
+            @javax.annotation.Nullable net.minecraft.world.entity.Entity entity) {
+        net.minecraft.world.level.block.SoundType t = super.getSoundType(state, world, pos, entity);
+        return t != null ? t : net.minecraft.world.level.block.SoundType.STONE;
+    }
+
 }
