@@ -87,8 +87,8 @@ public class ItemThaumonomicon extends ItemTCBase
         }
         else {
             world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundsTC.page, SoundSource.PLAYERS, 1.0f, 1.0f);
+            net.minecraft.client.Minecraft.getInstance().setScreen(new thaumcraft.client.gui.GuiResearchBrowser());
         }
-        /* TODO: port to NetworkHooks.openScreen */ 
         return InteractionResult.SUCCESS;
     }
     

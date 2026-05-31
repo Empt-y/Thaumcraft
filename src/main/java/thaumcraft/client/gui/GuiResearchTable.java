@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
@@ -48,7 +49,7 @@ public class GuiResearchTable extends AbstractContainerScreen<ContainerResearchT
     public ArrayList<ResearchTableData.CardChoice> cardChoices;
 
     public GuiResearchTable(ContainerResearchTable menu, Inventory inv, Component title) {
-        super(menu, inv, title);
+        super(menu, inv, title, 255, 255);
         txBackground = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_research_table.png");
         txBase = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_base.png");
         txPaper = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/paper.png");
@@ -89,11 +90,8 @@ public class GuiResearchTable extends AbstractContainerScreen<ContainerResearchT
 
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        // rendering stub
-    }
-
-    @Override
-    protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        // rendering stub
+        int x = (this.width - this.imageWidth) / 2;
+        int y = (this.height - this.imageHeight) / 2;
+        graphics.blit(RenderPipelines.GUI_TEXTURED, txBackground, x, y, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
 }
