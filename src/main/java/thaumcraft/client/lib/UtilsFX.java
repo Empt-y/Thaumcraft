@@ -89,8 +89,25 @@ public class UtilsFX
     }
 
     public static void drawTag(double x, double y, Aspect aspect, float amount, int bonus, double z, int blend, float alpha, boolean bw) {
-        // TODO: rewrite — renderEngine.bindTexture, mc.font, tessellator vertex builder removed
+        // 2D GUI rendering via GuiGraphicsExtractor stored in thread-local during tooltip events
+        net.minecraft.client.gui.GuiGraphicsExtractor gg = currentGuiGraphics;
+        if (gg == null || aspect == null) return;
+        int ix = (int)x, iy = (int)y;
+        net.minecraft.resources.Identifier img = aspect.getImage();
+        if (img != null) {
+            // Draw 16x16 aspect icon
+            gg.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, img, ix, iy, 0, 0, 16, 16, 16, 16);
+        }
+        if (amount > 0) {
+            // Draw the amount number in the corner
+            net.minecraft.client.gui.Font font = net.minecraft.client.Minecraft.getInstance().font;
+            String label = (amount == (int)amount) ? String.valueOf((int)amount) : String.format("%.1f", amount);
+            gg.text(font, label, ix + 16 - font.width(label), iy + 8, bw ? 0x888888 : aspect.getColor(), true);
+        }
     }
+
+    /** Set by HudHandler during tooltip rendering so drawTag can access the graphics context. */
+    public static net.minecraft.client.gui.GuiGraphicsExtractor currentGuiGraphics = null;
 
     public static void drawCustomTooltip(Screen gui, Font fr, List<String> textList, int x, int y, int subTipColor) {
         drawCustomTooltip(gui, fr, textList, x, y, subTipColor, false);

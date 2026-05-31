@@ -151,7 +151,26 @@ public class RenderEventHandler
 
     @SubscribeEvent
     public static void tooltipEvent(net.neoforged.neoforge.client.event.RenderTooltipEvent.Pre event) {
-        // TODO: rewrite with modern tooltip API (getLines/getHeight removed)
+        net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+        if (mc.player == null || !(mc.screen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen)) return;
+        if (!thaumcraft.common.lib.utils.EntityUtils.hasGoggles(mc.player)) return;
+        net.minecraft.world.item.ItemStack stack = event.getItemStack();
+        if (stack.isEmpty()) return;
+
+        // Calculate tooltip height from components
+        int tooltipH = 0;
+        for (var comp : event.getComponents()) {
+            tooltipH += comp.getHeight(mc.font);
+        }
+        if (tooltipH <= 0) tooltipH = 12;
+
+        net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?> gui =
+            (net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?>) mc.screen;
+        RenderEventHandler.hudHandler.renderAspectsInGui(
+            gui, mc.player, stack,
+            tooltipH + 4,
+            event.getX(), event.getY(),
+            event.getGraphics());
     }
 
     @SubscribeEvent

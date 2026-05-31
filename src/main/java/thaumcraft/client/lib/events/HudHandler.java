@@ -2,6 +2,7 @@ package thaumcraft.client.lib.events;
 import java.util.concurrent.LinkedBlockingQueue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import thaumcraft.client.lib.UtilsFX;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -65,8 +66,26 @@ public class HudHandler
         // TODO: rewrite with modern rendering API
     }
 
-    public void renderAspectsInGui(AbstractContainerScreen gui, Player player, ItemStack stack, int sd, int sx, int sy) {
-        // TODO: rewrite with modern rendering API
+    public void renderAspectsInGui(AbstractContainerScreen gui, Player player, ItemStack stack,
+                                    int sd, int sx, int sy,
+                                    net.minecraft.client.gui.GuiGraphicsExtractor graphics) {
+        thaumcraft.api.aspects.AspectList tags =
+            thaumcraft.common.lib.crafting.ThaumcraftCraftingManager.getObjectTags(stack);
+        if (tags == null || tags.size() == 0) return;
+        UtilsFX.currentGuiGraphics = graphics;
+        try {
+            int index = 0;
+            for (thaumcraft.api.aspects.Aspect tag : tags.getAspectsSortedByAmount()) {
+                if (tag != null) {
+                    int x = sx + index * 18;
+                    int y = sy + sd - 16;
+                    UtilsFX.drawTag(x, y, tag, (float)tags.getAmount(tag), 0, 0.0);
+                    index++;
+                }
+            }
+        } finally {
+            UtilsFX.currentGuiGraphics = null;
+        }
     }
 
     private boolean isMouseOverSlot(Slot par1Slot, int par2, int par3, int par4, int par5) {

@@ -12,6 +12,7 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.entities.EntitiesTC;
 import thaumcraft.common.lib.crafting.RecipeMagicDust;
 import thaumcraft.common.lib.crafting.RecipesRobeArmorDyes;
+import thaumcraft.common.lib.crafting.RecipesVoidRobeArmorDyes;
 import thaumcraft.common.config.ConfigAspects;
 import thaumcraft.common.config.ConfigBlocks;
 import thaumcraft.common.config.ConfigEntities;
@@ -51,6 +52,7 @@ public class Thaumcraft {
             net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.RECIPE_SERIALIZER, MODID);
         recipeSerializers.register("magic_dust", () -> RecipeMagicDust.SERIALIZER);
         recipeSerializers.register("robe_armor_dyes", () -> RecipesRobeArmorDyes.SERIALIZER);
+        recipeSerializers.register("void_robe_armor_dyes", () -> RecipesVoidRobeArmorDyes.SERIALIZER);
         recipeSerializers.register(modEventBus);
 
         ThaumcraftApi.internalMethods = new InternalMethodHandler();
