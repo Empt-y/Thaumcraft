@@ -56,13 +56,13 @@ public class BlockTaintFibre extends Block implements ITaintBlock
     private static final VoxelShape SHAPE_NORTH = Shapes.box(0.0,  0.0, 0.0, 1.0, 1.0, 0.05);
 
     public BlockTaintFibre() {
-        super(BlockBehaviour.Properties.of()
+        super(thaumcraft.common.blocks.BlockTC.autoProps(BlockBehaviour.Properties.of()
                 .strength(1.0f)
                 .randomTicks()
                 .noCollision()
                 .noOcclusion()
                 .noLootTable()
-                .replaceable());
+                .replaceable()));
         registerDefaultState(stateDefinition.any()
                 .setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false)
                 .setValue(WEST, false).setValue(UP, false).setValue(DOWN, false)

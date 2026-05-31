@@ -36,7 +36,7 @@ import thaumcraft.common.lib.utils.BlockUtils;
 import thaumcraft.common.world.aura.AuraHandler;
 
 
-public class BlockCrystal extends Block
+public class BlockCrystal extends thaumcraft.common.blocks.BlockTC
 {
     public static final IntegerProperty SIZE       = IntegerProperty.create("size", 0, 3);
     public static final IntegerProperty GENERATION = IntegerProperty.create("gen", 1, 4);
@@ -60,8 +60,8 @@ public class BlockCrystal extends Block
 
     public final Aspect aspect;
 
-    public BlockCrystal(Aspect aspect) {
-        super(BlockBehaviour.Properties.of()
+    public BlockCrystal(String name, Aspect aspect) {
+        super(propsWithId(name)
                 .strength(0.25f)
                 .sound(SoundsTC.CRYSTAL)
                 .noOcclusion()
@@ -69,6 +69,7 @@ public class BlockCrystal extends Block
                 .lightLevel(s -> 1)
                 .isRedstoneConductor((s, w, p) -> false)
                 .isViewBlocking((s, w, p) -> false));
+        this.tcRegistryName = name;
         this.aspect = aspect;
         registerDefaultState(this.stateDefinition.any()
                 .setValue(SIZE, 0)

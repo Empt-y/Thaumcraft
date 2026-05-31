@@ -31,12 +31,13 @@ public class BlockTaintFeature extends BlockTC implements ITaintBlock
     public static final EnumProperty<Direction> FACING = EnumProperty.create("facing", Direction.class);
 
     public BlockTaintFeature() {
-        super(BlockBehaviour.Properties.of()
+        super(propsWithId("taint_feature")
                 .strength(0.1f)
                 .lightLevel(s -> 10)
                 .randomTicks()
                 .noLootTable()
                 .noOcclusion());
+        this.tcRegistryName = "taint_feature";
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP));
     }
 

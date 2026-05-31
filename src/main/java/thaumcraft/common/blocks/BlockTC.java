@@ -23,20 +23,44 @@ public class BlockTC extends Block
     public BlockTC(BlockBehaviour.Properties props) {
         super(props);
     }
-    private String tcRegistryName;
+    protected String tcRegistryName;
+
+    /** Set before constructing a block in registerBlock() so subclasses that call
+     *  BlockBehaviour.Properties.of() directly can pick up the correct registry ID. */
+    public static final ThreadLocal<String> PENDING_NAME = ThreadLocal.withInitial(() -> null);
+
+    protected static BlockBehaviour.Properties propsWithId(String name) {
+        return BlockBehaviour.Properties.of().setId(
+            net.minecraft.resources.ResourceKey.create(
+                net.minecraft.core.registries.Registries.BLOCK,
+                net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name)));
+    }
+
+    /** Call from subclass constructors that build their own Properties instead of using the
+     *  legacy (material, name) shim.  Falls back to PENDING_NAME if name is not known locally. */
+    public static BlockBehaviour.Properties autoProps(BlockBehaviour.Properties base) {
+        String name = PENDING_NAME.get();
+        if (name != null) {
+            return base.setId(net.minecraft.resources.ResourceKey.create(
+                net.minecraft.core.registries.Registries.BLOCK,
+                net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name)));
+        }
+        return base;
+    }
 
     // Legacy shim - Material was removed in MC 1.20
     public BlockTC(Object material, String name) {
-        super(BlockBehaviour.Properties.of());
+        super(propsWithId(name));
         this.tcRegistryName = name;
     }
     // Legacy shim with SoundType
     public BlockTC(Object material, String name, SoundType st) {
-        super(BlockBehaviour.Properties.of().sound(st));
+        super(propsWithId(name).sound(st));
         this.tcRegistryName = name;
     }
 
     public String getTCRegistryName() { return tcRegistryName; }
+    public void setTCRegistryName(String name) { this.tcRegistryName = name; }
 
     // Old API stubs - these were removed in MC 1.14+
     public BlockTC setUnlocalizedName(String name) { return this; }

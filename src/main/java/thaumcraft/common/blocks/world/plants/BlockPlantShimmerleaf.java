@@ -16,11 +16,11 @@ import thaumcraft.client.fx.FXDispatcher;
 public class BlockPlantShimmerleaf extends BushBlock
 {
     public BlockPlantShimmerleaf() {
-        super(BlockBehaviour.Properties.of()
+        super(thaumcraft.common.blocks.BlockTC.autoProps(BlockBehaviour.Properties.of()
                 .sound(SoundType.GRASS)
                 .lightLevel(s -> 6)
                 .noCollision()
-                .instabreak());
+                .instabreak()));
     }
 
     @Override

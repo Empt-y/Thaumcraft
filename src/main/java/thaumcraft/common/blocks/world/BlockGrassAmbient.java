@@ -17,9 +17,9 @@ import thaumcraft.client.fx.FXDispatcher;
 public class BlockGrassAmbient extends GrassBlock
 {
     public BlockGrassAmbient() {
-        super(BlockBehaviour.Properties.of()
+        super(thaumcraft.common.blocks.BlockTC.autoProps(BlockBehaviour.Properties.of()
                 .strength(0.6f)
-                .sound(SoundType.GRASS));
+                .sound(SoundType.GRASS)));
     }
 
     @Override

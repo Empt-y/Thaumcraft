@@ -21,7 +21,7 @@ public class BlockTaintLog extends RotatedPillarBlock implements ITaintBlock
     }
 
     public BlockTaintLog() {
-        this(defaultProps());
+        this(thaumcraft.common.blocks.BlockTC.autoProps(defaultProps()));
     }
 
     public static BlockBehaviour.Properties defaultProps() {

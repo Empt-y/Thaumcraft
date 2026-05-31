@@ -16,11 +16,11 @@ import net.neoforged.api.distmarker.OnlyIn;
 public class BlockPlantCinderpearl extends BushBlock
 {
     public BlockPlantCinderpearl() {
-        super(BlockBehaviour.Properties.of()
+        super(thaumcraft.common.blocks.BlockTC.autoProps(BlockBehaviour.Properties.of()
                 .sound(SoundType.GRASS)
                 .lightLevel(s -> 8)
                 .noCollision()
-                .instabreak());
+                .instabreak()));
     }
 
     @Override

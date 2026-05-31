@@ -169,13 +169,13 @@ public class ConfigBlocks
         BlocksTC.oreAmber = registerBlock(new BlockOreTC("ore_amber").setHardness(1.5f));
         BlocksTC.oreCinnabar = registerBlock(new BlockOreTC("ore_cinnabar").setHardness(2.0f));
         BlocksTC.oreQuartz = registerBlock(new BlockOreTC("ore_quartz").setHardness(3.0f));
-        BlocksTC.crystalAir = registerBlock(new BlockCrystal(Aspect.AIR));
-        BlocksTC.crystalFire = registerBlock(new BlockCrystal(Aspect.FIRE));
-        BlocksTC.crystalWater = registerBlock(new BlockCrystal(Aspect.WATER));
-        BlocksTC.crystalEarth = registerBlock(new BlockCrystal(Aspect.EARTH));
-        BlocksTC.crystalOrder = registerBlock(new BlockCrystal(Aspect.ORDER));
-        BlocksTC.crystalEntropy = registerBlock(new BlockCrystal(Aspect.ENTROPY));
-        BlocksTC.crystalTaint = registerBlock(new BlockCrystal(Aspect.FLUX));
+        BlocksTC.crystalAir    = registerBlock(new BlockCrystal("crystal_aer",     Aspect.AIR));
+        BlocksTC.crystalFire   = registerBlock(new BlockCrystal("crystal_ignis",   Aspect.FIRE));
+        BlocksTC.crystalWater  = registerBlock(new BlockCrystal("crystal_aqua",    Aspect.WATER));
+        BlocksTC.crystalEarth  = registerBlock(new BlockCrystal("crystal_terra",   Aspect.EARTH));
+        BlocksTC.crystalOrder  = registerBlock(new BlockCrystal("crystal_ordo",    Aspect.ORDER));
+        BlocksTC.crystalEntropy= registerBlock(new BlockCrystal("crystal_perditio",Aspect.ENTROPY));
+        BlocksTC.crystalTaint  = registerBlock(new BlockCrystal("crystal_vitium",  Aspect.FLUX));
         ShardType.AIR.setOre(BlocksTC.crystalAir);
         ShardType.FIRE.setOre(BlocksTC.crystalFire);
         ShardType.WATER.setOre(BlocksTC.crystalWater);
@@ -215,15 +215,15 @@ public class ConfigBlocks
         // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(null /* removed *//* setRegistryName removed */));
         // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(null /* removed *//* setRegistryName removed */));
         // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(null /* removed *//* setRegistryName removed */));
-        BlocksTC.saplingGreatwood = registerBlock(new BlockSaplingTC(net.minecraft.world.level.block.grower.TreeGrower.OAK, net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(net.minecraft.world.level.block.SoundType.GRASS).randomTicks().instabreak().noCollision()));
-        BlocksTC.saplingSilverwood = registerBlock(new BlockSaplingTC(net.minecraft.world.level.block.grower.TreeGrower.OAK, net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(net.minecraft.world.level.block.SoundType.GRASS).randomTicks().instabreak().noCollision()));
-        BlocksTC.logGreatwood = registerBlock(new BlockLogsTC(BlockLogsTC.defaultProps()));
-        BlocksTC.logSilverwood = registerBlock(new BlockLogsTC(BlockLogsTC.defaultProps()));
-        BlocksTC.leafGreatwood = registerBlock(new BlockLeavesTC(0.05f, BlockLeavesTC.defaultProps().mapColor(net.minecraft.world.level.material.MapColor.PLANT)));
-        BlocksTC.leafSilverwood = registerBlock(new BlockLeavesTC(0.02f, BlockLeavesTC.defaultProps().mapColor(net.minecraft.world.level.material.MapColor.ICE)));
-        BlocksTC.shimmerleaf = registerBlock(new BlockPlantShimmerleaf());
-        BlocksTC.cinderpearl = registerBlock(new BlockPlantCinderpearl());
-        BlocksTC.vishroom = registerBlock(new BlockPlantVishroom());
+        BlocksTC.saplingGreatwood  = registerBlock("sapling_greatwood",  () -> new BlockSaplingTC(net.minecraft.world.level.block.grower.TreeGrower.OAK, thaumcraft.common.blocks.BlockTC.autoProps(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(net.minecraft.world.level.block.SoundType.GRASS).randomTicks().instabreak().noCollision())));
+        BlocksTC.saplingSilverwood = registerBlock("sapling_silverwood", () -> new BlockSaplingTC(net.minecraft.world.level.block.grower.TreeGrower.OAK, thaumcraft.common.blocks.BlockTC.autoProps(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(net.minecraft.world.level.block.SoundType.GRASS).randomTicks().instabreak().noCollision())));
+        BlocksTC.logGreatwood      = registerBlock("log_greatwood",      () -> new BlockLogsTC(thaumcraft.common.blocks.BlockTC.autoProps(BlockLogsTC.defaultProps())));
+        BlocksTC.logSilverwood     = registerBlock("log_silverwood",     () -> new BlockLogsTC(thaumcraft.common.blocks.BlockTC.autoProps(BlockLogsTC.defaultProps())));
+        BlocksTC.leafGreatwood     = registerBlock("leaves_greatwood",   () -> new BlockLeavesTC(0.05f, thaumcraft.common.blocks.BlockTC.autoProps(BlockLeavesTC.defaultProps().mapColor(net.minecraft.world.level.material.MapColor.PLANT))));
+        BlocksTC.leafSilverwood    = registerBlock("leaves_silverwood",  () -> new BlockLeavesTC(0.02f, thaumcraft.common.blocks.BlockTC.autoProps(BlockLeavesTC.defaultProps().mapColor(net.minecraft.world.level.material.MapColor.ICE))));
+        BlocksTC.shimmerleaf       = registerBlock("shimmerleaf",        BlockPlantShimmerleaf::new);
+        BlocksTC.cinderpearl       = registerBlock("cinderpearl",        BlockPlantCinderpearl::new);
+        BlocksTC.vishroom          = registerBlock("vishroom",           BlockPlantVishroom::new);
         BlocksTC.plankGreatwood = registerBlock(new BlockPlanksTC("plank_greatwood"));
         BlocksTC.plankSilverwood = registerBlock(new BlockPlanksTC("plank_silverwood"));
         BlocksTC.stairsGreatwood = registerBlock(new BlockStairsTC("stairs_greatwood", BlocksTC.plankGreatwood.defaultBlockState()));
@@ -247,14 +247,14 @@ public class ConfigBlocks
         BlocksTC.lootUrnCommon = registerBlock(new BlockLoot(null /* Material removed */, "loot_urn_common", BlockLoot.LootType.COMMON));
         BlocksTC.lootUrnUncommon = registerBlock(new BlockLoot(null /* Material removed */, "loot_urn_uncommon", BlockLoot.LootType.UNCOMMON));
         BlocksTC.lootUrnRare = registerBlock(new BlockLoot(null /* Material removed */, "loot_urn_rare", BlockLoot.LootType.RARE));
-        BlocksTC.taintFibre = registerBlock(new BlockTaintFibre());
+        BlocksTC.taintFibre = registerBlock("taint_fibre", BlockTaintFibre::new);
         BlocksTC.taintCrust = registerBlock(new BlockTaint("taint_crust"));
         BlocksTC.taintSoil = registerBlock(new BlockTaint("taint_soil"));
         BlocksTC.taintRock = registerBlock(new BlockTaint("taint_rock"));
         BlocksTC.taintGeyser = registerBlock(new BlockTaint("taint_geyser"));
         BlocksTC.taintFeature = registerBlock(new BlockTaintFeature());
-        BlocksTC.taintLog = registerBlock(new BlockTaintLog());
-        BlocksTC.grassAmbient = registerBlock(new BlockGrassAmbient());
+        BlocksTC.taintLog = registerBlock("taint_log", BlockTaintLog::new);
+        BlocksTC.grassAmbient = registerBlock("grass_ambient", BlockGrassAmbient::new);
         BlocksTC.tableWood = registerBlock(new BlockTable(null /* Material removed */, "table_wood", SoundType.WOOD).setHardness(2.0f));
         BlocksTC.tableStone = registerBlock(new BlockTable(null /* Material removed */, "table_stone", SoundType.STONE).setHardness(2.5f));
         BlocksTC.pedestalArcane = registerBlock(new BlockPedestal("pedestal_arcane"));
@@ -415,8 +415,32 @@ public class ConfigBlocks
         // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileBarrierStone.class, "thaumcraft:TileBarrierStone");
     }
     
+    /** Register a block using a factory so PENDING_NAME is set before construction. */
+    private static Block registerBlock(String name, java.util.function.Supplier<Block> factory) {
+        thaumcraft.common.blocks.BlockTC.PENDING_NAME.set(name);
+        Block block = factory.get();
+        thaumcraft.common.blocks.BlockTC.PENDING_NAME.remove();
+        // Store name on BlockTC subclasses; for non-BlockTC use name from pending
+        if (block instanceof thaumcraft.common.blocks.BlockTC tc && tc.getTCRegistryName() == null) {
+            tc.setTCRegistryName(name);
+        }
+        return registerBlockByName(name, block);
+    }
+
     private static Block registerBlock(Block block) {
-        return registerBlock(block, new BlockItem(block, new net.minecraft.world.item.Item.Properties()));
+        String name = (block instanceof thaumcraft.common.blocks.BlockTC tc) ? tc.getTCRegistryName() : null;
+        if (name != null) return registerBlockByName(name, block);
+        return block;
+    }
+
+    private static Block registerBlockByName(String name, Block block) {
+        net.minecraft.resources.Identifier rl = net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name);
+        net.minecraft.resources.ResourceKey<net.minecraft.world.item.Item> itemKey =
+            net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ITEM, rl);
+        BlockItem itemBlock = new BlockItem(block, new net.minecraft.world.item.Item.Properties().setId(itemKey));
+        net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.BLOCK, rl, block);
+        net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.ITEM, rl, itemBlock);
+        return block;
     }
 
     private static Block registerBlock(Block block, BlockItem itemBlock) {
