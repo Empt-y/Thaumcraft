@@ -38,14 +38,14 @@ public class BlockSaplingTC extends SaplingBlock
                         world.setBlock(pos.offset(i + 1, 0, j    ), world.getFluidState(pos.offset(i + 1, 0, j    )).createLegacyBlock(), 4);
                         world.setBlock(pos.offset(i, 0, j + 1), world.getFluidState(pos.offset(i,     0, j + 1)).createLegacyBlock(), 4);
                         world.setBlock(pos.offset(i + 1, 0, j + 1), world.getFluidState(pos.offset(i + 1, 0, j + 1)).createLegacyBlock(), 4);
-                        new WorldGenGreatwoodTrees(true, false).generate(world, rand, pos.offset(i, 0, j));
+                        new WorldGenGreatwoodTrees().generate(world, rand, pos.offset(i, 0, j));
                         return;
                     }
                 }
             }
         } else {
             world.setBlock(pos, world.getFluidState(pos).createLegacyBlock(), 4);
-            new WorldGenSilverwoodTrees(true, 7, 4).generate(world, rand, pos);
+            new WorldGenSilverwoodTrees().generate(world, rand, pos);
         }
     }
 

@@ -458,16 +458,28 @@ public class ConfigAspects
         ThaumcraftApi.registerComplexObjectTag(s(Blocks.TRIPWIRE), new AspectList().merge(Aspect.SENSES, 5).merge(Aspect.MECHANISM, 5).merge(Aspect.TRAP, 5));
         ThaumcraftApi.registerComplexObjectTag(s(Blocks.DAYLIGHT_DETECTOR), new AspectList().merge(Aspect.SENSES, 10).merge(Aspect.LIGHT, 10).merge(Aspect.MECHANISM, 5));
         ThaumcraftApi.registerComplexObjectTag("gear*", new AspectList().add(Aspect.MECHANISM, 5));
-        // FIXME-POTIONS: for (PotionType potiontype : PotionType.REGISTRY) {
-        // FIXME-POTIONS: ItemStack stack = PotionUtils.addPotionToItemStack(s(Items.POTION), potiontype);
-        // FIXME-POTIONS: ThaumcraftApi.registerObjectTag(stack, getPotionAspects(stack).add(Aspect.WATER, 5));
-        // FIXME-POTIONS: ItemStack stack2 = PotionUtils.addPotionToItemStack(s(Items.TIPPED_ARROW), potiontype);
-        // FIXME-POTIONS: ThaumcraftApi.registerObjectTag(stack2, getPotionAspects(stack2).add(Aspect.AVERSION, 5));
-        // FIXME-POTIONS: ItemStack stack3 = PotionUtils.addPotionToItemStack(s(Items.SPLASH_POTION), potiontype);
-        // FIXME-POTIONS: ThaumcraftApi.registerObjectTag(stack3, getPotionAspects(stack3).add(Aspect.ENERGY, 5));
-        // FIXME-POTIONS: ItemStack stack4 = PotionUtils.addPotionToItemStack(s(Items.LINGERING_POTION), potiontype);
-        // FIXME-POTIONS: ThaumcraftApi.registerObjectTag(stack4, getPotionAspects(stack4).add(Aspect.TRAP, 5));
-        // FIXME-POTIONS: }
+        for (net.minecraft.core.Holder.Reference<net.minecraft.world.item.alchemy.Potion> potionHolder :
+                net.minecraft.core.registries.BuiltInRegistries.POTION.listElements().toList()) {
+            net.minecraft.world.item.alchemy.PotionContents contents =
+                new net.minecraft.world.item.alchemy.PotionContents(
+                    java.util.Optional.of(potionHolder),
+                    java.util.Optional.empty(),
+                    java.util.List.of(),
+                    java.util.Optional.empty());
+            java.util.function.Function<net.minecraft.world.item.Item, ItemStack> mkStack = item -> {
+                ItemStack st = new ItemStack(item);
+                st.set(net.minecraft.core.component.DataComponents.POTION_CONTENTS, contents);
+                return st;
+            };
+            ThaumcraftApi.registerObjectTag(mkStack.apply(Items.POTION),
+                getPotionAspects(potionHolder).add(Aspect.WATER, 5));
+            ThaumcraftApi.registerObjectTag(mkStack.apply(Items.TIPPED_ARROW),
+                getPotionAspects(potionHolder).add(Aspect.AVERSION, 5));
+            ThaumcraftApi.registerObjectTag(mkStack.apply(Items.SPLASH_POTION),
+                getPotionAspects(potionHolder).add(Aspect.ENERGY, 5));
+            ThaumcraftApi.registerObjectTag(mkStack.apply(Items.LINGERING_POTION),
+                getPotionAspects(potionHolder).add(Aspect.TRAP, 5));
+        }
         ThaumcraftApi.registerObjectTag(s(Items.WHITE_DYE), new AspectList().add(Aspect.WATER, 2).add(Aspect.BEAST, 2));
         // FIXME: duplicate dye entry removed (old dye used meta values)
         // FIXME: duplicate dye entry removed (old dye used meta values)
@@ -582,9 +594,49 @@ public class ConfigAspects
         ThaumcraftApi.registerObjectTag(s(BlocksTC.eldritch), new AspectList().add(Aspect.VOID, 10).add(Aspect.ELDRITCH, 10).add(Aspect.BEAST, 15));
     }
     
-    public static AspectList getPotionAspects(ItemStack itemstack) {
-        // FIXME: PotionType API removed in 1.20+; return empty aspect list
-        return new AspectList().add(Aspect.MAGIC, 5).add(Aspect.ALCHEMY, 5).add(Aspect.WATER, 5);
+    public static AspectList getPotionAspects(net.minecraft.core.Holder<net.minecraft.world.item.alchemy.Potion> potionHolder) {
+        AspectList tmp = new AspectList();
+        java.util.List<net.minecraft.world.effect.MobEffectInstance> effects = potionHolder.value().getEffects();
+        if (effects.isEmpty()) return tmp.add(Aspect.WATER, 5);
+        for (net.minecraft.world.effect.MobEffectInstance effect : effects) {
+            AspectList ea = getEffectAspects(effect);
+            for (Aspect a : ea.getAspects()) tmp.add(a, ea.getAmount(a));
+            tmp.add(Aspect.ALCHEMY, 3);
+        }
+        for (Aspect a : tmp.getAspects()) tmp.remove(a, (int)(tmp.getAmount(a) * 0.66));
+        return tmp.size() == 0 ? new AspectList().add(Aspect.MAGIC, 5).add(Aspect.ALCHEMY, 5) : tmp;
+    }
+
+    private static AspectList getEffectAspects(net.minecraft.world.effect.MobEffectInstance effect) {
+        net.minecraft.world.effect.MobEffect type = effect.getEffect().value();
+        if (type == net.minecraft.world.effect.MobEffects.SPEED.value())    return new AspectList().add(Aspect.MOTION, 5);
+        if (type == net.minecraft.world.effect.MobEffects.SLOWNESS.value()) return new AspectList().add(Aspect.MOTION, 5).add(Aspect.ENTROPY, 5);
+        if (type == net.minecraft.world.effect.MobEffects.HASTE.value())         return new AspectList().add(Aspect.TOOL, 5).add(Aspect.MOTION, 5);
+        if (type == net.minecraft.world.effect.MobEffects.MINING_FATIGUE.value())      return new AspectList().add(Aspect.TOOL, 5).add(Aspect.ENTROPY, 5);
+        if (type == net.minecraft.world.effect.MobEffects.STRENGTH.value())      return new AspectList().add(Aspect.AVERSION, 5);
+        if (type == net.minecraft.world.effect.MobEffects.INSTANT_HEALTH.value())              return new AspectList().add(Aspect.LIFE, 5);
+        if (type == net.minecraft.world.effect.MobEffects.INSTANT_DAMAGE.value())              return new AspectList().add(Aspect.DEATH, 5);
+        if (type == net.minecraft.world.effect.MobEffects.JUMP_BOOST.value())              return new AspectList().add(Aspect.MOTION, 5).add(Aspect.AIR, 5);
+        if (type == net.minecraft.world.effect.MobEffects.NAUSEA.value())         return new AspectList().add(Aspect.MIND, 5).add(Aspect.ENTROPY, 5);
+        if (type == net.minecraft.world.effect.MobEffects.REGENERATION.value())      return new AspectList().add(Aspect.LIFE, 5).add(Aspect.ALCHEMY, 5);
+        if (type == net.minecraft.world.effect.MobEffects.RESISTANCE.value()) return new AspectList().add(Aspect.PROTECT, 5);
+        if (type == net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE.value())   return new AspectList().add(Aspect.FIRE, 5).add(Aspect.PROTECT, 5);
+        if (type == net.minecraft.world.effect.MobEffects.WATER_BREATHING.value())   return new AspectList().add(Aspect.WATER, 5).add(Aspect.AIR, 5);
+        if (type == net.minecraft.world.effect.MobEffects.INVISIBILITY.value())      return new AspectList().add(Aspect.DARKNESS, 5);
+        if (type == net.minecraft.world.effect.MobEffects.BLINDNESS.value())         return new AspectList().add(Aspect.SENSES, 5).add(Aspect.DARKNESS, 5);
+        if (type == net.minecraft.world.effect.MobEffects.NIGHT_VISION.value())      return new AspectList().add(Aspect.SENSES, 5).add(Aspect.LIGHT, 5);
+        if (type == net.minecraft.world.effect.MobEffects.HUNGER.value())            return new AspectList().add(Aspect.MAN, 5).add(Aspect.DESIRE, 5);
+        if (type == net.minecraft.world.effect.MobEffects.WEAKNESS.value())          return new AspectList().add(Aspect.AVERSION, 5).add(Aspect.ENTROPY, 5);
+        if (type == net.minecraft.world.effect.MobEffects.POISON.value())            return new AspectList().add(Aspect.DEATH, 5).add(Aspect.ALCHEMY, 5);
+        if (type == net.minecraft.world.effect.MobEffects.WITHER.value())            return new AspectList().add(Aspect.DEATH, 5).add(Aspect.UNDEAD, 5);
+        if (type == net.minecraft.world.effect.MobEffects.HEALTH_BOOST.value())      return new AspectList().add(Aspect.LIFE, 5).add(Aspect.PROTECT, 5);
+        if (type == net.minecraft.world.effect.MobEffects.ABSORPTION.value())        return new AspectList().add(Aspect.PROTECT, 5).add(Aspect.LIFE, 5);
+        if (type == net.minecraft.world.effect.MobEffects.SATURATION.value())        return new AspectList().add(Aspect.MAN, 5).add(Aspect.LIFE, 5);
+        if (type == net.minecraft.world.effect.MobEffects.LEVITATION.value())        return new AspectList().add(Aspect.MOTION, 5).add(Aspect.AIR, 5);
+        if (type == net.minecraft.world.effect.MobEffects.SLOW_FALLING.value())      return new AspectList().add(Aspect.MOTION, 3).add(Aspect.AIR, 5);
+        if (type == net.minecraft.world.effect.MobEffects.LUCK.value())              return new AspectList().add(Aspect.DESIRE, 5);
+        if (type == net.minecraft.world.effect.MobEffects.UNLUCK.value())            return new AspectList().add(Aspect.DESIRE, 5).add(Aspect.ENTROPY, 5);
+        return new AspectList().add(Aspect.MAGIC, 3).add(Aspect.ALCHEMY, 3);
     }
     
     static {

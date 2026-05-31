@@ -1,108 +1,122 @@
 package thaumcraft.common.lib.crafting;
+
+import com.mojang.serialization.MapCodec;
 import java.util.ArrayList;
-import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
-// import net.minecraft.world.item.crafting.RecipesArmorDyes; // removed
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-// minecraftforge.oredict import removed
 import thaumcraft.common.items.armor.ItemRobeArmor;
 
+public class RecipesRobeArmorDyes implements CraftingRecipe {
 
-public class RecipesRobeArmorDyes
-{
-    public boolean matches(CraftingContainer par1InventoryCrafting, Level par2World) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        ArrayList arraylist = new ArrayList();
-        for (int i = 0; i < par1InventoryCrafting.getContainerSize(); ++i) {
-            ItemStack itemstack2 = par1InventoryCrafting.getItem(i);
-            if (itemstack2 != null && !itemstack2.isEmpty()) {
-                if (itemstack2.getItem() instanceof Item /* ItemArmor removed */) {
-                    Item /* ItemArmor removed */ itemarmor = (Item /* ItemArmor removed */)itemstack2.getItem();
-                    if (!(itemarmor instanceof ItemRobeArmor) || !itemstack.isEmpty()) {
-                        return false;
-                    }
-                    itemstack = itemstack2;
-                }
-                else {
-                    if (!(itemstack2.getItem() instanceof net.minecraft.world.item.DyeItem)) {
-                        return false;
-                    }
-                    arraylist.add(itemstack2);
-                }
+    public static final MapCodec<RecipesRobeArmorDyes> MAP_CODEC = MapCodec.unit(new RecipesRobeArmorDyes());
+    public static final StreamCodec<RegistryFriendlyByteBuf, RecipesRobeArmorDyes> STREAM_CODEC =
+            StreamCodec.unit(new RecipesRobeArmorDyes());
+    public static final RecipeSerializer<RecipesRobeArmorDyes> SERIALIZER =
+            new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
+    @Override
+    public boolean matches(CraftingInput inv, Level level) {
+        ItemStack armor = ItemStack.EMPTY;
+        ArrayList<ItemStack> dyes = new ArrayList<>();
+        for (int i = 0; i < inv.size(); ++i) {
+            ItemStack stack = inv.getItem(i);
+            if (stack.isEmpty()) continue;
+            if (stack.getItem() instanceof ItemRobeArmor) {
+                if (!armor.isEmpty()) return false;
+                armor = stack;
+            } else if (stack.getItem() instanceof DyeItem) {
+                dyes.add(stack);
+            } else {
+                return false;
             }
         }
-        return !itemstack.isEmpty() && !arraylist.isEmpty();
+        return !armor.isEmpty() && !dyes.isEmpty();
     }
-    
-    public ItemStack getCraftingResult(CraftingContainer par1InventoryCrafting) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        int[] aint = new int[3];
-        int i = 0;
-        int j = 0;
-        Item /* ItemArmor removed */ itemarmor = null;
-        for (int k = 0; k < par1InventoryCrafting.getContainerSize(); ++k) {
-            ItemStack itemstack2 = par1InventoryCrafting.getItem(k);
-            if (itemstack2 != null && !itemstack2.isEmpty()) {
-                if (itemstack2.getItem() instanceof Item /* ItemArmor removed */) {
-                    itemarmor = (Item /* ItemArmor removed */)itemstack2.getItem();
-                    if (!(itemarmor instanceof ItemRobeArmor) || !itemstack.isEmpty()) {
-                        return ItemStack.EMPTY;
-                    }
-                    itemstack = itemstack2.copy();
-                    itemstack.setCount(1);
-                    if (((ItemRobeArmor)itemarmor).hasColor(itemstack2)) {
-                        int l = ((ItemRobeArmor)itemarmor).getColor(itemstack);
-                        float f = (l >> 16 & 0xFF) / 255.0f;
-                        float f2 = (l >> 8 & 0xFF) / 255.0f;
-                        float f3 = (l & 0xFF) / 255.0f;
-                        i += (int)(Math.max(f, Math.max(f2, f3)) * 255.0f);
-                        aint[0] += (int)(f * 255.0f);
-                        aint[1] += (int)(f2 * 255.0f);
-                        aint[2] += (int)(f3 * 255.0f);
-                        ++j;
-                    }
+
+    @Override
+    public ItemStack assemble(CraftingInput inv) {
+        ItemStack armor = ItemStack.EMPTY;
+        ItemRobeArmor robeItem = null;
+        int[] rgb = new int[3];
+        int count = 0;
+        int maxBrightness = 0;
+
+        for (int i = 0; i < inv.size(); ++i) {
+            ItemStack stack = inv.getItem(i);
+            if (stack.isEmpty()) continue;
+            if (stack.getItem() instanceof ItemRobeArmor ra) {
+                if (!armor.isEmpty()) return ItemStack.EMPTY;
+                robeItem = ra;
+                armor = stack.copy();
+                armor.setCount(1);
+                if (ra.hasColor(stack)) {
+                    int existing = ra.getColor(stack);
+                    float r = ((existing >> 16) & 0xFF) / 255.0f;
+                    float g = ((existing >> 8) & 0xFF) / 255.0f;
+                    float b = (existing & 0xFF) / 255.0f;
+                    maxBrightness += (int)(Math.max(r, Math.max(g, b)) * 255.0f);
+                    rgb[0] += (int)(r * 255.0f);
+                    rgb[1] += (int)(g * 255.0f);
+                    rgb[2] += (int)(b * 255.0f);
+                    count++;
                 }
-                else {
-                    if (!(itemstack2.getItem() instanceof net.minecraft.world.item.DyeItem dyeItem)) {
-                        return ItemStack.EMPTY;
-                    }
-                    net.minecraft.world.item.DyeColor dyeColor2 = itemstack2.get(net.minecraft.core.component.DataComponents.DYE);
-                    if (dyeColor2 == null) return ItemStack.EMPTY;
-                    int dyeRgb = dyeColor2.getFireworkColor();
-                    float[] afloat = new float[]{((dyeRgb >> 16) & 0xFF) / 255.0f, ((dyeRgb >> 8) & 0xFF) / 255.0f, (dyeRgb & 0xFF) / 255.0f};
-                    int j2 = (int)(afloat[0] * 255.0f);
-                    int k2 = (int)(afloat[1] * 255.0f);
-                    int i2 = (int)(afloat[2] * 255.0f);
-                    i += Math.max(j2, Math.max(k2, i2));
-                    int[] array = aint;
-                    int n = 0;
-                    array[n] += j2;
-                    int[] array2 = aint;
-                    int n2 = 1;
-                    array2[n2] += k2;
-                    int[] array3 = aint;
-                    int n3 = 2;
-                    array3[n3] += i2;
-                    ++j;
-                }
+            } else if (stack.getItem() instanceof DyeItem dyeItem) {
+                net.minecraft.world.item.DyeColor dyeColor = stack.get(net.minecraft.core.component.DataComponents.DYE);
+                if (dyeColor == null) continue;
+                int dyeRgb = dyeColor.getFireworkColor();
+                int r = (dyeRgb >> 16) & 0xFF;
+                int g = (dyeRgb >> 8) & 0xFF;
+                int b = dyeRgb & 0xFF;
+                maxBrightness += Math.max(r, Math.max(g, b));
+                rgb[0] += r;
+                rgb[1] += g;
+                rgb[2] += b;
+                count++;
             }
         }
-        if (itemarmor == null) {
-            return ItemStack.EMPTY;
-        }
-        int k = aint[0] / j;
-        int l2 = aint[1] / j;
-        int l = aint[2] / j;
-        float f = i / (float)j;
-        float f2 = (float)Math.max(k, Math.max(l2, l));
-        k = (int)(k * f / f2);
-        l2 = (int)(l2 * f / f2);
-        l = (int)(l * f / f2);
-        int i2 = (k << 8) + l2;
-        i2 = (i2 << 8) + l;
-        ((ItemRobeArmor)itemarmor).setColor(itemstack, i2);
-        return itemstack;
+        if (robeItem == null || count == 0) return ItemStack.EMPTY;
+        int r = rgb[0] / count;
+        int g = rgb[1] / count;
+        int b = rgb[2] / count;
+        float brightness = maxBrightness / (float)count;
+        float maxChannel = Math.max(r, Math.max(g, b));
+        r = (int)(r * brightness / maxChannel);
+        g = (int)(g * brightness / maxChannel);
+        b = (int)(b * brightness / maxChannel);
+        robeItem.setColor(armor, (r << 16) | (g << 8) | b);
+        return armor;
     }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
+    }
+
+
+
+    @Override
+    public CraftingBookCategory category() { return CraftingBookCategory.EQUIPMENT; }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() { return RecipeBookCategories.CRAFTING_EQUIPMENT; }
+
+    @Override
+    public boolean showNotification() { return false; }
+
+    @Override
+    public String group() { return ""; }
+
+    @Override
+    public RecipeSerializer<RecipesRobeArmorDyes> getSerializer() { return SERIALIZER; }
 }

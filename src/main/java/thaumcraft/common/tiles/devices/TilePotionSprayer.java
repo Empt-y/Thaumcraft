@@ -117,7 +117,13 @@ public class TilePotionSprayer extends TileThaumcraftInventory implements IAspec
         if (stack.isEmpty()) {
             recipe = new AspectList();
         } else {
-            recipe = ConfigAspects.getPotionAspects(stack);
+            net.minecraft.world.item.alchemy.PotionContents pc =
+                stack.get(net.minecraft.core.component.DataComponents.POTION_CONTENTS);
+            if (pc != null && pc.potion().isPresent()) {
+                recipe = thaumcraft.common.config.ConfigAspects.getPotionAspects(pc.potion().get());
+            } else {
+                recipe = new AspectList().add(thaumcraft.api.aspects.Aspect.WATER, 5);
+            }
             color = 3355443; // getPotionColor stubbed
         }
         charges = 0;
