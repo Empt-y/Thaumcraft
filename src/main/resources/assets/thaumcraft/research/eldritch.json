@@ -33,7 +33,7 @@
                 },
                 {
                     "text": "research.VOIDSIPHON.stage.2",  
-                    "recipes": ["thaumcraft:VoidSiphon"]
+                    "recipes": ["thaumcraft:void_siphon"]
                 }
             ]
         },
@@ -51,7 +51,7 @@
                 },
                 {
                     "text": "research.VOIDSEERPEARL.stage.2",  
-                    "recipes": ["thaumcraft:VoidseerPearl"]
+                    "recipes": ["thaumcraft:voidseer_pearl"]
                 }
             ]
         },
@@ -69,7 +69,7 @@
                 },
                 {
                     "text": "research.VOIDROBEARMOR.stage.2",  
-                    "recipes": ["thaumcraft:VoidRobeHelm","thaumcraft:VoidRobeChest","thaumcraft:VoidRobeLegs"]
+                    "recipes": ["thaumcraft:void_robe_helm","thaumcraft:void_robe_chest","thaumcraft:void_robe_legs"]
                 }
             ]
         },
@@ -87,7 +87,7 @@
                 },
                 {
                     "text": "research.PRIMALCRUSHER.stage.2",  
-                    "recipes": ["thaumcraft:PrimalCrusher"]
+                    "recipes": ["thaumcraft:primal_crusher"]
                 }
             ]
         }

@@ -27,7 +27,7 @@
                 },
                 {
                     "text": "research.JARBRAIN.stage.2",  
-                    "recipes": ["thaumcraft:JarBrain"], 
+                    "recipes": ["thaumcraft:jar_brain"], 
                     "warp": 3
                 }
             ]
@@ -82,11 +82,11 @@
                 {
                     "text": "research.MINDCLOCKWORK.stage.2",
                     "required_knowledge":["THEORY;ARTIFICE;1", "THEORY;GOLEMANCY;1"],  
-                    "recipes": ["thaumcraft:MindClockwork"]
+                    "recipes": ["thaumcraft:mind_clockwork"]
                 },
                 {
                     "text": "research.MINDCLOCKWORK.stage.3",  
-                    "recipes": ["thaumcraft:MindClockwork","thaumcraft:GolemPress"]
+                    "recipes": ["thaumcraft:mind_clockwork","thaumcraft:golem_press"]
                 }
             ]
         },
@@ -98,7 +98,7 @@
         "stages": [
                 {
                     "text": "research.CONTROLSEALS.stage.1",  
-                    "recipes": ["thaumcraft:GolemBell","thaumcraft:SealBlank"]
+                    "recipes": ["thaumcraft:golem_bell","thaumcraft:seal_blank"]
                 }
             ]
         },
@@ -143,7 +143,7 @@
                  },
                  {
                     "text": "research.MINDBIOTHAUMIC.stage.2", 
-                    "recipes":["thaumcraft:MindBiothaumic"],
+                    "recipes":["thaumcraft:mind_biothaumic"],
                     "warp": 3
                  }
             ]
@@ -155,11 +155,11 @@
         "stages": [            
                 {
                     "text": "research.SEALCOLLECT.stage.1",
-                    "recipes":["thaumcraft:SealCollect"]
+                    "recipes":["thaumcraft:seal_collect"]
                 }
             ],            
          "addenda": [{ "text": "research.SEALCOLLECT.stage.ADV",  
-                        "recipes": ["thaumcraft:SealCollectAdv"],  
+                        "recipes": ["thaumcraft:seal_collect_adv"],  
                         "required_research":["MINDBIOTHAUMIC"] }]
         },
         {
@@ -169,11 +169,11 @@
         "stages": [            
                 {
                     "text": "research.SEALSTORE.stage.1",
-                    "recipes":["thaumcraft:SealStore"]
+                    "recipes":["thaumcraft:seal_store"]
                 }
             ],            
          "addenda": [{ "text": "research.SEALSTORE.stage.ADV",  
-                        "recipes": ["thaumcraft:SealStoreAdv"],  
+                        "recipes": ["thaumcraft:seal_store_adv"],  
                         "required_research":["MINDBIOTHAUMIC"] }]
         },
         {
@@ -188,11 +188,11 @@
                 },
                 {
                     "text": "research.SEALEMPTY.stage.2", 
-                    "recipes":["thaumcraft:SealEmpty"]
+                    "recipes":["thaumcraft:seal_empty"]
                 }
             ],            
          "addenda": [{ "text": "research.SEALEMPTY.stage.ADV",  
-                        "recipes": ["thaumcraft:SealEmptyAdv"],  
+                        "recipes": ["thaumcraft:seal_empty_adv"],  
                         "required_research":["MINDBIOTHAUMIC"] }]
         },
         {
@@ -207,7 +207,7 @@
                 },
                 {
                     "text": "research.SEALPROVIDE.stage.2", 
-                    "recipes":["thaumcraft:SealProvide"]
+                    "recipes":["thaumcraft:seal_provide"]
                 }
             ]
         },
@@ -222,7 +222,7 @@
                 },
                 {
                     "text": "research.SEALSTOCK.stage.2", 
-                    "recipes":["thaumcraft:SealStock"]
+                    "recipes":["thaumcraft:seal_stock"]
                 }
             ]
         },
@@ -238,12 +238,12 @@
                 },
                 {
                     "text": "research.SEALGUARD.stage.2", 
-                    "recipes":["thaumcraft:SealGuard","thaumcraft:modaggression"],
+                    "recipes":["thaumcraft:seal_guard","thaumcraft:modaggression"],
                     "warp": 1
                 }
             ],            
          "addenda": [{ "text": "research.SEALGUARD.stage.ADV",  
-                        "recipes": ["thaumcraft:SealGuardAdv"],  
+                        "recipes": ["thaumcraft:seal_guard_adv"],  
                         "required_research":["MINDBIOTHAUMIC"] }]
         },
         {
@@ -258,7 +258,7 @@
                 },
                 {
                     "text": "research.SEALBUTCHER.stage.2", 
-                    "recipes":["thaumcraft:SealButcher"],
+                    "recipes":["thaumcraft:seal_butcher"],
                     "warp": 1
                 }
             ]
@@ -275,7 +275,7 @@
                 },
                 {
                     "text": "research.SEALUSE.stage.2", 
-                    "recipes":["thaumcraft:SealUse"]
+                    "recipes":["thaumcraft:seal_use"]
                 }
             ]
         },
@@ -291,7 +291,7 @@
                 },
                 {
                     "text": "research.SEALHARVEST.stage.2", 
-                    "recipes":["thaumcraft:SealHarvest"]
+                    "recipes":["thaumcraft:seal_harvest"]
                 }
             ]
         },
@@ -307,11 +307,11 @@
                 },
                 {
                     "text": "research.SEALBREAK.stage.2", 
-                    "recipes":["thaumcraft:SealBreak"]
+                    "recipes":["thaumcraft:seal_break"]
                 }
             ],            
              "addenda": [{ "text": "research.SEALBREAK.stage.ADV",  
-                            "recipes": ["thaumcraft:SealBreakAdv"],  
+                            "recipes": ["thaumcraft:seal_break_adv"],  
                             "required_research":["MINDBIOTHAUMIC"] }]
         },
         {
@@ -326,7 +326,7 @@
                 },
                 {
                     "text": "research.SEALLUMBER.stage.2", 
-                    "recipes":["thaumcraft:SealLumber"]
+                    "recipes":["thaumcraft:seal_lumber"]
                 }
             ]
         },

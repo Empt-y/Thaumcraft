@@ -10,7 +10,7 @@
         "stages": [
                 {
                     "text": "research.BASEINFUSION.stage.1", 
-                    "recipes":["thaumcraft:Banners","thaumcraft:baubles_stuff"]
+                    "recipes":["thaumcraft:banners","thaumcraft:baubles_stuff"]
                 }
             ]
         },
@@ -30,11 +30,11 @@
                 {
                     "text": "research.INFUSION.stage.2",
                     "required_craft":["thaumcraft:infusion_matrix"],  
-                    "recipes": ["thaumcraft:InfusionMatrix"]
+                    "recipes": ["thaumcraft:infusion_matrix"]
                 },
                 {
                     "text": "research.INFUSION.stage.3",  
-                    "recipes": ["thaumcraft:InfusionMatrix","thaumcraft:ArcanePedestal","thaumcraft:infusionaltar"]
+                    "recipes": ["thaumcraft:infusion_matrix","thaumcraft:arcane_pedestal","thaumcraft:infusionaltar"]
                 }
             ]
         },
@@ -53,7 +53,7 @@
                 },
                 {
                     "text": "research.INFUSIONSTABLE.stage.2",
-                    "recipes": ["thaumcraft:RedstoneInlay","thaumcraft:Stabilizer"]
+                    "recipes": ["thaumcraft:redstone_inlay","thaumcraft:stabilizer"]
                 }
             ]
         },
@@ -71,7 +71,7 @@
                 },
                 {
                     "text": "research.INFUSIONBOOST.stage.2",  
-                    "recipes": ["thaumcraft:MatrixMotion","thaumcraft:MatrixCost"]
+                    "recipes": ["thaumcraft:matrix_motion","thaumcraft:matrix_cost"]
                 }
             ]
         },
@@ -90,7 +90,7 @@
                 },
                 {
                     "text": "research.INFUSIONANCIENT.stage.2",  
-                    "recipes": ["thaumcraft:AncientPedestal","thaumcraft:infusionaltarancient"]
+                    "recipes": ["thaumcraft:ancient_pedestal","thaumcraft:infusionaltarancient"]
                 }
             ]
         },
@@ -109,7 +109,7 @@
                 },
                 {
                     "text": "research.INFUSIONELDRITCH.stage.2",  
-                    "recipes": ["thaumcraft:EldritchPedestal","thaumcraft:infusionaltareldritch"],
+                    "recipes": ["thaumcraft:eldritch_pedestal","thaumcraft:infusionaltareldritch"],
                     "warp": 2
                 }
             ]
@@ -129,7 +129,7 @@
                 },
                 {
                     "text": "research.PAVINGSTONES.stage.2",  
-                    "recipes": ["thaumcraft:PaveBarrier","thaumcraft:PaveTravel","thaumcraft:arcane_stone","thaumcraft:arcane_brick"]
+                    "recipes": ["thaumcraft:pave_barrier","thaumcraft:pave_travel","thaumcraft:arcane_stone","thaumcraft:arcane_brick"]
                 }
             ]
         },
@@ -147,7 +147,7 @@
                 },
                 {
                     "text": "research.BOOTSTRAVELLER.stage.2",  
-                    "recipes": ["thaumcraft:BootsTraveller"]
+                    "recipes": ["thaumcraft:boots_traveller"]
                 }
             ]
         },
@@ -165,7 +165,7 @@
                 },
                 {
                     "text": "research.ELEMENTALTOOLS.stage.2",  
-                    "recipes": ["thaumcraft:ElementalAxe","thaumcraft:ElementalSword","thaumcraft:ElementalPick","thaumcraft:ElementalShovel","thaumcraft:ElementalHoe"]
+                    "recipes": ["thaumcraft:elemental_axe","thaumcraft:elemental_sword","thaumcraft:elemental_pick","thaumcraft:elemental_shovel","thaumcraft:elemental_hoe"]
                 }
             ]
         },
@@ -183,8 +183,8 @@
                 },
                 {
                     "text": "research.INFUSIONENCHANTMENT.stage.2",  
-                    "recipes": ["thaumcraft:IEBURROWINGFAKE","thaumcraft:IECOLLECTORFAKE","thaumcraft:IEDESTRUCTIVEFAKE","thaumcraft:IEREFININGFAKE",
-                                "thaumcraft:IESOUNDINGFAKE","thaumcraft:IEARCINGFAKE","thaumcraft:IEESSENCEFAKE","thaumcraft:IELAMPLIGHTFAKE"]
+                    "recipes": ["thaumcraft:ieburrowingfake","thaumcraft:iecollectorfake","thaumcraft:iedestructivefake","thaumcraft:ierefiningfake",
+                                "thaumcraft:iesoundingfake","thaumcraft:iearcingfake","thaumcraft:ieessencefake","thaumcraft:ielamplightfake"]
                 }
             ]
         },
@@ -202,7 +202,7 @@
                 },
                 {
                     "text": "research.RUNICSHIELDING.stage.2",  
-                    "recipes": ["thaumcraft:RunicArmorFake0","thaumcraft:RunicArmorFake1","thaumcraft:RunicArmorFake2"]
+                    "recipes": ["thaumcraft:runic_armor_fake0","thaumcraft:runic_armor_fake1","thaumcraft:runic_armor_fake2"]
                 }
             ]
         },
@@ -220,7 +220,7 @@
                 },
                 {
                     "text": "research.ARMORFORTRESS.stage.2",  
-                    "recipes": ["thaumcraft:ThaumiumFortressHelm","thaumcraft:ThaumiumFortressChest","thaumcraft:ThaumiumFortressLegs"]
+                    "recipes": ["thaumcraft:thaumium_fortress_helm","thaumcraft:thaumium_fortress_chest","thaumcraft:thaumium_fortress_legs"]
                 }
             ]
         },
@@ -237,7 +237,7 @@
                 },
                 {
                     "text": "research.FORTRESSMASK.stage.2",  
-                    "recipes": ["thaumcraft:HelmGoggles","thaumcraft:MaskGrinningDevil","thaumcraft:MaskAngryGhost","thaumcraft:MaskSippingFiend"],
+                    "recipes": ["thaumcraft:helm_goggles","thaumcraft:mask_grinning_devil","thaumcraft:mask_angry_ghost","thaumcraft:mask_sipping_fiend"],
                     "warp": 2
                 }
             ]
@@ -255,7 +255,7 @@
                 },
                 {
                     "text": "research.CLOUDRING.stage.2",  
-                    "recipes": ["thaumcraft:CLOUDRING"]
+                    "recipes": ["thaumcraft:cloudring"]
                 }
             ]
         },
@@ -272,7 +272,7 @@
                 },
                 {
                     "text": "research.CURIOSITYBAND.stage.2",  
-                    "recipes": ["thaumcraft:CuriosityBand"]
+                    "recipes": ["thaumcraft:curiosity_band"]
                 }
             ]
         },
@@ -289,7 +289,7 @@
                 },
                 {
                     "text": "research.VERDANTCHARMS.stage.2",  
-                    "recipes": ["thaumcraft:VerdantHeart","thaumcraft:VerdantHeartLife","thaumcraft:VerdantHeartSustain"]
+                    "recipes": ["thaumcraft:verdant_heart","thaumcraft:verdant_heart_life","thaumcraft:verdant_heart_sustain"]
                 }
             ]
         }        ,
@@ -307,7 +307,7 @@
                 },
                 {
                     "text": "research.CHARMUNDYING.stage.1",  
-                    "recipes": ["thaumcraft:CHARMUNDYING"]
+                    "recipes": ["thaumcraft:charmundying"]
                 }
             ]
         }

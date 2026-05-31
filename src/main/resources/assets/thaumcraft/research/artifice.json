@@ -10,7 +10,7 @@
         "stages": [
                 {
                     "text": "research.BASEARTIFICE.stage.1", 
-                    "recipes":["thaumcraft:Goggles","thaumcraft:mechanism_simple","thaumcraft:mechanism_complex",
+                    "recipes":["thaumcraft:goggles","thaumcraft:mechanism_simple","thaumcraft:mechanism_complex",
                                "thaumcraft:mirrorglass","thaumcraft:ironplate"]
                 }
             ]
@@ -29,7 +29,7 @@
                 },
                 {
                     "text": "research.HUNGRYCHEST.stage.2",  
-                    "recipes": ["thaumcraft:HungryChest"]
+                    "recipes": ["thaumcraft:hungry_chest"]
                 }
             ]
         },
@@ -47,7 +47,7 @@
                 },
                 {
                     "text": "research.LEVITATOR.stage.2",  
-                    "recipes": ["thaumcraft:Levitator"]
+                    "recipes": ["thaumcraft:levitator"]
                 }
             ]
         },
@@ -87,7 +87,7 @@
                 },
                 {
                     "text": "research.BELLOWS.stage.2",  
-                    "recipes": ["thaumcraft:Bellows"]
+                    "recipes": ["thaumcraft:bellows"]
                 }
             ]
         },
@@ -106,7 +106,7 @@
                 },
                 {
                     "text": "research.REDSTONERELAY.stage.2",  
-                    "recipes": ["thaumcraft:RedstoneRelay"]
+                    "recipes": ["thaumcraft:redstone_relay"]
                 }
             ]
         },
@@ -125,7 +125,7 @@
                 },
                 {
                     "text": "research.ARCANEEAR.stage.2",  
-                    "recipes": ["thaumcraft:ArcaneEar","thaumcraft:ArcaneEarToggle"]
+                    "recipes": ["thaumcraft:arcane_ear","thaumcraft:arcane_ear_toggle"]
                 }
             ]
         },
@@ -163,7 +163,7 @@
                 },
                 {
                     "text": "research.MIRROR.stage.2",  
-                    "recipes": ["thaumcraft:Mirror"]
+                    "recipes": ["thaumcraft:mirror"]
                 }
             ]
         },
@@ -180,7 +180,7 @@
                 },
                 {
                     "text": "research.MIRRORHAND.stage.2",  
-                    "recipes": ["thaumcraft:MirrorHand"]
+                    "recipes": ["thaumcraft:mirror_hand"]
                 }
             ]
         },
@@ -197,7 +197,7 @@
                 },
                 {
                     "text": "research.MIRRORESSENTIA.stage.2",  
-                    "recipes": ["thaumcraft:MirrorEssentia"]
+                    "recipes": ["thaumcraft:mirror_essentia"]
                 }
             ]
         },
@@ -215,7 +215,7 @@
                 },
                 {
                     "text": "research.ARCANELAMP.stage.2",  
-                    "recipes": ["thaumcraft:ArcaneLamp"]
+                    "recipes": ["thaumcraft:arcane_lamp"]
                 }
             ]
         },
@@ -234,7 +234,7 @@
                 },
                 {
                     "text": "research.LAMPGROWTH.stage.2",  
-                    "recipes": ["thaumcraft:LampGrowth"]
+                    "recipes": ["thaumcraft:lamp_growth"]
                 }
             ]
         },
@@ -253,7 +253,7 @@
                 },
                 {
                     "text": "research.LAMPFERTILITY.stage.2",  
-                    "recipes": ["thaumcraft:LampFertility"]
+                    "recipes": ["thaumcraft:lamp_fertility"]
                 }
             ]
         },      
@@ -285,7 +285,7 @@
             },
             {
                 "text": "research.BASICTURRET.stage.2",  
-                "recipes": ["thaumcraft:AutomatedCrossbow","thaumcraft:activatorrail"]
+                "recipes": ["thaumcraft:automated_crossbow","thaumcraft:activatorrail"]
             }
             ]
         },
@@ -300,7 +300,7 @@
             },
             {
                 "text": "research.ADVANCEDTURRET.stage.2",  
-                "recipes": ["thaumcraft:AdvancedCrossbow"]
+                "recipes": ["thaumcraft:advanced_crossbow"]
             }
         ]
         },
@@ -315,7 +315,7 @@
             },
             {
                 "text": "research.ARCANEBORE.stage.2",  
-                "recipes": ["thaumcraft:ArcaneBore"]
+                "recipes": ["thaumcraft:arcane_bore"]
             }
         ]
         },
@@ -332,7 +332,7 @@
             },
             {
                 "text": "research.GRAPPLEGUN.stage.2",  
-                "recipes": ["thaumcraft:GrappleGunTip","thaumcraft:GrappleGunSpool","thaumcraft:GrappleGun"]
+                "recipes": ["thaumcraft:grapple_gun_tip","thaumcraft:grapple_gun_spool","thaumcraft:grapple_gun"]
             }
         ]
         },
@@ -351,7 +351,7 @@
                 },
                 {
                     "text": "research.VISGENERATOR.stage.2",  
-                    "recipes": ["thaumcraft:VisGenerator"]
+                    "recipes": ["thaumcraft:vis_generator"]
                 }
             ]
         }

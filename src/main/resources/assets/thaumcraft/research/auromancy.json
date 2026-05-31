@@ -358,7 +358,7 @@
                 },
                 {
                     "text": "research.VISAMULET.stage.2",  
-                    "recipes": ["thaumcraft:VisAmulet"]
+                    "recipes": ["thaumcraft:vis_amulet"]
                 }
             ]
         },
@@ -392,7 +392,7 @@
                 },
                 {
                     "text": "research.FOCUSPOUCH.stage.2",  
-                    "recipes": ["thaumcraft:FocusPouch"]
+                    "recipes": ["thaumcraft:focus_pouch"]
                 }
             ]
         },
@@ -409,7 +409,7 @@
                 },
                 {
                     "text": "research.VISBATTERY.stage.2",  
-                    "recipes": ["thaumcraft:VisBattery"]
+                    "recipes": ["thaumcraft:vis_battery"]
                 }
             ]
         }
