@@ -19,7 +19,7 @@ public class ItemGenericEssentiaContainer extends Item implements IEssentiaConta
 
 	public ItemGenericEssentiaContainer(int base)
     {
-        super(new Item.Properties().stacksTo(64));
+        super(thaumcraft.common.config.TCItemInit.take().stacksTo(64));
         this.base = base;
     }
 

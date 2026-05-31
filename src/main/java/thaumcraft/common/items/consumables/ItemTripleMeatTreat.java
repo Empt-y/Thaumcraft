@@ -12,7 +12,7 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemTripleMeatTreat extends Item /* ItemFood removed */ implements IThaumcraftItems
 {
     public ItemTripleMeatTreat() {
-        super(new net.minecraft.world.item.Item.Properties().food(
+        super(thaumcraft.common.config.TCItemInit.take().food(
             new net.minecraft.world.food.FoodProperties.Builder()
                 .nutrition(8)
                 .saturationModifier(0.8f)
