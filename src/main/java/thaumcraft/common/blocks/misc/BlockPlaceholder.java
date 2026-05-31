@@ -22,12 +22,14 @@ import thaumcraft.common.blocks.devices.BlockInfernalFurnace;
 
 public class BlockPlaceholder extends BlockTC
 {
-    public BlockPlaceholder() {
-        super(BlockBehaviour.Properties.of()
+    public BlockPlaceholder(String name) {
+        super(propsWithId(name)
                 .strength(2.5f)
                 .sound(SoundType.STONE)
                 .noLootTable());
+        this.tcRegistryName = name;
     }
+    public BlockPlaceholder() { this("placeholder"); }
 
     @Override
     public PushReaction getPistonPushReaction(BlockState state) {

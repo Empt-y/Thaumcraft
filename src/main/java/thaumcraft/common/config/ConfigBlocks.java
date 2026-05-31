@@ -195,26 +195,14 @@ public class ConfigBlocks
         BlocksTC.stairsArcane = registerBlock(new BlockStairsTC("stairs_arcane", BlocksTC.stoneArcane.defaultBlockState()));
         BlocksTC.stairsArcaneBrick = registerBlock(new BlockStairsTC("stairs_arcane_brick", BlocksTC.stoneArcaneBrick.defaultBlockState()));
         BlocksTC.stairsAncient = registerBlock(new BlockStairsTC("stairs_ancient", BlocksTC.stoneAncient.defaultBlockState()));
-        BlocksTC.slabArcaneStone = (SlabBlock)new BlockSlabTC.Half("slab_arcane_stone", null, false).setHardness(2.0f).setResistance(10.0f);
-        BlocksTC.doubleSlabArcaneStone = (SlabBlock)new BlockSlabTC.Double("slab_double_arcane_stone", BlocksTC.slabArcaneStone, false).setHardness(2.0f).setResistance(10.0f);
-        BlocksTC.slabArcaneBrick = (SlabBlock)new BlockSlabTC.Half("slab_arcane_brick", null, false).setHardness(2.0f).setResistance(10.0f);
-        BlocksTC.doubleSlabArcaneBrick = (SlabBlock)new BlockSlabTC.Double("slab_double_arcane_brick", BlocksTC.slabArcaneBrick, false).setHardness(2.0f).setResistance(10.0f);
-        BlocksTC.slabAncient = (SlabBlock)new BlockSlabTC.Half("slab_ancient", null, false).setHardness(2.0f).setResistance(10.0f);
-        BlocksTC.doubleSlabAncient = (SlabBlock)new BlockSlabTC.Double("slab_double_ancient", BlocksTC.slabAncient, false).setHardness(2.0f).setResistance(10.0f);
-        BlocksTC.slabEldritch = (SlabBlock)new BlockSlabTC.Half("slab_eldritch", null, false).setHardness(2.0f).setResistance(10.0f);
-        BlocksTC.doubleSlabEldritch = (SlabBlock)new BlockSlabTC.Double("slab_double_eldritch", BlocksTC.slabEldritch, false).setHardness(2.0f).setResistance(10.0f);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.slabArcaneStone);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.doubleSlabArcaneStone);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.slabArcaneBrick);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.doubleSlabArcaneBrick);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.slabAncient);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.doubleSlabAncient);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.slabEldritch);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.doubleSlabEldritch);
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(null /* removed *//* setRegistryName removed */));
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(null /* removed *//* setRegistryName removed */));
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(null /* removed *//* setRegistryName removed */));
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(null /* removed *//* setRegistryName removed */));
+        BlocksTC.slabArcaneStone      = (SlabBlock)registerBlock(new BlockSlabTC.Half("slab_arcane_stone", null, false).setHardness(2.0f).setResistance(10.0f));
+        BlocksTC.doubleSlabArcaneStone = (SlabBlock)registerBlock(new BlockSlabTC.Double("slab_double_arcane_stone", BlocksTC.slabArcaneStone, false).setHardness(2.0f).setResistance(10.0f));
+        BlocksTC.slabArcaneBrick      = (SlabBlock)registerBlock(new BlockSlabTC.Half("slab_arcane_brick", null, false).setHardness(2.0f).setResistance(10.0f));
+        BlocksTC.doubleSlabArcaneBrick = (SlabBlock)registerBlock(new BlockSlabTC.Double("slab_double_arcane_brick", BlocksTC.slabArcaneBrick, false).setHardness(2.0f).setResistance(10.0f));
+        BlocksTC.slabAncient          = (SlabBlock)registerBlock(new BlockSlabTC.Half("slab_ancient", null, false).setHardness(2.0f).setResistance(10.0f));
+        BlocksTC.doubleSlabAncient    = (SlabBlock)registerBlock(new BlockSlabTC.Double("slab_double_ancient", BlocksTC.slabAncient, false).setHardness(2.0f).setResistance(10.0f));
+        BlocksTC.slabEldritch         = (SlabBlock)registerBlock(new BlockSlabTC.Half("slab_eldritch", null, false).setHardness(2.0f).setResistance(10.0f));
+        BlocksTC.doubleSlabEldritch   = (SlabBlock)registerBlock(new BlockSlabTC.Double("slab_double_eldritch", BlocksTC.slabEldritch, false).setHardness(2.0f).setResistance(10.0f));
         BlocksTC.saplingGreatwood  = registerBlock("sapling_greatwood",  () -> new BlockSaplingTC(net.minecraft.world.level.block.grower.TreeGrower.OAK, thaumcraft.common.blocks.BlockTC.autoProps(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(net.minecraft.world.level.block.SoundType.GRASS).randomTicks().instabreak().noCollision())));
         BlocksTC.saplingSilverwood = registerBlock("sapling_silverwood", () -> new BlockSaplingTC(net.minecraft.world.level.block.grower.TreeGrower.OAK, thaumcraft.common.blocks.BlockTC.autoProps(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().sound(net.minecraft.world.level.block.SoundType.GRASS).randomTicks().instabreak().noCollision())));
         BlocksTC.logGreatwood      = registerBlock("log_greatwood",      () -> new BlockLogsTC(thaumcraft.common.blocks.BlockTC.autoProps(BlockLogsTC.defaultProps())));
@@ -228,16 +216,10 @@ public class ConfigBlocks
         BlocksTC.plankSilverwood = registerBlock(new BlockPlanksTC("plank_silverwood"));
         BlocksTC.stairsGreatwood = registerBlock(new BlockStairsTC("stairs_greatwood", BlocksTC.plankGreatwood.defaultBlockState()));
         BlocksTC.stairsSilverwood = registerBlock(new BlockStairsTC("stairs_silverwood", BlocksTC.plankSilverwood.defaultBlockState()));
-        BlocksTC.slabGreatwood = (SlabBlock)new BlockSlabTC.Half("slab_greatwood", null, true).setHardness(1.2f).setResistance(2.0f);
-        BlocksTC.doubleSlabGreatwood = (SlabBlock)new BlockSlabTC.Double("slab_double_greatwood", BlocksTC.slabGreatwood, true).setHardness(1.2f).setResistance(2.0f);
-        BlocksTC.slabSilverwood = (SlabBlock)new BlockSlabTC.Half("slab_silverwood", null, true).setHardness(1.0f).setResistance(2.0f);
-        BlocksTC.doubleSlabSilverwood = (SlabBlock)new BlockSlabTC.Double("slab_double_silverwood", BlocksTC.slabSilverwood, true).setHardness(1.0f).setResistance(2.0f);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.slabGreatwood);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.doubleSlabGreatwood);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.slabSilverwood);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.doubleSlabSilverwood);
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(null /* removed *//* setRegistryName removed */));
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(null /* removed *//* setRegistryName removed */));
+        BlocksTC.slabGreatwood        = (SlabBlock)registerBlock(new BlockSlabTC.Half("slab_greatwood", null, true).setHardness(1.2f).setResistance(2.0f));
+        BlocksTC.doubleSlabGreatwood  = (SlabBlock)registerBlock(new BlockSlabTC.Double("slab_double_greatwood", BlocksTC.slabGreatwood, true).setHardness(1.2f).setResistance(2.0f));
+        BlocksTC.slabSilverwood       = (SlabBlock)registerBlock(new BlockSlabTC.Half("slab_silverwood", null, true).setHardness(1.0f).setResistance(2.0f));
+        BlocksTC.doubleSlabSilverwood = (SlabBlock)registerBlock(new BlockSlabTC.Double("slab_double_silverwood", BlocksTC.slabSilverwood, true).setHardness(1.0f).setResistance(2.0f));
         BlocksTC.amberBlock = registerBlock(new BlockTranslucent("amber_block"));
         BlocksTC.amberBrick = registerBlock(new BlockTranslucent("amber_brick"));
         BlocksTC.fleshBlock = registerBlock(new BlockFlesh());
@@ -276,14 +258,10 @@ public class ConfigBlocks
             BlocksTC.candles.put(dye, registerBlock(new BlockCandle("candle_" + dye.getName().toLowerCase(), dye)));
         }
         for (DyeColor dye : DyeColor.values()) {
-            BlockBannerTC block = new BlockBannerTC("banner_" + dye.getName().toLowerCase(), dye);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(block);
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(new BlockBannerTCItem(block)/* setRegistryName removed */));
+            BlockBannerTC block = (BlockBannerTC)registerBlock(new BlockBannerTC("banner_" + dye.getName().toLowerCase(), dye));
             BlocksTC.banners.put(dye, block);
         }
-        BlocksTC.bannerCrimsonCult = new BlockBannerTC("banner_crimson_cult", null);
-        // FIXME-REGISTRATION: ForgeRegistries.BLOCKS.register(BlocksTC.bannerCrimsonCult);
-        // FIXME-REGISTRATION: ForgeRegistries.ITEMS.register(new BlockBannerTCItem((BlockBannerTC)BlocksTC.bannerCrimsonCult)/* setRegistryName removed */));
+        BlocksTC.bannerCrimsonCult = registerBlock(new BlockBannerTC("banner_crimson_cult", null));
         for (DyeColor dye : DyeColor.values()) {
             BlocksTC.nitor.put(dye, registerBlock(new BlockNitor("nitor_" + dye.getName().toLowerCase(), dye)));
         }
@@ -335,7 +313,7 @@ public class ConfigBlocks
         BlocksTC.redstoneRelay = registerBlock(new BlockRedstoneRelay());
         BlocksTC.patternCrafter = registerBlock(new BlockPatternCrafter());
         BlocksTC.potionSprayer = registerBlock(new BlockPotionSprayer());
-        BlocksTC.activatorRail = registerBlock(new PoweredRailBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().strength(0.7f)));
+        BlocksTC.activatorRail = registerBlock("activator_rail", () -> new PoweredRailBlock(thaumcraft.common.blocks.BlockTC.autoProps(net.minecraft.world.level.block.state.BlockBehaviour.Properties.of().strength(0.7f))));
         BlocksTC.stabilizer = registerBlock(new BlockStabilizer());
         BlocksTC.visGenerator = registerBlock(new BlockVisGenerator());
         BlocksTC.condenser = registerBlock(new BlockCondenser());
@@ -354,12 +332,12 @@ public class ConfigBlocks
         BlocksTC.effectShock = registerBlock(new BlockEffect("effect_shock"));
         BlocksTC.effectSap = registerBlock(new BlockEffect("effect_sap"));
         BlocksTC.effectGlimmer = registerBlock(new BlockEffect("effect_glimmer"));
-        BlocksTC.placeholderNetherbrick = registerBlock(new BlockPlaceholder());
-        BlocksTC.placeholderObsidian = registerBlock(new BlockPlaceholder());
-        BlocksTC.placeholderBars = registerBlock(new BlockPlaceholder());
-        BlocksTC.placeholderAnvil = registerBlock(new BlockPlaceholder());
-        BlocksTC.placeholderCauldron = registerBlock(new BlockPlaceholder());
-        BlocksTC.placeholderTable = registerBlock(new BlockPlaceholder());
+        BlocksTC.placeholderNetherbrick = registerBlock(new BlockPlaceholder("placeholder_brick"));
+        BlocksTC.placeholderObsidian    = registerBlock(new BlockPlaceholder("placeholder_obsidian"));
+        BlocksTC.placeholderBars        = registerBlock(new BlockPlaceholder("placeholder_bars"));
+        BlocksTC.placeholderAnvil       = registerBlock(new BlockPlaceholder("placeholder_anvil"));
+        BlocksTC.placeholderCauldron    = registerBlock(new BlockPlaceholder("placeholder_cauldron"));
+        BlocksTC.placeholderTable       = registerBlock(new BlockPlaceholder("placeholder_table"));
         BlocksTC.empty = registerBlock(new BlockTranslucent("empty"));
         BlocksTC.barrier = registerBlock(new BlockBarrier());
     }
@@ -459,7 +437,12 @@ public class ConfigBlocks
 
     private static Block registerBlock(Block block, Class clazz) {
         try {
-            BlockItem itemBlock = (BlockItem) clazz.getConstructors()[0].newInstance(block, new net.minecraft.world.item.Item.Properties());
+            String name = ((thaumcraft.common.blocks.BlockTC) block).getTCRegistryName();
+            net.minecraft.resources.Identifier rl = net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name);
+            net.minecraft.resources.ResourceKey<net.minecraft.world.item.Item> itemKey =
+                net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ITEM, rl);
+            net.minecraft.world.item.Item.Properties props = new net.minecraft.world.item.Item.Properties().setId(itemKey);
+            BlockItem itemBlock = (BlockItem) clazz.getConstructors()[0].newInstance(block, props);
             registerBlock(block, itemBlock);
         } catch (Exception e) {
             e.printStackTrace();

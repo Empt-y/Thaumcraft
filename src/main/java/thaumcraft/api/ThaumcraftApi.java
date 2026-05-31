@@ -78,11 +78,13 @@ public class ThaumcraftApi {
 	 * @param chance the base chance of the item being produced as a bonus. Default value is .33f
 	 */
 	public static void addSmeltingBonus(Object in, ItemStack out, float chance) {
+		if (out == null || out.isEmpty()) return;
 		if (in instanceof ItemStack || in instanceof String)
 			CommonInternals.smeltingBonus.add(new SmeltBonus(in,out,chance));
 	}
-	
+
 	public static void addSmeltingBonus(Object in, ItemStack out) {
+		if (out == null || out.isEmpty()) return;
 		if (in instanceof ItemStack || in instanceof String)
 			CommonInternals.smeltingBonus.add(new SmeltBonus(in,out,.33f));
 	}
@@ -299,6 +301,7 @@ public class ThaumcraftApi {
 	 */
 	@Deprecated
 	public static void registerObjectTag(ItemStack item, AspectList aspects) {
+		if (item == null || item.isEmpty()) return;
 		(new AspectEventProxy()).registerObjectTag(item, aspects);
 	}	
 	
@@ -334,6 +337,7 @@ public class ThaumcraftApi {
 	 */
 	@Deprecated
 	public static void registerComplexObjectTag(ItemStack item, AspectList aspects ) {
+		if (item == null || item.isEmpty()) return;
 		(new AspectEventProxy()).registerComplexObjectTag(item, aspects);
 	}
 	
@@ -398,6 +402,10 @@ public class ThaumcraftApi {
 	public static void addWarpToItem(ItemStack craftresult, int amount) {
 		CommonInternals.warpMap.put(Arrays.asList(craftresult.getItem(),craftresult.getDamageValue()),amount);
 	}
+
+	public static void addWarpToItem(net.minecraft.world.level.ItemLike item, int amount) {
+		CommonInternals.warpMap.put(Arrays.asList(item.asItem(), 0), amount);
+	}
 			
 	/**
 	 * Returns how much warp is gained from the item or research passed in
@@ -425,6 +433,7 @@ public class ThaumcraftApi {
 	 * 0 = common, 1 = uncommon, 2 = rare
 	 */
 	public static void addLootBagItem(ItemStack item, int weight, int... bagTypes) {
+		if (item == null || item.isEmpty()) return;
 		if (bagTypes==null || bagTypes.length==0)
 			WeightedRandomLoot.lootBagCommon.add(new WeightedRandomLoot(item,weight));
 		else {

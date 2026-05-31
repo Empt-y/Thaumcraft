@@ -196,17 +196,17 @@ public class ConfigResearch
         ScanningManager.addScannableThing(new ScanBlock("!PLANTCINDERPEARL", BlocksTC.cinderpearl));
         ScanningManager.addScannableThing(new ScanBlock("!PLANTSHIMMERLEAF", BlocksTC.shimmerleaf));
         ScanningManager.addScannableThing(new ScanBlock("!PLANTVISHROOM", BlocksTC.vishroom));
-        ScanningManager.addScannableThing(new ScanItem("PRIMPEARL", new ItemStack(ItemsTC.primordialPearl)));
-        ScanningManager.addScannableThing(new ScanItem("!DRAGONBREATH", new ItemStack(Items.DRAGON_BREATH)));
-        ScanningManager.addScannableThing(new ScanItem("!TOTEMUNDYING", new ItemStack(Items.TOTEM_OF_UNDYING)));
+        ScanningManager.addScannableThing(new ScanItem("PRIMPEARL", (net.minecraft.world.level.ItemLike)ItemsTC.primordialPearl));
+        ScanningManager.addScannableThing(new ScanItem("!DRAGONBREATH", (net.minecraft.world.level.ItemLike)Items.DRAGON_BREATH));
+        ScanningManager.addScannableThing(new ScanItem("!TOTEMUNDYING", (net.minecraft.world.level.ItemLike)Items.TOTEM_OF_UNDYING));
         ScanningManager.addScannableThing(new ScanBlock("f_TELEPORT", Blocks.NETHER_PORTAL, Blocks.END_PORTAL, Blocks.END_PORTAL_FRAME));
-        ScanningManager.addScannableThing(new ScanItem("f_TELEPORT", new ItemStack(Items.ENDER_PEARL)));
+        ScanningManager.addScannableThing(new ScanItem("f_TELEPORT", (net.minecraft.world.level.ItemLike)Items.ENDER_PEARL));
         ScanningManager.addScannableThing(new ScanEntity("f_TELEPORT", net.minecraft.world.entity.monster.EnderMan.class, true));
         ScanningManager.addScannableThing(new ScanEntity("f_BRAIN", EntityBrainyZombie.class, true));
-        ScanningManager.addScannableThing(new ScanItem("f_BRAIN", new ItemStack(ItemsTC.brain)));
+        ScanningManager.addScannableThing(new ScanItem("f_BRAIN", (net.minecraft.world.level.ItemLike)ItemsTC.brain));
         ScanningManager.addScannableThing(new ScanBlock("f_DISPENSER", Blocks.DISPENSER));
-        ScanningManager.addScannableThing(new ScanItem("f_DISPENSER", new ItemStack(Blocks.DISPENSER)));
-        ScanningManager.addScannableThing(new ScanItem("f_MATCLAY", new ItemStack(Items.CLAY_BALL)));
+        ScanningManager.addScannableThing(new ScanItem("f_DISPENSER", (net.minecraft.world.level.ItemLike)Blocks.DISPENSER));
+        ScanningManager.addScannableThing(new ScanItem("f_MATCLAY", (net.minecraft.world.level.ItemLike)Items.CLAY_BALL));
         ScanningManager.addScannableThing(new ScanBlock("f_MATCLAY", Blocks.TERRACOTTA, Blocks.WHITE_TERRACOTTA));
         // FIXME: Material API removed: ScanningManager.addScannableThing(new ScanMaterial("f_MATCLAY", null /* Material removed */));
         ScanningManager.addScannableThing(new ScanOreDictionary("f_MATIRON", "oreIron", "ingotIron", "blockIron", "plateIron"));
@@ -214,11 +214,11 @@ public class ConfigResearch
         ScanningManager.addScannableThing(new ScanOreDictionary("f_MATTHAUMIUM", "ingotThaumium", "blockThaumium", "plateThaumium"));
         ScanningManager.addScannableThing(new ScanOreDictionary("f_MATVOID", "ingotVoid", "blockVoid", "plateVoid"));
         ScanningManager.addScannableThing(new ScanEntity("f_arrow", AbstractArrow.class, true));
-        ScanningManager.addScannableThing(new ScanItem("f_arrow", new ItemStack(Items.ARROW)));
+        ScanningManager.addScannableThing(new ScanItem("f_arrow", (net.minecraft.world.level.ItemLike)Items.ARROW));
         ScanningManager.addScannableThing(new ScanEntity("f_fireball", net.minecraft.world.entity.projectile.hurtingprojectile.Fireball.class, true));
         ScanningManager.addScannableThing(new ScanEntity("f_spit", LlamaSpit.class, true));
-        ScanningManager.addScannableThing(new ScanItem("!Pechwand", new ItemStack(ItemsTC.pechWand)));
-        ScanningManager.addScannableThing(new ScanItem("f_VOIDSEED", new ItemStack(ItemsTC.voidSeed)));
+        ScanningManager.addScannableThing(new ScanItem("!Pechwand", (net.minecraft.world.level.ItemLike)ItemsTC.pechWand));
+        ScanningManager.addScannableThing(new ScanItem("f_VOIDSEED", (net.minecraft.world.level.ItemLike)ItemsTC.voidSeed));
         ScanningManager.addScannableThing(new ScanSky());
     }
     
@@ -273,7 +273,7 @@ public class ConfigResearch
     }
     
     private static void initWarp() {
-        ThaumcraftApi.addWarpToItem(new ItemStack(BlocksTC.jarBrain), 1);
+        ThaumcraftApi.addWarpToItem(BlocksTC.jarBrain, 1);
     }
     
     private static void initGolemancyResearch() {

@@ -20,6 +20,10 @@ public class PlayerWarp
 {
     public static void preInit() {
     }
+
+    public static IPlayerWarp createDefault() {
+        return new DefaultImpl();
+    }
     
     private static class DefaultImpl implements IPlayerWarp
     {

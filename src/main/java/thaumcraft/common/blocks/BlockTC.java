@@ -62,6 +62,14 @@ public class BlockTC extends Block
     public String getTCRegistryName() { return tcRegistryName; }
     public void setTCRegistryName(String name) { this.tcRegistryName = name; }
 
+    /** Auto-registers IBlockFacing*/
+    @Override
+    protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, net.minecraft.world.level.block.state.BlockState> builder) {
+        if (this instanceof IBlockFacingHorizontal) builder.add(IBlockFacingHorizontal.FACING);
+        else if (this instanceof IBlockFacing)      builder.add(IBlockFacing.FACING);
+        if (this instanceof IBlockEnabled)          builder.add(IBlockEnabled.ENABLED);
+    }
+
     // Old API stubs - these were removed in MC 1.14+
     public BlockTC setUnlocalizedName(String name) { return this; }
     public BlockTC setRegistryName(String name) { this.tcRegistryName = name; return this; }

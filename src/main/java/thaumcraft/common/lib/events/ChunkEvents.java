@@ -39,8 +39,8 @@ public class ChunkEvents
     public static void chunkSave(net.neoforged.neoforge.event.level.ChunkDataEvent.Save event) {
         int dim = dimHash(event.getLevel());
         ChunkPos loc = event.getChunk().getPos();
-        // attachmentData() is the CompoundTag reserved for mod persistence in SerializableChunkData
         CompoundTag attachments = event.getData().attachmentData();
+        if (attachments == null) return; // vanilla-path chunk has no attachment slot
         CompoundTag nbt = new CompoundTag();
         attachments.put("Thaumcraft", nbt);
         nbt.putBoolean(ModConfig.CONFIG_WORLD.regenKey, true);
@@ -74,6 +74,7 @@ public class ChunkEvents
         int dim = dimHash(event.getLevel());
         ChunkPos loc = event.getChunk().getPos();
         CompoundTag attachments = event.getData().attachmentData();
+        if (attachments == null) return; // vanilla-path chunk
         if (attachments.contains("Thaumcraft")) {
             CompoundTag nbt = attachments.getCompoundOrEmpty("Thaumcraft");
             if (nbt.contains("base")) {

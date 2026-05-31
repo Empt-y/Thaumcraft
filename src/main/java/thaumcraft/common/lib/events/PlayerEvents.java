@@ -389,6 +389,9 @@ public class PlayerEvents
         }
     }
     
+    // TODO: Player capability persistence (SaveToFile/LoadFromFile) — NeoForge 26.x API uses file paths,
+    // not NBT; needs AttachmentType serializer or manual file I/O. Capabilities reset on logout for now.
+
     @SubscribeEvent
     public static void cloneCapabilitiesEvent(PlayerEvent.Clone event) {
         try {

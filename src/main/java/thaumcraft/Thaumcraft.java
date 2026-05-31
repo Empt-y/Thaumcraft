@@ -33,12 +33,26 @@ public class Thaumcraft {
         modEventBus.addListener(this::loadComplete);
         modEventBus.addListener(PacketHandler::register);
         modEventBus.addListener(this::registerBlocks);
+        modEventBus.addListener(this::registerCapabilities);
 
         ThaumcraftApi.internalMethods = new InternalMethodHandler();
         PlayerKnowledge.preInit();
         PlayerWarp.preInit();
 
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
+    }
+
+    private void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
+        event.registerEntity(
+            thaumcraft.api.capabilities.ThaumcraftCapabilities.WARP,
+            net.minecraft.world.entity.EntityType.PLAYER,
+            (player, ctx) -> thaumcraft.common.lib.capabilities.PlayerWarp.createDefault()
+        );
+        event.registerEntity(
+            thaumcraft.api.capabilities.ThaumcraftCapabilities.KNOWLEDGE,
+            net.minecraft.world.entity.EntityType.PLAYER,
+            (player, ctx) -> thaumcraft.common.lib.capabilities.PlayerKnowledge.createDefault()
+        );
     }
 
     private void registerBlocks(net.neoforged.neoforge.registries.RegisterEvent event) {
@@ -53,23 +67,30 @@ public class Thaumcraft {
         event.enqueueWork(() -> {
             ConfigItems.init();
             ConfigResearch.init();
-            ConfigRecipes.initializeSmelting();
         });
     }
 
     private void loadComplete(FMLLoadCompleteEvent event) {
+        // All post-init that creates ItemStacks is deferred to onServerStarting
+        // because Holder$Reference.components is only bound after DataPackRegistries.apply()
         event.enqueueWork(() -> {
             ConfigEntities.postInitEntitySpawns();
+        });
+    }
+
+    private static boolean postInitDone = false;
+
+    private void onServerStarting(ServerStartingEvent event) {
+        ConfigRecipes.initializeSmelting();
+        if (!postInitDone) {
+            postInitDone = true;
             ConfigAspects.postInit();
             ConfigRecipes.postAspects();
             ModConfig.postInitLoot();
             ModConfig.postInitMisc();
             ConfigRecipes.compileGroups();
             ConfigResearch.postInit();
-        });
-    }
-
-    private void onServerStarting(ServerStartingEvent event) {
+        }
         // TODO: register command via Commands.register once command class is ported
     }
 }

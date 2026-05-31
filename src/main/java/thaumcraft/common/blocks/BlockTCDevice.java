@@ -17,17 +17,7 @@ public class BlockTCDevice extends BlockTCTile
         super(mat, tc, name);
     }
 
-    /** Base implementation — adds interface properties to block state.
-     *  Subclasses that override MUST call super to get facing/enabled registered,
-     *  and must NOT add the same properties again. */
-    @Override
-    protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
-        // Only add FACING/ENABLED if not already added by a subclass override
-        // Subclasses that override and call super should NOT add these themselves
-        if (this instanceof IBlockFacingHorizontal) builder.add(IBlockFacingHorizontal.FACING);
-        else if (this instanceof IBlockFacing)      builder.add(IBlockFacing.FACING);
-        if (this instanceof IBlockEnabled)          builder.add(IBlockEnabled.ENABLED);
-    }
+    // createBlockStateDefinition is handled by BlockTC base class
 
     public boolean rotateBlock(Level world, BlockPos pos, Direction axis) {
         BlockState state = world.getBlockState(pos);

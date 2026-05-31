@@ -477,51 +477,52 @@ public class ConfigRecipes
         return java.util.Arrays.stream(aitemstack).map(s -> Ingredient.of(s.getItem())).findFirst().orElse(Ingredient.of(net.minecraft.world.item.Items.AIR));
     }
     
+    private static boolean smeltingInitialized = false;
+
+    // Must be called after DataPackRegistries.apply() (i.e. ServerStartingEvent), not during mod loading.
+    // ItemStack construction requires Holder$Reference.components to be bound, which only happens at world load.
     public static void initializeSmelting() {
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.oreCinnabar, new ItemStack(ItemsTC.quicksilver), 1.0f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.oreAmber, new ItemStack(ItemsTC.amber), 1.0f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.oreQuartz, new ItemStack(Items.QUARTZ), 1.0f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.logGreatwood, new ItemStack(Items.COAL), 0.5f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.logSilverwood, new ItemStack(Items.COAL), 0.5f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(new ItemStack(ItemsTC.clusters), new ItemStack(Items.IRON_INGOT), 1.0f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(new ItemStack(ItemsTC.clusters), new ItemStack(Items.GOLD_INGOT), 1.0f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(new ItemStack(ItemsTC.clusters), new ItemStack(ItemsTC.quicksilver), 1.0f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(new ItemStack(ItemsTC.clusters), new ItemStack(Items.QUARTZ), 1.0f);
-        ThaumcraftApi.addSmeltingBonus("oreGold", new ItemStack(Items.GOLD_NUGGET));
-        ThaumcraftApi.addSmeltingBonus("oreIron", new ItemStack(Items.IRON_NUGGET));
-        ThaumcraftApi.addSmeltingBonus("oreCinnabar", new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus("oreCopper", new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus("oreTin", new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus("oreSilver", new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus("oreLead", new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus("oreQuartz", new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTC.clusters), new ItemStack(Items.IRON_NUGGET));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTC.clusters), new ItemStack(Items.GOLD_NUGGET));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTC.clusters), new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTC.clusters), new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTC.clusters), new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTC.clusters), new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTC.clusters), new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTC.clusters), new ItemStack(ItemsTC.nuggets));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(Items.BEEF), new ItemStack(ItemsTC.chunks));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(Items.CHICKEN), new ItemStack(ItemsTC.chunks));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(Items.PORKCHOP), new ItemStack(ItemsTC.chunks));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(Items.COD), new ItemStack(ItemsTC.chunks));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(Items.RABBIT), new ItemStack(ItemsTC.chunks));
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(Items.MUTTON), new ItemStack(ItemsTC.chunks));
-        ThaumcraftApi.addSmeltingBonus("oreDiamond", new ItemStack(ItemsTC.nuggets), 0.025f);
-        ThaumcraftApi.addSmeltingBonus("oreRedstone", new ItemStack(ItemsTC.nuggets), 0.01f);
-        ThaumcraftApi.addSmeltingBonus("oreLapis", new ItemStack(ItemsTC.nuggets), 0.01f);
-        ThaumcraftApi.addSmeltingBonus("oreEmerald", new ItemStack(ItemsTC.nuggets), 0.025f);
-        ThaumcraftApi.addSmeltingBonus("oreGold", new ItemStack(ItemsTC.nuggets), 0.02f);
-        ThaumcraftApi.addSmeltingBonus("oreIron", new ItemStack(ItemsTC.nuggets), 0.01f);
-        ThaumcraftApi.addSmeltingBonus("oreCinnabar", new ItemStack(ItemsTC.nuggets), 0.025f);
-        ThaumcraftApi.addSmeltingBonus("oreCopper", new ItemStack(ItemsTC.nuggets), 0.01f);
-        ThaumcraftApi.addSmeltingBonus("oreTin", new ItemStack(ItemsTC.nuggets), 0.01f);
-        ThaumcraftApi.addSmeltingBonus("oreSilver", new ItemStack(ItemsTC.nuggets), 0.02f);
-        ThaumcraftApi.addSmeltingBonus("oreLead", new ItemStack(ItemsTC.nuggets), 0.01f);
-        ThaumcraftApi.addSmeltingBonus("oreQuartz", new ItemStack(ItemsTC.nuggets), 0.01f);
-        ThaumcraftApi.addSmeltingBonus(new ItemStack(ItemsTC.clusters), new ItemStack(ItemsTC.nuggets), 0.02f);
+        if (smeltingInitialized) return;
+        smeltingInitialized = true;
+        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.oreCinnabar, s(ItemsTC.quicksilver), 1.0f);
+        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.oreAmber, s(ItemsTC.amber), 1.0f);
+        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.oreQuartz, s(Items.QUARTZ), 1.0f);
+        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.logGreatwood, s(Items.COAL), 0.5f);
+        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.logSilverwood, s(Items.COAL), 0.5f);
+        ThaumcraftApi.addSmeltingBonus("oreGold",    s(Items.GOLD_NUGGET));
+        ThaumcraftApi.addSmeltingBonus("oreIron",    s(Items.IRON_NUGGET));
+        ThaumcraftApi.addSmeltingBonus("oreCinnabar",s(ItemsTC.nuggets));
+        ThaumcraftApi.addSmeltingBonus("oreCopper",  s(ItemsTC.nuggets));
+        ThaumcraftApi.addSmeltingBonus("oreTin",     s(ItemsTC.nuggets));
+        ThaumcraftApi.addSmeltingBonus("oreSilver",  s(ItemsTC.nuggets));
+        ThaumcraftApi.addSmeltingBonus("oreLead",    s(ItemsTC.nuggets));
+        ThaumcraftApi.addSmeltingBonus("oreQuartz",  s(ItemsTC.nuggets));
+        ThaumcraftApi.addSmeltingBonus(s(ItemsTC.clusters), s(Items.IRON_NUGGET));
+        ThaumcraftApi.addSmeltingBonus(s(ItemsTC.clusters), s(Items.GOLD_NUGGET));
+        ThaumcraftApi.addSmeltingBonus(s(ItemsTC.clusters), s(ItemsTC.nuggets));
+        ThaumcraftApi.addSmeltingBonus(s(Items.BEEF),    s(ItemsTC.chunks));
+        ThaumcraftApi.addSmeltingBonus(s(Items.CHICKEN), s(ItemsTC.chunks));
+        ThaumcraftApi.addSmeltingBonus(s(Items.PORKCHOP),s(ItemsTC.chunks));
+        ThaumcraftApi.addSmeltingBonus(s(Items.COD),     s(ItemsTC.chunks));
+        ThaumcraftApi.addSmeltingBonus(s(Items.RABBIT),  s(ItemsTC.chunks));
+        ThaumcraftApi.addSmeltingBonus(s(Items.MUTTON),  s(ItemsTC.chunks));
+        ThaumcraftApi.addSmeltingBonus("oreDiamond", s(ItemsTC.nuggets), 0.025f);
+        ThaumcraftApi.addSmeltingBonus("oreRedstone",s(ItemsTC.nuggets), 0.01f);
+        ThaumcraftApi.addSmeltingBonus("oreLapis",   s(ItemsTC.nuggets), 0.01f);
+        ThaumcraftApi.addSmeltingBonus("oreEmerald", s(ItemsTC.nuggets), 0.025f);
+        ThaumcraftApi.addSmeltingBonus("oreGold",    s(ItemsTC.nuggets), 0.02f);
+        ThaumcraftApi.addSmeltingBonus("oreIron",    s(ItemsTC.nuggets), 0.01f);
+        ThaumcraftApi.addSmeltingBonus("oreCinnabar",s(ItemsTC.nuggets), 0.025f);
+        ThaumcraftApi.addSmeltingBonus("oreCopper",  s(ItemsTC.nuggets), 0.01f);
+        ThaumcraftApi.addSmeltingBonus("oreTin",     s(ItemsTC.nuggets), 0.01f);
+        ThaumcraftApi.addSmeltingBonus("oreSilver",  s(ItemsTC.nuggets), 0.02f);
+        ThaumcraftApi.addSmeltingBonus("oreLead",    s(ItemsTC.nuggets), 0.01f);
+        ThaumcraftApi.addSmeltingBonus("oreQuartz",  s(ItemsTC.nuggets), 0.01f);
+        ThaumcraftApi.addSmeltingBonus(s(ItemsTC.clusters), s(ItemsTC.nuggets), 0.02f);
+    }
+
+    private static net.minecraft.world.item.ItemStack s(net.minecraft.world.level.ItemLike item) {
+        return (item != null) ? new net.minecraft.world.item.ItemStack(item) : net.minecraft.world.item.ItemStack.EMPTY;
     }
     
     static Object shapelessOreDictRecipe(String name, Identifier optionalGroup, ItemStack res, Object[] params) {

@@ -2,7 +2,6 @@ package thaumcraft.api.research;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 
 
@@ -19,7 +18,7 @@ public class ScanBlock implements IScanThing {
 		this.research = research;
 		this.blocks = blocks;
 		for (Block block:blocks)
-			ScanningManager.addScannableThing(new ScanItem(research, new ItemStack(block)));
+			ScanningManager.addScannableThing(new ScanItem(research, block));
 	}		
 	
 	@Override

@@ -30,6 +30,10 @@ public class PlayerKnowledge
 {
     public static void preInit() {
     }
+
+    public static IPlayerKnowledge createDefault() {
+        return new DefaultImpl();
+    }
     
     private static class DefaultImpl implements IPlayerKnowledge
     {

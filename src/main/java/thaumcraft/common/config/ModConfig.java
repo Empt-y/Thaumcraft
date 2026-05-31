@@ -41,6 +41,9 @@ import thaumcraft.common.lib.utils.Utils;
 
 public class ModConfig
 {
+    private static ItemStack s(net.minecraft.world.level.ItemLike item) {
+        return (item != null) ? new ItemStack(item) : ItemStack.EMPTY;
+    }
     public static float auraSize = 4.0f;
     public static ArrayList<Aspect> aspectOrder;
     public static boolean foundCopperIngot;
@@ -58,50 +61,50 @@ public class ModConfig
         int UNCOMMON = 1;
         int RARE = 2;
         Random rand = new Random(System.currentTimeMillis());
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLD_NUGGET), 2500);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLD_NUGGET), 2250);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLD_NUGGET), 2000);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.salisMundus), 3);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.salisMundus), 6);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.salisMundus), 9);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.CHORUS_FRUIT), 5, 0, 1, 2);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.COMPASS), 5, 0, 1, 2);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.COOKIE), 5, 0, 1, 2);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.primordialPearl), 1);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.primordialPearl), 3);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.primordialPearl), 1);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.primordialPearl), 9);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.primordialPearl), 3);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.primordialPearl), 1);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.NETHER_STAR), 1);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.DIAMOND), 10);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.DIAMOND), 50, 1, 2);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.EMERALD), 15);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.EMERALD), 75, 1, 2);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLD_INGOT), 100, 0, 1, 2);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.ENDER_PEARL), 100, 0, 1, 2);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.amuletVis), 6, 1, 2);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.baubles), 10);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.baubles), 10);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.baubles), 10);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.baubles), 5);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.baubles), 5);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.baubles), 5);
-        ThaumcraftApi.addLootBagItem(new ItemStack(ItemsTC.baubles), 5);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.EXPERIENCE_BOTTLE), 5);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.EXPERIENCE_BOTTLE), 10);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.EXPERIENCE_BOTTLE), 20);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLDEN_APPLE), 1);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLDEN_APPLE), 2);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLDEN_APPLE), 3);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLDEN_APPLE), 3);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLDEN_APPLE), 6);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.GOLDEN_APPLE), 9);
-        ThaumcraftApi.addLootBagItem(new ItemStack(Items.BOOK), 10, 0, 1, 2);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLD_NUGGET), 2500);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLD_NUGGET), 2250);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLD_NUGGET), 2000);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.salisMundus), 3);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.salisMundus), 6);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.salisMundus), 9);
+        ThaumcraftApi.addLootBagItem(s(Items.CHORUS_FRUIT), 5, 0, 1, 2);
+        ThaumcraftApi.addLootBagItem(s(Items.COMPASS), 5, 0, 1, 2);
+        ThaumcraftApi.addLootBagItem(s(Items.COOKIE), 5, 0, 1, 2);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.primordialPearl), 1);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.primordialPearl), 3);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.primordialPearl), 1);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.primordialPearl), 9);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.primordialPearl), 3);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.primordialPearl), 1);
+        ThaumcraftApi.addLootBagItem(s(Items.NETHER_STAR), 1);
+        ThaumcraftApi.addLootBagItem(s(Items.DIAMOND), 10);
+        ThaumcraftApi.addLootBagItem(s(Items.DIAMOND), 50, 1, 2);
+        ThaumcraftApi.addLootBagItem(s(Items.EMERALD), 15);
+        ThaumcraftApi.addLootBagItem(s(Items.EMERALD), 75, 1, 2);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLD_INGOT), 100, 0, 1, 2);
+        ThaumcraftApi.addLootBagItem(s(Items.ENDER_PEARL), 100, 0, 1, 2);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.amuletVis), 6, 1, 2);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.baubles), 10);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.baubles), 10);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.baubles), 10);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.baubles), 5);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.baubles), 5);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.baubles), 5);
+        ThaumcraftApi.addLootBagItem(s(ItemsTC.baubles), 5);
+        ThaumcraftApi.addLootBagItem(s(Items.EXPERIENCE_BOTTLE), 5);
+        ThaumcraftApi.addLootBagItem(s(Items.EXPERIENCE_BOTTLE), 10);
+        ThaumcraftApi.addLootBagItem(s(Items.EXPERIENCE_BOTTLE), 20);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 1);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 2);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 3);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 3);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 6);
+        ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 9);
+        ThaumcraftApi.addLootBagItem(s(Items.BOOK), 10, 0, 1, 2);
         // FIXME: PotionType.REGISTRY removed; potion loot bag items need porting
-        ItemStack[] commonLoot = { new ItemStack(ItemsTC.lootBag), new ItemStack(ItemsTC.ingots), new ItemStack(ItemsTC.amber) };
-        ItemStack[] uncommonLoot = { new ItemStack(ItemsTC.lootBag), new ItemStack(ItemsTC.baubles), new ItemStack(ItemsTC.baubles), new ItemStack(ItemsTC.baubles) };
-        ItemStack[] rareLoot = { new ItemStack(ItemsTC.lootBag), new ItemStack(ItemsTC.thaumonomicon), new ItemStack(ItemsTC.thaumiumSword), new ItemStack(ItemsTC.thaumiumAxe), new ItemStack(ItemsTC.thaumiumHoe), new ItemStack(ItemsTC.thaumiumPick), new ItemStack(ItemsTC.baubles), new ItemStack(ItemsTC.baubles), new ItemStack(ItemsTC.baubles), new ItemStack(ItemsTC.baubles), new ItemStack(ItemsTC.amuletVis) };
+        ItemStack[] commonLoot = { s(ItemsTC.lootBag), s(ItemsTC.ingots), s(ItemsTC.amber) };
+        ItemStack[] uncommonLoot = { s(ItemsTC.lootBag), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.baubles) };
+        ItemStack[] rareLoot = { s(ItemsTC.lootBag), s(ItemsTC.thaumonomicon), s(ItemsTC.thaumiumSword), s(ItemsTC.thaumiumAxe), s(ItemsTC.thaumiumHoe), s(ItemsTC.thaumiumPick), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.amuletVis) };
     }
     
     public static void modCompatibility() {        // FIXME: OreDictionary API removed; use item tags instead
@@ -111,14 +114,14 @@ public class ModConfig
         // FIXME-OREDICT: if (OreDictionary.doesOreNameExist("oreIron") && OreDictionary.getOres("oreIron", false).size() > 1) {
         // FIXME-OREDICT: for (ItemStack is : OreDictionary.getOres("oreIron", false)) {
         // FIXME-OREDICT: if (is.getItem() != Item.getItemFromBlock(Blocks.IRON_ORE)) {
-        // FIXME-OREDICT: Utils.addSpecialMiningResult(is, new ItemStack(ItemsTC.clusters), 1.0f);
+        // FIXME-OREDICT: Utils.addSpecialMiningResult(is, s(ItemsTC.clusters), 1.0f);
         // FIXME-OREDICT: }
         // FIXME-OREDICT: }
         // FIXME-OREDICT: }
         // FIXME-OREDICT: if (OreDictionary.doesOreNameExist("oreGold") && OreDictionary.getOres("oreGold", false).size() > 1) {
         // FIXME-OREDICT: for (ItemStack is : OreDictionary.getOres("oreGold", false)) {
         // FIXME-OREDICT: if (is.getItem() != Item.getItemFromBlock(Blocks.GOLD_ORE)) {
-        // FIXME-OREDICT: Utils.addSpecialMiningResult(is, new ItemStack(ItemsTC.clusters), 1.0f);
+        // FIXME-OREDICT: Utils.addSpecialMiningResult(is, s(ItemsTC.clusters), 1.0f);
         // FIXME-OREDICT: }
         // FIXME-OREDICT: }
         // FIXME-OREDICT: }
@@ -144,7 +147,7 @@ public class ModConfig
         // FIXME: if (bs == null) {
         // FIXME: continue;
         // FIXME: }
-        // FIXME: ThaumcraftApi.registerSeed(bs.getBlock(), new ItemStack(item));
+        // FIXME: ThaumcraftApi.registerSeed(bs.getBlock(), s(item));
         // FIXME: }
         // FIXME: catch (Exception ex) {}
         // FIXME: }
@@ -154,11 +157,11 @@ public class ModConfig
         CropUtils.addStackedCrop(Blocks.SUGAR_CANE, 32767);
         CropUtils.addStackedCrop(Blocks.CACTUS, 32767);
         CropUtils.addStandardCrop(Blocks.NETHER_WART, 3);
-        ThaumcraftApi.registerSeed(Blocks.COCOA, new ItemStack(Items.COCOA_BEANS));
-        Utils.addSpecialMiningResult(new ItemStack(Blocks.IRON_ORE), new ItemStack(ItemsTC.clusters), 1.0f);
-        Utils.addSpecialMiningResult(new ItemStack(Blocks.GOLD_ORE), new ItemStack(ItemsTC.clusters), 1.0f);
-        Utils.addSpecialMiningResult(new ItemStack(BlocksTC.oreCinnabar), new ItemStack(ItemsTC.clusters), 1.0f);
-        Utils.addSpecialMiningResult(new ItemStack(Items.QUARTZ), new ItemStack(ItemsTC.clusters), 1.0f);
+        ThaumcraftApi.registerSeed(Blocks.COCOA, s(Items.COCOA_BEANS));
+        Utils.addSpecialMiningResult(s(Blocks.IRON_ORE), s(ItemsTC.clusters), 1.0f);
+        Utils.addSpecialMiningResult(s(Blocks.GOLD_ORE), s(ItemsTC.clusters), 1.0f);
+        Utils.addSpecialMiningResult(s(BlocksTC.oreCinnabar), s(ItemsTC.clusters), 1.0f);
+        Utils.addSpecialMiningResult(s(Items.QUARTZ), s(ItemsTC.clusters), 1.0f);
         Collection<Aspect> pa = Aspect.aspects.values();
         for (Aspect aspect : pa) {
             ModConfig.aspectOrder.add(aspect);

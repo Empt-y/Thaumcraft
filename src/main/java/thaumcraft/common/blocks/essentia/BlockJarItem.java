@@ -34,9 +34,10 @@ import thaumcraft.common.tiles.essentia.TileJarFillable;
 
 public class BlockJarItem extends BlockItem implements IEssentiaContainerItem
 {
-    public BlockJarItem(Block block) {
-        super(block, new Item.Properties());
+    public BlockJarItem(Block block, Item.Properties props) {
+        super(block, props);
     }
+    public BlockJarItem(Block block) { this(block, new Item.Properties()); }
 
     @Override
     public boolean isBarVisible(ItemStack stack) {

@@ -32,9 +32,10 @@ import thaumcraft.common.tiles.devices.TileMirrorEssentia;
 
 public class BlockMirrorItem extends BlockItem
 {
-    public BlockMirrorItem(Block par1) {
-        super(par1, new Item.Properties());
+    public BlockMirrorItem(Block par1, net.minecraft.world.item.Item.Properties props) {
+        super(par1, props);
     }
+    public BlockMirrorItem(Block par1) { this(par1, new net.minecraft.world.item.Item.Properties()); }
 
     
     public InteractionResult useOn(UseOnContext ctx) {
