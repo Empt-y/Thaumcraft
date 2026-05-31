@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/cross",
     "textures": {
-        "cross": "thaumcraft:blocks/vishroom"
+        "cross": "thaumcraft:block/vishroom"
     }
 }

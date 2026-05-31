@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "particle": "thaumcraft:block/nitor",
+    "all": "thaumcraft:block/nitor"
+  }
+}

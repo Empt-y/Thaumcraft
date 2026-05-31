@@ -1,20 +1,13 @@
 {
-    
-    "forge_marker": 1,
-    "variants": {
-        "half": { 
-            "bottom": { "model": "minecraft:half_slab" }, 
-            "top": { "model": "minecraft:upper_slab" } 
-        },
-        "variant": {
-            "default": {
-                "textures": {
-                    "particle": "thaumcraft:blocks/plank_silverwood",
-                    "bottom": "thaumcraft:blocks/plank_silverwood",
-                    "top": "thaumcraft:blocks/plank_silverwood",
-                    "side": "thaumcraft:blocks/plank_silverwood"
-                }
-            }
-        }        
-    }  
+  "variants": {
+    "type=bottom": {
+      "model": "thaumcraft:block/slab_silverwood_bottom"
+    },
+    "type=top": {
+      "model": "thaumcraft:block/slab_silverwood_top"
+    },
+    "type=double": {
+      "model": "thaumcraft:block/slab_silverwood_double"
+    }
+  }
 }

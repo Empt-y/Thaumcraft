@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/cross",
     "textures": {
-        "cross": "thaumcraft:blocks/cinderpearl"
+        "cross": "thaumcraft:block/cinderpearl"
     }
 }
