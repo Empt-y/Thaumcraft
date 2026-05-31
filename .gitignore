@@ -29,3 +29,7 @@ GUIDE CODE MOD/
 
 # Temporary fix scripts
 fix_*.py
+
+# Reference directories - not part of the mod
+SOURCE/
+NEW/
