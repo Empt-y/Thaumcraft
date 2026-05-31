@@ -75,7 +75,8 @@ public class ItemBootsTraveller extends net.minecraft.world.item.Item implements
             else if (e <= 0 && RechargeHelper.consumeCharge(itemStack, player, 1)) {
                 e = 60;
             }
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, itemStack, t -> t.putInt("energy", e));
+            final int eFinal = e;
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, itemStack, t -> t.putInt("energy", eFinal));
         }
         if (hasCharge && !player.getAbilities().flying) {
             if (player.onGround()) {

@@ -516,7 +516,7 @@ public class Utils
     }
 
     public static AABB rotateBlockAABB(AABB aabb, Direction facing) {
-        Cuboid6 c = new Cuboid6(aabb).add(new Vector3(-0.5, -0.5, -0.5)).apply(Rotation.sideRotations[facing.getIndex()]).add(new Vector3(0.5, 0.5, 0.5));
+        Cuboid6 c = new Cuboid6(aabb).add(new Vector3(-0.5, -0.5, -0.5)).apply(Rotation.sideRotations[facing.get3DDataValue()]).add(new Vector3(0.5, 0.5, 0.5));
         return c.aabb();
     }
 

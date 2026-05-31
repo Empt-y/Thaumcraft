@@ -52,7 +52,7 @@ public class ItemThaumometer extends ItemTCBase
     }
     
     public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @javax.annotation.Nullable net.minecraft.world.entity.EquipmentSlot itemSlot) {
-        boolean held = isSelected || itemSlot == null;
+        boolean held = itemSlot == null || itemSlot == net.minecraft.world.entity.EquipmentSlot.MAINHAND || itemSlot == net.minecraft.world.entity.EquipmentSlot.OFFHAND;
         if (held && !world.isClientSide() && entity.tickCount % 20 == 0 && entity instanceof net.minecraft.server.level.ServerPlayer) {
             updateAura(stack, world, (net.minecraft.server.level.ServerPlayer)entity);
         }

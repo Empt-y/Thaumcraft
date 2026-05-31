@@ -83,7 +83,7 @@ public class CardSynthesis extends TheorycraftCard
             data.addInspiration(1);
         }
         if (!player.getInventory().add(res)) {
-            player.dropItem(res, true);
+            player.drop(res, true);
         }
         return true;
     }

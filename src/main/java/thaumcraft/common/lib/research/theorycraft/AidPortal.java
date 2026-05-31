@@ -33,7 +33,7 @@ public class AidPortal implements ITheorycraftAid
     public static class AidPortalNether extends AidPortal
     {
         public AidPortalNether() {
-            super(Blocks.PORTAL);
+            super(Blocks.NETHER_PORTAL);
         }
     }
     

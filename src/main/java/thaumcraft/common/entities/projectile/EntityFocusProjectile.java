@@ -179,8 +179,8 @@ public class EntityFocusProjectile extends ThrowableProjectile
         if (target == null && tickCount % 5 == 0 && getSpecial() > 1) {
             List<LivingEntity> list = EntityUtils.getEntitiesInRangeSorted(level(), this, LivingEntity.class, 16.0);
             for (LivingEntity pt : list) {
-                if (!!pt.isAlive() && EntityUtils.isVisibleTo(1.75f, this, pt, 16.0f)) {
-                    if (!this.hasLineOfSight(pt)) {
+                if (pt.isAlive() && EntityUtils.isVisibleTo(1.75f, this, pt, 16.0f)) {
+                    if (level().clip(new net.minecraft.world.level.ClipContext(position(), pt.getEyePosition(), net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, this)).getType() != net.minecraft.world.phys.HitResult.Type.MISS) {
                         continue;
                     }
                     boolean f = EntityUtils.isFriendly(getOwner(), pt);
@@ -210,7 +210,7 @@ public class EntityFocusProjectile extends ThrowableProjectile
             setDeltaMovement(mv.x, getDeltaMovement().y, getDeltaMovement().z);
             setDeltaMovement(getDeltaMovement().x, mv.y, getDeltaMovement().z);
             setDeltaMovement(getDeltaMovement().x, getDeltaMovement().y, mv.z);
-            if (tickCount % 5 == 0 && (!target.isAlive() || !EntityUtils.isVisibleTo(1.75f, this, target, 16.0f) || !this.hasLineOfSight(target))) {
+            if (tickCount % 5 == 0 && (!target.isAlive() || !EntityUtils.isVisibleTo(1.75f, this, target, 16.0f) || level().clip(new net.minecraft.world.level.ClipContext(position(), target.getEyePosition(), net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, this)).getType() != net.minecraft.world.phys.HitResult.Type.MISS)) {
                 target = null;
             }
         }

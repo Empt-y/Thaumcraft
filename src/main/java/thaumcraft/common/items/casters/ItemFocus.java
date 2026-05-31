@@ -67,7 +67,8 @@ public class ItemFocus extends ItemTCBase
                 }
                 Color c2 = new Color(r, g, b);
                 color = c2.getRGB();
-                net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, focusstack, t -> t.putInt("color", color));
+                final int colorFinal = color;
+                net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, focusstack, t -> t.putInt("color", colorFinal));
             }
         }
         else {
@@ -83,7 +84,8 @@ public class ItemFocus extends ItemTCBase
         int sh = focusstack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getIntOr("srt", 0);
         if (sh == 0) {
             sh = getPackage(focusstack).getSortingHelper();
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, focusstack, t -> t.putInt("srt", sh));
+            final int shFinal = sh;
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, focusstack, t -> t.putInt("srt", shFinal));
         }
         return focusstack.getDisplayName().getString() + sh;
     }

@@ -7,14 +7,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 // ITickable removed - use BlockEntityTicker<T>
-// import net.neoforged.neoforge.capabilities.Object /* Capability removed */; // API changed
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import thaumcraft.common.lib.utils.BlockStateUtils;
 import thaumcraft.common.tiles.TileThaumcraft;
 import thaumcraft.common.world.aura.AuraHandler;
 
 
-public class TileVisGenerator extends TileThaumcraft implements IEnergyStorage
+public class TileVisGenerator extends TileThaumcraft
 {
     public TileVisGenerator(net.minecraft.world.level.block.entity.BlockEntityType<?> type, net.minecraft.core.BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -32,17 +32,19 @@ public class TileVisGenerator extends TileThaumcraft implements IEnergyStorage
             Block block = state.getBlock();
             BlockEntity tileentity = getLevel().getBlockEntity(getBlockPos().relative(face));
             if (tileentity != null) {
-                IEnergyStorage capability = getLevel().getCapability(
-                    net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.BLOCK,
-                    getBlockPos().relative(face), face.getOpposite());
-                if (capability != null && capability.canReceive()) {
+                EnergyHandler capability = net.neoforged.neoforge.capabilities.Capabilities.Energy.BLOCK
+                    .getCapability(getLevel(), getBlockPos().relative(face), state, tileentity, face.getOpposite());
+                if (capability != null) {
                     int energyExtracted = Math.min(energy, 20);
-                    energyExtracted = capability.receiveEnergy(energyExtracted, false);
-                    if (energyExtracted > 0) {
-                        energy -= energyExtracted;
-                        setChanged();
-                        if (energy == 0) {
-                            syncTile(false);
+                    try (Transaction transaction = Transaction.openRoot()) {
+                        int received = capability.insert(energyExtracted, transaction);
+                        if (received > 0) {
+                            energy -= received;
+                            transaction.commit();
+                            setChanged();
+                            if (energy == 0) {
+                                syncTile(false);
+                            }
                         }
                     }
                 }
@@ -70,28 +72,12 @@ public class TileVisGenerator extends TileThaumcraft implements IEnergyStorage
         return nbt;
     }
     
-    
-    public int receiveEnergy(int maxReceive, boolean simulate) {
-        return 0;
-    }
-    
-    public int extractEnergy(int maxExtract, boolean simulate) {
-        return 0;
-    }
-    
+
     public int getEnergyStored() {
         return energy;
     }
-    
+
     public int getMaxEnergyStored() {
         return 1000;
-    }
-    
-    public boolean canExtract() {
-        return true;
-    }
-    
-    public boolean canReceive() {
-        return false;
     }
 }

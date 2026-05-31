@@ -63,17 +63,10 @@ public class ItemVoidArmor extends net.minecraft.world.item.Item implements IWar
         return ItemStack.isSameItem(repairItem, new ItemStack(ItemsTC.ingots, 1)) || false;
     }
     
-    public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, @javax.annotation.Nullable net.minecraft.world.entity.EquipmentSlot p_77663_4_) {
-        super.inventoryTick(stack, world, entity, p_77663_4_);
-        if (!world.isClientSide() && (stack.getDamageValue() > 0) && entity.tickCount % 20 == 0 && entity instanceof LivingEntity) {
+    @Override
+    public void inventoryTick(ItemStack stack, ServerLevel world, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
+        if (stack.getDamageValue() > 0 && entity.tickCount % 20 == 0) {
             if (stack.isDamageableItem()) stack.setDamageValue(Math.max(0, stack.getDamageValue() - 1));
-        }
-    }
-    
-    public void onArmorTick(Level world, Player player, ItemStack armor) {
-        super.onArmorTick(world, player, armor);
-        if (!world.isClientSide() && armor.getDamageValue() > 0 && player.tickCount % 20 == 0) {
-            if (armor.isDamageableItem()) armor.setDamageValue(Math.max(0, armor.getDamageValue() - 1));
         }
     }
     

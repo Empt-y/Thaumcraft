@@ -366,7 +366,7 @@ public class TileMirror extends TileThaumcraft implements Container
         if (target != null && target instanceof TileMirror) {
             ((TileMirror)target).addStack(stack2.copy());
             addInstability(null, stack2.getCount());
-            level().blockEvent(getBlockPos(), getBlockState().getBlock(), 1, 0);
+            this.level.blockEvent(getBlockPos(), getBlockState().getBlock(), 1, 0);
         }
         else {
             spawnItem(stack2.copy());

@@ -59,7 +59,7 @@ public class SealButcher implements ISeal, ISealGui, ISealConfigArea
             for (Object e : list) {
                 LivingEntity target = (LivingEntity)e;
                 if (isValidTarget(target)) {
-                    List<LivingEntity> var55 = world.getEntities(net.minecraft.world.entity.EntityTypeTest.forClass(LivingEntity.class), area, e2 -> e2.getClass() == target.getClass());
+                    List<LivingEntity> var55 = world.getEntities(net.minecraft.world.level.entity.EntityTypeTest.forClass(LivingEntity.class), area, e2 -> e2.getClass() == target.getClass());
                     Iterator<LivingEntity> var56;
                     int count;
                     LivingEntity var57;

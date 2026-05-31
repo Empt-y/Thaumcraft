@@ -88,9 +88,9 @@ public class ItemGoggles extends net.minecraft.world.item.Item implements IVisDi
     
     @OnlyIn(Dist.CLIENT)
     public void onPlayerBaubleRender(ItemStack stack, Player player, float ticks) {
-        if (type == null) {
+        {
             boolean helmetEmpty = player.getItemBySlot(EquipmentSlot.HEAD) != null;
-            Minecraft.getInstance().renderEngine.bindTexture(tex);
+            // TODO: renderEngine removed; use modern rendering pipeline
             /* null call removed */;
             /* null call removed */;
             /* null call removed */;

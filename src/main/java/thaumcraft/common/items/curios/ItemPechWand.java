@@ -65,7 +65,7 @@ public class ItemPechWand extends ItemTCBase
             int tProg = IPlayerKnowledge.EnumKnowledgeType.THEORY.getProgression();
             ThaumcraftApi.internalMethods.addKnowledge(player, IPlayerKnowledge.EnumKnowledgeType.THEORY, rc[player.getRandom().nextInt(rc.length)], Mth.randomBetweenInclusive(player.getRandom(), tProg / 5, tProg / 4));
         }
-        player.addStat(Stats.getObjectUseStats(this));
+        player.awardStat(Stats.ITEM_USED.get(this));
         return super.use(worldIn, player, hand);
     }
 }

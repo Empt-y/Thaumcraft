@@ -70,8 +70,8 @@ public class SealUse extends SealFiltered implements ISealConfigToggles
     
     public boolean mayPlace(Level world, Block blockIn, BlockPos pos, Direction side) {
         BlockState block = world.getBlockState(pos);
-        AABB axisalignedbb = blockIn.getBoundingBox(blockIn.defaultBlockState(), world, pos);
-        return axisalignedbb == null || world.noCollision(axisalignedbb);
+        net.minecraft.world.phys.shapes.VoxelShape shape = blockIn.defaultBlockState().getCollisionShape(world, pos);
+        return shape.isEmpty() || world.noCollision(shape.bounds().move(pos));
     }
     
     @Override

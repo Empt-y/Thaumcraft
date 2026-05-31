@@ -196,7 +196,7 @@ public class BlockJar extends BlockTCTile implements ILabelable
 
     @Override
     public float getEnchantPowerBonus(BlockState state, BlockGetter world, BlockPos pos) {
-        BlockEntity te = getLevel().getBlockEntity(pos);
+        BlockEntity te = world.getBlockEntity(pos);
         if (te != null && te instanceof TileJarBrain) {
             return 5.0f;
         }

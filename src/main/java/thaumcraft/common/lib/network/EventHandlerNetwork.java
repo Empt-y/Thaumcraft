@@ -16,11 +16,10 @@ public class EventHandlerNetwork
 {
     @SubscribeEvent
     public void playerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
-        Side side = null /* FMLCommonHandler removed */;
-        if (side == Side.SERVER) {
-            Player p = event.getEntity();
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer((net.minecraft.server.level.ServerPlayer)p, new PacketSyncWarp(p));
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer((net.minecraft.server.level.ServerPlayer)p, new PacketSyncKnowledge(p));
+        Player p = event.getEntity();
+        if (p instanceof ServerPlayer sp) {
+            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(sp, new PacketSyncWarp(p));
+            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(sp, new PacketSyncKnowledge(p));
         }
     }
 }

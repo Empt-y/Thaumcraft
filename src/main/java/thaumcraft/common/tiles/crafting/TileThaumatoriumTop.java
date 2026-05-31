@@ -171,11 +171,14 @@ public class TileThaumatoriumTop extends TileThaumcraft implements IAspectContai
         return 1;
     }
     
-    public ItemStack getStackInSlot(int par1) {
-        if (thaumatorium == null) {
-            return ItemStack.EMPTY;
-        }
+    @Override
+    public net.minecraft.world.item.ItemStack getItem(int par1) {
+        if (thaumatorium == null) return net.minecraft.world.item.ItemStack.EMPTY;
         return thaumatorium.getItem(par1);
+    }
+
+    public ItemStack getStackInSlot(int par1) {
+        return getItem(par1);
     }
     
     public ItemStack decrStackSize(int par1, int par2) {

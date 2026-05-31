@@ -101,12 +101,12 @@ public class EntityHomingShard extends ThrowableProjectile
     }
     
     @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte par1) {
+    public void handleEntityEvent(byte par1) {
         if (par1 == 16) {
             FXDispatcher.INSTANCE.burst(getX(), getY(), getZ(), 0.3f);
         }
         else {
-            super.handleStatusUpdate(par1);
+            super.handleEntityEvent(par1);
         }
     }
     

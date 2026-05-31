@@ -128,8 +128,8 @@ public class InventoryUtils
         int removed = 0;
         if (inventory != null) {
             for (int a = 0; a < inventory.getSlots(); ++a) {
-                if (areItemStacksEqual(stack, inventory.getItem(a), filter)) {
-                    int s = Math.min(amount - removed, inventory.getItem(a).getCount());
+                if (areItemStacksEqual(stack, inventory.getStackInSlot(a), filter)) {
+                    int s = Math.min(amount - removed, inventory.getStackInSlot(a).getCount());
                     ItemStack es = inventory.extractItem(a, s, simulate);
                     if (es != null && !es.isEmpty()) {
                         removed += es.getCount();

@@ -15,7 +15,7 @@ public class EntityCritterAIAttackMelee extends MeleeAttackGoal
         if (canPerformAttack(target)) {
             resetAttackCooldown();
             if (mob.level() instanceof net.minecraft.server.level.ServerLevel sl) {
-                mob.doHurtTarget(sl, target, creature);
+                mob.doHurtTarget(sl, target);
             }
         }
     }

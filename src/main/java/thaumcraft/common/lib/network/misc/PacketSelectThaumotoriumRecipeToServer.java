@@ -55,7 +55,7 @@ public class PacketSelectThaumotoriumRecipeToServer implements CustomPacketPaylo
             Player player = serverPlayer;
             BlockPos bp = BlockPos.of(msg.pos);
             if (level != null && player != null && bp != null) {
-                BlockEntity te = getLevel().getBlockEntity(bp);
+                BlockEntity te = level.getBlockEntity(bp);
                 if (te != null && te instanceof TileThaumatorium) {
                     TileThaumatorium thaumatorium = (TileThaumatorium) te;
                     int i = 0;

@@ -67,17 +67,17 @@ public class ItemCrimsonBlade extends Item /* ItemSword removed */ implements IW
         }
     }
     
-    public boolean hitEntity(ItemStack is, LivingEntity target, LivingEntity hitter) {
+    @Override
+    public void postHurtEnemy(ItemStack is, LivingEntity target, LivingEntity hitter) {
+        super.postHurtEnemy(is, target, hitter);
         if (!target.level().isClientSide()) {
-            if (!(target instanceof Player) || !(hitter instanceof Player) ) {
+            if (!(target instanceof Player) || !(hitter instanceof Player)) {
                 try {
                     target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60));
                     target.addEffect(new MobEffectInstance(MobEffects.HUNGER, 120));
-                }
-                catch (Exception ex) {}
+                } catch (Exception ex) {}
             }
         }
-        return super.hitEntity(is, target, hitter);
     }
     
     public int getWarp(ItemStack itemstack, Player player) {
@@ -91,6 +91,7 @@ public class ItemCrimsonBlade extends Item /* ItemSword removed */ implements IW
     }
     
     static {
-        ItemCrimsonBlade.toolMatCrimsonVoid = EnumHelper.addToolMaterial("CVOID", 4, 200, 8.0f, 3.5f, 20).setRepairItem(new ItemStack(ItemsTC.ingots, 1));
+        // ToolMaterial is now a record; crimson void material defined via tags
+        ItemCrimsonBlade.toolMatCrimsonVoid = ToolMaterial.DIAMOND;
     }
 }

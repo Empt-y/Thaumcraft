@@ -113,7 +113,7 @@ public class BlockFluxGoo extends Block
     private void spawnSlime(ServerLevel world, BlockPos pos, int size) {
         EntityThaumicSlime slime = EntityThaumicSlime.TYPE != null ? new EntityThaumicSlime(EntityThaumicSlime.TYPE, world) : null;
         slime.snapTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0.0f, 0.0f);
-        slime.// setSize removed - dimensions in EntityType
+        // slime.setSize removed - dimensions in EntityType
         world.addFreshEntity(slime);
         slime.playSound(SoundsTC.gore, 1.0f, 1.0f);
     }

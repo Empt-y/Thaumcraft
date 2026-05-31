@@ -89,6 +89,6 @@ public class FocusEffectEarth extends FocusEffect
     
     @Override
     public void onCast(Entity caster) {
-        caster.level().playSound(null, caster.blockPosition().above(), SoundEvents.ENDERDRAGON_FIREBALL_EPLD, SoundSource.PLAYERS, 0.25f, 1.0f + (float)(caster.level().getRandom().nextGaussian() * 0.05000000074505806));
+        caster.level().playSound(null, caster.blockPosition().above(), SoundEvents.DRAGON_FIREBALL_EXPLODE, SoundSource.PLAYERS, 0.25f, 1.0f + (float)(caster.level().getRandom().nextGaussian() * 0.05000000074505806));
     }
 }

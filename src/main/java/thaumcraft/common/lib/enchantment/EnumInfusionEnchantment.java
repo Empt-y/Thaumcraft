@@ -88,7 +88,8 @@ public enum EnumInfusionEnchantment
                         return;
                     }
                     nbttaglist.getCompoundOrEmpty(j).putShort("lvl", (short)level);
-                    net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("infench", nbttaglist));
+                    final ListTag nbtFinal1 = nbttaglist;
+                    net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("infench", nbtFinal1));
                     return;
                 }
                 else {
@@ -104,7 +105,8 @@ public enum EnumInfusionEnchantment
         nbttagcompound.putShort("lvl", (short)level);
         nbttaglist.add(nbttagcompound);
         if (nbttaglist.size() > 0) {
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("infench", nbttaglist));
+            final ListTag nbtFinal2 = nbttaglist;
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, t -> t.put("infench", nbtFinal2));
         }
     }
 }

@@ -47,7 +47,7 @@ public class ItemMagicDust extends ItemTCBase
         }
         player.swing(hand);
         net.minecraft.world.phys.Vec3 hit = context.getClickLocation();
-        for (IDustTrigger trigger : IDustTrigger.triggers) {
+        for (IDustTrigger trigger : IDustTrigger.getTriggers()) {
             IDustTrigger.Placement place = trigger.getValidFace(world, player, pos, side);
             if (place != null) {
                 if (!player.getAbilities().instabuild) {

@@ -67,7 +67,7 @@ public class TileArcaneEar extends BlockEntity
             ArrayList<Integer[]> nbe = TileArcaneEar.noteBlockEvents.get((this.level instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)this.level).dimension().identifier().hashCode() : 0));
             if (nbe != null) {
                 for (Integer[] dat : nbe) {
-                    if (dat[3] == tone && dat[4] == note && distanceToSqr(dat[0] + 0.5, dat[1] + 0.5, dat[2] + 0.5) <= 4096.0) {
+                    if (dat[3] == tone && dat[4] == note && worldPosition.distSqr(new net.minecraft.core.BlockPos(dat[0], dat[1], dat[2])) <= 4096.0) {
                         Direction facing2 = getBlockState().getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING).getOpposite();
                         triggerNote(this.level, this.worldPosition, true);
                         BlockEntity tileentity2 = this.level.getBlockEntity(this.worldPosition);

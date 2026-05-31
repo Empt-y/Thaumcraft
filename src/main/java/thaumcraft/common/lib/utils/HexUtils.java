@@ -54,7 +54,7 @@ public class HexUtils
         ArrayList<Hex> ring = getRing(radius);
         ArrayList<Hex> results = new ArrayList<Hex>();
         float spacing = ring.size() / (float)entries;
-        float pos = (float)getRandom().nextInt(ring.size());
+        float pos = (float)random.nextInt(ring.size());
         for (int i = 0; i < entries; ++i) {
             results.add(ring.get(Math.round(pos)));
             pos += spacing;

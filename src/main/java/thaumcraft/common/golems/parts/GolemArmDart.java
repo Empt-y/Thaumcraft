@@ -21,7 +21,7 @@ public class GolemArmDart implements GolemArm.IArmFunction
     public void onRangedAttack(IGolemAPI golem, LivingEntity target, float range) {
         EntityGolemDart entityarrow = new EntityGolemDart(golem.getGolemWorld(), golem.getGolemEntity());
         float dmg = (float)golem.getGolemEntity().getAttribute(Attributes.ATTACK_DAMAGE).getValue() / 3.0f;
-        entityarrow.setDamage(dmg + range + golem.getGolemWorld().getRandom().nextGaussian() * 0.25);
+        entityarrow.setBaseDamage(dmg + range + golem.getGolemWorld().getRandom().nextGaussian() * 0.25);
         double d0 = target.getX() - golem.getGolemEntity().getX();
         double d2 = target.getBoundingBox().minY + target.getEyeHeight() + range * range - entityarrow.getY();
         double d3 = target.getZ() - golem.getGolemEntity().getZ();

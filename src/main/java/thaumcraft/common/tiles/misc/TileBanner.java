@@ -75,6 +75,6 @@ public class TileBanner extends TileThaumcraft
     
     @OnlyIn(Dist.CLIENT)
     public int getColor() {
-        return (getBlockState().getBlock() == null || !(getBlockState().getBlock() instanceof BlockBannerTC) || ((BlockBannerTC) getBlockState().getBlock()).dye == null) ? -1 : ((BlockBannerTC) getBlockState().getBlock()).dye.getColorValue();
+        return (getBlockState().getBlock() == null || !(getBlockState().getBlock() instanceof BlockBannerTC) || ((BlockBannerTC) getBlockState().getBlock()).dye == null) ? -1 : ((BlockBannerTC) getBlockState().getBlock()).dye.getTextureDiffuseColor();
     }
 }

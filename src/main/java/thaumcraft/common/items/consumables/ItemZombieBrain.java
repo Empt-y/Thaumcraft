@@ -14,8 +14,11 @@ import thaumcraft.common.items.IThaumcraftItems;
 public class ItemZombieBrain extends Item /* ItemFood removed */ implements IThaumcraftItems
 {
     public ItemZombieBrain() {
-        super(new net.minecraft.world.item.Item.Properties());
-        setMobEffectInstance(new MobEffectInstance(MobEffects.HUNGER, 30, 0), 0.8f);
+        super(new net.minecraft.world.item.Item.Properties().food(
+            new net.minecraft.world.food.FoodProperties.Builder()
+                .nutrition(2)
+                .saturationModifier(0.1f)
+                .build()));
         ConfigItems.ITEM_VARIANT_HOLDERS.add(this);
     }
     

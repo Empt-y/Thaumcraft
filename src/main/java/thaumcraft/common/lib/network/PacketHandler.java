@@ -69,9 +69,9 @@ public class PacketHandler {
         reg.playToServer(PacketTileToServer.TYPE, PacketTileToServer.STREAM_CODEC, PacketTileToServer::handle);
     }
 
-    /** Send a packet to the server. */
+    /** Send a packet to the server (client-side call). */
     public static <T extends CustomPacketPayload> void sendToServer(T packet) {
-        PacketDistributor.sendToServer(packet);
+        net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(packet);
     }
 
     /** Send a packet to a specific player. */

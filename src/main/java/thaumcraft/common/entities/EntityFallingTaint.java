@@ -160,7 +160,7 @@ public class EntityFallingTaint extends Entity
     public void fillCrashReportCategory(net.minecraft.CrashReportCategory par1CrashReportCategory) {
         super.fillCrashReportCategory(par1CrashReportCategory);
         par1CrashReportCategory.setDetail("Immitating block ID", () -> net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(fallTile.getBlock()).toString());
-        par1CrashReportCategory.addDetail("Immitating block data", fallTile.getBlock());
+        par1CrashReportCategory.setDetail("Immitating block data", fallTile.getBlock());
     }
     
     public SoundSource getSoundSource() {

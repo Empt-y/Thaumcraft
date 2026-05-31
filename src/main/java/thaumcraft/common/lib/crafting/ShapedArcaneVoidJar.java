@@ -18,7 +18,7 @@ public class ShapedArcaneVoidJar extends ShapedArcaneRecipe
     @Override
     public ItemStack assemble(net.minecraft.world.item.crafting.CraftingInput var1) {
         net.minecraft.world.item.component.CustomData nbt = null;
-        for (int a = 0; a < var1.getContainerSize(); ++a) {
+        for (int a = 0; a < var1.size(); ++a) {
             if (Block.byItem(var1.getItem(a).getItem()) == BlocksTC.jarNormal) {
                 nbt = var1.getItem(a).get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
                 break;

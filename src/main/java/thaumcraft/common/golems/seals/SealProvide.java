@@ -193,7 +193,7 @@ public class SealProvide extends SealFiltered implements ISealConfigToggles
         if (se == null) {
             return true;
         }
-        if (se.isLocked() && !((Object /* IEntityOwnable removed */)golem).getOwnerId().equals(se.getOwner())) {
+        if (se.isLocked() && !(golem.getGolemEntity() instanceof thaumcraft.common.entities.construct.EntityOwnedConstruct owned && owned.getOwnerId() != null && owned.getOwnerId().equals(se.getOwner()))) {
             return false;
         }
         if (se.getSeal().getRequiredTags() != null && !golem.getProperties().getTraits().containsAll(Arrays.asList(se.getSeal().getRequiredTags()))) {

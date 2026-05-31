@@ -339,8 +339,8 @@ public class PlayerEvents
     
     @SubscribeEvent
     public static void droppedItem(ItemTossEvent event) {
-        CompoundTag itemData = event.getItemEntity().getPersistentData();
-        itemData.putString("thrower", event.getEntity().getName().getString());
+        CompoundTag itemData = ((net.minecraft.world.entity.item.ItemEntity)event.getEntity()).getPersistentData();
+        itemData.putString("thrower", event.getPlayer().getName().getString());
     }
     
     @SubscribeEvent

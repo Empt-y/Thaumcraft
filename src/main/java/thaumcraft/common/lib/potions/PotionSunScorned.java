@@ -17,7 +17,7 @@ public class PotionSunScorned extends MobEffect {
 
     @Override
     public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
-        float brightness = entity.getBrightness();
+        float brightness = level.getMaxLocalRawBrightness(BlockPos.containing(entity.getX(), entity.getEyeY(), entity.getZ())) / 15.0f;
         BlockPos eyePos = BlockPos.containing(entity.getX(), entity.getEyeY(), entity.getZ());
         if (brightness > 0.5f
                 && entity.getRandom().nextFloat() * 30.0f < (brightness - 0.4f) * 2.0f

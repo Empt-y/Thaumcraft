@@ -38,9 +38,9 @@ public class ItemCuriosityBand extends ItemTCBase
     
     @OnlyIn(Dist.CLIENT)
     public void onPlayerBaubleRender(ItemStack stack, Player player, float ticks) {
-        if (type == null) {
+        {
             boolean helmetEmpty = !player.getItemBySlot(EquipmentSlot.HEAD).isEmpty();
-            Minecraft.getInstance().renderEngine.bindTexture(tex);
+            // TODO: renderEngine removed; use modern rendering pipeline
             /* null call removed */;
             /* null call removed */;
             /* null call removed */;

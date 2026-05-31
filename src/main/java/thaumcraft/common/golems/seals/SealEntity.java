@@ -197,7 +197,9 @@ public class SealEntity implements ISealEntity
     @Override
     public void syncToClient(Level world) {
         if (!world.isClientSide()) {
-            PacketHandler.INSTANCE.sendToDimension(new PacketSealToClient(this), (world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0));
+            if (world instanceof net.minecraft.server.level.ServerLevel sl) {
+                net.neoforged.neoforge.network.PacketDistributor.sendToPlayersInDimension(sl, new PacketSealToClient(this));
+            }
         }
     }
     

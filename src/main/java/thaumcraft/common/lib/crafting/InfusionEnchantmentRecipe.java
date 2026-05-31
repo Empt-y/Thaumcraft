@@ -49,7 +49,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
         if (!enchantment.toolClasses.contains("all")) {
             boolean cool = false;
             // Modern MC: use item tags for tool class checks instead of Forge's old toolClasses system
-            if (central.getItem() instanceof net.minecraft.world.item.TieredItem && enchantment.toolClasses.contains("weapon")) {
+            if (central.has(net.minecraft.core.component.DataComponents.WEAPON) && enchantment.toolClasses.contains("weapon")) {
                 cool = true;
             }
             if (!cool && !central.isEmpty() /* TODO: TieredItem check */) {
@@ -62,7 +62,7 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
                     }
                 }
             }
-            if (!cool && central.getItem() instanceof net.minecraft.world.item.ArmorItem) {
+            if (!cool && central.has(net.minecraft.core.component.DataComponents.EQUIPPABLE)) {
                 String at = "none";
                 switch (EquipmentSlot.CHEST /* armorType removed */) {
                     case HEAD: {

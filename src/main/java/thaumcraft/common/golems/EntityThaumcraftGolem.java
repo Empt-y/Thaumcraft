@@ -339,8 +339,9 @@ public class EntityThaumcraftGolem extends EntityOwnedConstruct implements IGole
     
     public boolean causeFallDamage(double distance, float damageMultiplier, net.minecraft.world.damagesource.DamageSource source) {
         if (!getProperties().hasTrait(EnumGolemTrait.FLYER) && !getProperties().hasTrait(EnumGolemTrait.CLIMBER)) {
-            super.causeFallDamage(distance, damageMultiplier, damageSources().fall());
+            return super.causeFallDamage(distance, damageMultiplier, damageSources().fall());
         }
+        return false;
     }
     
     private void goHome() {

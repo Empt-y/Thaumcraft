@@ -42,7 +42,7 @@ public class ItemAmuletVis extends ItemTCBase
     public void onWornTick(ItemStack itemstack, LivingEntity player) {
         if (player instanceof Player p && !player.level().isClientSide() && player.tickCount % ((itemstack.getDamageValue() == 0) ? 40 : 5) == 0) {
             Inventory inv = p.getInventory();
-            for (int a = 0; a < Inventory.getHotbarSize(); ++a) {
+            for (int a = 0; a < Inventory.getSelectionSize(); ++a) {
                 if (RechargeHelper.rechargeItem(player.level(), inv.getItem(a), player.blockPosition(), p, 1) > 0.0f) {
                     return;
                 }

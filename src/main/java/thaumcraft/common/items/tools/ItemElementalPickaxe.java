@@ -59,7 +59,7 @@ public class ItemElementalPickaxe extends net.minecraft.world.item.Item implemen
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
         if (!player.level().isClientSide()) {
             if (!(entity instanceof Player) ) {
-                entity.setFire(2);
+                entity.igniteForSeconds(2);
             }
         }
         return super.onLeftClickEntity(stack, player, entity);

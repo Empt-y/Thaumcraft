@@ -131,7 +131,7 @@ public class EntityGrapple extends ThrowableProjectile
                 }
                 else {
                     if (!level().isClientSide() && getOwner() instanceof net.minecraft.server.level.ServerPlayer) {
-                        ((net.minecraft.server.level.ServerPlayer) getOwner()).connection.floatingTickCount = 0;
+                        // floatingTickCount removed in modern MC
                     }
                     getOwner().fallDistance = 0.0f;
                     double mx = getX() - getOwner().getX();

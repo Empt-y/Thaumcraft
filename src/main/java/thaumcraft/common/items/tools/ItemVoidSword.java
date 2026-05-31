@@ -60,16 +60,16 @@ public class ItemVoidSword extends Item /* ItemSword removed */ implements IWarp
         }
     }
     
-    public boolean hitEntity(ItemStack is, LivingEntity target, LivingEntity hitter) {
+    @Override
+    public void postHurtEnemy(ItemStack is, LivingEntity target, LivingEntity hitter) {
+        super.postHurtEnemy(is, target, hitter);
         if (!target.level().isClientSide()) {
-            if (!(target instanceof Player) || !(hitter instanceof Player) ) {
+            if (!(target instanceof Player) || !(hitter instanceof Player)) {
                 try {
                     target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60));
-                }
-                catch (Exception ex) {}
+                } catch (Exception ex) {}
             }
         }
-        return super.hitEntity(is, target, hitter);
     }
     
     public int getWarp(ItemStack itemstack, Player player) {

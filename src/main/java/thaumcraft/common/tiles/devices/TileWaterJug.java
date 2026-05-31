@@ -64,7 +64,7 @@ public class TileWaterJug extends TileThaumcraft implements IFluidHandler
         handlers = new ArrayList<Integer>();
         for (int i = 0; i < nbttaglist.size(); ++i) {
             IntTag tag = (IntTag)nbttaglist.get(i);
-            handlers.add(tag.getInt());
+            handlers.add(tag.value());
         }
     }
 

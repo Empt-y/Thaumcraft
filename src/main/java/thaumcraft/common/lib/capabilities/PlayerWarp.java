@@ -112,7 +112,7 @@ public class PlayerWarp
         
         public <T> T getCapability(Object /* Capability removed */ capability, Direction facing) {
             if (capability == ThaumcraftCapabilities.WARP) {
-                return ThaumcraftCapabilities.WARP.cast(warp);
+                return (T)warp;
             }
             return null;
         }

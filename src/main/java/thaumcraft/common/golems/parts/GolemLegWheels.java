@@ -39,7 +39,7 @@ public class GolemLegWheels implements GolemLeg.ILegFunction
                 BlockPos blockpos = new BlockPos(i, j, k);
                 BlockState iblockstate = golem.getGolemEntity().level().getBlockState(blockpos);
                 Block block = iblockstate.getBlock();
-                if (block.getRenderType(iblockstate) != RenderShape.INVISIBLE) {
+                if (iblockstate.getRenderShape() != net.minecraft.world.level.block.RenderShape.INVISIBLE) {
                     // spawnParticle removed
                 }
             }

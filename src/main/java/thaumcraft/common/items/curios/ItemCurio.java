@@ -109,7 +109,7 @@ public class ItemCurio extends ItemTCBase
             }
             player.sendSystemMessage(net.minecraft.network.chat.Component.literal(ChatFormatting.DARK_PURPLE + I18n.get("tc.knowledge.gained")));
         }
-        player.addStat(Stats.getObjectUseStats(this));
+        player.awardStat(Stats.ITEM_USED.get(this));
         return super.use(worldIn, player, hand);
     }
 }

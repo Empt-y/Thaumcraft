@@ -104,6 +104,6 @@ public class BlockVisBattery extends BlockTC
     }
 
     static {
-        CHARGE = IntegerProperty.create("charge".asItem(), 0);
+        CHARGE = IntegerProperty.create("charge", 0, 10);
     }
 }

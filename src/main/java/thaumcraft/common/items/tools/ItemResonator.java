@@ -71,7 +71,7 @@ public class ItemResonator extends ItemTCBase
             s = et.getSuctionType(side).getName();
         }
         player.sendSystemMessage(Component.translatable("tc.resonator2", "" + et.getSuctionAmount(side), s));
-        world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_SHIELD_BLOCK, SoundSource.BLOCKS, 0.5f, 1.9f + net.minecraft.util.RandomSource.create().nextFloat() * 0.1f, false);
+        world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.SHIELD_BLOCK.value(), SoundSource.BLOCKS, 0.5f, 1.9f + net.minecraft.util.RandomSource.create().nextFloat() * 0.1f, false);
         if (tile != null && tile instanceof TileCondenser) {
             TileCondenser tc = (TileCondenser)tile;
             player.sendSystemMessage(Component.translatable("tc.condenser1", "" + tc.cost));

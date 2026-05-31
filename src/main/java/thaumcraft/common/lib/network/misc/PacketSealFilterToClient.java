@@ -85,7 +85,7 @@ public class PacketSealFilterToClient implements CustomPacketPayload
                 // TODO: SealHandler.getSealEntity may need dimension ID; client-side dimension lookup
                 // using Minecraft.getInstance().level as fallback
                 var level = Minecraft.getInstance().level;
-                ISealEntity seal = SealHandler.getSealEntity(world.dimension().identifier().hashCode(), new SealPos(msg.pos, msg.face));
+                ISealEntity seal = SealHandler.getSealEntity(level.dimension().identifier().hashCode(), new SealPos(msg.pos, msg.face));
                 if (seal != null && seal.getSeal() instanceof ISealConfigFilter) {
                     ISealConfigFilter cp = (ISealConfigFilter) seal.getSeal();
                     for (int a = 0; a < msg.filtersize; ++a) {

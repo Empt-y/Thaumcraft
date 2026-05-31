@@ -59,8 +59,8 @@ public class GolemInteractionHelper
     
     private static boolean mayPlace(Level world, Block blockIn, BlockPos pos, Direction side) {
         BlockState block = world.getBlockState(pos);
-        AABB axisalignedbb = blockIn.getBoundingBox(blockIn.defaultBlockState(), world, pos);
-        return axisalignedbb == null || world.noCollision(axisalignedbb);
+        net.minecraft.world.phys.shapes.VoxelShape shape = blockIn.defaultBlockState().getCollisionShape(world, pos);
+        return shape.isEmpty() || world.noCollision(shape.bounds().move(pos));
     }
     
     private static void dropSomeItems(FakePlayer fp2, IGolemAPI golem) {

@@ -58,13 +58,13 @@ public class ScanGeneric implements IScanThing
     
     @Override
     public String getResearchKey(Player player, Object obj) {
-        if (obj instanceof Entity && !(obj instanceof ItemEntity)) {
-            String s = EntityList.getEntityString((Entity)obj);
-            return "!" + s;
+        if (obj instanceof Entity e && !(obj instanceof ItemEntity)) {
+            net.minecraft.resources.Identifier key = net.minecraft.world.entity.EntityType.getKey(e.getType());
+            return "!" + (key != null ? key.toString() : "unknown");
         }
         ItemStack is = ScanningManager.getItemFromParms(player, obj);
         if (is != null && !is.isEmpty()) {
-            String s2 = "!" + is.getItem().getRegistryName();
+            String s2 = "!" + net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(is.getItem());
             if (!is.isDamageableItem()) {
                 s2 += is.getDamageValue();
             }

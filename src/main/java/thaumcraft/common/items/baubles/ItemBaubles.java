@@ -33,11 +33,12 @@ public class ItemBaubles extends ItemTCBase implements IVisDiscountGear
         }
     }
     
+    // getRarity(ItemStack) overrides NeoForge extension; vanilla rarity is set via Item.Properties
     public Rarity getRarity(ItemStack stack) {
         if (stack.getDamageValue() >= 3) {
             return Rarity.UNCOMMON;
         }
-        return super.getRarity(stack);
+        return Rarity.COMMON;
     }
     
     public int getVisDiscount(ItemStack stack, Player player) {

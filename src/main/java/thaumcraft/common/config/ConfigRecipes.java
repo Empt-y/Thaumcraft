@@ -534,6 +534,14 @@ public class ConfigRecipes
         return null;
     }
     
+    public static void postAspects() {
+        // Crucible hedge alchemy recipes added post-aspect initialization
+    }
+
+    public static void compileGroups() {
+        // Recipe group compilation - recipes now managed via JSON datapacks
+    }
+
     static {
         ConfigRecipes.defaultGroup = Identifier.withDefaultNamespace("thaumcraft");
         ConfigRecipes.recipeGroups = new HashMap<String, ArrayList<Identifier>>();

@@ -42,7 +42,7 @@ public class ItemSanitySoap extends ItemTCBase
     public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
         int ticks = getMaxItemUseDuration(stack) - count;
         if (ticks > 95) {
-            player.stopActiveHand();
+            player.stopUsingItem();
         }
         if (player.level().isClientSide()) {
             if (player.level().getRandom().nextFloat() < 0.2f) {

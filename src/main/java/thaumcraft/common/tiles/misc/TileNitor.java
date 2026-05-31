@@ -24,7 +24,7 @@ public class TileNitor extends BlockEntity
     public void update() {
         if (getLevel().isClientSide()) {
             BlockState state = getLevel().getBlockState(getBlockPos());
-            FXDispatcher.INSTANCE.drawNitorFlames(this.worldPosition.getX() + 0.5f + this.level.getRandom().nextGaussian() * 0.025, this.worldPosition.getY() + 0.45f + this.level.getRandom().nextGaussian() * 0.025, this.worldPosition.getZ() + 0.5f + this.level.getRandom().nextGaussian() * 0.025, this.level.getRandom().nextGaussian() * 0.0025, this.level.getRandom().nextFloat() * 0.06, this.level.getRandom().nextGaussian() * 0.0025, state.getMapColor(level, getBlockPos()).colorValue, 0);
+            FXDispatcher.INSTANCE.drawNitorFlames(this.worldPosition.getX() + 0.5f + this.level.getRandom().nextGaussian() * 0.025, this.worldPosition.getY() + 0.45f + this.level.getRandom().nextGaussian() * 0.025, this.worldPosition.getZ() + 0.5f + this.level.getRandom().nextGaussian() * 0.025, this.level.getRandom().nextGaussian() * 0.0025, this.level.getRandom().nextFloat() * 0.06, this.level.getRandom().nextGaussian() * 0.0025, state.getMapColor(level, getBlockPos()).col, 0);
             if (count++ % 10 == 0) {
                 FXDispatcher.INSTANCE.drawNitorCore(this.worldPosition.getX() + 0.5f, this.worldPosition.getY() + 0.49f, this.worldPosition.getZ() + 0.5f, 0.0, 0.0, 0.0);
             }

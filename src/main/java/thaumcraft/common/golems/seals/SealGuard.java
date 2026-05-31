@@ -100,7 +100,8 @@ public class SealGuard implements ISeal, ISealGui, ISealConfigArea
     
     @Override
     public boolean canGolemPerformTask(IGolemAPI golem, Task task) {
-        return !golem.getGolemEntity().isOnSameTeam(task.getEntity());
+        net.minecraft.world.scores.PlayerTeam golemTeam = golem.getGolemEntity().getTeam();
+        return golemTeam == null || !golemTeam.equals(task.getEntity() != null ? task.getEntity().getTeam() : null);
     }
     
     @Override

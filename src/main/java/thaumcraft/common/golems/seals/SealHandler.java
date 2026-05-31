@@ -121,7 +121,9 @@ public class SealHandler
                 }
             }
             if (!world.isClientSide()) {
-                PacketHandler.INSTANCE.sendToDimension(new PacketSealToClient(new SealEntity(world, pos, null)), (world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0));
+                if (world instanceof net.minecraft.server.level.ServerLevel sl) {
+                    net.neoforged.neoforge.network.PacketDistributor.sendToPlayersInDimension(sl, new PacketSealToClient(new SealEntity(world, pos, null)));
+                }
             }
             if (!quiet) {
                 markChunkAsDirty((world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0), pos.pos);

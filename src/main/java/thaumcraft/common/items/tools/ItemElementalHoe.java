@@ -58,32 +58,37 @@ public class ItemElementalHoe extends HoeItem implements IThaumcraftItems
         return ItemStack.isSameItem(repairItem, new ItemStack(ItemsTC.ingots, 1)) || false;
     }
     
-    public InteractionResult onItemUse(Player player, Level world, BlockPos pos, InteractionHand hand, Direction facing, float hitX, float hitY, float hitZ) {
-        if (player.isCrouching()) {
-            return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+    @Override
+    public net.minecraft.world.InteractionResult useOn(net.minecraft.world.item.context.UseOnContext context) {
+        Player player = context.getPlayer();
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        InteractionHand hand = context.getHand();
+        if (player != null && player.isCrouching()) {
+            return super.useOn(context);
         }
         boolean did = false;
         for (int xx = -1; xx <= 1; ++xx) {
             for (int zz = -1; zz <= 1; ++zz) {
-                if (super.onItemUse(player, world, pos.offset(xx, 0, zz), hand, facing, hitX, hitY, hitZ) == InteractionResult.SUCCESS) {
+                net.minecraft.world.item.context.UseOnContext ctx2 = new net.minecraft.world.item.context.UseOnContext(
+                    player, hand,
+                    new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(), context.getClickedFace(), pos.offset(xx, 0, zz), false));
+                if (super.useOn(ctx2) == InteractionResult.SUCCESS) {
                     if (world.isClientSide()) {
                         BlockPos pp = pos.offset(xx, 0, zz);
                         FXDispatcher.INSTANCE.drawBamf(pp.getX() + 0.5, pp.getY() + 1.01, pp.getZ() + 0.5, 0.3f, 0.12f, 0.1f, xx == 0 && zz == 0, false, Direction.UP);
                     }
-                    if (!did) {
-                        did = true;
-                    }
+                    did = true;
                 }
             }
         }
-        if (!did) {
+        if (!did && player != null) {
             did = Utils.useBonemealAtLoc(world, player, pos);
             if (did) {
                 player.getItemInHand(hand).hurtAndBreak(3, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
                 if (!world.isClientSide()) {
                     world.levelEvent(2005, pos, 0);
-                }
-                else {
+                } else {
                     FXDispatcher.INSTANCE.drawBlockMistParticles(pos, 4259648);
                 }
             }

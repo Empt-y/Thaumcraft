@@ -162,7 +162,7 @@ public class EntityFocusCloud extends Entity
                     if (e instanceof EntityFocusCloud) {
                         Vec3 v = e.position().subtract(position());
                         e.move(MoverType.SELF, new net.minecraft.world.phys.Vec3(v.x / 50.0, v.y / 50.0, v.z / 50.0));
-                        ((EntityFocusCloud)e).pushOutOfBlocks(getX(), getY(), getZ());
+                        // pushOutOfBlocks removed in modern MC
                     }
                     if (!(e instanceof LivingEntity)) {
                         continue;
@@ -173,7 +173,7 @@ public class EntityFocusCloud extends Entity
                     EntityFocusCloud.cooldownMap.put((long)e.getId(), t + 2000L);
                     Vec3 hitPos = e.position().add(0.0, e.getBbHeight() / 2.0f, 0.0);
                     EntityHitResult ray = new EntityHitResult(e, hitPos);
-                    Trajectory tra = new Trajectory(position(), position().subtractReverse(ray.getLocation()));
+                    Trajectory tra = new Trajectory(position(), ray.getLocation().subtract(position()).reverse());
                     targets.add(ray);
                     trajectories.add(tra);
                 }

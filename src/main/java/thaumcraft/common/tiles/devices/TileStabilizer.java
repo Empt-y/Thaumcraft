@@ -59,7 +59,7 @@ public class TileStabilizer extends TileThaumcraft
             }
         }
         if (getLevel().isClientSide() && energy != lastEnergy) {
-            getLevel().markBlockRangeForRenderUpdate(getBlockPos(), getBlockPos());
+            getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
             lastEnergy = energy;
         }
     }

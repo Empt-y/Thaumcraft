@@ -299,7 +299,7 @@ public class PlayerKnowledge
         
         public <T> T getCapability(Object /* Capability removed */ capability, Direction facing) {
             if (capability == ThaumcraftCapabilities.KNOWLEDGE) {
-                return ThaumcraftCapabilities.KNOWLEDGE.cast(knowledge);
+                return (T)knowledge;
             }
             return null;
         }

@@ -45,22 +45,22 @@ public class ItemGolemPlacer extends ItemTCBase implements ISealDisplayer
             ItemStack is = new ItemStack(this, 1);
             net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", 0L));
             items.add(is.copy());
-            IGolemProperties props = new GolemProperties();
-            props.setHead(GolemHead.getHeads()[1]);
-            props.setArms(GolemArm.getArms()[1]);
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props.toLong()));
+            IGolemProperties props1 = new GolemProperties();
+            props1.setHead(GolemHead.getHeads()[1]);
+            props1.setArms(GolemArm.getArms()[1]);
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props1.toLong()));
             items.add(is.copy());
-            props = new GolemProperties();
-            props.setMaterial(GolemMaterial.getMaterials()[1]);
-            props.setHead(GolemHead.getHeads()[1]);
-            props.setArms(GolemArm.getArms()[2]);
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props.toLong()));
+            IGolemProperties props2 = new GolemProperties();
+            props2.setMaterial(GolemMaterial.getMaterials()[1]);
+            props2.setHead(GolemHead.getHeads()[1]);
+            props2.setArms(GolemArm.getArms()[2]);
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props2.toLong()));
             items.add(is.copy());
-            props = new GolemProperties();
-            props.setMaterial(GolemMaterial.getMaterials()[4]);
-            props.setHead(GolemHead.getHeads()[1]);
-            props.setArms(GolemArm.getArms()[3]);
-            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props.toLong()));
+            IGolemProperties props3 = new GolemProperties();
+            props3.setMaterial(GolemMaterial.getMaterials()[4]);
+            props3.setHead(GolemHead.getHeads()[1]);
+            props3.setArms(GolemArm.getArms()[3]);
+            net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, is, t -> t.putLong("props", props3.toLong()));
             items.add(is.copy());
         }
     }

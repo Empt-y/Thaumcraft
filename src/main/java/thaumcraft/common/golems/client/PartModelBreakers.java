@@ -24,7 +24,8 @@ public class PartModelBreakers extends PartModel
                 lastSpeed = ani.get(golem.getGolemEntity().getId())[0];
                 lastRot = ani.get(golem.getGolemEntity().getId())[1];
             }
-            float f = Math.max(lastSpeed, golem.getGolemEntity().getSwingProgress(partialTicks) * 20.0f);
+            float swingFrac = golem.getGolemEntity().swinging ? Math.max(0, 1.0f - golem.getGolemEntity().swingTime / 6.0f) : 0.0f;
+            float f = Math.max(lastSpeed, swingFrac * 20.0f);
             float rot = lastRot + f;
             lastSpeed = f * 0.99f;
             ani.put(golem.getGolemEntity().getId(), new Float[] { lastSpeed, rot });

@@ -17,7 +17,7 @@ public class PotionUnnaturalHunger extends MobEffect {
     @Override
     public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
         if (entity instanceof Player player) {
-            player.addExhaustion(0.025f * (amplifier + 1));
+            player.causeFoodExhaustion(0.025f * (amplifier + 1));
         }
         return true;
     }

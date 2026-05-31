@@ -25,7 +25,7 @@ public class AIGotoBlock extends AIGoto
     public void tick() {
         super.tick();
         if (golem.getLookControl() != null) {
-            golem.getLookControl().setLookPosition(golem.getTask().getPos().getX() + 0.5, golem.getTask().getPos().getY() + 0.5, golem.getTask().getPos().getZ() + 0.5, 10.0f, (float) 40);
+            golem.getLookControl().setLookAt(golem.getTask().getPos().getX() + 0.5, golem.getTask().getPos().getY() + 0.5, golem.getTask().getPos().getZ() + 0.5, 10.0f, (float) 40);
         }
     }
     

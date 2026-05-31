@@ -81,7 +81,7 @@ public class FocusEffectFrost extends FocusEffect
                         continue;
                     }
                     getPackage().world.setBlockAndUpdate(blockpos$mutableblockpos1, Blocks.FROSTED_ICE.defaultBlockState());
-                    getPackage().world.scheduleTick(blockpos$mutableblockpos1.toImmutable(), Blocks.FROSTED_ICE, Mth.randomBetweenInclusive(getPackage().world.getRandom(), 60, 120));
+                    getPackage().world.scheduleTick(blockpos$mutableblockpos1.immutable(), Blocks.FROSTED_ICE, Mth.randomBetweenInclusive(getPackage().world.getRandom(), 60, 120));
                 }
             }
         }

@@ -40,7 +40,7 @@ public class BlockPavingStone extends BlockTC
         return state.getBlock() == BlocksTC.pavingStoneBarrier;
     }
 
-    public BlockEntity createBlockEntity(Level world, BlockState state) {
+    public BlockEntity newBlockEntity(net.minecraft.core.BlockPos pos, BlockState state) {
         return (state.getBlock() == BlocksTC.pavingStoneBarrier) ? new TileBarrierStone(null, pos, state) : null;
     }
 

@@ -60,7 +60,7 @@ import thaumcraft.common.tiles.essentia.TileSmelter;
 public class ProxyGUI
 {
     public Object getClientGuiElement(int ID, Player player, Level world, int x, int y, int z) {
-        if (world instanceof WorldClient) {
+        if (world instanceof net.minecraft.client.multiplayer.ClientLevel) {
             switch (ID) {
                 case 13: {
                     return new GuiArcaneWorkbench(player.getInventory(), (TileArcaneWorkbench)world.getBlockEntity(new BlockPos(x, y, z)));

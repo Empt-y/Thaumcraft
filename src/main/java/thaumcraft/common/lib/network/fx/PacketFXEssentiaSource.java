@@ -77,7 +77,7 @@ public class PacketFXEssentiaSource implements CustomPacketPayload
                 EssentiaHandler.sourceFX.put(key, sf);
             }
             else {
-                EssentiaHandler.sourceFX.put(key, new EssentiaHandler.EssentiaSourceFX(new BlockPos(msg.getX(), msg.y, msg.z), new BlockPos(tx, ty, tz), msg.color, msg.ext));
+                EssentiaHandler.sourceFX.put(key, new EssentiaHandler.EssentiaSourceFX(new BlockPos(msg.x, msg.y, msg.z), new BlockPos(tx, ty, tz), msg.color, msg.ext));
             }
         });
     }

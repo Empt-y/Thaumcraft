@@ -1,21 +1,21 @@
 package thaumcraft.common.lib;
 
-import net.minecraft.core.dispenser.ProjectileDispenseBehavior;
-import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.entities.projectile.EntityAlumentum;
 
 
-public class BehaviorDispenseAlumetum extends ProjectileDispenseBehavior
+public class BehaviorDispenseAlumetum extends DefaultDispenseItemBehavior
 {
-    public BehaviorDispenseAlumetum() {
-        super(ItemsTC.alumentum.asItem());
-    }
-
     @Override
-    protected Projectile getProjectileEntity(Level worldIn, net.minecraft.core.dispenser.BlockSource position, ItemStack stackIn) {
-        return new EntityAlumentum(worldIn, position.center().x, position.center().y, position.center().z);
+    public ItemStack execute(BlockSource source, ItemStack stack) {
+        Direction direction = source.state().getValue(net.minecraft.world.level.block.DispenserBlock.FACING);
+        EntityAlumentum alumentum = new EntityAlumentum(source.level(), source.center().x, source.center().y, source.center().z);
+        alumentum.shoot(direction.getStepX(), direction.getStepY() + 0.1, direction.getStepZ(), 1.1f, 2.5f);
+        source.level().addFreshEntity(alumentum);
+        stack.shrink(1);
+        return stack;
     }
 }
