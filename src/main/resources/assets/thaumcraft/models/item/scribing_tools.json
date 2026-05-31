@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "thaumcraft:items/scribing_tools"
+        "layer0": "thaumcraft:item/scribing_tools"
     }
 }
