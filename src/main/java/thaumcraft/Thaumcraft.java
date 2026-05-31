@@ -20,6 +20,7 @@ import thaumcraft.common.config.TCBlockEntityTypes;
 import thaumcraft.common.container.TCMenuTypes;
 import thaumcraft.common.lib.CommandThaumcraft;
 import thaumcraft.common.lib.InternalMethodHandler;
+import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.capabilities.PlayerKnowledge;
 import thaumcraft.common.lib.capabilities.PlayerWarp;
 import thaumcraft.common.lib.network.PacketHandler;
@@ -36,6 +37,7 @@ public class Thaumcraft {
         modEventBus.addListener(PacketHandler::register);
         modEventBus.addListener(this::registerBlocks);
         modEventBus.addListener(this::registerCapabilities);
+        modEventBus.addListener(SoundsTC::registerSounds);
         TCMenuTypes.register(modEventBus);
         TCBlockEntityTypes.register(modEventBus);
 

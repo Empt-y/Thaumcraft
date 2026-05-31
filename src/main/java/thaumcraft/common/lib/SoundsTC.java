@@ -85,6 +85,7 @@ public class SoundsTC
     }
     
     public static void registerSounds(RegisterEvent event) {
+        if (!event.getRegistryKey().equals(net.minecraft.core.registries.Registries.SOUND_EVENT)) return;
         SoundsTC.zap = getRegisteredSoundEvent(event, "thaumcraft:zap");
         SoundsTC.heartbeat = getRegisteredSoundEvent(event, "thaumcraft:heartbeat");
         SoundsTC.spill = getRegisteredSoundEvent(event, "thaumcraft:spill");
@@ -150,6 +151,7 @@ public class SoundsTC
         SoundsTC.evilportal = getRegisteredSoundEvent(event, "thaumcraft:evilportal");
         SoundsTC.grind = getRegisteredSoundEvent(event, "thaumcraft:grind");
         SoundsTC.dust = getRegisteredSoundEvent(event, "thaumcraft:dust");
+        registerSoundTypes();
     }
     
     private static SoundEvent getRegisteredSoundEvent(RegisterEvent event, String id) {
