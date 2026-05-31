@@ -150,6 +150,8 @@ public class ThaumcraftApiHelper {
 
 	public static Ingredient getIngredient(Object obj) {
 		if (obj instanceof Ingredient) return (Ingredient) obj;
+        if (obj instanceof String key) return thaumcraft.api.crafting.OreDictCompat.fromOreDict(key);
+        if (obj instanceof net.minecraft.world.level.ItemLike il) return Ingredient.of(il);
         if (obj instanceof ItemStack is && is.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA))
             return new IngredientNBTTC(is).toVanilla();
         if (obj instanceof ItemStack is)

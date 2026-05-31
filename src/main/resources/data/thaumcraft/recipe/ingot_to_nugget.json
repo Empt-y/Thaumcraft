@@ -1,0 +1,1 @@
+{ "type": "minecraft:crafting_shapeless", "ingredients": ["thaumcraft:ingots"], "result": {"id": "thaumcraft:nugget", "count": 9} }
