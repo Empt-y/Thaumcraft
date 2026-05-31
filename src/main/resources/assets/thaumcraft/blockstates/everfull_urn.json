@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:everfull_urn"
+      "model": "thaumcraft:block/everfull_urn"
     }
   }
 }

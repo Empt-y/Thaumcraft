@@ -1,10 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "minecraft:block/cube_all",
-      "textures": {
-        "all": "thaumcraft:block/amber_brick"
-      }
+      "model": "thaumcraft:block/amber_brick"
     }
   }
 }

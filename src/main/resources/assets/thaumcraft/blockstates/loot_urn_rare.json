@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:loot_urn_rare"
+      "model": "thaumcraft:block/loot_urn_rare"
     }
   }
 }

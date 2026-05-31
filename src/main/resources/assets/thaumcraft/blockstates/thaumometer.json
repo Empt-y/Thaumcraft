@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:scanner.obj",
+      "model": "thaumcraft:block/scanner.obj",
       "textures": {
         "#body": "thaumcraft:items/scanner",
         "#pane": "thaumcraft:items/scanscreen"

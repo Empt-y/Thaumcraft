@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:jar_void"
+      "model": "thaumcraft:block/jar_void"
     }
   }
 }

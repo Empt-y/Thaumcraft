@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:centrifuge",
+      "model": "thaumcraft:block/centrifuge",
       "textures": {
         "particle": "thaumcraft:block/centrifuge",
         "side": "thaumcraft:block/centrifuge"

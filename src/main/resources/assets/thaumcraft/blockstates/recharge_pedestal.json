@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:recharge_pedestal"
+      "model": "thaumcraft:block/recharge_pedestal"
     }
   }
 }

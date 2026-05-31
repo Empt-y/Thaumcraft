@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:infusion_matrix",
+      "model": "thaumcraft:block/infusion_matrix",
       "textures": {
         "particle": "thaumcraft:block/infuser_normal",
         "side": "thaumcraft:block/infuser_normal"

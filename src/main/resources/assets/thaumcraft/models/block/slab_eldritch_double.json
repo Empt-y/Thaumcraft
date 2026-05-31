@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "thaumcraft:block/eldritch_stone"
+    "all": "thaumcraft:block/eldritch_stone_1"
   }
 }

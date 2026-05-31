@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:arcane_workbench"
+      "model": "thaumcraft:block/arcane_workbench"
     }
   }
 }

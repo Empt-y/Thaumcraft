@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:paving_stone_barrier"
+      "model": "thaumcraft:block/paving_stone_barrier"
     }
   }
 }

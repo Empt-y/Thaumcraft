@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:arcane_stone"
+      "model": "thaumcraft:block/arcane_stone"
     }
   }
 }

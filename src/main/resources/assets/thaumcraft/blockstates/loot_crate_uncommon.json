@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "thaumcraft:loot_crate_uncommon"
+      "model": "thaumcraft:block/loot_crate_uncommon"
     }
   }
 }

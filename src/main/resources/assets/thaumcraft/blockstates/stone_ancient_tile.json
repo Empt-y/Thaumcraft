@@ -1,10 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "minecraft:block/cube_all",
-      "textures": {
-        "all": "thaumcraft:block/ancient_tile"
-      }
+      "model": "thaumcraft:block/stone_ancient_tile"
     }
   }
 }
