@@ -38,20 +38,22 @@ public class Thaumcraft {
         ThaumcraftApi.internalMethods = new InternalMethodHandler();
         PlayerKnowledge.preInit();
         PlayerWarp.preInit();
+        thaumcraft.common.lib.capabilities.TCPlayerData.register(modEventBus);
 
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
     }
 
     private void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
+        // Return the attachment-backed instance so the capability and persistent storage are the same object
         event.registerEntity(
             thaumcraft.api.capabilities.ThaumcraftCapabilities.WARP,
             net.minecraft.world.entity.EntityType.PLAYER,
-            (player, ctx) -> thaumcraft.common.lib.capabilities.PlayerWarp.createDefault()
+            (player, ctx) -> player.getData(thaumcraft.common.lib.capabilities.TCPlayerData.WARP)
         );
         event.registerEntity(
             thaumcraft.api.capabilities.ThaumcraftCapabilities.KNOWLEDGE,
             net.minecraft.world.entity.EntityType.PLAYER,
-            (player, ctx) -> thaumcraft.common.lib.capabilities.PlayerKnowledge.createDefault()
+            (player, ctx) -> player.getData(thaumcraft.common.lib.capabilities.TCPlayerData.KNOWLEDGE)
         );
     }
 
@@ -63,6 +65,9 @@ public class Thaumcraft {
         }
         if (event.getRegistryKey().equals(net.minecraft.core.registries.Registries.ITEM)) {
             ConfigItems.initItems();
+        }
+        if (event.getRegistryKey().equals(net.minecraft.core.registries.Registries.CREATIVE_MODE_TAB)) {
+            ConfigItems.initCreativeTab();
         }
     }
 

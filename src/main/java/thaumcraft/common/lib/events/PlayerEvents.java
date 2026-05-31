@@ -386,14 +386,18 @@ public class PlayerEvents
 
     @SubscribeEvent
     public static void cloneCapabilitiesEvent(PlayerEvent.Clone event) {
-        try {
-            CompoundTag nbtKnowledge = ThaumcraftCapabilities.getKnowledge(event.getOriginal()).serializeNBT();
-            ThaumcraftCapabilities.getKnowledge(event.getEntity()).deserializeNBT(nbtKnowledge);
-            CompoundTag nbtWarp = ThaumcraftCapabilities.getWarp(event.getOriginal()).serializeNBT();
-            ThaumcraftCapabilities.getWarp(event.getEntity()).deserializeNBT(nbtWarp);
-        }
-        catch (Exception e) {
-            Thaumcraft.log.error("Could not clone player [" + event.getOriginal().getName().getString() + "] knowledge when changing dimensions");
+        // AttachmentType.copyOnDeath() handles death/respawn copy automatically.
+        // This handler stays for dimension-change clones where copyOnDeath does not fire.
+        if (!event.isWasDeath()) {
+            try {
+                CompoundTag nbtKnowledge = ThaumcraftCapabilities.getKnowledge(event.getOriginal()).serializeNBT();
+                ThaumcraftCapabilities.getKnowledge(event.getEntity()).deserializeNBT(nbtKnowledge);
+                CompoundTag nbtWarp = ThaumcraftCapabilities.getWarp(event.getOriginal()).serializeNBT();
+                ThaumcraftCapabilities.getWarp(event.getEntity()).deserializeNBT(nbtWarp);
+            }
+            catch (Exception e) {
+                Thaumcraft.log.error("Could not clone player [" + event.getOriginal().getName().getString() + "] knowledge when changing dimensions");
+            }
         }
     }
     

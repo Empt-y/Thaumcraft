@@ -369,9 +369,22 @@ public class ConfigItems
         return startBook;
     }
 
+    public static void initCreativeTab() {
+        net.minecraft.resources.Identifier rl = net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", "thaumcraft");
+        TABTC = net.minecraft.world.item.CreativeModeTab.builder()
+            .title(net.minecraft.network.chat.Component.translatable("itemGroup.thaumcraft"))
+            .icon(() -> new ItemStack(thaumcraft.api.items.ItemsTC.thaumonomicon))
+            .displayItems((params, output) -> {
+                net.minecraft.core.registries.BuiltInRegistries.ITEM.listElements()
+                    .filter(h -> h.key().identifier().getNamespace().equals("thaumcraft"))
+                    .forEach(h -> output.accept(new ItemStack(h)));
+            })
+            .build();
+        net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.CREATIVE_MODE_TAB, rl, TABTC);
+    }
+
     static {
         ConfigItems.startBook = ItemStack.EMPTY;
-        ConfigItems.TABTC = null; // FIXME: CreativeModeTab registration changed in 1.20+; use DeferredRegister
         ITEM_VARIANT_HOLDERS = new ArrayList<IThaumcraftItems>();
     }
 }
