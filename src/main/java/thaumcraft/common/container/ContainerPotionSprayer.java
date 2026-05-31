@@ -1,7 +1,9 @@
 package thaumcraft.common.container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -13,8 +15,13 @@ public class ContainerPotionSprayer extends AbstractContainerMenu
 {
     private TilePotionSprayer sprayer;
 
-    public ContainerPotionSprayer(Inventory par1InventoryPlayer, TilePotionSprayer tilePotionSprayer) {
-        super(null, 0);
+    public ContainerPotionSprayer(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.POTION_SPRAYER.get(), id, inv,
+            (TilePotionSprayer) inv.player.level().getBlockEntity(buf.readBlockPos()));
+    }
+
+    public ContainerPotionSprayer(MenuType<ContainerPotionSprayer> type, int id, Inventory par1InventoryPlayer, TilePotionSprayer tilePotionSprayer) {
+        super(type, id);
         sprayer = tilePotionSprayer;
         addSlot(new SlotPotion(tilePotionSprayer, 0, 56, 64));
         for (int i = 0; i < 3; ++i) {
@@ -59,4 +66,6 @@ public class ContainerPotionSprayer extends AbstractContainerMenu
         }
         return stack;
     }
+
+    public TilePotionSprayer getTile() { return sprayer; }
 }

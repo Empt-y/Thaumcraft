@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "": {
+      "model": "thaumcraft:block/nitor_lightblue",
+      "textures": {
+        "particle": "thaumcraft:block/nitor",
+        "all": "thaumcraft:block/nitor"
+      }
+    }
+  }
+}

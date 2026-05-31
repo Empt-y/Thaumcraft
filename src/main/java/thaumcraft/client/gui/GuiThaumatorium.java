@@ -27,9 +27,8 @@ public class GuiThaumatorium extends AbstractContainerScreen<ContainerThaumatori
     long lastHLUpdate;
     static HashMap<Integer, CrucibleRecipe> recipeCache;
 
-    public GuiThaumatorium(Inventory par1InventoryPlayer, TileThaumatorium par2BlockEntityFurnace) {
-        super(new ContainerThaumatorium(par1InventoryPlayer, par2BlockEntityFurnace), par1InventoryPlayer,
-            Component.translatable("gui.thaumatorium"), 175, 216);
+    public GuiThaumatorium(ContainerThaumatorium menu, Inventory inv, Component title) {
+        super(menu, inv, title);
         container = null;
         index = 0;
         lastSize = 0;
@@ -37,10 +36,10 @@ public class GuiThaumatorium extends AbstractContainerScreen<ContainerThaumatori
         tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_thaumatorium.png");
         hashList = new ArrayList<Integer>();
         lastHLUpdate = 0L;
-        inventory = par2BlockEntityFurnace;
-        container = (ContainerThaumatorium) menu;
-        player = par1InventoryPlayer.player;
-        inventory.updateRecipes(player);
+        inventory = menu.getTile();
+        container = menu;
+        player = inv.player;
+        if (inventory != null) inventory.updateRecipes(player);
     }
 
     @Override

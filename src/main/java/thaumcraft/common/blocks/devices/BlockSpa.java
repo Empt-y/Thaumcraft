@@ -41,4 +41,15 @@ public class BlockSpa extends BlockTCDevice
         }
         return true;
     }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world, net.minecraft.core.BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        if (!world.isClientSide() && !player.isShiftKeyDown()) {
+            net.minecraft.world.level.block.entity.BlockEntity te = world.getBlockEntity(pos);
+            if (te instanceof net.minecraft.world.MenuProvider) {
+                ((net.minecraft.server.level.ServerPlayer) player).openMenu((net.minecraft.world.MenuProvider) te, buf -> buf.writeBlockPos(pos));
+            }
+        }
+        return net.minecraft.world.InteractionResult.SUCCESS;
+    }
 }

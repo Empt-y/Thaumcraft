@@ -1,7 +1,9 @@
 package thaumcraft.common.container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import thaumcraft.common.tiles.crafting.TileThaumatorium;
@@ -12,8 +14,13 @@ public class ContainerThaumatorium extends AbstractContainerMenu
     private TileThaumatorium thaumatorium;
     private Player player;
 
-    public ContainerThaumatorium(Inventory par1InventoryPlayer, TileThaumatorium tileEntity) {
-        super(null, 0);
+    public ContainerThaumatorium(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.THAUMATORIUM.get(), id, inv,
+            (TileThaumatorium) inv.player.level().getBlockEntity(buf.readBlockPos()));
+    }
+
+    public ContainerThaumatorium(MenuType<ContainerThaumatorium> type, int id, Inventory par1InventoryPlayer, TileThaumatorium tileEntity) {
+        super(type, id);
         player = par1InventoryPlayer.player;
         thaumatorium = tileEntity;
         thaumatorium.eventHandler = this;
@@ -86,4 +93,6 @@ public class ContainerThaumatorium extends AbstractContainerMenu
         }
         return itemstack;
     }
+
+    public TileThaumatorium getTile() { return thaumatorium; }
 }

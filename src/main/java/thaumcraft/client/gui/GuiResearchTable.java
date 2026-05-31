@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -46,9 +47,8 @@ public class GuiResearchTable extends AbstractContainerScreen<ContainerResearchT
     GuiImageButton buttonScrap;
     public ArrayList<ResearchTableData.CardChoice> cardChoices;
 
-    public GuiResearchTable(Player player, TileResearchTable e) {
-        super(new ContainerResearchTable(player.getInventory(), e), player.getInventory(),
-            Component.translatable("gui.researchtable"), 255, 255);
+    public GuiResearchTable(ContainerResearchTable menu, Inventory inv, Component title) {
+        super(menu, inv, title);
         txBackground = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_research_table.png");
         txBase = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_base.png");
         txPaper = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/paper.png");
@@ -66,9 +66,9 @@ public class GuiResearchTable extends AbstractContainerScreen<ContainerResearchT
         currentAids = new HashSet<String>();
         selectedAids = new HashSet<String>();
         cardChoices = new ArrayList<ResearchTableData.CardChoice>();
-        table = e;
-        this.player = player;
-        username = player.getName().getString();
+        table = menu.tileEntity;
+        this.player = inv.player;
+        username = inv.player.getName().getString();
         if (table.data != null) {
             for (String cat : table.data.categoryTotals.keySet()) {
                 tempCatTotals.put(cat, table.data.categoryTotals.get(cat));

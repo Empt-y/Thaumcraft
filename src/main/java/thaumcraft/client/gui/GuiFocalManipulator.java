@@ -58,10 +58,9 @@ public class GuiFocalManipulator extends AbstractContainerScreen<ContainerFocalM
     int scrollX;
     int scrollY;
 
-    public GuiFocalManipulator(Inventory par1InventoryPlayer, TileFocalManipulator table) {
-        super(new ContainerFocalManipulator(par1InventoryPlayer, table), par1InventoryPlayer,
-            Component.translatable("gui.focalmanipulator"), 231, 231);
-        this.table = table;
+    public GuiFocalManipulator(ContainerFocalManipulator menu, Inventory inv, Component title) {
+        super(menu, inv, title);
+        this.table = menu.getTile();
         isMouseButtonDown = 0;
         mouseX = 0;
         mouseY = 0;

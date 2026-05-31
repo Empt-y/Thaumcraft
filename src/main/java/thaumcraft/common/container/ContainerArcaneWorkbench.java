@@ -37,8 +37,13 @@ public class ContainerArcaneWorkbench extends AbstractContainerMenu
     private int lastVis;
     private long lastCheck;
 
-    public ContainerArcaneWorkbench(Inventory par1InventoryPlayer, TileArcaneWorkbench e) {
-        super(null, 0);
+    public ContainerArcaneWorkbench(int id, Inventory inv, net.minecraft.network.RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.ARCANE_WORKBENCH.get(), id, inv,
+            (TileArcaneWorkbench) inv.player.level().getBlockEntity(buf.readBlockPos()));
+    }
+
+    public ContainerArcaneWorkbench(net.minecraft.world.inventory.MenuType<ContainerArcaneWorkbench> type, int id, Inventory par1InventoryPlayer, TileArcaneWorkbench e) {
+        super(type, id);
         craftResult = new ResultContainer();
         lastVis = -1;
         lastCheck = 0L;
@@ -209,4 +214,6 @@ public class ContainerArcaneWorkbench extends AbstractContainerMenu
         ContainerArcaneWorkbench.xx = new int[] { 64, 17, 112, 17, 112, 64 };
         ContainerArcaneWorkbench.yy = new int[] { 13, 35, 35, 93, 93, 115 };
     }
+
+    public TileArcaneWorkbench getTile() { return tileEntity; }
 }

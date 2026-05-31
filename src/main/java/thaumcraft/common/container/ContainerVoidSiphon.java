@@ -1,8 +1,10 @@
 package thaumcraft.common.container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import thaumcraft.common.container.slot.SlotOutput;
@@ -13,8 +15,13 @@ public class ContainerVoidSiphon extends AbstractContainerMenu
 {
     private TileVoidSiphon siphon;
 
-    public ContainerVoidSiphon(Inventory par1InventoryPlayer, TileVoidSiphon tileEntity) {
-        super(null, 0);
+    public ContainerVoidSiphon(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.VOID_SIPHON.get(), id, inv,
+            (TileVoidSiphon) inv.player.level().getBlockEntity(buf.readBlockPos()));
+    }
+
+    public ContainerVoidSiphon(MenuType<ContainerVoidSiphon> type, int id, Inventory par1InventoryPlayer, TileVoidSiphon tileEntity) {
+        super(type, id);
         siphon = tileEntity;
         addSlot(new SlotOutput(tileEntity, 0, 80, 32));
         for (int i = 0; i < 3; ++i) {
@@ -61,4 +68,6 @@ public class ContainerVoidSiphon extends AbstractContainerMenu
         }
         return stack;
     }
+
+    public TileVoidSiphon getTile() { return siphon; }
 }

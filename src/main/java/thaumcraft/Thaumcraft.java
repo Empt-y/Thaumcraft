@@ -16,6 +16,8 @@ import thaumcraft.common.config.ConfigItems;
 import thaumcraft.common.config.ConfigRecipes;
 import thaumcraft.common.config.ConfigResearch;
 import thaumcraft.common.config.ModConfig;
+import thaumcraft.common.config.TCBlockEntityTypes;
+import thaumcraft.common.container.TCMenuTypes;
 import thaumcraft.common.lib.CommandThaumcraft;
 import thaumcraft.common.lib.InternalMethodHandler;
 import thaumcraft.common.lib.capabilities.PlayerKnowledge;
@@ -34,6 +36,8 @@ public class Thaumcraft {
         modEventBus.addListener(PacketHandler::register);
         modEventBus.addListener(this::registerBlocks);
         modEventBus.addListener(this::registerCapabilities);
+        TCMenuTypes.register(modEventBus);
+        TCBlockEntityTypes.register(modEventBus);
 
         ThaumcraftApi.internalMethods = new InternalMethodHandler();
         PlayerKnowledge.preInit();

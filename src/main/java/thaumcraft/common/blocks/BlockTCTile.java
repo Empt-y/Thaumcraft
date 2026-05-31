@@ -35,7 +35,13 @@ public class BlockTCTile extends BlockTC implements EntityBlock
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         if (tileClass == null) return null;
         try {
-            return tileClass.getDeclaredConstructor().newInstance();
+            net.minecraft.world.level.block.entity.BlockEntityType<?> type =
+                thaumcraft.common.config.TCBlockEntityTypes.getTypeForClass(tileClass);
+            return tileClass.getDeclaredConstructor(
+                net.minecraft.world.level.block.entity.BlockEntityType.class,
+                net.minecraft.core.BlockPos.class,
+                net.minecraft.world.level.block.state.BlockState.class
+            ).newInstance(type, pos, state);
         } catch (Exception e) {
             Thaumcraft.log.catching(e);
         }

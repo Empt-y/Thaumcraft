@@ -56,10 +56,18 @@ public class BlockSmelter extends BlockTCDevice implements IBlockEnabled, IBlock
     }
 
     public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (!world.isClientSide() && !player.isShiftKeyDown()) {
-            // TODO: open smelter GUI - requires MenuProvider wiring
-        }
         return true;
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        if (!world.isClientSide() && !player.isShiftKeyDown()) {
+            net.minecraft.world.level.block.entity.BlockEntity te = world.getBlockEntity(pos);
+            if (te instanceof TileSmelter) {
+                ((net.minecraft.server.level.ServerPlayer) player).openMenu((TileSmelter) te, buf -> buf.writeBlockPos(pos));
+            }
+        }
+        return net.minecraft.world.InteractionResult.SUCCESS;
     }
 
     @Override

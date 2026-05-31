@@ -16,11 +16,10 @@ public class GuiArcaneWorkbench extends AbstractContainerScreen<ContainerArcaneW
     private TileArcaneWorkbench tileEntity;
     Identifier tex;
 
-    public GuiArcaneWorkbench(Inventory par1InventoryPlayer, TileArcaneWorkbench e) {
-        super(new ContainerArcaneWorkbench(par1InventoryPlayer, e), par1InventoryPlayer,
-            Component.translatable("gui.arcaneworkbench"), 190, 234);
+    public GuiArcaneWorkbench(ContainerArcaneWorkbench menu, Inventory inv, Component title) {
+        super(menu, inv, title);
         tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/arcaneworkbench.png");
-        tileEntity = e;
+        tileEntity = menu.getTile();
     }
 
     @Override

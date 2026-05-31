@@ -1,7 +1,9 @@
 package thaumcraft.common.container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import thaumcraft.common.container.slot.SlotLimitedByClass;
@@ -13,9 +15,14 @@ public class ContainerSpa extends AbstractContainerMenu
 {
     private TileSpa spa;
     private int lastBreakTime;
-    
-    public ContainerSpa(Inventory par1InventoryPlayer, TileSpa tileEntity) {
-        super(null, 0);
+
+    public ContainerSpa(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.SPA.get(), id, inv,
+            (TileSpa) inv.player.level().getBlockEntity(buf.readBlockPos()));
+    }
+
+    public ContainerSpa(MenuType<ContainerSpa> type, int id, Inventory par1InventoryPlayer, TileSpa tileEntity) {
+        super(type, id);
         spa = tileEntity;
         addSlot(new SlotLimitedByClass(ItemBathSalts.class, tileEntity, 0, 65, 31));
         for (int i = 0; i < 3; ++i) {
@@ -64,4 +71,6 @@ public class ContainerSpa extends AbstractContainerMenu
         }
         return stack;
     }
+
+    public TileSpa getTile() { return spa; }
 }

@@ -1,8 +1,13 @@
 package thaumcraft.common.container;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import thaumcraft.api.aspects.AspectList;
@@ -15,8 +20,13 @@ public class ContainerSmelter extends AbstractContainerMenu
 {
     private TileSmelter furnace;
 
-    public ContainerSmelter(Inventory par1InventoryPlayer, TileSmelter tileEntity) {
-        super(null, 0);
+    public ContainerSmelter(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.SMELTER.get(), id, inv,
+            (TileSmelter) inv.player.level().getBlockEntity(buf.readBlockPos()));
+    }
+
+    public ContainerSmelter(MenuType<ContainerSmelter> type, int id, Inventory par1InventoryPlayer, TileSmelter tileEntity) {
+        super(type, id);
         furnace = tileEntity;
         addSlot(new SlotLimitedHasAspects(tileEntity, 0, 80, 8));
         addSlot(new Slot(tileEntity, 1, 80, 48));
@@ -101,4 +111,6 @@ public class ContainerSmelter extends AbstractContainerMenu
         }
         return itemstack;
     }
+
+    public TileSmelter getTile() { return furnace; }
 }

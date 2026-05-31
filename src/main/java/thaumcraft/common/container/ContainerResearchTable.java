@@ -1,10 +1,12 @@
 package thaumcraft.common.container;
 import java.util.HashMap;
 import java.util.Iterator;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import thaumcraft.api.aspects.Aspect;
@@ -23,9 +25,14 @@ public class ContainerResearchTable extends AbstractContainerMenu
     String[] aspects;
     Player player;
     static HashMap<Integer, Long> antiSpam;
-    
-    public ContainerResearchTable(Inventory iinventory, TileResearchTable iinventory1) {
-        super(null, 0);
+
+    public ContainerResearchTable(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.RESEARCH_TABLE.get(), id, inv,
+            (TileResearchTable) inv.player.level().getBlockEntity(buf.readBlockPos()));
+    }
+
+    public ContainerResearchTable(MenuType<ContainerResearchTable> type, int id, Inventory iinventory, TileResearchTable iinventory1) {
+        super(type, id);
         player = iinventory.player;
         tileEntity = iinventory1;
         aspects = Aspect.aspects.keySet().toArray(new String[0]);

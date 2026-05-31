@@ -149,9 +149,10 @@ public class EntityUtils
         Vec3 entityVec = new Vec3(ray.getLocation().x, ray.getLocation().y, ray.getLocation().z);
         Vec3 vec3d2 = entityVec.add(lookVec.x * d, lookVec.y * d, lookVec.z * d);
         float f1 = padding;
-        AABB bb = (((net.minecraft.world.phys.EntityHitResult)ray).getEntity() != null) ? ((net.minecraft.world.phys.EntityHitResult)ray).getEntity().getBoundingBox() : new AABB(ray.getLocation().x, ray.getLocation().y, ray.getLocation().z, ray.getLocation().x, ray.getLocation().y, ray.getLocation().z).inflate(0.5);
+        Entity hitEntity = (ray instanceof net.minecraft.world.phys.EntityHitResult ehr) ? ehr.getEntity() : null;
+        AABB bb = (hitEntity != null) ? hitEntity.getBoundingBox() : new AABB(ray.getLocation().x, ray.getLocation().y, ray.getLocation().z, ray.getLocation().x, ray.getLocation().y, ray.getLocation().z).inflate(0.5);
         // getEntitiesOfClass(Class, Entity, AABB) removed; use getEntities(Entity, AABB, Predicate)
-        List<Entity> list = world.getEntities(((net.minecraft.world.phys.EntityHitResult)ray).getEntity(), bb.expandTowards(lookVec.x * d, lookVec.y * d, lookVec.z * d).inflate(f1, f1, f1));
+        List<Entity> list = world.getEntities(hitEntity, bb.expandTowards(lookVec.x * d, lookVec.y * d, lookVec.z * d).inflate(f1, f1, f1));
         double d2 = 0.0;
         for (int i = 0; i < list.size(); ++i) {
             Entity entity = list.get(i);

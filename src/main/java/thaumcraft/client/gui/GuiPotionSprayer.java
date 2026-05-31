@@ -21,16 +21,15 @@ public class GuiPotionSprayer extends AbstractContainerScreen<ContainerPotionSpr
     Identifier tex;
     int startAspect;
 
-    public GuiPotionSprayer(Inventory par1InventoryPlayer, TilePotionSprayer tilePotionSprayer) {
-        super(new ContainerPotionSprayer(par1InventoryPlayer, tilePotionSprayer), par1InventoryPlayer,
-            Component.translatable("gui.potionsprayer"), 192, 233);
+    public GuiPotionSprayer(ContainerPotionSprayer menu, Inventory inv, Component title) {
+        super(menu, inv, title);
         container = null;
         player = null;
         tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_potion_sprayer.png");
         startAspect = 0;
-        inventory = tilePotionSprayer;
-        container = (ContainerPotionSprayer) menu;
-        player = par1InventoryPlayer.player;
+        inventory = menu.getTile();
+        container = menu;
+        player = inv.player;
     }
 
     @Override

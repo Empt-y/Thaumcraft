@@ -1,7 +1,9 @@
 package thaumcraft.common.container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.sounds.SoundSource;
@@ -16,8 +18,13 @@ public class ContainerFocalManipulator extends AbstractContainerMenu
     private TileFocalManipulator table;
     private int lastBreakTime;
 
-    public ContainerFocalManipulator(Inventory inventoryPlayer, TileFocalManipulator tileEntity) {
-        super(null, 0);
+    public ContainerFocalManipulator(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.FOCAL_MANIPULATOR.get(), id, inv,
+            (TileFocalManipulator) inv.player.level().getBlockEntity(buf.readBlockPos()));
+    }
+
+    public ContainerFocalManipulator(MenuType<ContainerFocalManipulator> type, int id, Inventory inventoryPlayer, TileFocalManipulator tileEntity) {
+        super(type, id);
         table = tileEntity;
         addSlot(new SlotFocus(tileEntity, 0, 31, 191));
         for (int i = 0; i < 3; ++i) {
@@ -85,4 +92,6 @@ public class ContainerFocalManipulator extends AbstractContainerMenu
         }
         return itemstack;
     }
+
+    public TileFocalManipulator getTile() { return table; }
 }

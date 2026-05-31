@@ -16,11 +16,10 @@ public class GuiSpa extends AbstractContainerScreen<ContainerSpa>
     private TileSpa spa;
     Identifier tex;
 
-    public GuiSpa(Inventory par1InventoryPlayer, TileSpa teSpa) {
-        super(new ContainerSpa(par1InventoryPlayer, teSpa), par1InventoryPlayer,
-            Component.translatable("gui.spa"));
+    public GuiSpa(ContainerSpa menu, Inventory inv, Component title) {
+        super(menu, inv, title);
         tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_spa.png");
-        spa = teSpa;
+        spa = menu.getTile();
     }
 
     @Override

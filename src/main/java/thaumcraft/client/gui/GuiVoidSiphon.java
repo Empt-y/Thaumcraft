@@ -21,11 +21,10 @@ public class GuiVoidSiphon extends AbstractContainerScreen<ContainerVoidSiphon>
         starsTexture = Identifier.fromNamespaceAndPath("minecraft", "textures/entity/end_portal.png");
     }
 
-    public GuiVoidSiphon(Inventory par1InventoryPlayer, TileVoidSiphon tileVoidSiphon) {
-        super(new ContainerVoidSiphon(par1InventoryPlayer, tileVoidSiphon), par1InventoryPlayer,
-            Component.translatable("gui.voidsiphon"), 176, 166);
+    public GuiVoidSiphon(ContainerVoidSiphon menu, Inventory inv, Component title) {
+        super(menu, inv, title);
         tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_void_siphon.png");
-        inventory = tileVoidSiphon;
+        inventory = menu.getTile();
     }
 
     @Override

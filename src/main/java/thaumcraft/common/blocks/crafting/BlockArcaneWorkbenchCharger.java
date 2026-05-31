@@ -60,15 +60,17 @@ public class BlockArcaneWorkbenchCharger extends BlockTC
     }
 
     public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (world.isClientSide()) {
-            return true;
-        }
-        if (world.getBlockState(pos.below()).getBlock() == BlocksTC.arcaneWorkbench) {
-            // TODO: open GUI id=13
-        }
-        if (world.getBlockState(pos.below()).getBlock() == BlocksTC.wandWorkbench) {
-            // TODO: open GUI id=7
-        }
         return true;
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level world, net.minecraft.core.BlockPos pos, Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        if (!world.isClientSide() && !player.isShiftKeyDown()) {
+            net.minecraft.world.level.block.entity.BlockEntity te = world.getBlockEntity(pos);
+            if (te instanceof net.minecraft.world.MenuProvider) {
+                ((net.minecraft.server.level.ServerPlayer) player).openMenu((net.minecraft.world.MenuProvider) te, buf -> buf.writeBlockPos(pos));
+            }
+        }
+        return net.minecraft.world.InteractionResult.SUCCESS;
     }
 }

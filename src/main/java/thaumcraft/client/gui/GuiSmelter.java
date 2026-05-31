@@ -16,11 +16,10 @@ public class GuiSmelter extends AbstractContainerScreen<ContainerSmelter>
     private TileSmelter furnaceInventory;
     Identifier tex;
 
-    public GuiSmelter(Inventory par1InventoryPlayer, TileSmelter par2BlockEntityFurnace) {
-        super(new ContainerSmelter(par1InventoryPlayer, par2BlockEntityFurnace), par1InventoryPlayer,
-            Component.translatable("gui.smelter"));
+    public GuiSmelter(ContainerSmelter menu, Inventory inv, Component title) {
+        super(menu, inv, title);
         tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_smelter.png");
-        furnaceInventory = par2BlockEntityFurnace;
+        furnaceInventory = menu.getTile();
     }
 
     @Override
