@@ -167,10 +167,29 @@ public class ConfigItems
     }
     
     private static Item ri(String name, java.util.function.Supplier<Item> factory) {
+        return ri(name, null, factory);
+    }
+
+    private static Item ri(String name, EquipmentSlot slot, java.util.function.Supplier<Item> factory) {
+        return ri(name, slot, null, factory);
+    }
+
+    private static Item ri(String name, EquipmentSlot slot, String assetName, java.util.function.Supplier<Item> factory) {
         net.minecraft.resources.Identifier rl = net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name);
         net.minecraft.resources.ResourceKey<net.minecraft.world.item.Item> key =
             net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ITEM, rl);
-        TCItemInit.set(new net.minecraft.world.item.Item.Properties().setId(key));
+        net.minecraft.world.item.Item.Properties props = new net.minecraft.world.item.Item.Properties().setId(key);
+        if (slot != null) {
+            net.minecraft.world.item.equipment.Equippable.Builder eb =
+                net.minecraft.world.item.equipment.Equippable.builder(slot);
+            if (assetName != null) {
+                eb.setAsset(net.minecraft.resources.ResourceKey.create(
+                    net.minecraft.world.item.equipment.EquipmentAssets.ROOT_ID,
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", assetName)));
+            }
+            props = props.component(net.minecraft.core.component.DataComponents.EQUIPPABLE, eb.build());
+        }
+        TCItemInit.set(props);
         Item item = factory.get();
         net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.ITEM, rl, item);
         return item;
@@ -239,35 +258,35 @@ public class ConfigItems
         ItemsTC.grappleGun       = ri("grapple_gun", () -> new thaumcraft.common.items.tools.ItemGrappleGun());
         ItemsTC.grappleGunTip    = ri("grapple_gun_tip", () -> new ItemTCBase("grapple_gun_tip"));
         ItemsTC.grappleGunSpool  = ri("grapple_gun_spool", () -> new ItemTCBase("grapple_gun_spool"));
-        ItemsTC.goggles          = ri("goggles", () -> new thaumcraft.common.items.armor.ItemGoggles());
-        ItemsTC.thaumiumHelm     = ri("thaumium_helm", () -> new thaumcraft.common.items.armor.ItemThaumiumArmor("thaumium_helm",  ThaumcraftMaterials.ARMORMAT_THAUMIUM_KEY, 2, EquipmentSlot.HEAD));
-        ItemsTC.thaumiumChest    = ri("thaumium_chest", () -> new thaumcraft.common.items.armor.ItemThaumiumArmor("thaumium_chest", ThaumcraftMaterials.ARMORMAT_THAUMIUM_KEY, 2, EquipmentSlot.CHEST));
-        ItemsTC.thaumiumLegs     = ri("thaumium_legs", () -> new thaumcraft.common.items.armor.ItemThaumiumArmor("thaumium_legs",  ThaumcraftMaterials.ARMORMAT_THAUMIUM_KEY, 2, EquipmentSlot.LEGS));
-        ItemsTC.thaumiumBoots    = ri("thaumium_boots", () -> new thaumcraft.common.items.armor.ItemThaumiumArmor("thaumium_boots", ThaumcraftMaterials.ARMORMAT_THAUMIUM_KEY, 2, EquipmentSlot.FEET));
-        ItemsTC.clothChest       = ri("cloth_chest", () -> new thaumcraft.common.items.armor.ItemRobeArmor("cloth_chest",  ThaumcraftMaterials.ARMORMAT_SPECIAL_KEY, 1, EquipmentSlot.CHEST));
-        ItemsTC.clothLegs        = ri("cloth_legs", () -> new thaumcraft.common.items.armor.ItemRobeArmor("cloth_legs",   ThaumcraftMaterials.ARMORMAT_SPECIAL_KEY, 2, EquipmentSlot.LEGS));
-        ItemsTC.clothBoots       = ri("cloth_boots", () -> new thaumcraft.common.items.armor.ItemRobeArmor("cloth_boots",  ThaumcraftMaterials.ARMORMAT_SPECIAL_KEY, 1, EquipmentSlot.FEET));
-        ItemsTC.travellerBoots   = ri("traveller_boots", () -> new thaumcraft.common.items.armor.ItemBootsTraveller());
-        ItemsTC.fortressHelm     = ri("fortress_helm", () -> new thaumcraft.common.items.armor.ItemFortressArmor("fortress_helm",  ThaumcraftMaterials.ARMORMAT_FORTRESS_KEY, 4, EquipmentSlot.HEAD));
-        ItemsTC.fortressChest    = ri("fortress_chest", () -> new thaumcraft.common.items.armor.ItemFortressArmor("fortress_chest", ThaumcraftMaterials.ARMORMAT_FORTRESS_KEY, 4, EquipmentSlot.CHEST));
-        ItemsTC.fortressLegs     = ri("fortress_legs", () -> new thaumcraft.common.items.armor.ItemFortressArmor("fortress_legs",  ThaumcraftMaterials.ARMORMAT_FORTRESS_KEY, 4, EquipmentSlot.LEGS));
-        ItemsTC.voidHelm         = ri("void_helm", () -> new thaumcraft.common.items.armor.ItemVoidArmor("void_helm",   ThaumcraftMaterials.ARMORMAT_VOID_KEY, 2, EquipmentSlot.HEAD));
-        ItemsTC.voidChest        = ri("void_chest", () -> new thaumcraft.common.items.armor.ItemVoidArmor("void_chest",  ThaumcraftMaterials.ARMORMAT_VOID_KEY, 2, EquipmentSlot.CHEST));
-        ItemsTC.voidLegs         = ri("void_legs", () -> new thaumcraft.common.items.armor.ItemVoidArmor("void_legs",   ThaumcraftMaterials.ARMORMAT_VOID_KEY, 2, EquipmentSlot.LEGS));
-        ItemsTC.voidBoots        = ri("void_boots", () -> new thaumcraft.common.items.armor.ItemVoidArmor("void_boots",  ThaumcraftMaterials.ARMORMAT_VOID_KEY, 2, EquipmentSlot.FEET));
-        ItemsTC.voidRobeHelm     = ri("void_robe_helm", () -> new thaumcraft.common.items.armor.ItemVoidRobeArmor("void_robe_helm",  ThaumcraftMaterials.ARMORMAT_VOIDROBE_KEY, 4, EquipmentSlot.HEAD));
-        ItemsTC.voidRobeChest    = ri("void_robe_chest", () -> new thaumcraft.common.items.armor.ItemVoidRobeArmor("void_robe_chest", ThaumcraftMaterials.ARMORMAT_VOIDROBE_KEY, 4, EquipmentSlot.CHEST));
-        ItemsTC.voidRobeLegs     = ri("void_robe_legs", () -> new thaumcraft.common.items.armor.ItemVoidRobeArmor("void_robe_legs",  ThaumcraftMaterials.ARMORMAT_VOIDROBE_KEY, 4, EquipmentSlot.LEGS));
-        ItemsTC.crimsonPlateHelm  = ri("crimson_plate_helm", () -> new thaumcraft.common.items.armor.ItemCultistPlateArmor("crimson_plate_helm",  ThaumcraftMaterials.ARMORMAT_CULTIST_PLATE_KEY, 4, EquipmentSlot.HEAD));
-        ItemsTC.crimsonPlateChest = ri("crimson_plate_chest", () -> new thaumcraft.common.items.armor.ItemCultistPlateArmor("crimson_plate_chest", ThaumcraftMaterials.ARMORMAT_CULTIST_PLATE_KEY, 4, EquipmentSlot.CHEST));
-        ItemsTC.crimsonPlateLegs  = ri("crimson_plate_legs", () -> new thaumcraft.common.items.armor.ItemCultistPlateArmor("crimson_plate_legs",  ThaumcraftMaterials.ARMORMAT_CULTIST_PLATE_KEY, 4, EquipmentSlot.LEGS));
-        ItemsTC.crimsonBoots      = ri("crimson_boots", () -> new thaumcraft.common.items.armor.ItemCultistBoots());
-        ItemsTC.crimsonRobeHelm   = ri("crimson_robe_helm", () -> new thaumcraft.common.items.armor.ItemCultistRobeArmor("crimson_robe_helm",  ThaumcraftMaterials.ARMORMAT_CULTIST_ROBE_KEY, 4, EquipmentSlot.HEAD));
-        ItemsTC.crimsonRobeChest  = ri("crimson_robe_chest", () -> new thaumcraft.common.items.armor.ItemCultistRobeArmor("crimson_robe_chest", ThaumcraftMaterials.ARMORMAT_CULTIST_ROBE_KEY, 4, EquipmentSlot.CHEST));
-        ItemsTC.crimsonRobeLegs   = ri("crimson_robe_legs", () -> new thaumcraft.common.items.armor.ItemCultistRobeArmor("crimson_robe_legs",  ThaumcraftMaterials.ARMORMAT_CULTIST_ROBE_KEY, 4, EquipmentSlot.LEGS));
-        ItemsTC.crimsonPraetorHelm  = ri("crimson_praetor_helm", () -> new thaumcraft.common.items.armor.ItemCultistLeaderArmor("crimson_praetor_helm",  4, EquipmentSlot.HEAD));
-        ItemsTC.crimsonPraetorChest = ri("crimson_praetor_chest", () -> new thaumcraft.common.items.armor.ItemCultistLeaderArmor("crimson_praetor_chest", 4, EquipmentSlot.CHEST));
-        ItemsTC.crimsonPraetorLegs  = ri("crimson_praetor_legs", () -> new thaumcraft.common.items.armor.ItemCultistLeaderArmor("crimson_praetor_legs",  4, EquipmentSlot.LEGS));
+        ItemsTC.goggles          = ri("goggles", EquipmentSlot.HEAD, "goggles", () -> new thaumcraft.common.items.armor.ItemGoggles());
+        ItemsTC.thaumiumHelm     = ri("thaumium_helm", EquipmentSlot.HEAD, "thaumium", () -> new thaumcraft.common.items.armor.ItemThaumiumArmor("thaumium_helm",  ThaumcraftMaterials.ARMORMAT_THAUMIUM_KEY, 2, EquipmentSlot.HEAD));
+        ItemsTC.thaumiumChest    = ri("thaumium_chest", EquipmentSlot.CHEST, "thaumium", () -> new thaumcraft.common.items.armor.ItemThaumiumArmor("thaumium_chest", ThaumcraftMaterials.ARMORMAT_THAUMIUM_KEY, 2, EquipmentSlot.CHEST));
+        ItemsTC.thaumiumLegs     = ri("thaumium_legs", EquipmentSlot.LEGS, "thaumium", () -> new thaumcraft.common.items.armor.ItemThaumiumArmor("thaumium_legs",  ThaumcraftMaterials.ARMORMAT_THAUMIUM_KEY, 2, EquipmentSlot.LEGS));
+        ItemsTC.thaumiumBoots    = ri("thaumium_boots", EquipmentSlot.FEET, "thaumium", () -> new thaumcraft.common.items.armor.ItemThaumiumArmor("thaumium_boots", ThaumcraftMaterials.ARMORMAT_THAUMIUM_KEY, 2, EquipmentSlot.FEET));
+        ItemsTC.clothChest       = ri("cloth_chest", EquipmentSlot.CHEST, "robe", () -> new thaumcraft.common.items.armor.ItemRobeArmor("cloth_chest",  ThaumcraftMaterials.ARMORMAT_SPECIAL_KEY, 1, EquipmentSlot.CHEST));
+        ItemsTC.clothLegs        = ri("cloth_legs", EquipmentSlot.LEGS, "robe", () -> new thaumcraft.common.items.armor.ItemRobeArmor("cloth_legs",   ThaumcraftMaterials.ARMORMAT_SPECIAL_KEY, 2, EquipmentSlot.LEGS));
+        ItemsTC.clothBoots       = ri("cloth_boots", EquipmentSlot.FEET, "robe", () -> new thaumcraft.common.items.armor.ItemRobeArmor("cloth_boots",  ThaumcraftMaterials.ARMORMAT_SPECIAL_KEY, 1, EquipmentSlot.FEET));
+        ItemsTC.travellerBoots   = ri("traveller_boots", EquipmentSlot.FEET, "traveller", () -> new thaumcraft.common.items.armor.ItemBootsTraveller());
+        ItemsTC.fortressHelm     = ri("fortress_helm", EquipmentSlot.HEAD, "fortress", () -> new thaumcraft.common.items.armor.ItemFortressArmor("fortress_helm",  ThaumcraftMaterials.ARMORMAT_FORTRESS_KEY, 4, EquipmentSlot.HEAD));
+        ItemsTC.fortressChest    = ri("fortress_chest", EquipmentSlot.CHEST, "fortress", () -> new thaumcraft.common.items.armor.ItemFortressArmor("fortress_chest", ThaumcraftMaterials.ARMORMAT_FORTRESS_KEY, 4, EquipmentSlot.CHEST));
+        ItemsTC.fortressLegs     = ri("fortress_legs", EquipmentSlot.LEGS, "fortress", () -> new thaumcraft.common.items.armor.ItemFortressArmor("fortress_legs",  ThaumcraftMaterials.ARMORMAT_FORTRESS_KEY, 4, EquipmentSlot.LEGS));
+        ItemsTC.voidHelm         = ri("void_helm", EquipmentSlot.HEAD, "void", () -> new thaumcraft.common.items.armor.ItemVoidArmor("void_helm",   ThaumcraftMaterials.ARMORMAT_VOID_KEY, 2, EquipmentSlot.HEAD));
+        ItemsTC.voidChest        = ri("void_chest", EquipmentSlot.CHEST, "void", () -> new thaumcraft.common.items.armor.ItemVoidArmor("void_chest",  ThaumcraftMaterials.ARMORMAT_VOID_KEY, 2, EquipmentSlot.CHEST));
+        ItemsTC.voidLegs         = ri("void_legs", EquipmentSlot.LEGS, "void", () -> new thaumcraft.common.items.armor.ItemVoidArmor("void_legs",   ThaumcraftMaterials.ARMORMAT_VOID_KEY, 2, EquipmentSlot.LEGS));
+        ItemsTC.voidBoots        = ri("void_boots", EquipmentSlot.FEET, "void", () -> new thaumcraft.common.items.armor.ItemVoidArmor("void_boots",  ThaumcraftMaterials.ARMORMAT_VOID_KEY, 2, EquipmentSlot.FEET));
+        ItemsTC.voidRobeHelm     = ri("void_robe_helm", EquipmentSlot.HEAD, "void_robe", () -> new thaumcraft.common.items.armor.ItemVoidRobeArmor("void_robe_helm",  ThaumcraftMaterials.ARMORMAT_VOIDROBE_KEY, 4, EquipmentSlot.HEAD));
+        ItemsTC.voidRobeChest    = ri("void_robe_chest", EquipmentSlot.CHEST, "void_robe", () -> new thaumcraft.common.items.armor.ItemVoidRobeArmor("void_robe_chest", ThaumcraftMaterials.ARMORMAT_VOIDROBE_KEY, 4, EquipmentSlot.CHEST));
+        ItemsTC.voidRobeLegs     = ri("void_robe_legs", EquipmentSlot.LEGS, "void_robe", () -> new thaumcraft.common.items.armor.ItemVoidRobeArmor("void_robe_legs",  ThaumcraftMaterials.ARMORMAT_VOIDROBE_KEY, 4, EquipmentSlot.LEGS));
+        ItemsTC.crimsonPlateHelm  = ri("crimson_plate_helm", EquipmentSlot.HEAD, "cultist_plate", () -> new thaumcraft.common.items.armor.ItemCultistPlateArmor("crimson_plate_helm",  ThaumcraftMaterials.ARMORMAT_CULTIST_PLATE_KEY, 4, EquipmentSlot.HEAD));
+        ItemsTC.crimsonPlateChest = ri("crimson_plate_chest", EquipmentSlot.CHEST, "cultist_plate", () -> new thaumcraft.common.items.armor.ItemCultistPlateArmor("crimson_plate_chest", ThaumcraftMaterials.ARMORMAT_CULTIST_PLATE_KEY, 4, EquipmentSlot.CHEST));
+        ItemsTC.crimsonPlateLegs  = ri("crimson_plate_legs", EquipmentSlot.LEGS, "cultist_plate", () -> new thaumcraft.common.items.armor.ItemCultistPlateArmor("crimson_plate_legs",  ThaumcraftMaterials.ARMORMAT_CULTIST_PLATE_KEY, 4, EquipmentSlot.LEGS));
+        ItemsTC.crimsonBoots      = ri("crimson_boots", EquipmentSlot.FEET, "cultist_boots", () -> new thaumcraft.common.items.armor.ItemCultistBoots());
+        ItemsTC.crimsonRobeHelm   = ri("crimson_robe_helm", EquipmentSlot.HEAD, "cultist_robe", () -> new thaumcraft.common.items.armor.ItemCultistRobeArmor("crimson_robe_helm",  ThaumcraftMaterials.ARMORMAT_CULTIST_ROBE_KEY, 4, EquipmentSlot.HEAD));
+        ItemsTC.crimsonRobeChest  = ri("crimson_robe_chest", EquipmentSlot.CHEST, "cultist_robe", () -> new thaumcraft.common.items.armor.ItemCultistRobeArmor("crimson_robe_chest", ThaumcraftMaterials.ARMORMAT_CULTIST_ROBE_KEY, 4, EquipmentSlot.CHEST));
+        ItemsTC.crimsonRobeLegs   = ri("crimson_robe_legs", EquipmentSlot.LEGS, "cultist_robe", () -> new thaumcraft.common.items.armor.ItemCultistRobeArmor("crimson_robe_legs",  ThaumcraftMaterials.ARMORMAT_CULTIST_ROBE_KEY, 4, EquipmentSlot.LEGS));
+        ItemsTC.crimsonPraetorHelm  = ri("crimson_praetor_helm", EquipmentSlot.HEAD, "cultist_praetor", () -> new thaumcraft.common.items.armor.ItemCultistLeaderArmor("crimson_praetor_helm",  4, EquipmentSlot.HEAD));
+        ItemsTC.crimsonPraetorChest = ri("crimson_praetor_chest", EquipmentSlot.CHEST, "cultist_praetor", () -> new thaumcraft.common.items.armor.ItemCultistLeaderArmor("crimson_praetor_chest", 4, EquipmentSlot.CHEST));
+        ItemsTC.crimsonPraetorLegs  = ri("crimson_praetor_legs", EquipmentSlot.LEGS, "cultist_praetor", () -> new thaumcraft.common.items.armor.ItemCultistLeaderArmor("crimson_praetor_legs",  4, EquipmentSlot.LEGS));
         ItemsTC.baubles          = ri("baubles", () -> new thaumcraft.common.items.baubles.ItemBaubles());
         ItemsTC.amuletVis        = ri("amulet_vis", () -> new thaumcraft.common.items.baubles.ItemAmuletVis());
         ItemsTC.charmVerdant     = ri("verdant_charm", () -> new thaumcraft.common.items.baubles.ItemVerdantCharm());
