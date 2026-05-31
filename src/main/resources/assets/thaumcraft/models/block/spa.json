@@ -7,6 +7,6 @@
     "west": "thaumcraft:block/spa_side",
     "particle": "thaumcraft:block/spa_side",
     "up": "thaumcraft:block/spa_top",
-    "down": "blocks/furnace_top"
+    "down": "minecraft:block/furnace_top"
   }
 }
