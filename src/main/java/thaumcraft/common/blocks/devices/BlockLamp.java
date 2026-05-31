@@ -45,10 +45,6 @@ public class BlockLamp extends BlockTCDevice implements IBlockFacing, IBlockEnab
         return false;
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean isFullCube(BlockState state) {
         return false;
     }

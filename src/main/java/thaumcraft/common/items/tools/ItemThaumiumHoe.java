@@ -25,12 +25,7 @@ public class ItemThaumiumHoe extends HoeItem implements IThaumcraftItems
     
     public int[] getVariantMeta() {
         return new int[] { 0 };
-    }
-    
-    public Object /* ItemMeshDefinition removed */ getCustomMesh() {
-        return null;
-    }
-    
+    }    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }

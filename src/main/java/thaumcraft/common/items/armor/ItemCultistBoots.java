@@ -35,11 +35,6 @@ public class ItemCultistBoots extends net.minecraft.world.item.Item implements I
     }
     
     @OnlyIn(Dist.CLIENT)
-    public Object /* ItemMeshDefinition removed */ getCustomMesh() {
-        return null;
-    }
-    
-    @OnlyIn(Dist.CLIENT)
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }

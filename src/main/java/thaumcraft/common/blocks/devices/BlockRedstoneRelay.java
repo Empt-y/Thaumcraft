@@ -66,10 +66,6 @@ public class BlockRedstoneRelay extends BlockTCDevice implements IBlockFacingHor
         return false;
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-
     public boolean isOpaqueCube(BlockState state) {
         return false;
     }
@@ -281,11 +277,6 @@ public class BlockRedstoneRelay extends BlockTCDevice implements IBlockFacingHor
 
     public boolean isAssociatedBlock(Block other) {
         return isAssociated(other);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public Object /* BlockRenderLayer removed */ getBlockLayer_removed() {
-        return null; // Object /* BlockRenderLayer removed */ removed
     }
 
     @OnlyIn(Dist.CLIENT)

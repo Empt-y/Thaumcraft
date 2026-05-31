@@ -37,11 +37,7 @@ public class ItemCultistRobeArmor extends net.minecraft.world.item.Item implemen
         return new int[] { 0 };
     }
     
-    @OnlyIn(Dist.CLIENT)
-    public Object /* ItemMeshDefinition removed */ getCustomMesh() {
-        return null;
-    }
-    
+    @OnlyIn(Dist.CLIENT)    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }

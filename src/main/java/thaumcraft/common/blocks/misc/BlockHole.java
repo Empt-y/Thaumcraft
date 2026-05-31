@@ -34,10 +34,6 @@ public class BlockHole extends BlockTC
         return ItemStack.EMPTY;
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     @OnlyIn(Dist.CLIENT)
     public void getSubBlocks(CreativeModeTab par2CreativeTabs, NonNullList<ItemStack> par3List) {
     }

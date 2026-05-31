@@ -44,10 +44,6 @@ public class BlockVisGenerator extends BlockTCDevice implements IBlockFacing, IB
         return 0;
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-
     public BlockState getStateForPlacement(Level worldIn, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         for (Direction face : Direction.values()) {
             BlockPos adjPos = pos.relative(face);

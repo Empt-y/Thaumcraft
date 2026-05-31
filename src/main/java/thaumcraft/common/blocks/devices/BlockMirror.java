@@ -50,10 +50,6 @@ public class BlockMirror extends BlockTCDevice implements IBlockFacing
         return SoundsTC.JAR;
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     @Override
     public boolean canHarvestBlock(BlockGetter world, BlockPos pos, Player player) {
         return true;

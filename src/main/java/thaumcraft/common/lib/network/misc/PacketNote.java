@@ -81,7 +81,7 @@ public class PacketNote implements CustomPacketPayload
                     }
                     if (note >= 0) {
                         final byte finalNote = note;
-                        /* sendToAllAround stub */
+                        PacketHandler.sendToAllAround(new PacketNote(msg.x, msg.y, msg.z, 0, finalNote), level, msg.x, msg.y, msg.z, 8.0);
                     }
                     if (tile2 instanceof TileArcaneEar ear2) {
                         ear2.note = msg.note;

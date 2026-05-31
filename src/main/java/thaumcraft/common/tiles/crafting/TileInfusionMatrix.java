@@ -443,7 +443,10 @@ public class TileInfusionMatrix extends TileThaumcraft implements IInteractWithC
                         }
                         --recipeXP;
                         target.hurt(getLevel().damageSources().magic(), (float) net.minecraft.util.RandomSource.create().nextInt(2));
-                        /* sendToAllAround stub */
+                        if (getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                            BlockPos pos = getBlockPos();
+                            PacketHandler.sendToAllAround(new PacketFXInfusionSource(pos, pos, target.getId()), sl, pos.getX(), pos.getY(), pos.getZ(), 32.0);
+                        }
                         target.playSound(SoundEvents.LAVA_EXTINGUISH, 1.0f, 2.0f + net.minecraft.util.RandomSource.create().nextFloat() * 0.4f);
                         countDelay = cycleTime;
                         return;
@@ -491,7 +494,10 @@ public class TileInfusionMatrix extends TileThaumcraft implements IInteractWithC
                     if (te != null && te instanceof TilePedestal && ((TilePedestal)te).getItem(0) != null && !((TilePedestal)te).getItem(0).isEmpty() && ThaumcraftInvHelper.areItemStacksEqualForCrafting(((TilePedestal)te).getItem(0), recipeIngredients.get(a))) {
                         if (itemCount == 0) {
                             itemCount = 5;
-                            /* sendToAllAround stub */
+                            if (getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                                BlockPos pos = getBlockPos();
+                                PacketHandler.sendToAllAround(new PacketFXInfusionSource(pos, cc, 0), sl, pos.getX(), pos.getY(), pos.getZ(), 32.0);
+                            }
                         }
                         else if (itemCount-- <= 1) {
                             net.minecraft.world.item.ItemStackTemplate _rem = ((TilePedestal)te).getItem(0).getCraftingRemainder();
@@ -527,7 +533,10 @@ public class TileInfusionMatrix extends TileThaumcraft implements IInteractWithC
         List<LivingEntity> targets = getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), getBlockPos().getX() + 1, getBlockPos().getY() + 1, getBlockPos().getZ() + 1).inflate(10.0, 10.0, 10.0));
         if (targets != null && targets.size() > 0) {
             for (LivingEntity target : targets) {
-                /* sendToAllAround stub */
+                if (getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                    BlockPos pos = getBlockPos();
+                    PacketHandler.sendToAllAround(new PacketFXBlockArc(pos, target.blockPosition(), 0.3f - getLevel().getRandom().nextFloat() * 0.1f, 0.0f, 0.3f - getLevel().getRandom().nextFloat() * 0.1f), sl, pos.getX(), pos.getY(), pos.getZ(), 32.0);
+                }
                 target.hurt(getLevel().damageSources().magic(), (float)(4 + net.minecraft.util.RandomSource.create().nextInt(4)));
                 if (!all) {
                     break;
@@ -594,8 +603,11 @@ public class TileInfusionMatrix extends TileThaumcraft implements IInteractWithC
                         TileStabilizer tste = (TileStabilizer)ste;
                         if (tste.mitigate(this.level.getRandom().nextIntBetweenInclusive(5, 10))) {
                             getLevel().blockEvent(cc, getLevel().getBlockState(cc).getBlock(), 5, 0);
-                            /* sendToAllAround stub */
-                            /* sendToAllAround stub */
+                            if (getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                                BlockPos pos = getBlockPos();
+                                PacketHandler.sendToAllAround(new PacketFXBlockArc(pos, cc.above(), 0.3f - sl.getRandom().nextFloat() * 0.1f, 0.0f, 0.3f - sl.getRandom().nextFloat() * 0.1f), sl, pos.getX(), pos.getY(), pos.getZ(), 32.0);
+                                PacketHandler.sendToAllAround(new PacketFXBlockArc(cc.above(), stabPos, 0.3f - sl.getRandom().nextFloat() * 0.1f, 0.0f, 0.3f - sl.getRandom().nextFloat() * 0.1f), sl, stabPos.getX(), stabPos.getY(), stabPos.getZ(), 32.0);
+                            }
                             return;
                         }
                     }
@@ -620,7 +632,10 @@ public class TileInfusionMatrix extends TileThaumcraft implements IInteractWithC
                     getLevel().explode(null, cc.getX() + 0.5f, cc.getY() + 0.5f, cc.getZ() + 0.5f, 1.0f, Level.ExplosionInteraction.NONE);
                 }
                 getLevel().blockEvent(cc, getLevel().getBlockState(cc).getBlock(), 11, 0);
-                /* sendToAllAround stub */
+                if (getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                    BlockPos pos = getBlockPos();
+                    PacketHandler.sendToAllAround(new PacketFXBlockArc(pos, cc.above(), 0.3f - sl.getRandom().nextFloat() * 0.1f, 0.0f, 0.3f - sl.getRandom().nextFloat() * 0.1f), sl, cc.getX(), cc.getY(), cc.getZ(), 32.0);
+                }
                 return;
             }
         }

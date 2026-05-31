@@ -65,7 +65,9 @@ public class FocusMediumBolt extends FocusMediumTouch
         g /= getPackage().getFocusEffects().length;
         b /= getPackage().getFocusEffects().length;
         Color c2 = new Color(r, g, b);
-        /* sendToAllAround stub */
+        if (getPackage().world instanceof net.minecraft.server.level.ServerLevel sl) {
+            PacketHandler.sendToAllAround(new PacketFXZap(trajectory.source, end, c2.getRGB(), getPackage().getPower() * 0.66f), sl, trajectory.source.x, trajectory.source.y, trajectory.source.z, 64.0);
+        }
         return true;
     }
 }

@@ -60,7 +60,9 @@ public class FocusEffectFrost extends FocusEffect
     
     @Override
     public boolean execute(HitResult target, Trajectory trajectory, float finalPower, int num) {
-        /* sendToAllAround stub */
+        if (getPackage().world instanceof net.minecraft.server.level.ServerLevel sl) {
+            PacketHandler.sendToAllAround(new PacketFXFocusPartImpact(target.getLocation().x, target.getLocation().y, target.getLocation().z, new String[]{getKey()}), sl, target.getLocation().x, target.getLocation().y, target.getLocation().z, 64.0);
+        }
         if (target.getType() == HitResult.Type.ENTITY && ((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null) {
             float damage = getDamageForDisplay(finalPower);
             int duration = 20 * getSettingValue("duration");

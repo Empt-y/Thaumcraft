@@ -50,10 +50,6 @@ public class BlockWaterJug extends BlockTCDevice
         return new AABB(0.1875, 0.0, 0.1875, 0.8125, 1.0, 0.8125);
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-
     public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
         if (!world.isClientSide()) {
             BlockEntity te = world.getBlockEntity(pos);

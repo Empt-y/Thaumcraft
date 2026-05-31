@@ -52,10 +52,6 @@ public class ItemVoidRobeArmor extends net.minecraft.world.item.Item implements 
     }
 
     @OnlyIn(Dist.CLIENT)
-    public Object getCustomMesh() {
-        return null;
-    }
-
     public Object getCustomModelResourceLocation(String variant) {
         return null;
     }

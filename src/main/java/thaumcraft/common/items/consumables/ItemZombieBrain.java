@@ -43,12 +43,7 @@ public class ItemZombieBrain extends Item /* ItemFood removed */ implements ITha
     
     public int[] getVariantMeta() {
         return new int[] { 0 };
-    }
-    
-    public Object /* ItemMeshDefinition removed */ getCustomMesh() {
-        return null;
-    }
-    
+    }    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }

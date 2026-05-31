@@ -40,10 +40,6 @@ public class BlockArcaneWorkbenchCharger extends BlockTC
             || worldIn.getBlockState(pos.below()).getBlock() == BlocksTC.wandWorkbench;
     }
 
-    public Object getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public BlockState getStateForPlacement(Level worldIn, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         BlockEntity te = worldIn.getBlockEntity(pos.below());
         if (te instanceof TileArcaneWorkbench) {

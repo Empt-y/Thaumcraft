@@ -45,7 +45,12 @@ public class FocusEffectBreak extends FocusEffect
     @Override
     public boolean execute(HitResult target, Trajectory trajectory, float finalPower, int num) {
         if (target.getType() == HitResult.Type.BLOCK) {
-            /* sendToAllAround stub */
+            if (getPackage().world instanceof net.minecraft.server.level.ServerLevel sl) {
+                net.minecraft.core.BlockPos bp = ((net.minecraft.world.phys.BlockHitResult)target).getBlockPos();
+                PacketHandler.sendToAllAround(
+                    new PacketFXFocusPartImpact(bp.getX() + 0.5, bp.getY() + 0.5, bp.getZ() + 0.5, new String[] { getKey() }),
+                    sl, target.getLocation().x, target.getLocation().y, target.getLocation().z, 64.0);
+            }
             boolean silk = getSettingValue("silk") > 0;
             int fortune = getSettingValue("fortune");
             float strength = getSettingValue("power") * finalPower;

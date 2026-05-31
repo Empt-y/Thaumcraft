@@ -46,10 +46,6 @@ public class ItemRobeArmor extends net.minecraft.world.item.Item implements IVis
     }
 
     @OnlyIn(Dist.CLIENT)
-    public Object getCustomMesh() {
-        return null;
-    }
-
     public Object getCustomModelResourceLocation(String variant) {
         return null;
     }

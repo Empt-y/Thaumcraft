@@ -126,6 +126,7 @@ public class EntityFocusCloud extends Entity
         ownerUniqueId = net.minecraft.core.UUIDUtil.uuidFromIntArray(nbt.getIntArray("OwnerUUID").orElse(new int[4]));
         try {
             (focusPackage = new FocusPackage()).deserialize(nbt.read("pack", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag()));
+            if (focusPackage != null) focusPackage.world = level();
         }
         catch (Exception ex) {}
     }

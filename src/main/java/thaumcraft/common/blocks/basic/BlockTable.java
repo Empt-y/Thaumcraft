@@ -26,10 +26,6 @@ public class BlockTable extends BlockTC
         return side == Direction.UP;
     }
 
-    public Object getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean canHarvestBlock(BlockGetter world, BlockPos pos, Player player) {
         return true;
     }

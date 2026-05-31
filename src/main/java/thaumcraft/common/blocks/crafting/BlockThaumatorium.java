@@ -38,10 +38,6 @@ public class BlockThaumatorium extends BlockTCDevice implements IBlockFacingHori
         return false;
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean isFullCube(BlockState state) {
         return false;
     }

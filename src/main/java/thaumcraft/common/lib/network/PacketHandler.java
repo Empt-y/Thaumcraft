@@ -83,4 +83,9 @@ public class PacketHandler {
     public static <T extends CustomPacketPayload> void sendToAll(T packet) {
         PacketDistributor.sendToAllPlayers(packet);
     }
+
+    /** Equivalent of old NetworkRegistry.sendToAllAround — sends to all players within range of a point. */
+    public static <T extends CustomPacketPayload> void sendToAllAround(T packet, net.minecraft.server.level.ServerLevel level, double x, double y, double z, double range) {
+        PacketDistributor.sendToPlayersNear(level, null, x, y, z, range, packet);
+    }
 }

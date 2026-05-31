@@ -44,10 +44,6 @@ public class BlockBannerTC extends BlockTC implements EntityBlock
         return RenderShape.INVISIBLE;
     }
 
-    public Object getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public MapColor getMapColor(BlockState state, BlockGetter worldIn, BlockPos pos) {
         return (dye == null) ? MapColor.COLOR_RED : BlockCandle.dyeToMapColor(dye);
     }

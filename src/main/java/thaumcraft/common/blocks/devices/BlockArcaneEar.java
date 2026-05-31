@@ -46,10 +46,6 @@ public class BlockArcaneEar extends BlockTCDevice implements IBlockFacing, IBloc
         builder.add(IBlockFacing.FACING, IBlockEnabled.ENABLED);
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean isOpaqueCube(BlockState state) {
         return false;
     }

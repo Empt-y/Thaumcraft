@@ -130,8 +130,8 @@ public class InternalMethodHandler implements IInternalMethodHandler
             return;
         }
         AuraHandler.addFlux(world, pos, amount);
-        if (showEffect && amount > 0.0f) {
-            /* sendToAllAround stub */
+        if (showEffect && amount > 0.0f && world instanceof net.minecraft.server.level.ServerLevel sl) {
+            PacketHandler.sendToAllAround(new PacketFXPollute(pos, amount), sl, pos.getX(), pos.getY(), pos.getZ(), 32.0);
         }
     }
     

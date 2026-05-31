@@ -43,12 +43,7 @@ public class ItemVoidSword extends Item /* ItemSword removed */ implements IWarp
     
     public int[] getVariantMeta() {
         return new int[] { 0 };
-    }
-    
-    public Object /* ItemMeshDefinition removed */ getCustomMesh() {
-        return null;
-    }
-    
+    }    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         return null /* removed */;
     }

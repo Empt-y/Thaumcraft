@@ -23,12 +23,7 @@ public class BlockEssentiaTransport extends BlockTCDevice implements IBlockFacin
         setHardness(1.0f);
         setResistance(10.0f);
         registerDefaultState(defaultBlockState().setValue((Property)IBlockFacing.FACING, Direction.UP));
-    }
-    
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-    
+    }    
     @Override
     public boolean canHarvestBlock(BlockGetter world, BlockPos pos, Player player) {
         return true;

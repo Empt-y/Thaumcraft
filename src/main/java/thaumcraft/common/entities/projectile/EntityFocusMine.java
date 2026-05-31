@@ -85,6 +85,7 @@ public class EntityFocusMine extends ThrowableProjectile
         }
         try {
             (focusPackage = new FocusPackage()).deserialize(nbt.read("pack", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag()));
+            if (focusPackage != null) focusPackage.world = level();
         }
         catch (Exception ex) {}
     }

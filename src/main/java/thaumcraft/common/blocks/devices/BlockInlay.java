@@ -141,10 +141,6 @@ public class BlockInlay extends BlockTC implements IInfusionStabiliserExt
         }
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     @OnlyIn(Dist.CLIENT)
     public void randomDisplayTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         int charge = (int)stateIn.getValue(CHARGE);

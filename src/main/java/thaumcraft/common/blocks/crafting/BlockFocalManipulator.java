@@ -26,10 +26,6 @@ public class BlockFocalManipulator extends BlockTCDevice
         return false;
     }
 
-    public Object getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
         if (world.isClientSide()) {
             return true;

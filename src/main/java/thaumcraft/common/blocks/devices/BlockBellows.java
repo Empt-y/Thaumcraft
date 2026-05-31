@@ -26,10 +26,6 @@ public class BlockBellows extends BlockTCDevice implements IBlockFacing, IBlockE
         return 0;
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean isOpaqueCube(BlockState state) {
         return false;
     }

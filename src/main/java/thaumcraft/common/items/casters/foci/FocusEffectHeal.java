@@ -50,7 +50,9 @@ public class FocusEffectHeal extends FocusEffect
     
     @Override
     public boolean execute(HitResult target, Trajectory trajectory, float finalPower, int num) {
-        /* sendToAllAround stub */
+        if (getPackage().world instanceof net.minecraft.server.level.ServerLevel sl) {
+            PacketHandler.sendToAllAround(new PacketFXFocusPartImpact(target.getLocation().x, target.getLocation().y, target.getLocation().z, new String[]{getKey()}), sl, target.getLocation().x, target.getLocation().y, target.getLocation().z, 64.0);
+        }
         if (target.getType() == HitResult.Type.ENTITY && ((net.minecraft.world.phys.EntityHitResult)target).getEntity() != null && ((net.minecraft.world.phys.EntityHitResult)target).getEntity() instanceof LivingEntity) {
             if (((LivingEntity)((net.minecraft.world.phys.EntityHitResult)target).getEntity()).getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
                 ((net.minecraft.world.phys.EntityHitResult)target).getEntity().hurt(getPackage().world.damageSources().indirectMagic(getPackage().getCaster(), getPackage().getCaster()), getSettingValue("power") * finalPower * 1.5f);

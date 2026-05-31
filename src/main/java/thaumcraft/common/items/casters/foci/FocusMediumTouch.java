@@ -100,7 +100,11 @@ public class FocusMediumTouch extends FocusMedium
             for (int a = 0; a < fe.length; ++a) {
                 effects[a] = fe[a].getKey();
             }
-            /* sendToAllAround stub */
+            if (getPackage().world instanceof net.minecraft.server.level.ServerLevel sl) {
+                PacketHandler.sendToAllAround(
+                    new PacketFXFocusEffect((float)trajectory.source.x, (float)trajectory.source.y, (float)trajectory.source.z, (float)trajectory.direction.x / 2.0f, (float)trajectory.direction.y / 2.0f, (float)trajectory.direction.z / 2.0f, effects),
+                    sl, trajectory.source.x, trajectory.source.y, trajectory.source.z, 64.0);
+            }
         }
         return true;
     }

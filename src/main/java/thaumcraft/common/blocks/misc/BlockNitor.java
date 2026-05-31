@@ -40,12 +40,7 @@ public class BlockNitor extends BlockTC implements EntityBlock
     
     public MapColor getMapColor(BlockState state, BlockGetter worldIn, BlockPos pos) {
         return MapColor.NONE;
-    }
-    
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-    
+    }    
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.INVISIBLE;
     }

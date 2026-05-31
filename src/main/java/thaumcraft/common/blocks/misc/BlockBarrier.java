@@ -38,10 +38,6 @@ public class BlockBarrier extends BlockTC
         return RenderShape.INVISIBLE;
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public void getSubBlocks(CreativeModeTab tab, NonNullList<ItemStack> list) {
     }
 

@@ -44,11 +44,6 @@ public class ItemTCEssentiaContainer extends ItemGenericEssentiaContainer implem
     }
     
     @Override
-    public Object /* ItemMeshDefinition removed */ getCustomMesh() {
-        return null;
-    }
-    
-    @Override
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         if (variant.equals(BASE_NAME)) {
             return null /* removed */;

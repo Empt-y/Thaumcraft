@@ -109,8 +109,8 @@ public class TileLampGrowth extends TileThaumcraft implements IEssentiaTransport
         BlockState bs = getLevel().getBlockState(new BlockPos(lx, ly, lz));
         if (lid != bs.getBlock() || lmd != bs.getBlock()) {
             Player p = getLevel().getNearestPlayer(lx, ly, lz, 32.0, false);
-            if (p != null) {
-                /* sendToAllAround stub */
+            if (p != null && getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                PacketHandler.sendToAllAround(new PacketFXBlockMist(new BlockPos(lx, ly, lz), 4259648), sl, lx, ly, lz, 32.0);
             }
             lid = bs.getBlock();
             lmd = bs.getBlock();

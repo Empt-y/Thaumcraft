@@ -23,10 +23,6 @@ public class BlockSmelterAux extends BlockTC implements IBlockFacingHorizontal
         setResistance(10.0f);
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean canHarvestBlock(BlockGetter world, BlockPos pos, Player player) {
         return true;
     }

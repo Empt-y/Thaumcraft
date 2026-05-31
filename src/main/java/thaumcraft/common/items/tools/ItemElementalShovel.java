@@ -58,10 +58,6 @@ public class ItemElementalShovel extends ShovelItem implements IArchitect, IThau
         return new int[] { 0 };
     }
 
-    public Object getCustomMesh() {
-        return null;
-    }
-
     public Object getCustomModelResourceLocation(String variant) {
         return null;
     }

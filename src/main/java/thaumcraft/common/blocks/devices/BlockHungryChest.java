@@ -47,10 +47,6 @@ public class BlockHungryChest extends BlockTCTile
         builder.add(FACING);
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean canHarvestBlock(BlockGetter world, BlockPos pos, Player player) {
         return true;
     }

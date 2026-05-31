@@ -52,10 +52,6 @@ public class BlockInfernalFurnace extends BlockTCDevice implements IBlockFacingH
     }
 
     @OnlyIn(Dist.CLIENT)
-    public Object /* BlockRenderLayer removed */ getBlockLayer_removed() {
-        return null;
-    }
-
     @Override
     public BlockState getStateForPlacement(Level worldIn, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         return defaultBlockState().setValue(IBlockFacingHorizontal.FACING, placer.getDirection().getOpposite());

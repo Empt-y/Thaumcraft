@@ -23,12 +23,7 @@ public class BlockInfusionMatrix extends BlockTCDevice
     
     public boolean isFullCube(BlockState state) {
         return false;
-    }
-    
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-    
+    }    
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.INVISIBLE;
     }

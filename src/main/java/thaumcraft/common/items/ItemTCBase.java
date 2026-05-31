@@ -41,10 +41,6 @@ public class ItemTCBase extends Item implements IThaumcraftItems
         return VARIANTS_META;
     }
 
-    public Object getCustomMesh() {
-        return null;
-    }
-
     public Object getCustomModelResourceLocation(String variant) {
         return null;
     }

@@ -49,7 +49,14 @@ public class AuraThread implements Runnable
             long startTime = System.currentTimeMillis();
             AuraWorld auraWorld = AuraHandler.getAuraWorld(dim);
             if (auraWorld != null) {
-                Level world = null /* TODO: DimensionManager removed */;
+                net.minecraft.server.MinecraftServer server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
+                Level world = null;
+                if (server != null) {
+                    for (net.minecraft.server.level.ServerLevel sl : server.getAllLevels()) {
+                        if (sl.dimension().identifier().hashCode() == dim) { world = sl; break; }
+                    }
+                }
+                if (world == null) { try { Thread.sleep(INTERVAL); } catch (InterruptedException e) {} continue; }
                 if (lastWorldTime != world.getGameTime()) {
                     lastWorldTime = world.getGameTime();
                     if (world != null) {

@@ -40,11 +40,7 @@ public class BlockTranslucent extends BlockTC
         return block != this;
     }
     
-    @OnlyIn(Dist.CLIENT)
-    public Object /* BlockRenderLayer removed */ getBlockLayer_removed() {
-        return null; // Object /* BlockRenderLayer removed */ removed
-    }
-    
+    @OnlyIn(Dist.CLIENT)    
     public boolean isOpaqueCube(BlockState iblockstate) {
         return false;
     }

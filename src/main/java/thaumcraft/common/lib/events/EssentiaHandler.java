@@ -51,7 +51,12 @@ public class EssentiaHandler
                 continue;
             }
             if (as.takeFromContainer(aspect, 1)) {
-                /* sendToAllAround stub */
+                if (tile.getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                    BlockPos tp = tile.getBlockPos();
+                    PacketHandler.sendToAllAround(
+                        new PacketFXEssentiaSource(tp, (byte)(tp.getX() - source.pos.getX()), (byte)(tp.getY() - source.pos.getY()), (byte)(tp.getZ() - source.pos.getZ()), aspect.getColor(), ext),
+                        sl, tp.getX(), tp.getY(), tp.getZ(), 32.0);
+                }
                 return true;
             }
         }
@@ -95,8 +100,12 @@ public class EssentiaHandler
     public static void confirmDrain() {
         if (EssentiaHandler.las != null && EssentiaHandler.lasp != null && EssentiaHandler.lat != null) {
             IAspectSource as = (IAspectSource)EssentiaHandler.las;
-            if (as.takeFromContainer(EssentiaHandler.lasp, 1)) {
-                /* sendToAllAround stub */
+            if (as.takeFromContainer(EssentiaHandler.lasp, 1) && EssentiaHandler.lat.getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                BlockPos tp = EssentiaHandler.lat.getBlockPos();
+                BlockPos sp = EssentiaHandler.las.getBlockPos();
+                PacketHandler.sendToAllAround(
+                    new PacketFXEssentiaSource(tp, (byte)(tp.getX() - sp.getX()), (byte)(tp.getY() - sp.getY()), (byte)(tp.getZ() - sp.getZ()), EssentiaHandler.lasp.getColor(), EssentiaHandler.lext),
+                    sl, tp.getX(), tp.getY(), tp.getZ(), 32.0);
             }
         }
         EssentiaHandler.las = null;
@@ -129,7 +138,13 @@ public class EssentiaHandler
             }
             else {
                 if (as.doesContainerAccept(aspect) && as.addToContainer(aspect, 1) <= 0) {
-                    /* sendToAllAround stub */
+                    if (tile.getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                        BlockPos sp = source.pos;
+                        BlockPos tp = tile.getBlockPos();
+                        PacketHandler.sendToAllAround(
+                            new PacketFXEssentiaSource(sp, (byte)(sp.getX() - tp.getX()), (byte)(sp.getY() - tp.getY()), (byte)(sp.getZ() - tp.getZ()), aspect.getColor(), ext),
+                            sl, tp.getX(), tp.getY(), tp.getZ(), 32.0);
+                    }
                     return true;
                 }
                 continue;
@@ -146,7 +161,13 @@ public class EssentiaHandler
                 }
                 IAspectSource as = (IAspectSource)sourceTile;
                 if (aspect != null && as.doesContainerAccept(aspect) && as.addToContainer(aspect, 1) <= 0) {
-                    /* sendToAllAround stub */
+                    if (tile.getLevel() instanceof net.minecraft.server.level.ServerLevel sl) {
+                        BlockPos sp = source.pos;
+                        BlockPos tp = tile.getBlockPos();
+                        PacketHandler.sendToAllAround(
+                            new PacketFXEssentiaSource(sp, (byte)(sp.getX() - tp.getX()), (byte)(sp.getY() - tp.getY()), (byte)(sp.getZ() - tp.getZ()), aspect.getColor(), ext),
+                            sl, tp.getX(), tp.getY(), tp.getZ(), 32.0);
+                    }
                     return true;
                 }
                 continue;

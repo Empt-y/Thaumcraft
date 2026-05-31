@@ -10,7 +10,7 @@ public interface IThaumcraftItems
     
     int[] getVariantMeta();
     
-    Object /* ItemMeshDefinition removed */ getCustomMesh();
-    
-    Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String p0);
+    default Object getCustomMesh() { return null; }
+
+    default Object getCustomModelResourceLocation(String p0) { return null; }
 }

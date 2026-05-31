@@ -29,10 +29,6 @@ public class BlockSmelterVent extends BlockTC implements IBlockFacingHorizontal
         return true;
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public BlockState getStateForPlacement(Level worldIn, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         BlockState bs = defaultBlockState();
         if (!facing.getAxis().isHorizontal()) {

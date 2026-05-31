@@ -50,10 +50,6 @@ public class BlockEffect extends BlockTC
         return super.getLightEmission(state, world, pos);
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public void onEntityCollidedWithBlock(Level world, BlockPos pos, BlockState state, Entity entity) {
         if (state.getBlock() == BlocksTC.effectShock) {
             if (entity instanceof LivingEntity) {

@@ -23,12 +23,7 @@ public class BlockCondenser extends BlockTCDevice implements IBlockEnabled
     
     public boolean isFullCube(BlockState state) {
         return false;
-    }
-    
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-    
+    }    
     public int damageDropped(BlockState state) {
         return 0;
     }

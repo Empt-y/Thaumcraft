@@ -43,12 +43,7 @@ public class ItemChunksEdible extends Item /* ItemFood removed */ implements ITh
     
     public Item getItem() {
         return this;
-    }
-    
-    public Object /* ItemMeshDefinition removed */ getCustomMesh() {
-        return null;
-    }
-    
+    }    
     public Object /* ModelResourceLocation removed */ getCustomModelResourceLocation(String variant) {
         if (variant.equals("chunk")) {
             return null /* removed */;

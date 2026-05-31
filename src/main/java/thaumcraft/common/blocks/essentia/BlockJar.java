@@ -52,15 +52,7 @@ public class BlockJar extends BlockTCTile implements ILabelable
         return new AABB(0.1875, 0.0, 0.1875, 0.8125, 0.75, 0.8125);
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-
     @OnlyIn(Dist.CLIENT)
-    public Object /* BlockRenderLayer removed */ getBlockLayer_removed() {
-        return null; // Object /* BlockRenderLayer removed */ removed
-    }
-
     public boolean isOpaqueCube(BlockState state) {
         return false;
     }

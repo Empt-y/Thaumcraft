@@ -68,10 +68,16 @@ public class ThaumcraftApiHelper {
 			return null;
 	}
 
-	// TODO: port to new block raytrace API (collisionRayTrace removed in 1.20+)
 	public static HitResult rayTraceIgnoringSource(Level world, Vec3 v1, Vec3 v2,
 			boolean bool1, boolean bool2, boolean bool3) {
-		return null;
+		net.minecraft.world.level.ClipContext.Fluid fluid = bool1
+			? net.minecraft.world.level.ClipContext.Fluid.ANY
+			: net.minecraft.world.level.ClipContext.Fluid.NONE;
+		return world.clip(new net.minecraft.world.level.ClipContext(
+			v1, v2,
+			net.minecraft.world.level.ClipContext.Block.COLLIDER,
+			fluid,
+			net.minecraft.world.phys.shapes.CollisionContext.empty()));
 	}
 
 	public static Object getNBTDataFromId(CompoundTag nbt, byte id, String key) {

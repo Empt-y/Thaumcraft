@@ -56,10 +56,6 @@ public class BlockCondenserLattice extends BlockTC
         builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN);
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean isOpaqueCube(BlockState state) {
         return false;
     }

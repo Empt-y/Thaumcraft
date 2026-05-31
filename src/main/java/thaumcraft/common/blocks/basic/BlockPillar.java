@@ -46,10 +46,6 @@ public class BlockPillar extends BlockTC
         return false;
     }
 
-    public Object getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean isFullCube(BlockState state) {
         return false;
     }

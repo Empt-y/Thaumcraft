@@ -54,10 +54,6 @@ public class BlockCandle extends BlockTC implements IInfusionStabiliserExt
         }
     }
 
-    public Object getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean canPlaceBlockAt(Level par1World, BlockPos pos) {
         return par1World.getBlockState(pos.below()).isFaceSturdy(par1World, pos.below(), Direction.UP);
     }

@@ -34,10 +34,6 @@ public class BlockAlembic extends BlockTCTile implements ILabelable
         setSoundType(SoundType.WOOD);
     }
 
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-
     public boolean isOpaqueCube(BlockState state) {
         return false;
     }

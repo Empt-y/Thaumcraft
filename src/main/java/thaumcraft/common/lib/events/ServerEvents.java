@@ -284,8 +284,8 @@ public class ServerEvents
                             world.addFreshEntity(entityItem);
                         }
                     }
-                    if (vs.fx) {
-                        /* sendToAllAround stub */
+                    if (vs.fx && world instanceof net.minecraft.server.level.ServerLevel sl) {
+                        PacketHandler.sendToAllAround(new PacketFXBlockBamf(vs.pos, vs.color, true, vs.fancy, null), sl, vs.pos.getX(), vs.pos.getY(), vs.pos.getZ(), 32.0);
                     }
                     if (vs.lifespan <= 0) {
                         continue;

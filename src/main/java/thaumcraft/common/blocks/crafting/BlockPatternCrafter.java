@@ -53,10 +53,6 @@ public class BlockPatternCrafter extends BlockTCDevice implements IBlockFacingHo
         return false;
     }
 
-    public Object getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null;
-    }
-
     public boolean isSideSolid(BlockState state, BlockGetter world, BlockPos pos, Direction side) {
         return false;
     }

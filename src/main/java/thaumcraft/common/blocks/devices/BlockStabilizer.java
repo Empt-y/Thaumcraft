@@ -48,12 +48,7 @@ public class BlockStabilizer extends BlockTCDevice implements IInfusionStabilise
     
     public Object /* BlockRenderLayer removed */ getBlockLayer_removed() {
         return null; // Object /* BlockRenderLayer removed */ removed
-    }
-    
-    public Object /* BlockFaceShape removed */ getBlockFaceShape(BlockGetter worldIn, BlockState state, BlockPos pos, Direction face) {
-        return null; // Object /* BlockFaceShape removed */ removed
-    }
-    
+    }    
     @Override
     public int getLightEmission(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
         return 4;
