@@ -24,6 +24,14 @@ public class TileThaumcraft extends BlockEntity
         super(type, pos, state);
     }
 
+    @Override
+    public boolean isValidBlockState(net.minecraft.world.level.block.state.BlockState blockState) {
+        // TCBlockEntityTypes registers with Set.of() because block refs aren't
+        // available at static init time. Block→tile mapping is enforced by
+        // BlockTCTile.newBlockEntity(); skip MC's ownership check here.
+        return true;
+    }
+
     /** Compatibility alias for old TC code that used getPos(). */
     public BlockPos getPos() { return getBlockPos(); }
 

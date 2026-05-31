@@ -1,1 +1,1 @@
-{ "type": "minecraft:crafting_shaped", "pattern": ["W"], "key": {"W": {"item": "thaumcraft:log_greatwood"}}, "result": {"id": "thaumcraft:plank_greatwood", "count": 4} }
+{ "type": "minecraft:crafting_shaped", "pattern": ["W"], "key": {"W": "thaumcraft:log_greatwood"}, "result": {"id": "thaumcraft:plank_greatwood", "count": 4} }
