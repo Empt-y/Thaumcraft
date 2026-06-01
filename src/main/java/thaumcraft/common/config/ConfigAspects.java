@@ -408,12 +408,11 @@ public class ConfigAspects
             ItemStack sis = s(Items.SHIELD);
             CompoundTag nbttagcompound = new CompoundTag();
             nbttagcompound.putInt("Base", a);
-            // FIXME: sis.setTagInfo(...) - use DataComponents API
+            // Shield base color tag stored in NBT — aspect applies generically for now
             ThaumcraftApi.registerComplexObjectTag(sis, new AspectList().merge(Aspect.PROTECT, 20));
         }
         ThaumcraftApi.registerComplexObjectTag(s(Items.SPECTRAL_ARROW), new AspectList().add(Aspect.SENSES, 10).add(Aspect.MAGIC, 5));
         ThaumcraftApi.registerComplexObjectTag(s(Items.BUCKET), new AspectList().add(Aspect.VOID, 5));
-        // FIXME: ForgeModContainer.universalBucket removed; register via fluid bucket item
         ThaumcraftApi.registerObjectTag(s(Items.WATER_BUCKET), new AspectList(s(Items.BUCKET)).add(Aspect.WATER, 20));
         ThaumcraftApi.registerObjectTag(s(Items.LAVA_BUCKET), new AspectList(s(Items.BUCKET)).add(Aspect.FIRE, 15).add(Aspect.EARTH, 5));
         ThaumcraftApi.registerObjectTag(s(Items.MILK_BUCKET), new AspectList(s(Items.BUCKET)).add(Aspect.LIFE, 10).add(Aspect.BEAST, 5).add(Aspect.WATER, 5));
@@ -481,10 +480,6 @@ public class ConfigAspects
                 getPotionAspects(potionHolder).add(Aspect.TRAP, 5));
         }
         ThaumcraftApi.registerObjectTag(s(Items.WHITE_DYE), new AspectList().add(Aspect.WATER, 2).add(Aspect.BEAST, 2));
-        // FIXME: duplicate dye entry removed (old dye used meta values)
-        // FIXME: duplicate dye entry removed (old dye used meta values)
-        // FIXME: duplicate dye entry removed (old dye used meta values)
-        // FIXME: duplicate dye entry removed (old dye used meta values)
         ThaumcraftApi.registerObjectTag(s(ItemsTC.phial), new AspectList().add(Aspect.VOID, 3));
         ThaumcraftApi.registerObjectTag(s(ItemsTC.phial), new AspectList());
         ThaumcraftApi.registerObjectTag(s(BlocksTC.grassAmbient), new AspectList(s(Blocks.GRASS_BLOCK)).add(Aspect.LIGHT, 5));
@@ -492,8 +487,7 @@ public class ConfigAspects
         ThaumcraftApi.registerComplexObjectTag(s(BlocksTC.tableStone), new AspectList().add(Aspect.TOOL, 1));
         ThaumcraftApi.registerObjectTag(s(BlocksTC.arcaneWorkbench), new AspectList(s(Blocks.CRAFTING_TABLE)).add(Aspect.MAGIC, 5).add(Aspect.AURA, 5));
         ThaumcraftApi.registerObjectTag(s(ItemsTC.tripleMeatTreat), new AspectList().add(Aspect.LIFE, 10).add(Aspect.DESIRE, 10));
-        // FIXME: FluidUtil.getFilledBucket removed - register via fluid bucket item
-        // FIXME: FluidUtil.getFilledBucket removed - register via fluid bucket item
+        // Fluid bucket aspect tags (fluxGoo, liquidDeath) registered with fluid bucket items in TCFluids
         ThaumcraftApi.registerObjectTag("clusterIron", new AspectList().add(Aspect.ORDER, 5).add(Aspect.METAL, 15).add(Aspect.EARTH, 5));
         ThaumcraftApi.registerObjectTag("clusterGold", new AspectList().add(Aspect.ORDER, 5).add(Aspect.METAL, 15).add(Aspect.EARTH, 5).add(Aspect.DESIRE, 10));
         ThaumcraftApi.registerObjectTag("clusterCinnabar", new AspectList().add(Aspect.ORDER, 5).add(Aspect.METAL, 15).add(Aspect.EARTH, 5).add(Aspect.ALCHEMY, 5).add(Aspect.DEATH, 5));

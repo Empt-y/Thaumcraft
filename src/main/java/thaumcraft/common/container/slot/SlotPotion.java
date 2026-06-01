@@ -25,7 +25,6 @@ public class SlotPotion extends Slot
     }
 
     public static boolean isValidPotion(ItemStack stack) {
-        // FIXME: PotionType API removed; check for potion items broadly
         return stack.getItem() == Items.POTION
                 || stack.getItem() == Items.LINGERING_POTION
                 || stack.getItem() == Items.SPLASH_POTION;

@@ -27,7 +27,7 @@ public class ContainerFocusPouch extends AbstractContainerMenu implements Contai
 
     public ContainerFocusPouch(MenuType<ContainerFocusPouch> type, int id, Inventory iinventory, Level level) {
         super(type, id);
-        input = new InventoryFocusPouch(this);
+        input = new InventoryFocusPouch();
         pouch = null;
         player = iinventory.player;
         pouch = iinventory.getSelectedItem();

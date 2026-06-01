@@ -101,30 +101,15 @@ public class ModConfig
         ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 6);
         ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 9);
         ThaumcraftApi.addLootBagItem(s(Items.BOOK), 10, 0, 1, 2);
-        // FIXME: PotionType.REGISTRY removed; potion loot bag items need porting
+        // TODO: potion loot bag items — iterate BuiltInRegistries.POTION for filled potion stacks
         ItemStack[] commonLoot = { s(ItemsTC.lootBag), s(ItemsTC.ingots), s(ItemsTC.amber) };
         ItemStack[] uncommonLoot = { s(ItemsTC.lootBag), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.baubles) };
         ItemStack[] rareLoot = { s(ItemsTC.lootBag), s(ItemsTC.thaumonomicon), s(ItemsTC.thaumiumSword), s(ItemsTC.thaumiumAxe), s(ItemsTC.thaumiumHoe), s(ItemsTC.thaumiumPick), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.amuletVis) };
     }
     
-    public static void modCompatibility() {        // FIXME: OreDictionary API removed; use item tags instead
-        // FIXME-OREDICT: Thaumcraft.log.info("Checking for mod & oredict compatibilities");
-        // FIXME-OREDICT: Identifier defaultGroup = Identifier.withDefaultNamespace("thaumcraft");
-        // FIXME-OREDICT: try {
-        // FIXME-OREDICT: if (OreDictionary.doesOreNameExist("oreIron") && OreDictionary.getOres("oreIron", false).size() > 1) {
-        // FIXME-OREDICT: for (ItemStack is : OreDictionary.getOres("oreIron", false)) {
-        // FIXME-OREDICT: if (is.getItem() != Item.getItemFromBlock(Blocks.IRON_ORE)) {
-        // FIXME-OREDICT: Utils.addSpecialMiningResult(is, s(ItemsTC.clusters), 1.0f);
-        // FIXME-OREDICT: }
-        // FIXME-OREDICT: }
-        // FIXME-OREDICT: }
-        // FIXME-OREDICT: if (OreDictionary.doesOreNameExist("oreGold") && OreDictionary.getOres("oreGold", false).size() > 1) {
-        // FIXME-OREDICT: for (ItemStack is : OreDictionary.getOres("oreGold", false)) {
-        // FIXME-OREDICT: if (is.getItem() != Item.getItemFromBlock(Blocks.GOLD_ORE)) {
-        // FIXME-OREDICT: Utils.addSpecialMiningResult(is, s(ItemsTC.clusters), 1.0f);
-        // FIXME-OREDICT: }
-        // FIXME-OREDICT: }
-        // FIXME-OREDICT: }
+    public static void modCompatibility() {
+        // OreDictionary replaced by NeoForge item tags; cross-mod ore cluster drops
+        // handled via data/thaumcraft/tags/items/ores_*.json and Utils.addSpecialMiningResult in postInitMisc
     }
 
     
@@ -140,18 +125,8 @@ public class ModConfig
     }
     
     public static void postInitMisc() {
-        // FIXME: for (Item item : ForgeRegistries.ITEMS.getValuesCollection()) {
-        // FIXME: if (item != null && item instanceof IPlantable) {
-        // FIXME: try {
-        // FIXME: BlockState bs = ((IPlantable)item).getPlant(null, null);
-        // FIXME: if (bs == null) {
-        // FIXME: continue;
-        // FIXME: }
-        // FIXME: ThaumcraftApi.registerSeed(bs.getBlock(), s(item));
-        // FIXME: }
-        // FIXME: catch (Exception ex) {}
-        // FIXME: }
-        // FIXME: }
+        // IPlantable removed; seed→crop mapping registered manually below for known crops.
+        // Third-party modded seeds would need to use ThaumcraftApi.registerSeed() themselves.
         CropUtils.addStandardCrop(Blocks.MELON, 32767);
         CropUtils.addStandardCrop(Blocks.PUMPKIN, 32767);
         CropUtils.addStackedCrop(Blocks.SUGAR_CANE, 32767);

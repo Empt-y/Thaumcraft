@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.List;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import java.util.EnumSet;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +26,7 @@ public class AIPechItemEntityGoto extends Goal
     public AIPechItemEntityGoto(EntityPech par1PathfinderMob) {
         maxTargetDistance = 16.0f;
         pech = par1PathfinderMob;
-        // FIXME: setMutexBits removed - use setFlags(EnumSet.of(Goal.Flag.MOVE))
+        setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
     
     @Override

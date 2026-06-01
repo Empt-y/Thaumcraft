@@ -1,4 +1,5 @@
 package thaumcraft.common.entities.ai.pech;
+import java.util.EnumSet;
 import net.minecraft.world.entity.ai.goal.Goal;
 import thaumcraft.common.entities.monster.EntityPech;
 
@@ -9,7 +10,7 @@ public class AIPechTradePlayer extends Goal
     
     public AIPechTradePlayer(EntityPech par1EntityVillager) {
         villager = par1EntityVillager;
-        // FIXME: setMutexBits removed - use setFlags(EnumSet.of(Goal.Flag.MOVE))
+        setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
     
     @Override

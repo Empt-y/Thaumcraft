@@ -32,6 +32,7 @@ import thaumcraft.api.aura.AuraHelper;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.potions.PotionFluxTaint;
 import thaumcraft.common.blocks.BlockTC;
+import thaumcraft.api.entities.EntitiesTC;
 import thaumcraft.common.entities.EntityFallingTaint;
 import thaumcraft.common.entities.monster.tainted.EntityTaintSwarm;
 import thaumcraft.common.lib.SoundsTC;
@@ -100,7 +101,7 @@ public class BlockTaint extends BlockTC implements ITaintBlock
             if (rand.nextFloat() < 0.2f
                     && world.getPlayers(p -> p.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < 32.0 * 32.0).size() > 0
                     && EntityUtils.getEntitiesInRange(world, pos, null, EntityTaintSwarm.class, 32.0).isEmpty()) {
-                EntityTaintSwarm swarm = new EntityTaintSwarm(null, world) /* FIXME: use registered EntityType */;
+                EntityTaintSwarm swarm = EntitiesTC.TAINT_SWARM.get().create(world, net.minecraft.world.entity.EntitySpawnReason.NATURAL);
                 swarm.snapTo(pos.getX() + 0.5, pos.getY() + 1.25, pos.getZ() + 0.5, (float) rand.nextInt(360), 0.0f);
                 world.addFreshEntity(swarm);
             } else if (AuraHelper.getFlux(world, pos) < 2.0f) {

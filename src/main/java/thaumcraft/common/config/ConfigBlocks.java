@@ -148,8 +148,7 @@ import thaumcraft.common.tiles.misc.TileNitor;
 public class ConfigBlocks
 {
     public static void initMisc() {
-        // FIXME: setHarvestLevel removed; use block tag #minecraft:needs_stone_tool instead
-        // FIXME: setHarvestLevel removed; use block tag #minecraft:needs_iron_tool instead
+        // Tool requirements are defined via block tags in data/minecraft/tags/blocks/
         BlockUtils.portableHoleBlackList.add("minecraft:bed");
         BlockUtils.portableHoleBlackList.add("minecraft:piston");
         BlockUtils.portableHoleBlackList.add("minecraft:piston_head");
@@ -320,14 +319,7 @@ public class ConfigBlocks
         BlocksTC.condenserlattice = registerBlock(new BlockCondenserLattice(false));
         BlocksTC.condenserlatticeDirty = registerBlock(new BlockCondenserLattice(true));
         BlocksTC.voidSiphon = registerBlock(new BlockVoidSiphon());
-        // FIXME-REGISTRATION: FluidRegistry.registerFluid(FluidFluxGoo.instance);
-        // FIXME-REGISTRATION: iForgeRegistry.register((BlocksTC.fluxGoo = new BlockFluxGoo()));
-        // FIXME-REGISTRATION: FluidRegistry.registerFluid(FluidDeath.instance);
-        // FIXME-REGISTRATION: FluidRegistry.addBucketForFluid(FluidDeath.instance);
-        // FIXME-REGISTRATION: iForgeRegistry.register((BlocksTC.liquidDeath = new BlockFluidDeath()));
-        // FIXME-REGISTRATION: FluidRegistry.registerFluid(FluidPure.instance);
-        // FIXME-REGISTRATION: FluidRegistry.addBucketForFluid(FluidPure.instance);
-        // FIXME-REGISTRATION: iForgeRegistry.register((BlocksTC.purifyingFluid = new BlockFluidPure()));
+        // Fluids (fluxGoo, liquidDeath, purifyingFluid) are registered via TCFluids (DeferredRegister pattern)
         BlocksTC.hole = registerBlock(new BlockHole());
         BlocksTC.effectShock = registerBlock(new BlockEffect("effect_shock"));
         BlocksTC.effectSap = registerBlock(new BlockEffect("effect_sap"));
@@ -343,54 +335,7 @@ public class ConfigBlocks
     }
     
     public static void initTileEntities() {
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileArcaneWorkbench.class, "thaumcraft:TileArcaneWorkbench");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileDioptra.class, "thaumcraft:TileDioptra");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileArcaneEar.class, "thaumcraft:TileArcaneEar");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileLevitator.class, "thaumcraft:TileLevitator");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileCrucible.class, "thaumcraft:TileCrucible");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileNitor.class, "thaumcraft:TileNitor");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileFocalManipulator.class, "thaumcraft:TileFocalManipulator");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TilePedestal.class, "thaumcraft:TilePedestal");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileRechargePedestal.class, "thaumcraft:TileRechargePedestal");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileResearchTable.class, "thaumcraft:TileResearchTable");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileTube.class, "thaumcraft:TileTube");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileTubeValve.class, "thaumcraft:TileTubeValve");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileTubeFilter.class, "thaumcraft:TileTubeFilter");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileTubeRestrict.class, "thaumcraft:TileTubeRestrict");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileTubeOneway.class, "thaumcraft:TileTubeOneway");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileTubeBuffer.class, "thaumcraft:TileTubeBuffer");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileHungryChest.class, "thaumcraft:TileChestHungry");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileCentrifuge.class, "thaumcraft:TileCentrifuge");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileJarFillable.class, "thaumcraft:TileJar");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileJarFillableVoid.class, "thaumcraft:TileJarVoid");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileJarBrain.class, "thaumcraft:TileJarBrain");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileBellows.class, "thaumcraft:TileBellows");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileSmelter.class, "thaumcraft:TileSmelter");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileAlembic.class, "thaumcraft:TileAlembic");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileInfusionMatrix.class, "thaumcraft:TileInfusionMatrix");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileWaterJug.class, "thaumcraft:TileWaterJug");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileInfernalFurnace.class, "thaumcraft:TileInfernalFurnace");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileThaumatorium.class, "thaumcraft:TileThaumatorium");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileThaumatoriumTop.class, "thaumcraft:TileThaumatoriumTop");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileSpa.class, "thaumcraft:TileSpa");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileLampGrowth.class, "thaumcraft:TileLampGrowth");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileLampArcane.class, "thaumcraft:TileLampArcane");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileLampFertility.class, "thaumcraft:TileLampFertility");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileMirror.class, "thaumcraft:TileMirror");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileMirrorEssentia.class, "thaumcraft:TileMirrorEssentia");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileRedstoneRelay.class, "thaumcraft:TileRedstoneRelay");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileGolemBuilder.class, "thaumcraft:TileGolemBuilder");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileEssentiaInput.class, "thaumcraft:TileEssentiaInput");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileEssentiaOutput.class, "thaumcraft:TileEssentiaOutput");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TilePatternCrafter.class, "thaumcraft:TilePatternCrafter");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TilePotionSprayer.class, "thaumcraft:TilePotionSprayer");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileVisGenerator.class, "thaumcraft:TileVisGenerator");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileStabilizer.class, "thaumcraft:TileStabilizer");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileCondenser.class, "thaumcraft:TileCondenser");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileVoidSiphon.class, "thaumcraft:TileVoidSiphon");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileBanner.class, "thaumcraft:TileBanner");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileHole.class, "thaumcraft:TileHole");
-        // FIXME-REGISTRATION: GameRegistry.registerBlockEntity(TileBarrierStone.class, "thaumcraft:TileBarrierStone");
+        // Block entities are registered via TCBlockEntityTypes (DeferredRegister pattern)
     }
     
     /** Register a block using a factory so PENDING_NAME is set before construction. */

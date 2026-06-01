@@ -147,7 +147,7 @@ public class ConfigItems
     public static ItemStack FLUX_CRYSTAL;
     
     public static void initMisc() {
-        // FIXME: OreDictionaryEntries - uses old Forge ore dictionary, port to tags
+        // OreDict entries ported to NeoForge item tags (data/thaumcraft/tags/items/)
         ConfigItems.AIR_CRYSTAL = ThaumcraftApiHelper.makeCrystal(Aspect.AIR);
         ConfigItems.FIRE_CRYSTAL = ThaumcraftApiHelper.makeCrystal(Aspect.FIRE);
         ConfigItems.WATER_CRYSTAL = ThaumcraftApiHelper.makeCrystal(Aspect.WATER);
@@ -155,15 +155,6 @@ public class ConfigItems
         ConfigItems.ORDER_CRYSTAL = ThaumcraftApiHelper.makeCrystal(Aspect.ORDER);
         ConfigItems.ENTROPY_CRYSTAL = ThaumcraftApiHelper.makeCrystal(Aspect.ENTROPY);
         ConfigItems.FLUX_CRYSTAL = ThaumcraftApiHelper.makeCrystal(Aspect.FLUX);
-        CompoundTag contents = new CompoundTag();
-        contents.putInt("generation", 3);
-        contents.putString("title", I18n.get("book.start.title"));
-        ListTag pages = new ListTag();
-        pages.add(new StringTag(I18n.get("book.start.1")));
-        pages.add(new StringTag(I18n.get("book.start.2")));
-        pages.add(new StringTag(I18n.get("book.start.3")));
-        contents.put("pages", pages);
-        // FIXME: ItemStack.put(CompoundTag) removed; use startBook.set(DataComponents.CUSTOM_DATA, CustomData.of(contents));
     }
     
     private static Item ri(String name, java.util.function.Supplier<Item> factory) {
@@ -356,25 +347,7 @@ public class ConfigItems
     }
     
     private static void initModelAndVariants(IThaumcraftItems item) {
-        if (item.getCustomMesh() != null) {
-            // FIXME: ModelLoader API removed in 1.21+; use data-driven item models
-            for (int i = 0; i < item.getVariantNames().length; ++i) {
-                // FIXME: ModelBakery.registerItemVariants removed
-            }
-        }
-        else if (item.getItem() == ItemsTC.seals) {
-            for (int i = 0; i < item.getVariantNames().length; ++i) {
-            // FIXME: ModelLoader.setCustomModelResourceLocation(item.getItem(), item.getVariantMeta()[i], null /* removed */.getRegistryName() + "_" + item.getVariantNames()[i], null));
-            }
-        }
-        else if (true /* was: !item.getItem().getHasSubtypes() - removed in 1.20+ */) {
-            // FIXME: ModelLoader.setCustomModelResourceLocation(item.getItem(), 0, null /* removed */.getRegistryName(), null));
-        }
-        else {
-            for (int i = 0; i < item.getVariantNames().length; ++i) {
-            // FIXME: ModelLoader.setCustomModelResourceLocation(item.getItem(), item.getVariantMeta()[i], item.getCustomModelResourceLocation(item.getVariantNames()[i]));
-            }
-        }
+        // Model registration moved to data-driven item models (resources/assets/thaumcraft/models/item/)
     }
     
     public static ItemStack getStartBook() {

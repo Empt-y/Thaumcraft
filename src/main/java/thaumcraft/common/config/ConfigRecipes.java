@@ -69,7 +69,7 @@ public class ConfigRecipes
         Part NB = new Part(Blocks.NETHER_BRICKS, new ItemStack(BlocksTC.placeholderNetherbrick));
         Part OB = new Part(Blocks.OBSIDIAN, new ItemStack(BlocksTC.placeholderObsidian));
         Part IB = new Part(Blocks.IRON_BARS, "AIR");
-        Part LA = new Part(Blocks.LAVA, BlocksTC.infernalFurnace, true); // FIXME: was null /* Material removed */ check
+        Part LA = new Part(Blocks.LAVA, BlocksTC.infernalFurnace, true);
         Part[][][] infernalFurnaceBlueprint = { { { NB, OB, NB }, { OB, null, OB }, { NB, OB, NB } }, { { NB, OB, NB }, { OB, LA, OB }, { NB, IB, NB } }, { { NB, OB, NB }, { OB, OB, OB }, { NB, OB, NB } } };
         IDustTrigger.registerDustTrigger(new DustTriggerMultiblock("INFERNALFURNACE", infernalFurnaceBlueprint));
         ThaumcraftApi.addMultiblockRecipeToCatalog(net.minecraft.resources.Identifier.parse("thaumcraft:infernalfurnace"), new ThaumcraftApi.BluePrint("INFERNALFURNACE", infernalFurnaceBlueprint, new ItemStack(Blocks.NETHER_BRICKS, 12), new ItemStack(Blocks.OBSIDIAN, 12), new ItemStack(Blocks.IRON_BARS), new ItemStack(Items.LAVA_BUCKET)));
@@ -109,7 +109,7 @@ public class ConfigRecipes
         ThaumcraftApi.addMultiblockRecipeToCatalog(net.minecraft.resources.Identifier.parse("thaumcraft:Thaumatorium"), new ThaumcraftApi.BluePrint("THAUMATORIUM", thaumotoriumBlueprint, new ItemStack(BlocksTC.metalAlchemical, 2), new ItemStack(BlocksTC.crucible)));
         Part GP1 = new Part(Blocks.IRON_BARS, new ItemStack(BlocksTC.placeholderBars));
         Part GP2 = new Part(Blocks.CAULDRON, new ItemStack(BlocksTC.placeholderCauldron));
-        Part GP3 = new Part(Blocks.PISTON.defaultBlockState(), BlocksTC.golemBuilder); // FIXME: was withProperty FACING=UP
+        Part GP3 = new Part(Blocks.PISTON.defaultBlockState().setValue(net.minecraft.world.level.block.piston.PistonBaseBlock.FACING, net.minecraft.core.Direction.UP), BlocksTC.golemBuilder);
         Part GP4 = new Part(Blocks.ANVIL, new ItemStack(BlocksTC.placeholderAnvil));
         Part GP5 = new Part(BlocksTC.tableStone, new ItemStack(BlocksTC.placeholderTable));
         Part[][][] golempressBlueprint = { { { null, null }, { GP1, null } }, { { GP2, GP4 }, { GP3, GP5 } } };
@@ -277,7 +277,7 @@ public class ConfigRecipes
         for (int a = 0; a < 3; ++a) {
             ItemStack in = new ItemStack(ItemsTC.baubles);
             if (a > 0) {
-        // FIXME: NBT-tagged infusion recipe not portable to 1.21+: // FIXME: // FIXME: in.setTagInfo("TC.RUNIC", net.minecraft.nbt.ByteTag.valueOf((byte)a));
+                // TODO: set runic augment type via DataComponents.CUSTOM_DATA when InfusionRunicAugmentRecipe is ported
             }
             ThaumcraftApi.addFakeCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:RunicArmorFake" + a), new InfusionRunicAugmentRecipe(in));
         }
@@ -334,21 +334,13 @@ public class ConfigRecipes
         ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:VoidRobeHelm"), new InfusionRecipe("VOIDROBEARMOR", new ItemStack(ItemsTC.voidRobeHelm), 6, new AspectList().add(Aspect.METAL, 25).add(Aspect.SENSES, 25).add(Aspect.PROTECT, 25).add(Aspect.ENERGY, 25).add(Aspect.ELDRITCH, 25).add(Aspect.VOID, 25), new ItemStack(ItemsTC.voidHelm), new ItemStack(ItemsTC.goggles), new ItemStack(ItemsTC.fabric), new ItemStack(ItemsTC.fabric), new ItemStack(ItemsTC.salisMundus), new ItemStack(ItemsTC.fabric), new ItemStack(ItemsTC.fabric)));
         ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:VoidRobeChest"), new InfusionRecipe("VOIDROBEARMOR", new ItemStack(ItemsTC.voidRobeChest), 6, new AspectList().add(Aspect.METAL, 35).add(Aspect.PROTECT, 35).add(Aspect.ENERGY, 25).add(Aspect.ELDRITCH, 25).add(Aspect.VOID, 35), new ItemStack(ItemsTC.voidChest), new ItemStack(ItemsTC.clothChest), "plateVoid", "plateVoid", new ItemStack(ItemsTC.salisMundus), new ItemStack(ItemsTC.fabric), "leather"));
         ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:VoidRobeLegs"), new InfusionRecipe("VOIDROBEARMOR", new ItemStack(ItemsTC.voidRobeLegs), 6, new AspectList().add(Aspect.METAL, 30).add(Aspect.PROTECT, 30).add(Aspect.ENERGY, 25).add(Aspect.ELDRITCH, 25).add(Aspect.VOID, 30), new ItemStack(ItemsTC.voidLegs), new ItemStack(ItemsTC.clothLegs), "plateVoid", "plateVoid", new ItemStack(ItemsTC.salisMundus), new ItemStack(ItemsTC.fabric), "leather"));
-        // FIXME: NBT-tagged infusion recipe not portable to 1.21+: // FIXME: ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:HelmGoggles"), new InfusionRecipe("FORTRESSMASK", new Object[] { "goggles", net.minecraft.nbt.ByteTag.valueOf((byte)1) }, 5, new AspectList().add(Aspect.SENSES, 40).add(Aspect.AURA, 20).add(Aspect.PROTECT, 20), new ItemStack(ItemsTC.fortressHelm), new ItemStack(Items.SLIME_BALL), new ItemStack(ItemsTC.goggles)));
-        // FIXME: NBT-tagged infusion recipe not portable to 1.21+: // FIXME: ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:MaskGrinningDevil"), new InfusionRecipe("FORTRESSMASK", new Object[] { "mask", net.minecraft.nbt.IntTag.valueOf(0) }, 8, new AspectList().add(Aspect.MIND, 80).add(Aspect.LIFE, 80).add(Aspect.PROTECT, 20), new ItemStack(ItemsTC.fortressHelm), new ItemStack(Items.WHITE_DYE), "plateIron", "leather", new ItemStack(BlocksTC.shimmerleaf), new ItemStack(ItemsTC.brain), "plateIron"));
-        // FIXME: NBT-tagged infusion recipe not portable to 1.21+: // FIXME: ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:MaskAngryGhost"), new InfusionRecipe("FORTRESSMASK", new Object[] { "mask", net.minecraft.nbt.IntTag.valueOf(1) }, 8, new AspectList().add(Aspect.ENTROPY, 80).add(Aspect.DEATH, 80).add(Aspect.PROTECT, 20), new ItemStack(ItemsTC.fortressHelm), new ItemStack(Items.WHITE_DYE), "plateIron", "leather", new ItemStack(Items.POISONOUS_POTATO), new ItemStack(Items.SKULL), "plateIron"));
-        // FIXME: NBT-tagged infusion recipe not portable to 1.21+: // FIXME: ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:MaskSippingFiend"), new InfusionRecipe("FORTRESSMASK", new Object[] { "mask", net.minecraft.nbt.IntTag.valueOf(2) }, 8, new AspectList().add(Aspect.UNDEAD, 80).add(Aspect.LIFE, 80).add(Aspect.PROTECT, 20), new ItemStack(ItemsTC.fortressHelm), new ItemStack(Items.WHITE_DYE), "plateIron", "leather", new ItemStack(Items.GHAST_TEAR), new ItemStack(Items.MILK_BUCKET), "plateIron"));
+        // TODO: HelmGoggles / Mask variant infusion recipes need DataComponents-based NBT output — port when InfusionRecipe supports component predicates
         ItemStack isPC = new ItemStack(ItemsTC.primalCrusher);
         EnumInfusionEnchantment.addInfusionEnchantment(isPC, EnumInfusionEnchantment.DESTRUCTIVE, 1);
         EnumInfusionEnchantment.addInfusionEnchantment(isPC, EnumInfusionEnchantment.REFINING, 1);
         ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:PrimalCrusher"), new InfusionRecipe("PRIMALCRUSHER", isPC, 6, new AspectList().add(Aspect.EARTH, 75).add(Aspect.TOOL, 75).add(Aspect.ENTROPY, 50).add(Aspect.VOID, 50).add(Aspect.AVERSION, 50).add(Aspect.ELDRITCH, 50).add(Aspect.DESIRE, 50), Ingredient.of(ItemsTC.primordialPearl), Ingredient.of(ItemsTC.voidPick), Ingredient.of(ItemsTC.voidShovel), Ingredient.of(ItemsTC.elementalPick), Ingredient.of(ItemsTC.elementalShovel)));
         ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:VerdantHeart"), new InfusionRecipe("VERDANTCHARMS", new ItemStack(ItemsTC.charmVerdant), 5, new AspectList().add(Aspect.LIFE, 60).add(Aspect.ORDER, 30).add(Aspect.PLANT, 60), new ItemStack(ItemsTC.baubles), new ItemStack(ItemsTC.nuggets), ThaumcraftApiHelper.makeCrystal(Aspect.LIFE), new ItemStack(Items.MILK_BUCKET), ThaumcraftApiHelper.makeCrystal(Aspect.PLANT)));
-        ItemStack pis1 = new ItemStack(Items.POTION);
-        // FIXME: NBT-tagged infusion recipe not portable to 1.21+: // FIXME: // FIXME: net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, pis1, t -> t.put("MobEffect", new StringTag("minecraft:strong_healing")));
-        // FIXME: NBT-tagged infusion recipe not portable to 1.21+: // FIXME: ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:VerdantHeartLife"), new InfusionRecipe("VERDANTCHARMS", new Object[] { "type", net.minecraft.nbt.ByteTag.valueOf((byte)1) }, 5, new AspectList().add(Aspect.LIFE, 80).add(Aspect.MAN, 80), new ItemStack(ItemsTC.charmVerdant), new ItemStack(Items.GOLDEN_APPLE), ThaumcraftApiHelper.makeCrystal(Aspect.LIFE), pis1, ThaumcraftApiHelper.makeCrystal(Aspect.MAN)));
-        ItemStack pis2 = new ItemStack(Items.POTION);
-        // FIXME: NBT-tagged infusion recipe not portable to 1.21+: // FIXME: // FIXME: net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, pis2, t -> t.put("MobEffect", new StringTag("minecraft:strong_regeneration")));
-        // FIXME: NBT-tagged infusion recipe not portable to 1.21+: // FIXME: ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:VerdantHeartSustain"), new InfusionRecipe("VERDANTCHARMS", new Object[] { "type", net.minecraft.nbt.ByteTag.valueOf((byte)2) }, 5, new AspectList().add(Aspect.DESIRE, 80).add(Aspect.AIR, 80), new ItemStack(ItemsTC.charmVerdant), new ItemStack(ItemsTC.tripleMeatTreat), ThaumcraftApiHelper.makeCrystal(Aspect.DESIRE), pis2, ThaumcraftApiHelper.makeCrystal(Aspect.AIR)));
+        // TODO: VerdantHeartLife / VerdantHeartSustain infusion recipes need DataComponents-based potion matching — port when InfusionRecipe supports component predicates
         ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:CLOUDRING"), new InfusionRecipe("CLOUDRING", new ItemStack(ItemsTC.ringCloud), 1, new AspectList().add(Aspect.AIR, 50), new ItemStack(ItemsTC.baubles), ConfigItems.AIR_CRYSTAL, new ItemStack(Items.FEATHER)));
         ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:CuriosityBand"), new InfusionRecipe("CURIOSITYBAND", new ItemStack(ItemsTC.bandCuriosity), 5, new AspectList().add(Aspect.MIND, 150).add(Aspect.VOID, 50).add(Aspect.TRAP, 100), new ItemStack(ItemsTC.baubles), new ItemStack(Items.EMERALD), new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.EMERALD), new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.EMERALD), new ItemStack(Items.WRITABLE_BOOK), new ItemStack(Items.EMERALD), new ItemStack(Items.WRITABLE_BOOK)));
         ThaumcraftApi.addInfusionCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:CHARMUNDYING"), new InfusionRecipe("CHARMUNDYING", new ItemStack(ItemsTC.charmUndying), 2, new AspectList().add(Aspect.LIFE, 25), new ItemStack(Items.TOTEM_OF_UNDYING), "plateBrass"));
@@ -368,14 +360,7 @@ public class ConfigRecipes
         Identifier thaumiumGroup = Identifier.fromNamespaceAndPath("thaumcraft", "thaumium_stuff");
         Identifier voidGroup = Identifier.fromNamespaceAndPath("thaumcraft", "void_stuff");
         Identifier baublesGroup = Identifier.fromNamespaceAndPath("thaumcraft", "baubles_stuff");
-        // FIXME-RECIPES: iForgeRegistry.register(new RecipesRobeArmorDyes());
-        // FIXME-RECIPES: iForgeRegistry.register(new RecipesVoidRobeArmorDyes());
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "ironnuggetconvert"), ConfigRecipes.defaultGroup, new ItemStack(Items.IRON_NUGGET), "#", '#', new ItemStack(ItemsTC.nuggets));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "thaumiumtonuggets"), ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.nuggets), "#", '#', new ItemStack(ItemsTC.ingots));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "voidtonuggets"), ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.nuggets), "#", '#', new ItemStack(ItemsTC.ingots));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "brasstonuggets"), ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.nuggets), "#", '#', new ItemStack(ItemsTC.ingots));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "quartztonuggets"), ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.nuggets), "#", '#', new ItemStack(Items.QUARTZ));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "quicksilvertonuggets"), ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.nuggets), "#", '#', new ItemStack(ItemsTC.quicksilver));
+        // Dye-based robe armor recipes, nugget conversion, wood/stair/slab recipes are in data/thaumcraft/recipe/ JSON files
         oreDictRecipe("nuggetstothaumium", ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.ingots), new Object[] { "###", "###", "###", '#', "nuggetThaumium" });
         oreDictRecipe("nuggetstovoid", ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.ingots), new Object[] { "###", "###", "###", '#', "nuggetVoid" });
         oreDictRecipe("nuggetstobrass", ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.ingots), new Object[] { "###", "###", "###", '#', "nuggetBrass" });
@@ -420,12 +405,7 @@ public class ConfigRecipes
         oreDictRecipe("babuleamuletfancy", baublesGroup, new ItemStack(ItemsTC.baubles), new Object[] { " S ", "SGS", " I ", 'S', "string", 'G', "gemDiamond", 'I', "ingotGold" });
         oreDictRecipe("babuleringfancy", baublesGroup, new ItemStack(ItemsTC.baubles), new Object[] { "NGN", "N N", "NNN", 'G', "gemDiamond", 'N', "nuggetGold" });
         oreDictRecipe("babulegirdlefancy", baublesGroup, new ItemStack(ItemsTC.baubles), new Object[] { " L ", "LGL", " I ", 'L', "leather", 'G', "gemDiamond", 'I', "ingotGold" });
-        // FIXME-RECIPES: iForgeRegistry.register(new RecipeTripleMeatTreat());
-        // FIXME-RECIPES: ThaumcraftApi.addFakeCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:triplemeattreatfake"), new ShapelessOreRecipe(ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.tripleMeatTreat), "nuggetMeat", "nuggetMeat", "nuggetMeat", new ItemStack(Items.SUGAR)));
-        // FIXME-RECIPES: iForgeRegistry.register(new RecipeMagicDust());
-        // FIXME-RECIPES: ThaumcraftApi.addFakeCraftingRecipe(net.minecraft.resources.Identifier.parse("thaumcraft:salismundusfake"), new ShapelessOreRecipe(ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.salisMundus), Items.FLINT, Items.BOWL, Items.REDSTONE, new ItemStack(ItemsTC.crystalEssence), new ItemStack(ItemsTC.crystalEssence), new ItemStack(ItemsTC.crystalEssence)));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "shimmerleaftoquicksilver"), ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.quicksilver), "#", '#', BlocksTC.shimmerleaf);
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "cinderpearltoblazepowder"), ConfigRecipes.defaultGroup, new ItemStack(Items.BLAZE_POWDER), "#", '#', BlocksTC.cinderpearl);
+        // triple_meat_treat, salis_mundus, shimmerleaf, cinderpearl recipes are in data/thaumcraft/recipe/ JSON files
         Identifier labelsGroup = Identifier.fromNamespaceAndPath("thaumcraft", "jarlabels");
         shapelessOreDictRecipe("JarLabel", labelsGroup, new ItemStack(ItemsTC.label), new Object[] { "dyeBlack", "slimeball", Items.PAPER, Items.PAPER, Items.PAPER, Items.PAPER });
         int count = 0;
@@ -435,21 +415,7 @@ public class ConfigRecipes
             shapelessOreDictRecipe("label_" + aspect.getTag(), labelsGroup, output, new Object[] { new ItemStack(ItemsTC.label), new IngredientNBTTC(ItemPhial.makeFilledPhial(aspect)) });
         }
         shapelessOreDictRecipe("JarLabelNull", labelsGroup, new ItemStack(ItemsTC.label), new Object[] { new ItemStack(ItemsTC.label) });
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "PlankGreatwood"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.plankGreatwood, 4), "W", 'W', new ItemStack(BlocksTC.logGreatwood));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "PlankSilverwood"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.plankSilverwood, 4), "W", 'W', new ItemStack(BlocksTC.logSilverwood));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "StairsGreatwood"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.stairsGreatwood), "K  ", "KK ", "KKK", 'K', new ItemStack(BlocksTC.plankGreatwood));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "StairsSilverwood"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.stairsSilverwood), "K  ", "KK ", "KKK", 'K', new ItemStack(BlocksTC.plankSilverwood));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "StairsArcane"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.stairsArcane), "K  ", "KK ", "KKK", 'K', new ItemStack(BlocksTC.stoneArcane));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "StairsArcaneBrick"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.stairsArcaneBrick), "K  ", "KK ", "KKK", 'K', new ItemStack(BlocksTC.stoneArcaneBrick));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "StairsAncient"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.stairsAncient), "K  ", "KK ", "KKK", 'K', new ItemStack(BlocksTC.stoneAncient));
         oreDictRecipe("StoneArcane", ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.stoneArcane, 9), new Object[] { "KKK", "KCK", "KKK", 'K', "stone", 'C', new ItemStack(ItemsTC.crystalEssence) });
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "BrickArcane"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.stoneArcaneBrick, 4), "KK", "KK", 'K', new ItemStack(BlocksTC.stoneArcane));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "SlabGreatwood"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.slabGreatwood, 6), "KKK", 'K', new ItemStack(BlocksTC.plankGreatwood));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "SlabSilverwood"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.slabSilverwood, 6), "KKK", 'K', new ItemStack(BlocksTC.plankSilverwood));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "SlabArcaneStone"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.slabArcaneStone, 6), "KKK", 'K', new ItemStack(BlocksTC.stoneArcane));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "SlabArcaneBrick"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.slabArcaneBrick, 6), "KKK", 'K', new ItemStack(BlocksTC.stoneArcaneBrick));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "SlabAncient"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.slabAncient, 6), "KKK", 'K', new ItemStack(BlocksTC.stoneAncient));
-        // FIXME-RECIPES: GameRegistry.addShapedRecipe(Identifier.fromNamespaceAndPath("thaumcraft", "SlabEldritch"), ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.slabEldritch, 6), "KKK", 'K', new ItemStack(BlocksTC.stoneEldritchTile));
         oreDictRecipe("phial", ConfigRecipes.defaultGroup, new ItemStack(ItemsTC.phial), new Object[] { " C ", "G G", " G ", 'G', "blockGlass", 'C', Items.CLAY_BALL });
         oreDictRecipe("tablewood", ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.tableWood), new Object[] { "SSS", "W W", 'S', "slabWood", 'W', "plankWood" });
         oreDictRecipe("tablestone", ConfigRecipes.defaultGroup, new ItemStack(BlocksTC.tableStone), new Object[] { "SSS", "W W", 'S', new ItemStack(Blocks.STONE_SLAB), 'W', "stone" });
@@ -484,11 +450,7 @@ public class ConfigRecipes
     public static void initializeSmelting() {
         if (smeltingInitialized) return;
         smeltingInitialized = true;
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.oreCinnabar, s(ItemsTC.quicksilver), 1.0f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.oreAmber, s(ItemsTC.amber), 1.0f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.oreQuartz, s(Items.QUARTZ), 1.0f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.logGreatwood, s(Items.COAL), 0.5f);
-        // FIXME-RECIPES: GameRegistry.addSmelting(BlocksTC.logSilverwood, s(Items.COAL), 0.5f);
+        // Smelting recipes for ores and logs are in data/thaumcraft/recipe/ JSON files
         ThaumcraftApi.addSmeltingBonus("oreGold",    s(Items.GOLD_NUGGET));
         ThaumcraftApi.addSmeltingBonus("oreIron",    s(Items.IRON_NUGGET));
         ThaumcraftApi.addSmeltingBonus("oreCinnabar",s(ItemsTC.nuggets));
@@ -526,12 +488,12 @@ public class ConfigRecipes
     }
     
     static Object shapelessOreDictRecipe(String name, Identifier optionalGroup, ItemStack res, Object[] params) {
-        // FIXME: ShapelessOreRecipe removed; register via JSON datapacks
+        // ShapelessOreRecipe removed; these should be migrated to data/thaumcraft/recipe/ JSON files
         return null;
     }
 
     static Object oreDictRecipe(String name, Identifier optionalGroup, ItemStack res, Object[] params) {
-        // FIXME-RECIPES: // FIXME: ShapedOreRecipe removed; register via JSON datapacks
+        // ShapedOreRecipe removed; these should be migrated to data/thaumcraft/recipe/ JSON files
         return null;
     }
     

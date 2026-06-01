@@ -79,50 +79,7 @@ public class ConfigEntities
     public static HashMap<Class, Integer> championModWhitelist;
     
     public static void initEntities(Object /* IForgeRegistry removed */ iForgeRegistry) {
-        int id = 0;
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "CultistPortalGreater"), EntityCultistPortalGreater.class, "CultistPortalGreater", id++, Thaumcraft.instance, 64, 20, false, 6842578, 32896);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "CultistPortalLesser"), EntityCultistPortalLesser.class, "CultistPortalLesser", id++, Thaumcraft.instance, 64, 20, false, 9438728, 6316242);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "FluxRift"), EntityFluxRift.class, "FluxRift", id++, Thaumcraft.instance, 64, 20, false);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "SpecialItem"), EntitySpecialItem.class, "SpecialItem", id++, Thaumcraft.instance, 64, 20, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "FollowItem"), EntityFollowingItem.class, "FollowItem", id++, Thaumcraft.instance, 64, 20, false);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "FallingTaint"), EntityFallingTaint.class, "FallingTaint", id++, Thaumcraft.instance, 64, 3, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "Alumentum"), EntityAlumentum.class, "Alumentum", id++, Thaumcraft.instance, 64, 20, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "GolemDart"), EntityGolemDart.class, "GolemDart", id++, Thaumcraft.instance, 64, 20, false);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "EldritchOrb"), EntityEldritchOrb.class, "EldritchOrb", id++, Thaumcraft.instance, 64, 20, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "BottleTaint"), EntityBottleTaint.class, "BottleTaint", id++, Thaumcraft.instance, 64, 20, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "GolemOrb"), EntityGolemOrb.class, "GolemOrb", id++, Thaumcraft.instance, 64, 3, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "Grapple"), EntityGrapple.class, "Grapple", id++, Thaumcraft.instance, 64, 20, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "CausalityCollapser"), EntityCausalityCollapser.class, "CausalityCollapser", id++, Thaumcraft.instance, 64, 20, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "FocusProjectile"), EntityFocusProjectile.class, "FocusProjectile", id++, Thaumcraft.instance, 64, 20, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "FocusCloud"), EntityFocusCloud.class, "FocusCloud", id++, Thaumcraft.instance, 64, 20, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "Focusmine"), EntityFocusMine.class, "Focusmine", id++, Thaumcraft.instance, 64, 20, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "TurretBasic"), EntityTurretCrossbow.class, "TurretBasic", id++, Thaumcraft.instance, 64, 3, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "TurretAdvanced"), EntityTurretCrossbowAdvanced.class, "TurretAdvanced", id++, Thaumcraft.instance, 64, 3, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "ArcaneBore"), EntityArcaneBore.class, "ArcaneBore", id++, Thaumcraft.instance, 64, 3, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "Golem"), EntityThaumcraftGolem.class, "Golem", id++, Thaumcraft.instance, 64, 3, true);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "EldritchWarden"), EntityEldritchWarden.class, "EldritchWarden", id++, Thaumcraft.instance, 64, 3, true, 6842578, 8421504);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "EldritchGolem"), EntityEldritchGolem.class, "EldritchGolem", id++, Thaumcraft.instance, 64, 3, true, 6842578, 8947848);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "CultistLeader"), EntityCultistLeader.class, "CultistLeader", id++, Thaumcraft.instance, 64, 3, true, 6842578, 9438728);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "TaintacleGiant"), EntityTaintacleGiant.class, "TaintacleGiant", id++, Thaumcraft.instance, 96, 3, false, 6842578, 10618530);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "BrainyZombie"), EntityBrainyZombie.class, "BrainyZombie", id++, Thaumcraft.instance, 64, 3, true, -16129, -16744448);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "GiantBrainyZombie"), EntityGiantBrainyZombie.class, "GiantBrainyZombie", id++, Thaumcraft.instance, 64, 3, true, -16129, -16760832);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "Wisp"), EntityWisp.class, "Wisp", id++, Thaumcraft.instance, 64, 3, false, -16129, -1);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "Firebat"), EntityFireBat.class, "Firebat", id++, Thaumcraft.instance, 64, 3, false, -16129, -806354944);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "Spellbat"), EntitySpellBat.class, "Spellbat", id++, Thaumcraft.instance, 64, 3, false, -16129, -806354944);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "Pech"), EntityPech.class, "Pech", id++, Thaumcraft.instance, 64, 3, true, -16129, -12582848);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "MindSpider"), EntityMindSpider.class, "MindSpider", id++, Thaumcraft.instance, 64, 3, true, 4996656, 4473924);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "EldritchGuardian"), EntityEldritchGuardian.class, "EldritchGuardian", id++, Thaumcraft.instance, 64, 3, true, 8421504, 0);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "CultistKnight"), EntityCultistKnight.class, "CultistKnight", id++, Thaumcraft.instance, 64, 3, true, 9438728, 128);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "CultistCleric"), EntityCultistCleric.class, "CultistCleric", id++, Thaumcraft.instance, 64, 3, true, 9438728, 8388608);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "EldritchCrab"), EntityEldritchCrab.class, "EldritchCrab", id++, Thaumcraft.instance, 64, 3, true, 8421504, 5570560);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "InhabitedZombie"), EntityInhabitedZombie.class, "InhabitedZombie", id++, Thaumcraft.instance, 64, 3, true, 8421504, 5570560);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "ThaumSlime"), EntityThaumicSlime.class, "ThaumSlime", id++, Thaumcraft.instance, 64, 3, true, 10618530, -32513);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "TaintCrawler"), EntityTaintCrawler.class, "TaintCrawler", id++, Thaumcraft.instance, 64, 3, true, 10618530, 3158064);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "Taintacle"), EntityTaintacle.class, "Taintacle", id++, Thaumcraft.instance, 64, 3, false, 10618530, 4469572);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "TaintacleTiny"), EntityTaintacleSmall.class, "TaintacleTiny", id++, Thaumcraft.instance, 64, 3, false);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "TaintSwarm"), EntityTaintSwarm.class, "TaintSwarm", id++, Thaumcraft.instance, 64, 3, false, 10618530, 16744576);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "TaintSeed"), EntityTaintSeed.class, "TaintSeed", id++, Thaumcraft.instance, 64, 20, false, 10618530, 4465237);
-        // FIXME-REGISTRATION: EntityRegistry.registerModEntity(Identifier.fromNamespaceAndPath("thaumcraft", "TaintSeedPrime"), EntityTaintSeedPrime.class, "TaintSeedPrime", id++, Thaumcraft.instance, 64, 20, false, 10618530, 5583718);
+        // Entities are registered via EntitiesTC (DeferredRegister pattern)
         EntityPech.valuedItems.put(net.minecraft.core.registries.BuiltInRegistries.ITEM.getId(Items.ENDER_PEARL), 15);
         ArrayList<List> forInv = new ArrayList<List>();
         forInv.add(Arrays.asList(1, new ItemStack(ItemsTC.clusters)));
@@ -197,8 +154,9 @@ public class ConfigEntities
     }
     
     public static void postInitEntitySpawns() {
-        // FIXME: All spawn registration uses old Forge API (BiomeManager, BiomeDictionary, EntityRegistry.addSpawn, FMLInterModComms)
-        // FIXME: Port to NeoForge 26.x spawn mechanics using biome modifiers and SpawnModifier events
+        // Entity spawns are registered via JSON biome modifiers in
+        // data/neoforge/biome_modifier/thaumcraft_spawns_<category>.json
+        // using type "neoforge:add_spawns" with biome tags and SpawnerData entries.
     }
     
     static {

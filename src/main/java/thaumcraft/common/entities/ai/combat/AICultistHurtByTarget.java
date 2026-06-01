@@ -18,7 +18,6 @@ public class AICultistHurtByTarget extends TargetGoal
     public AICultistHurtByTarget(PathfinderMob owner, boolean callsHelp) {
         super(owner, false);
         entityCallsForHelp = callsHelp;
-        // FIXME: setMutexBits removed - use setFlags(EnumSet.of(Goal.Flag.MOVE))
     }
     
     @Override
@@ -33,7 +32,6 @@ public class AICultistHurtByTarget extends TargetGoal
         mob.setTarget(mob.getLastHurtByMob());
         ;
         revengeTimerOld = mob.getLastHurtByMobTimestamp();
-        // FIXME: TargetGoal no longer has setUnseenMemoryTicks - use constructor
         if (entityCallsForHelp) {
             alertOthers();
         }

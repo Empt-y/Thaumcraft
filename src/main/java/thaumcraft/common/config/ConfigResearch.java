@@ -19,13 +19,14 @@ import net.minecraft.world.entity.projectile.LlamaSpit;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.resources.Identifier;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.world.level.biome.Biome;
-        // FIXME: // FIXME: // removed: import net.minecraftforge.common.BiomeDictionary;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -130,6 +131,11 @@ public class ConfigResearch
     
     public static void postInit() {
         ResearchManager.parseAllResearch();
+        net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer()
+                .registryAccess()
+                .lookupOrThrow(Registries.ENCHANTMENT)
+                .listElements()
+                .forEach(holder -> ScanningManager.addScannableThing(new ScanEnchantment(holder.value())));
     }
     
     private static void initCategories() {
@@ -144,14 +150,8 @@ public class ConfigResearch
     
     private static void initScannables() {
         ScanningManager.addScannableThing(new ScanGeneric());
-        // FIXME: for (Identifier loc : Enchantment.REGISTRY.getKeys()) {
-        // FIXME:     Enchantment ench = Enchantment.REGISTRY.getObject(loc);
-        // FIXME:     ScanningManager.addScannableThing(new ScanEnchantment(ench));
-        // FIXME: }
-        // FIXME: for (Identifier loc : MobEffect.REGISTRY.getKeys()) {
-        // FIXME:     MobEffect pot = MobEffect.REGISTRY.getObject(loc);
-        // FIXME:     ScanningManager.addScannableThing(new ScanPotion(pot));
-        // FIXME: }
+        // Enchantments are data-driven; registered in postInit() once the server registry is available.
+        BuiltInRegistries.MOB_EFFECT.forEach(effect -> ScanningManager.addScannableThing(new ScanPotion(effect)));
         ScanningManager.addScannableThing(new ScanEntity("!Wisp", EntityWisp.class, true));
         ScanningManager.addScannableThing(new ScanEntity("!ThaumSlime", EntityThaumicSlime.class, true));
         ScanningManager.addScannableThing(new ScanEntity("!Firebat", EntityFireBat.class, true));
@@ -208,7 +208,6 @@ public class ConfigResearch
         ScanningManager.addScannableThing(new ScanItem("f_DISPENSER", (net.minecraft.world.level.ItemLike)Blocks.DISPENSER));
         ScanningManager.addScannableThing(new ScanItem("f_MATCLAY", (net.minecraft.world.level.ItemLike)Items.CLAY_BALL));
         ScanningManager.addScannableThing(new ScanBlock("f_MATCLAY", Blocks.TERRACOTTA, Blocks.WHITE_TERRACOTTA));
-        // FIXME: Material API removed: ScanningManager.addScannableThing(new ScanMaterial("f_MATCLAY", null /* Material removed */));
         ScanningManager.addScannableThing(new ScanOreDictionary("f_MATIRON", "oreIron", "ingotIron", "blockIron", "plateIron"));
         ScanningManager.addScannableThing(new ScanOreDictionary("f_MATBRASS", "ingotBrass", "blockBrass", "plateBrass"));
         ScanningManager.addScannableThing(new ScanOreDictionary("f_MATTHAUMIUM", "ingotThaumium", "blockThaumium", "plateThaumium"));
@@ -284,17 +283,17 @@ public class ConfigResearch
     
     public static void checkPeriodicStuff(Player player) {
         IPlayerKnowledge knowledge = ThaumcraftCapabilities.getKnowledge(player);
-        // FIXME: // FIXME: Biome biome = player.level().getBiome(player.blockPosition());
-        // FIXME: // FIXME: if (!knowledge.isResearchKnown("m_hellandback") && false /* BiomeDictionary removed */) {
+        net.minecraft.core.Holder<net.minecraft.world.level.biome.Biome> biome = player.level().getBiome(player.blockPosition());
+        if (!knowledge.isResearchKnown("m_hellandback") && biome.is(BiomeTags.IS_NETHER)) {
             knowledge.addResearch("m_hellandback");
             knowledge.sync((net.minecraft.server.level.ServerPlayer)player);
             player.sendOverlayMessage(net.minecraft.network.chat.Component.literal(ChatFormatting.DARK_PURPLE + I18n.get("got.hellandback")));
-        // FIXME: } // end of BiomeDictionary block
-        // FIXME: // FIXME: if (!knowledge.isResearchKnown("m_endoftheworld") && false /* BiomeDictionary removed */) {
+        }
+        if (!knowledge.isResearchKnown("m_endoftheworld") && biome.is(BiomeTags.IS_END)) {
             knowledge.addResearch("m_endoftheworld");
             knowledge.sync((net.minecraft.server.level.ServerPlayer)player);
             player.sendOverlayMessage(net.minecraft.network.chat.Component.literal(ChatFormatting.DARK_PURPLE + I18n.get("got.endoftheworld")));
-        // FIXME: } // end of BiomeDictionary block
+        }
         if (knowledge.isResearchKnown("UNLOCKAUROMANCY@1") && !knowledge.isResearchKnown("UNLOCKAUROMANCY@2")) {
             if (player.getY() < 10.0 && !knowledge.isResearchKnown("m_deepdown")) {
                 knowledge.addResearch("m_deepdown");
