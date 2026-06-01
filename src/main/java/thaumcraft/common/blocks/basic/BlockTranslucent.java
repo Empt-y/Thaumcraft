@@ -2,7 +2,7 @@ package thaumcraft.common.blocks.basic;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-// import net.minecraft.world.level.material.Material; // removed in 1.20
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Direction;
@@ -14,9 +14,12 @@ import thaumcraft.common.blocks.BlockTC;
 public class BlockTranslucent extends BlockTC
 {
     public BlockTranslucent(String name) {
-        super(null /*  null   Material removed    */, name);
-        setHardness(0.5f);
-        setSoundType(SoundType.STONE);
+        super(BlockBehaviour.Properties.of()
+                .sound(SoundType.STONE)
+                .noOcclusion()
+                .setId(net.minecraft.resources.ResourceKey.create(
+                        net.minecraft.core.registries.Registries.BLOCK,
+                        net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name))));
     }
     
     public boolean isBeaconBase(BlockGetter world, BlockPos pos, BlockPos beacon) {

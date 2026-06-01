@@ -26,6 +26,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.crafting.IInfusionStabiliserExt;
 import thaumcraft.client.fx.FXDispatcher;
@@ -45,9 +46,12 @@ public class BlockInlay extends BlockTC implements IInfusionStabiliserExt
     private static final Direction[] HORIZONTALS = {Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST};
 
     public BlockInlay() {
-        super(null /*  null   Material removed    */, "inlay");
-        setSoundType(SoundType.METAL);
-        setHardness(0.5f);
+        super(BlockBehaviour.Properties.of()
+                .sound(SoundType.METAL)
+                .noOcclusion()
+                .setId(net.minecraft.resources.ResourceKey.create(
+                        net.minecraft.core.registries.Registries.BLOCK,
+                        net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", "inlay"))));
         registerDefaultState(defaultBlockState()
             .setValue(NORTH, EnumAttachPosition.NONE)
             .setValue(EAST, EnumAttachPosition.NONE)

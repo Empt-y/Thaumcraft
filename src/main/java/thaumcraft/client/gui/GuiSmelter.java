@@ -25,5 +25,22 @@ public class GuiSmelter extends AbstractContainerScreen<ContainerSmelter>
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
         graphics.blit(RenderPipelines.GUI_TEXTURED, tex, x, y, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+
+        // Burn time indicator (fire icon, fills from bottom up)
+        int burnScaled = furnaceInventory.getBurnTimeRemainingScaled(20);
+        if (burnScaled > 0) {
+            graphics.blit(RenderPipelines.GUI_TEXTURED, tex, x + 80, y + 26 + (20 - burnScaled), 176, 20 - burnScaled, 16, burnScaled, 256, 256);
+        }
+
+        // Cook progress (vertical bar filling from bottom)
+        int cookScaled = furnaceInventory.getCookProgressScaled(46);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, tex, x + 106, y + 13 + (46 - cookScaled), 216, 46 - cookScaled, 9, cookScaled, 256, 256);
+
+        // Vis bar (vertical, fills from bottom)
+        int visScaled = furnaceInventory.getVisScaled(48);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, tex, x + 61, y + 12 + (48 - visScaled), 200, 48 - visScaled, 8, visScaled, 256, 256);
+
+        // Vis bar frame overlay
+        graphics.blit(RenderPipelines.GUI_TEXTURED, tex, x + 60, y + 8, 232, 0, 10, 55, 256, 256);
     }
 }

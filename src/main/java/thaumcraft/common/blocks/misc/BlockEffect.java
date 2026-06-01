@@ -20,6 +20,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.client.fx.FXDispatcher;
@@ -31,10 +33,12 @@ import thaumcraft.common.lib.events.ServerEvents;
 public class BlockEffect extends BlockTC
 {
     public BlockEffect(String name) {
-        super(null /*  false   Material check removed    */, name);
-        setTickRandomly(true);
-        setResistance(999.0f);
-        setLightLevel(0.5f);
+        super(BlockBehaviour.Properties.of()
+                .sound(SoundType.STONE)
+                .noOcclusion()
+                .setId(net.minecraft.resources.ResourceKey.create(
+                        net.minecraft.core.registries.Registries.BLOCK,
+                        net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name))));
     }
 
     @Override

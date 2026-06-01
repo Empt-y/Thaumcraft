@@ -11,6 +11,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import thaumcraft.api.crafting.IInfusionStabiliserExt;
 import thaumcraft.common.blocks.BlockTC;
 
@@ -20,10 +21,12 @@ public class BlockCandle extends BlockTC implements IInfusionStabiliserExt
     public DyeColor dye;
 
     public BlockCandle(String name, DyeColor dye) {
-        super(null /*  null   Material removed    */, name);
-        setHardness(0.1f);
-        setSoundType(SoundType.WOOL);
-        setLightLevel(0.9375f);
+        super(BlockBehaviour.Properties.of()
+                .sound(SoundType.WOOL)
+                .noOcclusion()
+                .setId(net.minecraft.resources.ResourceKey.create(
+                        net.minecraft.core.registries.Registries.BLOCK,
+                        net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name))));
         this.dye = dye;
     }
 
