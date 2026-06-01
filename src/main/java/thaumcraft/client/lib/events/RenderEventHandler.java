@@ -24,6 +24,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.client.event.RenderLivingEvent;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
@@ -153,7 +154,10 @@ public class RenderEventHandler
     public static void tooltipEvent(net.neoforged.neoforge.client.event.RenderTooltipEvent.Pre event) {
         net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
         if (mc.player == null || !(mc.screen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen)) return;
-        if (!thaumcraft.common.lib.utils.EntityUtils.hasGoggles(mc.player)) return;
+        boolean hasGoggles = thaumcraft.common.lib.utils.EntityUtils.hasGoggles(mc.player);
+        boolean hasThaumometer = mc.player.getMainHandItem().getItem() instanceof thaumcraft.common.items.tools.ItemThaumometer
+                || mc.player.getOffhandItem().getItem() instanceof thaumcraft.common.items.tools.ItemThaumometer;
+        if (!hasGoggles && !hasThaumometer) return;
         net.minecraft.world.item.ItemStack stack = event.getItemStack();
         if (stack.isEmpty()) return;
 
@@ -175,7 +179,107 @@ public class RenderEventHandler
 
     @SubscribeEvent
     public static void renderOverlay(net.neoforged.neoforge.client.event.RenderGuiLayerEvent.Post event) {
-        // TODO: rewrite with modern GUI layer API (getType/getResolution removed)
+        // Run after the hotbar layer so our overlay sits on top
+        if (!VanillaGuiLayers.HOTBAR.equals(event.getName())) return;
+        net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+        if (mc.player == null || mc.screen != null) return;
+
+        net.minecraft.client.gui.GuiGraphicsExtractor graphics = event.getGuiGraphics();
+        float partialTicks = event.getPartialTick().getRealtimeDeltaTicks();
+        long time = System.nanoTime() / 1000000L;
+
+        // Check which items are held and render appropriate HUDs
+        net.minecraft.world.item.ItemStack mainHand = mc.player.getMainHandItem();
+        net.minecraft.world.item.ItemStack offHand  = mc.player.getOffhandItem();
+
+        int shift = 0;
+        for (net.minecraft.world.item.ItemStack held : new net.minecraft.world.item.ItemStack[]{mainHand, offHand}) {
+            if (held.isEmpty()) continue;
+            if (held.getItem() instanceof thaumcraft.common.items.tools.ItemThaumometer) {
+                renderThaumometerHudModern(mc, graphics, partialTicks, mc.player, shift);
+                shift += 80;
+            }
+        }
+
+        // Knowledge gain notifications
+        renderKnowledgeGainsModern(mc, graphics);
+    }
+
+    private static void renderKnowledgeGainsModern(net.minecraft.client.Minecraft mc,
+            net.minecraft.client.gui.GuiGraphicsExtractor g) {
+        java.util.concurrent.LinkedBlockingQueue<HudHandler.KnowledgeGainTracker> trackers =
+            hudHandler.knowledgeGainTrackers;
+        if (trackers.isEmpty()) return;
+
+        int ww = mc.getWindow().getGuiScaledWidth();
+        int hh = mc.getWindow().getGuiScaledHeight();
+        int iconX = ww - 20, iconY = hh - 20;
+
+        java.util.concurrent.LinkedBlockingQueue<HudHandler.KnowledgeGainTracker> keep =
+            new java.util.concurrent.LinkedBlockingQueue<>();
+
+        for (HudHandler.KnowledgeGainTracker tracker : trackers) {
+            if (tracker.progress > 0) {
+                float alpha = Math.min(1.0f, tracker.progress / 10.0f);
+                // Draw category icon at bottom-right if available
+                if (tracker.category != null && tracker.category.icon != null) {
+                    g.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
+                        tracker.category.icon, iconX, iconY - (keep.size() * 20),
+                        0, 0, 16, 16, 32, 32);
+                }
+                tracker.progress--;
+                if (tracker.progress > 0) keep.offer(tracker);
+            }
+        }
+        trackers.clear();
+        trackers.addAll(keep);
+    }
+
+    private static void renderThaumometerHudModern(net.minecraft.client.Minecraft mc, net.minecraft.client.gui.GuiGraphicsExtractor g,
+            float partialTicks, net.minecraft.world.entity.player.Player player, int shifty) {
+        thaumcraft.common.world.aura.AuraChunk aura = thaumcraft.client.lib.events.HudHandler.currentAura;
+        if (aura == null) return;
+
+        int ww = mc.getWindow().getGuiScaledWidth();
+        int hh = mc.getWindow().getGuiScaledHeight();
+
+        float VISCON = 525.0f;
+        float base = net.minecraft.util.Mth.clamp(aura.getBase()  / VISCON, 0.0f, 1.0f);
+        float vis  = net.minecraft.util.Mth.clamp(aura.getVis()   / VISCON, 0.0f, 1.0f);
+        float flux = net.minecraft.util.Mth.clamp(aura.getFlux()  / VISCON, 0.0f, 1.0f);
+
+        if (flux + vis > 1.0f) {
+            float m = 1.0f / (flux + vis);
+            vis *= m; flux *= m;
+        }
+
+        // Vis bar: purple, fills from bottom
+        if (vis > 0.0f) {
+            int barH = (int)(vis * 64);
+            int barY = shifty + 10 + (int)((1.0f - vis) * 64);
+            // semi-transparent purple fill
+            g.fill(7, barY, 13, barY + barH, 0xCCB266E6);
+        }
+        // Flux bar: dark purple, above vis
+        if (flux > 0.0f) {
+            int barH = (int)(flux * 64);
+            int barY = shifty + 10 + (int)((1.0f - flux - vis) * 64);
+            g.fill(7, barY, 13, barY + barH, 0xCC400060);
+        }
+
+        // Frame (hud.png, region 72,48 size 16x80)
+        Identifier HUD = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/hud.png");
+        g.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, HUD, 3, shifty + 1, 72, 48, 16, 80, 256, 256);
+
+        // Base marker (small pip, hud.png region 117,61 size 14x5)
+        int markerY = shifty + 8 + (int)((1.0f - base) * 64);
+        g.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, HUD, 4, markerY, 117, 61, 14, 5, 256, 256);
+
+        // If sneaking, show numeric values
+        if (player.isCrouching()) {
+            g.text(mc.font, String.format("%.0f", aura.getVis()),  20, shifty + 10 + (int)((1.0f - vis)  * 64), 0xEEBBFF, true);
+            g.text(mc.font, String.format("%.0f", aura.getFlux()), 20, shifty + 10 + (int)((1.0f - flux - vis) * 64) - 8, 0xAA44CC, true);
+        }
     }
 
     @SubscribeEvent
