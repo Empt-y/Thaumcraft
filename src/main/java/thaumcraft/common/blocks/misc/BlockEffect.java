@@ -39,6 +39,7 @@ public class BlockEffect extends BlockTC
                 .setId(net.minecraft.resources.ResourceKey.create(
                         net.minecraft.core.registries.Registries.BLOCK,
                         net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name))));
+        this.tcRegistryName = name;
     }
 
     @Override

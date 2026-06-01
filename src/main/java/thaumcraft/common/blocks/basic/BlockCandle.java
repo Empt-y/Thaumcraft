@@ -27,6 +27,7 @@ public class BlockCandle extends BlockTC implements IInfusionStabiliserExt
                 .setId(net.minecraft.resources.ResourceKey.create(
                         net.minecraft.core.registries.Registries.BLOCK,
                         net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name))));
+        this.tcRegistryName = name;
         this.dye = dye;
     }
 

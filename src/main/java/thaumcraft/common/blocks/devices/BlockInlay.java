@@ -52,6 +52,7 @@ public class BlockInlay extends BlockTC implements IInfusionStabiliserExt
                 .setId(net.minecraft.resources.ResourceKey.create(
                         net.minecraft.core.registries.Registries.BLOCK,
                         net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", "inlay"))));
+        this.tcRegistryName = "inlay";
         registerDefaultState(defaultBlockState()
             .setValue(NORTH, EnumAttachPosition.NONE)
             .setValue(EAST, EnumAttachPosition.NONE)

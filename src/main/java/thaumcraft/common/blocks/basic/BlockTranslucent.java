@@ -20,6 +20,7 @@ public class BlockTranslucent extends BlockTC
                 .setId(net.minecraft.resources.ResourceKey.create(
                         net.minecraft.core.registries.Registries.BLOCK,
                         net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name))));
+        this.tcRegistryName = name;
     }
     
     public boolean isBeaconBase(BlockGetter world, BlockPos pos, BlockPos beacon) {
