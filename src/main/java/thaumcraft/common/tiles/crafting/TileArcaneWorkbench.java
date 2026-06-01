@@ -63,7 +63,7 @@ public class TileArcaneWorkbench extends TileThaumcraft implements MenuProvider{
                 int sz = worldPosition.getZ() >> 4;
                 for (int xx = -1; xx <= 1; ++xx) {
                     for (int zz = -1; zz <= 1; ++zz) {
-                        AuraChunk ac = AuraHandler.getAuraChunk((level instanceof net.minecraft.server.level.ServerLevel sl ? sl.dimension().hashCode() : 0), sx + xx, sz + zz);
+                        AuraChunk ac = AuraHandler.getAuraChunk((level instanceof net.minecraft.server.level.ServerLevel sl ? sl.dimension().identifier().hashCode() : 0), sx + xx, sz + zz);
                         if (ac != null) {
                             t += (int)ac.getVis();
                         }

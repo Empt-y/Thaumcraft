@@ -74,7 +74,13 @@ public class ChunkEvents
         int dim = dimHash(event.getLevel());
         ChunkPos loc = event.getChunk().getPos();
         CompoundTag attachments = event.getData().attachmentData();
-        if (attachments == null) return; // vanilla-path chunk
+        // null = brand-new chunk with no mod attachment data; treat same as missing Thaumcraft key
+        if (attachments == null) {
+            if (event.getChunk() instanceof LevelChunk lc && event.getLevel() instanceof Level lvl) {
+                AuraHandler.generateAura(lc, lvl, new java.util.Random());
+            }
+            return;
+        }
         if (attachments.contains("Thaumcraft")) {
             CompoundTag nbt = attachments.getCompoundOrEmpty("Thaumcraft");
             if (nbt.contains("base")) {

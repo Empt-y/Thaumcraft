@@ -61,6 +61,7 @@ public class Thaumcraft {
         thaumcraft.common.lib.capabilities.TCPlayerData.register(modEventBus);
 
         NeoForge.EVENT_BUS.addListener(this::onServerStarting);
+        NeoForge.EVENT_BUS.addListener(this::registerCommands);
     }
 
     private void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
@@ -119,6 +120,9 @@ public class Thaumcraft {
             ConfigRecipes.compileGroups();
             ConfigResearch.postInit();
         }
-        // TODO: register command via Commands.register once command class is ported
+    }
+
+    private void registerCommands(net.neoforged.neoforge.event.RegisterCommandsEvent event) {
+        thaumcraft.common.lib.CommandThaumcraft.register(event.getDispatcher());
     }
 }

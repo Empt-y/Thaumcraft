@@ -1,16 +1,16 @@
 package thaumcraft.common.lib;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.world.entity.player.Player;
 import thaumcraft.api.capabilities.IPlayerKnowledge;
 import thaumcraft.api.capabilities.IPlayerWarp;
 import thaumcraft.api.capabilities.ThaumcraftCapabilities;
@@ -25,196 +25,169 @@ import thaumcraft.common.lib.research.ResearchManager;
 
 public class CommandThaumcraft
 {
-    private List aliases;
-
-    public CommandThaumcraft() {
-        (aliases = new ArrayList()).add("thaumcraft");
-        aliases.add("thaum");
-        aliases.add("tc");
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(Commands.literal("thaumcraft").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+            .then(Commands.literal("help")
+                .executes(ctx -> help(ctx.getSource())))
+            .then(Commands.literal("reload")
+                .executes(ctx -> reload(ctx.getSource())))
+            .then(Commands.literal("research")
+                .then(Commands.literal("list")
+                    .executes(ctx -> listResearch(ctx.getSource())))
+                .then(Commands.argument("player", EntityArgument.player())
+                    .then(Commands.literal("all")
+                        .executes(ctx -> giveAllResearch(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"))))
+                    .then(Commands.literal("list")
+                        .executes(ctx -> listAllResearch(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"))))
+                    .then(Commands.literal("reset")
+                        .executes(ctx -> resetResearch(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"))))
+                    .then(Commands.literal("revoke")
+                        .then(Commands.argument("key", StringArgumentType.word())
+                            .executes(ctx -> revokeResearch(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "key")))))
+                    .then(Commands.argument("key", StringArgumentType.word())
+                        .executes(ctx -> giveResearch(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "key"))))))
+            .then(Commands.literal("warp")
+                .then(Commands.argument("player", EntityArgument.player())
+                    .then(Commands.literal("add")
+                        .then(Commands.argument("amount", IntegerArgumentType.integer(-100, 100))
+                            .executes(ctx -> addWarp(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "amount"), ""))
+                            .then(Commands.argument("type", StringArgumentType.word())
+                                .executes(ctx -> addWarp(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "amount"), StringArgumentType.getString(ctx, "type"))))))
+                    .then(Commands.literal("set")
+                        .then(Commands.argument("amount", IntegerArgumentType.integer())
+                            .executes(ctx -> setWarp(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "amount"), ""))
+                            .then(Commands.argument("type", StringArgumentType.word())
+                                .executes(ctx -> setWarp(ctx.getSource(), EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "amount"), StringArgumentType.getString(ctx, "type"))))))))
+        );
+        // Aliases
+        dispatcher.register(Commands.literal("tc").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+            .redirect(dispatcher.getRoot().getChild("thaumcraft")));
+        dispatcher.register(Commands.literal("thaum").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+            .redirect(dispatcher.getRoot().getChild("thaumcraft")));
     }
 
-    public String getName() {
-        return "thaumcraft";
+    private static int help(CommandSourceStack src) {
+        src.sendSuccess(() -> Component.literal("§3/thaumcraft research <player> all  — give all research"), false);
+        src.sendSuccess(() -> Component.literal("§3/thaumcraft research <player> reset — reset research"), false);
+        src.sendSuccess(() -> Component.literal("§3/thaumcraft research <player> <key> — give specific research"), false);
+        src.sendSuccess(() -> Component.literal("§3/thaumcraft research <player> revoke <key> — revoke research"), false);
+        src.sendSuccess(() -> Component.literal("§3/thaumcraft warp <player> add|set <amount> [PERM|TEMP]"), false);
+        src.sendSuccess(() -> Component.literal("§3/thaumcraft reload — reload research JSON"), false);
+        return 1;
     }
 
-    public List<String> getAliases() {
-        return aliases;
-    }
-
-    public String getUsage(CommandSourceStack icommandsender) {
-        return "/thaumcraft <action> [<player> [<params>]]";
-    }
-
-    public int getRequiredPermissionLevel() {
-        return 2;
-    }
-
-    public boolean isUsernameIndex(String[] astring, int i) {
-        return i == 1;
-    }
-
-    public void execute(MinecraftServer server, CommandSourceStack sender, String[] args) {
-        if (args.length == 0) {
-            sender.sendFailure(Component.literal("§cInvalid arguments"));
-            sender.sendFailure(Component.literal("§cUse /thaumcraft help to get help"));
-            return;
+    private static int reload(CommandSourceStack src) {
+        for (ResearchCategory rc : ResearchCategories.researchCategories.values()) {
+            rc.research.clear();
         }
-        if (args[0].equalsIgnoreCase("reload")) {
-            for (ResearchCategory rc : ResearchCategories.researchCategories.values()) {
-                rc.research.clear();
-            }
-            ResearchManager.parseAllResearch();
-            sender.sendSuccess(() -> Component.literal("§5Success!"), false);
-        }
-        else if (args[0].equalsIgnoreCase("help")) {
-            sender.sendSuccess(() -> Component.literal("§3You can also use /thaum or /tc instead of /thaumcraft."), false);
-            sender.sendSuccess(() -> Component.literal("§3Use this to give research to a player."), false);
-            sender.sendSuccess(() -> Component.literal("  /thaumcraft research <list|player> <list|all|reset|<research>>"), false);
-            sender.sendSuccess(() -> Component.literal("§3Use this to remove research from a player."), false);
-            sender.sendSuccess(() -> Component.literal("  /thaumcraft research <player> revoke <research>"), false);
-            sender.sendSuccess(() -> Component.literal("§3Use this to give set a players warp world."), false);
-            sender.sendSuccess(() -> Component.literal("  /thaumcraft warp <player> <add|set> <amount> <PERM|TEMP>"), false);
-            sender.sendSuccess(() -> Component.literal("  not specifying perm or temp will just add normal warp"), false);
-            sender.sendSuccess(() -> Component.literal("§3Use this to reload json research data"), false);
-            sender.sendSuccess(() -> Component.literal("  /thaumcraft reload"), false);
-        }
-        else if (args.length >= 2) {
-            if (args[0].equalsIgnoreCase("research") && args[1].equalsIgnoreCase("list")) {
-                listResearch(sender);
-            }
-            else {
-                net.minecraft.server.level.ServerPlayer entityplayermp = server.getPlayerList().getPlayerByName(args[1]);
-                if (entityplayermp == null) {
-                    sender.sendFailure(Component.literal("§cPlayer not found: " + args[1]));
-                    return;
-                }
-                if (args[0].equalsIgnoreCase("research")) {
-                    if (args.length == 3) {
-                        if (args[2].equalsIgnoreCase("list")) {
-                            listAllResearch(sender, entityplayermp);
-                        }
-                        else if (args[2].equalsIgnoreCase("all")) {
-                            giveAllResearch(sender, entityplayermp);
-                        }
-                        else if (args[2].equalsIgnoreCase("reset")) {
-                            resetResearch(sender, entityplayermp);
-                        }
-                        else {
-                            giveResearch(sender, entityplayermp, args[2]);
-                        }
-                    }
-                    else if (args.length == 4) {
-                        if (args[2].equalsIgnoreCase("revoke")) {
-                            revokeResearch(sender, entityplayermp, args[3]);
-                        }
-                    }
-                    else {
-                        sender.sendFailure(Component.literal("§cInvalid arguments"));
-                        sender.sendFailure(Component.literal("§cUse /thaumcraft research <list|player> <list|all|reset|<research>>"));
-                    }
-                }
-                else if (args[0].equalsIgnoreCase("warp")) {
-                    if (args.length >= 4 && args[2].equalsIgnoreCase("set")) {
-                        int i = parseIntSafe(args[3]);
-                        setWarp(sender, entityplayermp, i, (args.length == 5) ? args[4] : "");
-                    }
-                    else if (args.length >= 4 && args[2].equalsIgnoreCase("add")) {
-                        int i = Mth.clamp(parseIntSafe(args[3]), -100, 100);
-                        addWarp(sender, entityplayermp, i, (args.length == 5) ? args[4] : "");
-                    }
-                    else {
-                        sender.sendFailure(Component.literal("§cInvalid arguments"));
-                        sender.sendFailure(Component.literal("§cUse /thaumcraft warp <player> <add|set> <amount> <PERM|TEMP>"));
-                    }
-                }
-                else {
-                    sender.sendFailure(Component.literal("§cInvalid arguments"));
-                    sender.sendFailure(Component.literal("§cUse /thaumcraft help to get help"));
-                }
+        ResearchManager.parseAllResearch();
+        src.sendSuccess(() -> Component.literal("§5Research reloaded."), false);
+        return 1;
+    }
+
+    private static int listResearch(CommandSourceStack src) {
+        for (ResearchCategory cat : ResearchCategories.researchCategories.values()) {
+            for (ResearchEntry ri : cat.research.values()) {
+                src.sendSuccess(() -> Component.literal("§5" + ri.getKey()), false);
             }
         }
-        else {
-            sender.sendFailure(Component.literal("§cInvalid arguments"));
-            sender.sendFailure(Component.literal("§cUse /thaumcraft help to get help"));
-        }
+        return 1;
     }
 
-    private static int parseIntSafe(String s) {
-        try { return Integer.parseInt(s); } catch (NumberFormatException e) { return 0; }
+    private static int listAllResearch(CommandSourceStack src, ServerPlayer player) {
+        StringBuilder sb = new StringBuilder();
+        for (String key : ThaumcraftCapabilities.getKnowledge(player).getResearchList()) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(key);
+        }
+        final String name = player.getName().getString();
+        final String list = sb.toString();
+        src.sendSuccess(() -> Component.literal("§5Research for " + name + ": " + list), false);
+        return 1;
     }
 
-    private void setWarp(CommandSourceStack icommandsender, net.minecraft.server.level.ServerPlayer player, int i, String type) {
-        if (type.equalsIgnoreCase("PERM")) {
-            ThaumcraftCapabilities.getWarp(player).set(IPlayerWarp.EnumWarpType.PERMANENT, i);
+    private static int giveResearch(CommandSourceStack src, ServerPlayer player, String research) {
+        if (ResearchCategories.getResearch(research) == null) {
+            src.sendFailure(Component.literal("§cUnknown research: " + research));
+            return 0;
         }
-        else if (type.equalsIgnoreCase("TEMP")) {
-            ThaumcraftCapabilities.getWarp(player).set(IPlayerWarp.EnumWarpType.TEMPORARY, i);
+        giveRecursiveResearch(player, research);
+        ThaumcraftCapabilities.getKnowledge(player).sync(player);
+        src.sendSuccess(() -> Component.literal("§5Gave " + research + " to " + player.getName().getString()), false);
+        return 1;
+    }
+
+    private static int giveAllResearch(CommandSourceStack src, ServerPlayer player) {
+        for (ResearchCategory cat : ResearchCategories.researchCategories.values()) {
+            for (ResearchEntry ri : cat.research.values()) {
+                giveRecursiveResearch(player, ri.getKey());
+            }
         }
-        else {
-            ThaumcraftCapabilities.getWarp(player).set(IPlayerWarp.EnumWarpType.NORMAL, i);
+        ThaumcraftCapabilities.getKnowledge(player).sync(player);
+        src.sendSuccess(() -> Component.literal("§5Gave all research to " + player.getName().getString()), false);
+        return 1;
+    }
+
+    private static int resetResearch(CommandSourceStack src, ServerPlayer player) {
+        ThaumcraftCapabilities.getKnowledge(player).clear();
+        for (ResearchCategory cat : ResearchCategories.researchCategories.values()) {
+            for (ResearchEntry ri : cat.research.values()) {
+                if (ri.hasMeta(ResearchEntry.EnumResearchMeta.AUTOUNLOCK)) {
+                    ResearchManager.completeResearch(player, ri.getKey(), false);
+                }
+            }
         }
+        ThaumcraftCapabilities.getKnowledge(player).sync(player);
+        src.sendSuccess(() -> Component.literal("§5Reset research for " + player.getName().getString()), false);
+        return 1;
+    }
+
+    private static int revokeResearch(CommandSourceStack src, ServerPlayer player, String research) {
+        if (ResearchCategories.getResearch(research) == null) {
+            src.sendFailure(Component.literal("§cUnknown research: " + research));
+            return 0;
+        }
+        revokeRecursiveResearch(player, research);
+        ThaumcraftCapabilities.getKnowledge(player).sync(player);
+        src.sendSuccess(() -> Component.literal("§5Revoked " + research + " from " + player.getName().getString()), false);
+        return 1;
+    }
+
+    private static int setWarp(CommandSourceStack src, ServerPlayer player, int amount, String type) {
+        if (type.equalsIgnoreCase("PERM")) ThaumcraftCapabilities.getWarp(player).set(IPlayerWarp.EnumWarpType.PERMANENT, amount);
+        else if (type.equalsIgnoreCase("TEMP")) ThaumcraftCapabilities.getWarp(player).set(IPlayerWarp.EnumWarpType.TEMPORARY, amount);
+        else ThaumcraftCapabilities.getWarp(player).set(IPlayerWarp.EnumWarpType.NORMAL, amount);
         ThaumcraftCapabilities.getWarp(player).sync(player);
-        player.sendSystemMessage(Component.literal("§5" + icommandsender.getTextName() + " set your warp to " + i));
-        icommandsender.sendSuccess(() -> Component.literal("§5Success!"), false);
+        src.sendSuccess(() -> Component.literal("§5Set warp to " + amount + " for " + player.getName().getString()), false);
+        return 1;
     }
 
-    private void addWarp(CommandSourceStack icommandsender, net.minecraft.server.level.ServerPlayer player, int i, String type) {
-        if (type.equalsIgnoreCase("PERM")) {
-            ThaumcraftCapabilities.getWarp(player).add(IPlayerWarp.EnumWarpType.PERMANENT, i);
-        }
-        else if (type.equalsIgnoreCase("TEMP")) {
-            ThaumcraftCapabilities.getWarp(player).add(IPlayerWarp.EnumWarpType.TEMPORARY, i);
-        }
-        else {
-            ThaumcraftCapabilities.getWarp(player).add(IPlayerWarp.EnumWarpType.NORMAL, i);
-        }
+    private static int addWarp(CommandSourceStack src, ServerPlayer player, int amount, String type) {
+        if (type.equalsIgnoreCase("PERM")) ThaumcraftCapabilities.getWarp(player).add(IPlayerWarp.EnumWarpType.PERMANENT, amount);
+        else if (type.equalsIgnoreCase("TEMP")) ThaumcraftCapabilities.getWarp(player).add(IPlayerWarp.EnumWarpType.TEMPORARY, amount);
+        else ThaumcraftCapabilities.getWarp(player).add(IPlayerWarp.EnumWarpType.NORMAL, amount);
         ThaumcraftCapabilities.getWarp(player).sync(player);
-        PacketHandler.sendToPlayer(new PacketWarpMessage(player, (byte)0, i), player);
-        player.sendSystemMessage(Component.literal("§5" + icommandsender.getTextName() + " added " + i + " warp to your total."));
-        icommandsender.sendSuccess(() -> Component.literal("§5Success!"), false);
+        PacketHandler.sendToPlayer(new PacketWarpMessage(player, (byte)0, amount), player);
+        src.sendSuccess(() -> Component.literal("§5Added " + amount + " warp to " + player.getName().getString()), false);
+        return 1;
     }
 
-    private void listResearch(CommandSourceStack icommandsender) {
-        Collection<ResearchCategory> rc = ResearchCategories.researchCategories.values();
-        for (ResearchCategory cat : rc) {
-            Collection<ResearchEntry> rl = cat.research.values();
-            for (ResearchEntry ri : rl) {
-                icommandsender.sendSuccess(() -> Component.literal("§5" + ri.getKey()), false);
-            }
-        }
-    }
-
-    void giveResearch(CommandSourceStack icommandsender, net.minecraft.server.level.ServerPlayer player, String research) {
-        if (ResearchCategories.getResearch(research) != null) {
-            giveRecursiveResearch(player, research);
-            ThaumcraftCapabilities.getKnowledge(player).sync(player);
-            player.sendSystemMessage(Component.literal("§5" + icommandsender.getTextName() + " gave you " + research + " research and its requisites."));
-            icommandsender.sendSuccess(() -> Component.literal("§5Success!"), false);
-        }
-        else {
-            icommandsender.sendFailure(Component.literal("§cResearch does not exist."));
-        }
-    }
+    // -----------------------------------------------------------------------
+    // Static helpers used by ItemThaumonomicon and elsewhere
+    // -----------------------------------------------------------------------
 
     public static void giveRecursiveResearch(Player player, String research) {
-        if (research.contains("@")) {
-            int i = research.indexOf("@");
-            research = research.substring(0, i);
-        }
+        if (research.contains("@")) research = research.substring(0, research.indexOf("@"));
         ResearchEntry res = ResearchCategories.getResearch(research);
         IPlayerKnowledge knowledge = ThaumcraftCapabilities.getKnowledge(player);
         if (!knowledge.isResearchComplete(research)) {
             if (res != null && res.getParents() != null) {
-                for (String rsi : res.getParentsStripped()) {
-                    giveRecursiveResearch(player, rsi);
-                }
+                for (String rsi : res.getParentsStripped()) giveRecursiveResearch(player, rsi);
             }
             if (res != null && res.getStages() != null) {
                 for (ResearchStage page : res.getStages()) {
                     if (page.getResearch() != null) {
-                        for (String gr : page.getResearch()) {
-                            ResearchManager.completeResearch(player, gr);
-                        }
+                        for (String gr : page.getResearch()) ResearchManager.completeResearch(player, gr);
                     }
                 }
             }
@@ -232,87 +205,25 @@ public class CommandThaumcraft
                 }
             }
             if (res != null && res.getSiblings() != null) {
-                for (String rsi : res.getSiblings()) {
-                    giveRecursiveResearch(player, rsi);
-                }
+                for (String rsi : res.getSiblings()) giveRecursiveResearch(player, rsi);
             }
         }
     }
 
-    private void revokeResearch(CommandSourceStack icommandsender, net.minecraft.server.level.ServerPlayer player, String research) {
-        if (ResearchCategories.getResearch(research) != null) {
-            revokeRecursiveResearch(player, research);
-            ThaumcraftCapabilities.getKnowledge(player).sync(player);
-            player.sendSystemMessage(Component.literal("§5" + icommandsender.getTextName() + " removed " + research + " research and its children."));
-            icommandsender.sendSuccess(() -> Component.literal("§5Success!"), false);
-        }
-        else {
-            icommandsender.sendFailure(Component.literal("§cResearch does not exist."));
-        }
-    }
-
     public static void revokeRecursiveResearch(Player player, String research) {
-        if (research.contains("@")) {
-            int i = research.indexOf("@");
-            research = research.substring(0, i);
-        }
-        ResearchEntry res = ResearchCategories.getResearch(research);
+        if (research.contains("@")) research = research.substring(0, research.indexOf("@"));
         IPlayerKnowledge knowledge = ThaumcraftCapabilities.getKnowledge(player);
         if (knowledge.isResearchComplete(research)) {
             for (String rc : ResearchCategories.researchCategories.keySet()) {
                 for (ResearchEntry ri : ResearchCategories.getResearchCategory(rc).research.values()) {
                     if (ri != null && ri.getParents() != null && knowledge.isResearchComplete(ri.getKey())) {
                         for (String rsi : ri.getParentsStripped()) {
-                            if (rsi.equals(research)) {
-                                revokeRecursiveResearch(player, ri.getKey());
-                            }
+                            if (rsi.equals(research)) revokeRecursiveResearch(player, ri.getKey());
                         }
                     }
                 }
             }
             ThaumcraftCapabilities.getKnowledge(player).removeResearch(research);
         }
-    }
-
-    void listAllResearch(CommandSourceStack icommandsender, net.minecraft.server.level.ServerPlayer player) {
-        String ss = "";
-        for (String key : ThaumcraftCapabilities.getKnowledge(player).getResearchList()) {
-            if (ss.length() != 0) {
-                ss += ", ";
-            }
-            ss += key;
-        }
-        final String playerName = player.getName().getString();
-        final String researchList = ss;
-        icommandsender.sendSuccess(() -> Component.literal("§5Research for " + playerName), false);
-        icommandsender.sendSuccess(() -> Component.literal("§5" + researchList), false);
-    }
-
-    void giveAllResearch(CommandSourceStack icommandsender, net.minecraft.server.level.ServerPlayer player) {
-        Collection<ResearchCategory> rc = ResearchCategories.researchCategories.values();
-        for (ResearchCategory cat : rc) {
-            Collection<ResearchEntry> rl = cat.research.values();
-            for (ResearchEntry ri : rl) {
-                giveRecursiveResearch(player, ri.getKey());
-            }
-        }
-        player.sendSystemMessage(Component.literal("§5" + icommandsender.getTextName() + " has given you all research."));
-        icommandsender.sendSuccess(() -> Component.literal("§5Success!"), false);
-    }
-
-    void resetResearch(CommandSourceStack icommandsender, net.minecraft.server.level.ServerPlayer player) {
-        ThaumcraftCapabilities.getKnowledge(player).clear();
-        Collection<ResearchCategory> rc = ResearchCategories.researchCategories.values();
-        for (ResearchCategory cat : rc) {
-            Collection<ResearchEntry> res = cat.research.values();
-            for (ResearchEntry ri : res) {
-                if (ri.hasMeta(ResearchEntry.EnumResearchMeta.AUTOUNLOCK)) {
-                    ResearchManager.completeResearch(player, ri.getKey(), false);
-                }
-            }
-        }
-        player.sendSystemMessage(Component.literal("§5" + icommandsender.getTextName() + " has reset all your research."));
-        icommandsender.sendSuccess(() -> Component.literal("§5Success!"), false);
-        ThaumcraftCapabilities.getKnowledge(player).sync(player);
     }
 }
