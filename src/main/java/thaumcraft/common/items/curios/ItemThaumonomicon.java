@@ -56,6 +56,12 @@ public class ItemThaumonomicon extends ItemTCBase
     
     public InteractionResult use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide()) {
+            // Grant the prerequisite key that enables FIRSTSTEPS (works in creative too)
+            thaumcraft.api.capabilities.IPlayerKnowledge knowledge = ThaumcraftCapabilities.getKnowledge(player);
+            if (knowledge != null && !knowledge.isResearchKnown("!gotthaumonomicon")) {
+                knowledge.addResearch("!gotthaumonomicon");
+                knowledge.sync((net.minecraft.server.level.ServerPlayer) player);
+            }
             if (ModConfig.CONFIG_MISC.allowCheatSheet && player.getItemInHand(hand).getDamageValue() == 1) {
                 Collection<ResearchCategory> rc = ResearchCategories.researchCategories.values();
                 for (ResearchCategory cat : rc) {

@@ -118,6 +118,13 @@ public class CommandThaumcraft
     }
 
     private static int giveAllResearch(CommandSourceStack src, ServerPlayer player) {
+        // Grant prerequisite unlock keys that aren't in ResearchCategories
+        thaumcraft.api.capabilities.IPlayerKnowledge know = ThaumcraftCapabilities.getKnowledge(player);
+        if (know != null) {
+            for (String prereq : new String[]{"!gotthaumonomicon", "!gotcrystals", "!gotdream"}) {
+                if (!know.isResearchKnown(prereq)) know.addResearch(prereq);
+            }
+        }
         for (ResearchCategory cat : ResearchCategories.researchCategories.values()) {
             for (ResearchEntry ri : cat.research.values()) {
                 giveRecursiveResearch(player, ri.getKey());
