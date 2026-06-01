@@ -442,6 +442,33 @@ public class GuiResearchBrowser extends Screen
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         popuptime = System.currentTimeMillis() - 1L;
+        double mx = event.x(), my = event.y();
+
+        // Category tab click handling
+        if (!GuiResearchBrowser.searching) {
+            int tcIdx = 0;
+            for (String rcl : categoriesTC) {
+                ++tcIdx;
+                int tx = 1, ty = 10 + tcIdx * 24;
+                if (mx >= tx - 3 && my >= ty - 3 && mx < tx + 19 && my < ty + 19) {
+                    GuiResearchBrowser.selectedCategory = rcl;
+                    updateResearch();
+                    minecraft.player.playSound(net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK.value(), 0.4f, 1.0f);
+                    return true;
+                }
+            }
+            int otherIdx = 0;
+            for (String rcl : categoriesOther) {
+                ++otherIdx;
+                int tx2 = width - 17, ty2 = 10 + otherIdx * 24;
+                if (mx >= tx2 - 3 && my >= ty2 - 3 && mx < tx2 + 19 && my < ty2 + 19) {
+                    GuiResearchBrowser.selectedCategory = rcl;
+                    updateResearch();
+                    minecraft.player.playSound(net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK.value(), 0.4f, 1.0f);
+                    return true;
+                }
+            }
+        }
 
         if (!GuiResearchBrowser.searching && currentHighlight != null) {
             if (!ThaumcraftCapabilities.knowsResearch(player, currentHighlight.getKey())
@@ -665,12 +692,16 @@ public class GuiResearchBrowser extends Screen
             boolean selected = rcl.equals(GuiResearchBrowser.selectedCategory);
             // Badge background
             graphics.blit(RenderPipelines.GUI_TEXTURED, tx1, tx - 3, ty - 3, 13, 13, 22, 22, 256, 256);
-            // Category icon
+            // Category icon (textures are 32×32; draw full icon at 16×16 on screen)
             if (rc.icon != null) {
-                graphics.blit(RenderPipelines.GUI_TEXTURED, rc.icon, tx, ty, 0, 0, 16, 16, 16, 16);
+                graphics.blit(RenderPipelines.GUI_TEXTURED, rc.icon, tx, ty, 0, 0, 16, 16, 32, 32);
+            }
+            // Selected highlight
+            if (selected) {
+                graphics.fill(tx - 1, ty - 1, tx + 17, ty + 17, 0x44FFFFFF);
             }
             // Tooltip on hover
-            if (mx >= tx && my >= ty && mx < tx + 16 && my < ty + 16) {
+            if (mx >= tx - 3 && my >= ty - 3 && mx < tx + 19 && my < ty + 19) {
                 String label = net.minecraft.client.resources.language.I18n.get("tc.research_category." + rcl);
                 graphics.text(font, label, tx + 22, ty + 4, selected ? 0xFFAAEEEE : 0xFFFFFFFF);
             }
@@ -681,15 +712,18 @@ public class GuiResearchBrowser extends Screen
             ++otherIdx;
             ResearchCategory rc = ResearchCategories.getResearchCategory(rcl);
             if (rc == null) continue;
-            int tx = width - 17, ty = 10 + (otherIdx + addonShift / 24) * 24;
+            int tx = width - 17, ty = 10 + otherIdx * 24;
             boolean selected = rcl.equals(GuiResearchBrowser.selectedCategory);
             graphics.blit(RenderPipelines.GUI_TEXTURED, tx1, tx - 3, ty - 3, 13, 13, 22, 22, 256, 256);
             if (rc.icon != null) {
-                graphics.blit(RenderPipelines.GUI_TEXTURED, rc.icon, tx, ty, 0, 0, 16, 16, 16, 16);
+                graphics.blit(RenderPipelines.GUI_TEXTURED, rc.icon, tx, ty, 0, 0, 16, 16, 32, 32);
             }
-            if (mx >= tx && my >= ty && mx < tx + 16 && my < ty + 16) {
+            if (selected) {
+                graphics.fill(tx - 1, ty - 1, tx + 17, ty + 17, 0x44FFFFFF);
+            }
+            if (mx >= tx - 3 && my >= ty - 3 && mx < tx + 19 && my < ty + 19) {
                 String label = net.minecraft.client.resources.language.I18n.get("tc.research_category." + rcl);
-                int labelX = screenX + 9 - font.width(label);
+                int labelX = width - 17 - font.width(label) - 4;
                 graphics.text(font, label, labelX, ty + 4, selected ? 0xFFAAEEEE : 0xFFFFFFFF);
             }
         }

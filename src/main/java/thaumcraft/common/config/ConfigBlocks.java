@@ -365,7 +365,7 @@ public class ConfigBlocks
         net.minecraft.resources.Identifier rl = net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name);
         net.minecraft.resources.ResourceKey<net.minecraft.world.item.Item> itemKey =
             net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ITEM, rl);
-        BlockItem itemBlock = new BlockItem(block, new net.minecraft.world.item.Item.Properties().setId(itemKey));
+        BlockItem itemBlock = new BlockItem(block, new net.minecraft.world.item.Item.Properties().setId(itemKey).useBlockDescriptionPrefix());
         net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.BLOCK, rl, block);
         net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.ITEM, rl, itemBlock);
         return block;
