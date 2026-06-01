@@ -32,7 +32,7 @@ import thaumcraft.common.tiles.devices.TileWaterJug;
 public class BlockWaterJug extends BlockTCDevice
 {
     public BlockWaterJug() {
-        super(null /*  null   Material removed    */, TileWaterJug.class, "everfull_urn");
+        super(null /*  null   Material removed    */, TileWaterJug.class, "everfull_urn", true);
         setSoundType(SoundType.STONE);
     }
 

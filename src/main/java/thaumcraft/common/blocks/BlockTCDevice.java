@@ -16,6 +16,9 @@ public class BlockTCDevice extends BlockTCTile
     public BlockTCDevice(Object mat, Class tc, String name) {
         super(mat, tc, name);
     }
+    public BlockTCDevice(Object mat, Class tc, String name, boolean noOcclusion) {
+        super(mat, tc, name, noOcclusion);
+    }
 
     // createBlockStateDefinition is handled by BlockTC base class
 

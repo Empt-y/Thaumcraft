@@ -13,7 +13,7 @@ import thaumcraft.common.tiles.devices.TileCondenser;
 public class BlockCondenser extends BlockTCDevice implements IBlockEnabled
 {
     public BlockCondenser() {
-        super(null /*  null   Material removed    */, TileCondenser.class, "condenser");
+        super(null /*  null   Material removed    */, TileCondenser.class, "condenser", true);
         setSoundType(SoundType.METAL);
     }
     

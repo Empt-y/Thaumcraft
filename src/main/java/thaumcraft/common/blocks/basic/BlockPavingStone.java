@@ -22,7 +22,8 @@ import thaumcraft.common.tiles.misc.TileBarrierStone;
 public class BlockPavingStone extends BlockTC
 {
     public BlockPavingStone(String name) {
-        super(null /*  null   Material removed    */, name);
+        super(null /*  null   Material removed    */, name, true);
+
         setHardness(2.5f);
         setSoundType(SoundType.STONE);
         setTickRandomly(true);

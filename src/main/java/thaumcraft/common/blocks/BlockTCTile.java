@@ -26,6 +26,12 @@ public class BlockTCTile extends BlockTC implements EntityBlock
         setResistance(20.0f);
         tileClass = tc;
     }
+    public BlockTCTile(Object mat, Class<? extends BlockEntity> tc, String name, boolean noOcclusion) {
+        super(mat, name, noOcclusion);
+        setHardness(2.0f);
+        setResistance(20.0f);
+        tileClass = tc;
+    }
 
     public boolean canHarvestBlock(BlockGetter world, BlockPos pos, Player player) {
         return true;

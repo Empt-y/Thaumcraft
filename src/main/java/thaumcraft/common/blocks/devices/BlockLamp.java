@@ -27,7 +27,7 @@ import thaumcraft.common.tiles.devices.TileLampGrowth;
 public class BlockLamp extends BlockTCDevice implements IBlockFacing, IBlockEnabled
 {
     public BlockLamp(Class tc, String name) {
-        super(null /*  null   Material removed    */, tc, name);
+        super(null /*  null   Material removed    */, tc, name, true);
         setSoundType(SoundType.METAL);
         setHardness(1.0f);
         registerDefaultState(defaultBlockState()

@@ -13,7 +13,7 @@ import thaumcraft.common.tiles.crafting.TileInfusionMatrix;
 public class BlockInfusionMatrix extends BlockTCDevice
 {
     public BlockInfusionMatrix() {
-        super(null /*  null   Material removed    */, TileInfusionMatrix.class, "infusion_matrix");
+        super(null /*  null   Material removed    */, TileInfusionMatrix.class, "infusion_matrix", true);
         setSoundType(SoundType.STONE);
     }
     

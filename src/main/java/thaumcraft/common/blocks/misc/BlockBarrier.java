@@ -30,7 +30,7 @@ import thaumcraft.common.tiles.misc.TileBarrierStone;
 public class BlockBarrier extends BlockTC
 {
     public BlockBarrier() {
-        super(propsWithId("barrier"));
+        super(propsWithId("barrier").noOcclusion());
         this.tcRegistryName = "barrier";
         setLightOpacity(0);
     }

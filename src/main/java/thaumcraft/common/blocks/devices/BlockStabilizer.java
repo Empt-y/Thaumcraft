@@ -15,7 +15,7 @@ import thaumcraft.common.tiles.devices.TileStabilizer;
 public class BlockStabilizer extends BlockTCDevice implements IInfusionStabiliserExt
 {
     public BlockStabilizer() {
-        super(null /*  null   Material removed    */, TileStabilizer.class, "stabilizer");
+        super(null /*  null   Material removed    */, TileStabilizer.class, "stabilizer", true);
         setSoundType(SoundType.STONE);
     }
     

@@ -34,7 +34,8 @@ public class BlockBannerTC extends BlockTC implements EntityBlock
     public DyeColor dye;
 
     public BlockBannerTC(String name, DyeColor dye) {
-        super(null /*  null   Material removed    */, name);
+        super(null /*  null   Material removed    */, name, true);
+
         setHardness(1.0f);
         setSoundType(SoundType.WOOD);
         this.dye = dye;

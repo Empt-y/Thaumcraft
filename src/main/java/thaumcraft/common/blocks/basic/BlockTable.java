@@ -1,5 +1,6 @@
 package thaumcraft.common.blocks.basic;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +20,13 @@ import thaumcraft.common.tiles.crafting.TileResearchTable;
 public class BlockTable extends BlockTC
 {
     public BlockTable(Object mat, String name, SoundType st) {
-        super(mat, name, st);
+        super(BlockBehaviour.Properties.of()
+                .sound(st)
+                .noOcclusion()
+                .setId(net.minecraft.resources.ResourceKey.create(
+                        net.minecraft.core.registries.Registries.BLOCK,
+                        net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", name))));
+        this.tcRegistryName = name;
     }
 
     public boolean isSideSolid(BlockState state, BlockGetter world, BlockPos pos, Direction side) {

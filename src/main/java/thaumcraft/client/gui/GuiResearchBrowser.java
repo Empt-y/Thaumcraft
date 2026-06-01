@@ -494,7 +494,7 @@ public class GuiResearchBrowser extends Screen
             if (rc != null && rc.background != null) {
                 graphics.blit(RenderPipelines.GUI_TEXTURED, rc.background,
                         startX - 2, startY - 2, (float)(locX / 2.0),
-                        (float)(locY / 2.0), screenX + 4, screenY + 4, 256, 256);
+                        (float)(locY / 2.0), screenX + 4, screenY + 4, 1024, 1024);
             }
         }
 

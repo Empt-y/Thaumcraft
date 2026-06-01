@@ -18,7 +18,8 @@ import thaumcraft.common.lib.utils.BlockStateUtils;
 public class BlockSmelterVent extends BlockTC implements IBlockFacingHorizontal
 {
     public BlockSmelterVent() {
-        super(null /*  null   Material removed    */, "smelter_vent");
+        super(null /*  null   Material removed    */, "smelter_vent", true);
+
         setSoundType(SoundType.METAL);
         registerDefaultState(defaultBlockState().setValue((Property)IBlockFacingHorizontal.FACING, Direction.NORTH));
         setHardness(1.0f);

@@ -21,7 +21,7 @@ public class BlockGolemBuilder extends BlockTCDevice implements IBlockFacingHori
     public static boolean ignore;
 
     public BlockGolemBuilder() {
-        super(null /*  null   Material removed    */, null, "golem_builder");
+        super(null /*  null   Material removed    */, null, "golem_builder", true);
         setSoundType(SoundType.STONE);
     }
 

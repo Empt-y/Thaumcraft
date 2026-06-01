@@ -24,7 +24,8 @@ import thaumcraft.common.lib.utils.BlockStateUtils;
 public class BlockBrainBox extends BlockTC implements IBlockFacingHorizontal, IBlockEnabled
 {
     public BlockBrainBox() {
-        super(null /*  null   Material removed    */, "brain_box");
+        super(null /*  null   Material removed    */, "brain_box", true);
+
         setSoundType(SoundType.METAL);
         setHardness(1.0f);
         setResistance(10.0f);

@@ -32,7 +32,7 @@ public class BlockCrucible extends BlockTCTile
     private int delay;
 
     public BlockCrucible() {
-        super(null /*  null   Material removed    */, TileCrucible.class, "crucible");
+        super(null /*  null   Material removed    */, TileCrucible.class, "crucible", true);
         delay = 0;
         setSoundType(SoundType.METAL);
     }

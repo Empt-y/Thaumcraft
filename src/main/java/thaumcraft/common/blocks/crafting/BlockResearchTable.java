@@ -21,7 +21,7 @@ import thaumcraft.common.tiles.crafting.TileResearchTable;
 public class BlockResearchTable extends BlockTCDevice implements IBlockFacingHorizontal
 {
     public BlockResearchTable() {
-        super(null /*  null   Material removed    */, TileResearchTable.class, "research_table");
+        super(null /*  null   Material removed    */, TileResearchTable.class, "research_table", true);
         setSoundType(SoundType.WOOD);
     }
 

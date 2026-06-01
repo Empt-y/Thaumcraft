@@ -27,7 +27,8 @@ public class BlockPillar extends BlockTC
     private Random rand;
 
     public BlockPillar(String name) {
-        super(null /*  null   Material removed    */, name);
+        super(null /*  null   Material removed    */, name, true);
+
         rand = new Random();
         setHardness(2.5f);
         setSoundType(SoundType.STONE);

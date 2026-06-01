@@ -39,7 +39,7 @@ public class BlockPatternCrafter extends BlockTCDevice implements IBlockFacingHo
     private RayTracer rayTracer;
 
     public BlockPatternCrafter() {
-        super(null /*  null   Material removed    */, TilePatternCrafter.class, "pattern_crafter");
+        super(null /*  null   Material removed    */, TilePatternCrafter.class, "pattern_crafter", true);
         rayTracer = new RayTracer();
         setSoundType(SoundType.METAL);
     }

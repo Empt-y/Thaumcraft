@@ -21,7 +21,7 @@ public class BlockLoot extends BlockTC
     net.minecraft.util.RandomSource rand;
     
     public BlockLoot(Object mat /* Material removed */, String name, LootType type) {
-        super(mat, name);
+        super(mat, name, true);
         rand = net.minecraft.util.RandomSource.create();
         setHardness(0.15f);
         setResistance(0.0f);

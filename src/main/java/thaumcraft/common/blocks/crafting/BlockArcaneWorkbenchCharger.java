@@ -21,7 +21,8 @@ import thaumcraft.common.tiles.crafting.TileFocalManipulator;
 public class BlockArcaneWorkbenchCharger extends BlockTC
 {
     public BlockArcaneWorkbenchCharger() {
-        super(null /*  null   Material removed    */, "arcane_workbench_charger");
+        super(null /*  null   Material removed    */, "arcane_workbench_charger", true);
+
         setSoundType(SoundType.WOOD);
         setHardness(1.25f);
         setResistance(10.0f);

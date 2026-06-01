@@ -52,6 +52,11 @@ public class BlockTC extends Block
         super(propsWithId(name));
         this.tcRegistryName = name;
     }
+    // Legacy shim with noOcclusion flag
+    public BlockTC(Object material, String name, boolean noOcclusion) {
+        super(noOcclusion ? propsWithId(name).noOcclusion() : propsWithId(name));
+        this.tcRegistryName = name;
+    }
     // Legacy shim with SoundType
     public BlockTC(Object material, String name, SoundType st) {
         super(propsWithId(name).sound(st));
