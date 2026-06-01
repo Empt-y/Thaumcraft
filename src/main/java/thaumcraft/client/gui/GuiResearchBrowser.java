@@ -220,15 +220,6 @@ public class GuiResearchBrowser extends Screen
             for (String tcc : ConfigResearch.TCCategories) {
                 if (tcc.equals(rcl)) {
                     categoriesTC.add(rcl);
-                    final String catKey = rcl;
-                    final String catName = rcl;
-                    final boolean isLeft = true;
-                    final int tcIdx = categoriesTC.size();
-                    addRenderableWidget(Button.builder(
-                            Component.translatable("tc.research_category." + rcl),
-                            b -> switchCategory(catKey))
-                        .bounds(1, 10 + tcIdx * 24, 16, 16)
-                        .build());
                     continue outer;
                 }
             }
@@ -238,13 +229,6 @@ public class GuiResearchBrowser extends Screen
             if (count - 1 < GuiResearchBrowser.catScrollPos) continue;
 
             categoriesOther.add(rcl);
-            final String catKey = rcl;
-            final int otherIdx = categoriesOther.size();
-            addRenderableWidget(Button.builder(
-                    Component.translatable("tc.research_category." + rcl),
-                    b -> switchCategory(catKey))
-                .bounds(width - 17, 10 + otherIdx * 24, 16, 16)
-                .build());
         }
 
         // Scroll buttons for addon categories
@@ -515,19 +499,24 @@ public class GuiResearchBrowser extends Screen
                 (int)(guiBoundsTop   * screenZoom),
                 (int)(guiBoundsBottom * screenZoom - 1.0f));
 
-        // Background texture (category-specific)
+        // Everything zoomable is drawn inside scale(1/screenZoom) so positions are in
+        // "pre-scale" space: multiply by screenZoom to get true pre-scale coords,
+        // the matrix then divides by screenZoom giving correct screen positions.
+        graphics.pose().pushMatrix();
+        graphics.pose().scale(1.0f / screenZoom, 1.0f / screenZoom);
+
+        // Background texture: draw at (startX-2)*zoom so after scale it lands at startX-2
         if (GuiResearchBrowser.selectedCategory != null && !GuiResearchBrowser.selectedCategory.isEmpty()) {
             ResearchCategory rc = ResearchCategories.getResearchCategory(GuiResearchBrowser.selectedCategory);
             if (rc != null && rc.background != null) {
+                int bw = (int)((screenX + 4) * screenZoom);
+                int bh = (int)((screenY + 4) * screenZoom);
                 graphics.blit(RenderPipelines.GUI_TEXTURED, rc.background,
-                        startX - 2, startY - 2, (float)(locX / 2.0),
-                        (float)(locY / 2.0), screenX + 4, screenY + 4, 1024, 1024);
+                        (int)((startX - 2) * screenZoom), (int)((startY - 2) * screenZoom),
+                        (float)(locX / 2.0), (float)(locY / 2.0),
+                        bw, bh, 1024, 1024);
             }
         }
-
-        // Clip rendering to the research area (software scissor via fill borders)
-        graphics.pose().pushMatrix();
-        graphics.pose().scale(1.0f / screenZoom, 1.0f / screenZoom);
 
         drawResearchConnections(graphics, locX, locY);
         drawResearchIcons(graphics, mx, my, locX, locY);
@@ -596,20 +585,37 @@ public class GuiResearchBrowser extends Screen
         }
     }
 
-    /** Draw a simple line between two grid positions as small filled rectangles. */
+    /**
+     * Draw a line between two grid positions. Coordinates are in PRE-SCALE space
+     * (will be divided by screenZoom by the pose matrix).
+     * Only draws if at least one endpoint is within the visible region.
+     */
     private void drawConnectionLine(GuiGraphicsExtractor graphics,
             int col1, int row1, int col2, int row2,
             int color, int locX, int locY) {
-        int x1 = (int)((startX + col1 * 24 - locX + 8) * screenZoom);
-        int y1 = (int)((startY + row1 * 24 - locY + 8) * screenZoom);
-        int x2 = (int)((startX + col2 * 24 - locX + 8) * screenZoom);
-        int y2 = (int)((startY + row2 * 24 - locY + 8) * screenZoom);
-        // Walk from (x1,y1) to (x2,y2) in grid steps and draw 2x2 dots
-        int dx = x2 - x1;
-        int dy = y2 - y1;
+        // Pre-scale positions (inside scale(1/screenZoom) matrix)
+        int x1 = startX + col1 * 24 - locX + 8;
+        int y1 = startY + row1 * 24 - locY + 8;
+        int x2 = startX + col2 * 24 - locX + 8;
+        int y2 = startY + row2 * 24 - locY + 8;
+
+        // Visible bounds in pre-scale space
+        int visLeft   = (int)(startX * screenZoom) - 24;
+        int visTop    = (int)(startY * screenZoom) - 24;
+        int visRight  = (int)((startX + screenX) * screenZoom) + 24;
+        int visBottom = (int)((startY + screenY) * screenZoom) + 24;
+
+        // Skip lines where neither endpoint is visible
+        boolean p1vis = x1 >= visLeft && x1 <= visRight && y1 >= visTop && y1 <= visBottom;
+        boolean p2vis = x2 >= visLeft && x2 <= visRight && y2 >= visTop && y2 <= visBottom;
+        if (!p1vis && !p2vis) return;
+
+        int dx = x2 - x1, dy = y2 - y1;
         int steps = Math.max(Math.abs(dx), Math.abs(dy));
-        if (steps == 0) return;
-        for (int i = 0; i <= steps; i++) {
+        if (steps == 0) { graphics.fill(x1, y1, x1 + 2, y1 + 2, color); return; }
+        // Draw dots every few pixels for performance
+        int stride = Math.max(1, steps / 48);
+        for (int i = 0; i <= steps; i += stride) {
             int px = x1 + dx * i / steps;
             int py = y1 + dy * i / steps;
             graphics.fill(px, py, px + 2, py + 2, color);
@@ -621,13 +627,20 @@ public class GuiResearchBrowser extends Screen
         IPlayerKnowledge know = ThaumcraftCapabilities.getKnowledge(player);
         if (know == null) return;
 
+        // mx/my are in screen space; convert to pre-scale space for hit-testing
+        int psMx = (int)(mx * screenZoom);
+        int psMy = (int)(my * screenZoom);
+
         for (ResearchEntry iconResearch : research) {
             if (!isVisible(iconResearch)) continue;
 
-            int var25 = (int)(iconResearch.getDisplayColumn() * 24 * screenZoom) - locX;
-            int var26 = (int)(iconResearch.getDisplayRow()    * 24 * screenZoom) - locY;
+            // Pre-scale position (no extra * screenZoom — the pose matrix handles scaling)
+            int var25 = iconResearch.getDisplayColumn() * 24 - locX;
+            int var26 = iconResearch.getDisplayRow()    * 24 - locY;
 
-            if (var25 < -24 || var26 < -24 || var25 > screenX * screenZoom || var26 > screenY * screenZoom) continue;
+            // Cull against pre-scale visible region
+            if (var25 < -24 || var26 < -24
+                    || var25 > screenX * screenZoom || var26 > screenY * screenZoom) continue;
 
             int iconX = startX + var25;
             int iconY = startY + var26;
@@ -648,10 +661,10 @@ public class GuiResearchBrowser extends Screen
             // Draw research icon
             drawResearchIcon(iconResearch, iconX, iconY, 0.0f, !canUnlock);
 
-            // Hover detection (in unscaled space)
+            // Hover detection: psMx/psMy are in pre-scale space, compare to iconX/Y
             if (mx >= startX && my >= startY && mx < startX + screenX && my < startY + screenY) {
-                if (mx >= iconX / screenZoom - 2 && mx <= (iconX + 18) / screenZoom
-                        && my >= iconY / screenZoom - 2 && my <= (iconY + 18) / screenZoom) {
+                if (psMx >= iconX - 2 && psMx <= iconX + 18
+                        && psMy >= iconY - 2 && psMy <= iconY + 18) {
                     currentHighlight = iconResearch;
                 }
             }
