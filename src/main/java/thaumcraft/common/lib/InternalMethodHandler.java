@@ -81,12 +81,12 @@ public class InternalMethodHandler implements IInternalMethodHandler
     
     @Override
     public AspectList getObjectAspects(ItemStack is) {
-        return null /* getInfusionRecipeAspects removed */;
+        return ThaumcraftCraftingManager.getObjectTags(is);
     }
-    
+
     @Override
     public AspectList generateTags(ItemStack is) {
-        return null /* getInfusionRecipeAspects removed */;
+        return ThaumcraftCraftingManager.generateTags(is);
     }
     
     @Override

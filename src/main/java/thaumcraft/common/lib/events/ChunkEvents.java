@@ -9,6 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.neoforge.event.level.ChunkDataEvent;
+import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.level.ChunkWatchEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -33,6 +34,20 @@ public class ChunkEvents
             return l.dimension().identifier().hashCode();
         }
         return 0;
+    }
+
+    /** Fires for ALL chunks including brand-new generated ones. Use this for first-time aura setup. */
+    @SubscribeEvent
+    public static void chunkLoaded(ChunkEvent.Load event) {
+        if (!event.isNewChunk()) return; // only handle newly generated chunks here
+        if (!(event.getLevel() instanceof Level lvl)) return;
+        if (lvl.isClientSide()) return;
+        LevelChunk lc = event.getChunk();
+        int dim = dimHash(lvl);
+        // Only generate if no aura exists yet for this chunk
+        if (AuraHandler.getAuraChunk(dim, lc.getPos().x(), lc.getPos().z()) == null) {
+            AuraHandler.generateAura(lc, lvl, new java.util.Random());
+        }
     }
 
     @SubscribeEvent
