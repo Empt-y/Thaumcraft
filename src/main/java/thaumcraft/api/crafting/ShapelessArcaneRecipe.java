@@ -33,6 +33,9 @@ import java.util.List;
  */
 public class ShapelessArcaneRecipe implements IArcaneRecipe {
 
+    public static final ShapelessArcaneRecipe EMPTY = new ShapelessArcaneRecipe(
+            null, "", 0, new AspectList(), NonNullList.create(), ItemStack.EMPTY);
+
     private final String research;
     private final int vis;
     private final AspectList crystals;
@@ -169,12 +172,12 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     @Override
     @SuppressWarnings("unchecked")
     public RecipeSerializer<? extends Recipe<CraftingInput>> getSerializer() {
-        return null; // TODO: Hook custom deferred registry object here
+        return thaumcraft.common.config.TCRecipes.SHAPELESS_ARCANE_SERIALIZER.get();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public RecipeType<? extends Recipe<CraftingInput>> getType() {
-        return null; // TODO: Hook custom deferred recipe type registry object here
+        return thaumcraft.common.config.TCRecipes.SHAPELESS_ARCANE_TYPE.get();
     }
 }

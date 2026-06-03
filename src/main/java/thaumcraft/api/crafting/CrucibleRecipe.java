@@ -28,6 +28,9 @@ import thaumcraft.api.aspects.AspectList;
  */
 public class CrucibleRecipe implements IThaumcraftRecipe {
 
+    public static final CrucibleRecipe EMPTY = new CrucibleRecipe(
+            "", ItemStack.EMPTY, net.minecraft.world.item.Items.STONE, new AspectList());
+
     private final ItemStack recipeOutput;
     private Ingredient catalyst;
     private AspectList aspects;
@@ -154,12 +157,12 @@ public class CrucibleRecipe implements IThaumcraftRecipe {
     @Override
     @SuppressWarnings("unchecked")
     public RecipeSerializer<? extends Recipe<CraftingInput>> getSerializer() {
-        return null; // TODO: Hook deferred crucible recipe serializer registry mapping here
+        return thaumcraft.common.config.TCRecipes.CRUCIBLE_SERIALIZER.get();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public RecipeType<? extends Recipe<CraftingInput>> getType() {
-        return null; // TODO: Hook deferred crucible recipe type registry mapping here
+        return thaumcraft.common.config.TCRecipes.CRUCIBLE_TYPE.get();
     }
 }

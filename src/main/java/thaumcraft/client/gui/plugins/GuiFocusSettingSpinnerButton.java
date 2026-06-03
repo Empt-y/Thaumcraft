@@ -38,7 +38,14 @@ public class GuiFocusSettingSpinnerButton extends AbstractButton
 
     @Override
     protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        // rendering stub
+        // Left arrow (decrement) at UV (20,0), right arrow (increment) at UV (30,0), 10×10 each
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex,
+                this.getX(), this.getY(), 20, 0, 10, 10, 256, 256);
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex,
+                this.getX() + width, this.getY(), 30, 0, 10, 10, 256, 256);
+        var font = net.minecraft.client.Minecraft.getInstance().font;
+        String s = setting.getValueText();
+        graphics.text(font, s, this.getX() + (width + 10) / 2 - font.width(s) / 2, this.getY() + 1, 0xFFFFFF, true);
     }
 
     @Override

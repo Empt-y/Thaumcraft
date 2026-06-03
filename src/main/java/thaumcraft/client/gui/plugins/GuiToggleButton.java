@@ -2,7 +2,9 @@ package thaumcraft.client.gui.plugins;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.input.InputWithModifiers;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 
 public class GuiToggleButton extends AbstractButton
@@ -22,7 +24,11 @@ public class GuiToggleButton extends AbstractButton
 
     @Override
     protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        // rendering stub
+        // Toggle button: draw small icon at UV (192,16) or (192,24) depending on toggle state, 8×8
+        int v = toggled ? 24 : 16;
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
+                Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_base.png"),
+                this.getX(), this.getY(), 192, v, 8, 8, 256, 256);
     }
 
     @Override

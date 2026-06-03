@@ -1,8 +1,10 @@
 package thaumcraft.client.gui.plugins;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.InputWithModifiers;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
@@ -48,7 +50,20 @@ public class GuiImageButton extends AbstractButton
 
     @Override
     protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        // rendering stub
+        if (loc != null) {
+            int dx = this.getX() - ww / 2;
+            int dy = this.getY() - hh / 2;
+            graphics.blit(RenderPipelines.GUI_TEXTURED, loc, dx, dy, lx, ly, ww, hh, 256, 256);
+        }
+        String label = this.getMessage().getString();
+        if (!label.isEmpty()) {
+            var font = Minecraft.getInstance().font;
+            graphics.text(font, label, this.getX() - font.width(label) / 2, this.getY() - 2, color, true);
+        }
+        if (isHoveredOrFocused() && description != null && !description.isEmpty()) {
+            var font = Minecraft.getInstance().font;
+            graphics.setTooltipForNextFrame(font, java.util.List.of(Component.literal(description)), java.util.Optional.empty(), mouseX, mouseY);
+        }
     }
 
     @Override

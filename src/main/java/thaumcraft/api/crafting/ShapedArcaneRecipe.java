@@ -35,6 +35,10 @@ import java.util.Map;
  */
 public class ShapedArcaneRecipe implements IArcaneRecipe {
 
+    public static final ShapedArcaneRecipe EMPTY = new ShapedArcaneRecipe(
+            null, "", 0, new AspectList(), ItemStack.EMPTY, 1, 1,
+            NonNullList.withSize(1, Ingredient.of(net.minecraft.world.item.Items.AIR)));
+
     private final String research;
     private final int vis;
     private final AspectList crystals;
@@ -209,12 +213,12 @@ public class ShapedArcaneRecipe implements IArcaneRecipe {
     @Override
     @SuppressWarnings("unchecked")
     public RecipeSerializer<? extends Recipe<CraftingInput>> getSerializer() {
-        return null; // TODO: Hook custom deferred registry item here
+        return thaumcraft.common.config.TCRecipes.SHAPED_ARCANE_SERIALIZER.get();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public RecipeType<? extends Recipe<CraftingInput>> getType() {
-        return null; // TODO: Hook custom deferred recipe type registry object here
+        return thaumcraft.common.config.TCRecipes.SHAPED_ARCANE_TYPE.get();
     }
 }

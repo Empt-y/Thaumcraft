@@ -21,6 +21,18 @@ import thaumcraft.api.capabilities.ThaumcraftCapabilities;
 
 public class InfusionRecipe implements IThaumcraftRecipe
 {
+	public static final InfusionRecipe EMPTY;
+	static {
+		InfusionRecipe e = new InfusionRecipe();
+		e.research = "";
+		e.name = "";
+		e.aspects = new AspectList();
+		e.recipeOutput = ItemStack.EMPTY;
+		e.instability = 0;
+		e.sourceInput = Ingredient.of(net.minecraft.world.item.Items.AIR);
+		EMPTY = e;
+	}
+
 	public AspectList aspects;
 	public String research;
 	private String name;
@@ -28,7 +40,9 @@ public class InfusionRecipe implements IThaumcraftRecipe
 	public Ingredient sourceInput; //Use Ingredient.of(net.minecraft.world.item.Items.AIR) of the source item can be anything
 	public Object recipeOutput;
 	public int instability;
-	
+
+	private InfusionRecipe() { name = ""; }
+
 	public InfusionRecipe(String research, Object outputResult, int inst, AspectList aspects2, Object centralItem, Object ... recipe) {
 		name="";
 		this.research = research;
@@ -138,11 +152,11 @@ public class InfusionRecipe implements IThaumcraftRecipe
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public RecipeSerializer<? extends Recipe<CraftingInput>> getSerializer() { return null; }
+	public RecipeSerializer<? extends Recipe<CraftingInput>> getSerializer() { return thaumcraft.common.config.TCRecipes.INFUSION_SERIALIZER.get(); }
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public RecipeType<? extends Recipe<CraftingInput>> getType() { return null; }
+	public RecipeType<? extends Recipe<CraftingInput>> getType() { return thaumcraft.common.config.TCRecipes.INFUSION_TYPE.get(); }
 
 	private static boolean matchesIngredients(List<ItemStack> available, NonNullList<Ingredient> required) {
 		if (available.size() < required.size()) return false;

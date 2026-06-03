@@ -25,7 +25,25 @@ public class ResearchToast implements Toast
             firstDrawTime = timeSinceLastVisible;
             newDisplay = false;
         }
-        // TODO: render toast using extractor
+        // Background: hud.png region (0, 224) size 160x32
+        extractor.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, 0, 0, 0, 224, 160, 32, 256, 256);
+        // Research entry icon at (6, 8)
+        if (entry != null) {
+            GuiResearchBrowser.drawResearchIcon(entry, 6, 8, 0.0f, false);
+        }
+        // "Research Complete" label
+        extractor.text(font, net.minecraft.client.resources.language.I18n.get("research.complete"), 30, 7, 0xA2D169, false);
+        // Research name (possibly scaled)
+        if (entry != null) {
+            String s = entry.getLocalizedName();
+            int sw = font.width(s);
+            if (sw > 124) {
+                // Clamp: just draw truncated
+                extractor.text(font, s, 30, 18, 0xFFCC55, false);
+            } else {
+                extractor.text(font, s, 30, 18, 0xFFCC55, false);
+            }
+        }
         if (timeSinceLastVisible - firstDrawTime >= 5000L) {
             done = true;
         }

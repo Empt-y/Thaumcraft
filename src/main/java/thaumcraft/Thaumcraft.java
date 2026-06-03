@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.entities.EntitiesTC;
+import thaumcraft.common.config.TCRecipes;
 import thaumcraft.common.lib.crafting.RecipeMagicDust;
 import thaumcraft.common.lib.crafting.RecipesRobeArmorDyes;
 import thaumcraft.common.lib.crafting.RecipesVoidRobeArmorDyes;
@@ -47,13 +48,15 @@ public class Thaumcraft {
         EntitiesTC.register(modEventBus);
         thaumcraft.common.world.TCFeatures.register(modEventBus);
         modEventBus.addListener(thaumcraft.common.config.TCEntityAttributes::registerAttributes);
-        // Recipe serializers
+        // Recipe serializers (vanilla crafting overrides)
         net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.item.crafting.RecipeSerializer<?>> recipeSerializers =
             net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.RECIPE_SERIALIZER, MODID);
         recipeSerializers.register("magic_dust", () -> RecipeMagicDust.SERIALIZER);
         recipeSerializers.register("robe_armor_dyes", () -> RecipesRobeArmorDyes.SERIALIZER);
         recipeSerializers.register("void_robe_armor_dyes", () -> RecipesVoidRobeArmorDyes.SERIALIZER);
         recipeSerializers.register(modEventBus);
+        // Custom Thaumcraft recipe types and serializers
+        TCRecipes.register(modEventBus);
 
         ThaumcraftApi.internalMethods = new InternalMethodHandler();
         PlayerKnowledge.preInit();

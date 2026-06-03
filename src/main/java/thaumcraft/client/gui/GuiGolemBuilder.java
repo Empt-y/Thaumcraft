@@ -92,11 +92,32 @@ public class GuiGolemBuilder extends AbstractContainerScreen<ContainerGolemBuild
 
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        // rendering stub
+        int x = this.leftPos;
+        int y = this.topPos;
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, x, y, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        // Highlight missing components with a "not owned" overlay
+        if (components != null && owns != null) {
+            int row = 1, col = 0;
+            for (int a = 0; a < components.length; a++) {
+                if (!owns[a]) {
+                    graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex,
+                            x + 144 + col * 16, y + 16 + 16 * row, 240, 0, 16, 16, 256, 256);
+                }
+                if (++row > 3) { row = 0; col++; }
+            }
+        }
+        // Crafting progress bar
+        if (builder != null && builder.cost > 0) {
+            int barW = (int)(46.0f * (1.0f - builder.cost / (float) Math.max(1, builder.maxCost)));
+            graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, x + 145, y + 89, 209, 89, barW, 6, 256, 256);
+        }
     }
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        // rendering stub
+        if (components != null && components.length > 0) {
+            String costStr = "" + cost;
+            graphics.text(this.font, costStr, 162 - this.font.width(costStr), 24, 0xFFFFFF, true);
+        }
     }
 }

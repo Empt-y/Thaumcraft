@@ -69,7 +69,7 @@ public class GolemArm
         
         void onRangedAttack(IGolemAPI p0, LivingEntity p1, float p2);
         
-        // TODO: getRangedAttackAI - entity AI goal types changed in NeoForge
+        // Returns a RangedAttackGoal (typed Object for cross-version compat; caller does instanceof check)
         Object getRangedAttackAI(Object p0);
     }
 }

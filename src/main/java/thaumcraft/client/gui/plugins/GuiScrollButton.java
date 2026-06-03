@@ -30,7 +30,10 @@ public class GuiScrollButton extends AbstractButton
 
     @Override
     protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        // rendering stub
+        int u = vertical ? 67 : (minus ? 20 : 30);
+        int v = vertical ? (minus ? 0 : 10) : 0;
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex,
+                this.getX(), this.getY(), u, v, 10, 10, 256, 256);
     }
 
     @Override

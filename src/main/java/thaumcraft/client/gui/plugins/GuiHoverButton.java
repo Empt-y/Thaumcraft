@@ -1,9 +1,14 @@
 package thaumcraft.client.gui.plugins;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.InputWithModifiers;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
+import thaumcraft.api.aspects.Aspect;
 
 
 public class GuiHoverButton extends AbstractButton
@@ -35,7 +40,25 @@ public class GuiHoverButton extends AbstractButton
 
     @Override
     protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        // rendering stub
+        int dx = this.getX() - width / 2;
+        int dy = this.getY() - height / 2;
+        if (tex instanceof Aspect aspect) {
+            graphics.blit(RenderPipelines.GUI_TEXTURED, aspect.getImage(), dx, dy, 0, 0, 16, 16, 16, 16);
+        } else if (tex instanceof Identifier id) {
+            graphics.blit(RenderPipelines.GUI_TEXTURED, id, dx, dy, 0, 0, 16, 16, 16, 16);
+        } else if (tex instanceof ItemStack stack) {
+            graphics.item(stack, dx, dy);
+        }
+        if (isHoveredOrFocused()) {
+            var font = Minecraft.getInstance().font;
+            java.util.List<Component> tooltip = new java.util.ArrayList<>();
+            String label = this.getMessage().getString();
+            if (!label.isEmpty()) tooltip.add(Component.literal(label));
+            if (description != null && !description.isEmpty()) tooltip.add(Component.literal("§o§9" + description));
+            if (!tooltip.isEmpty()) {
+                graphics.setTooltipForNextFrame(font, tooltip, java.util.Optional.empty(), mouseX, mouseY);
+            }
+        }
     }
 
     @Override

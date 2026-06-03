@@ -32,7 +32,15 @@ public class GuiGolemLockButton extends AbstractButton
 
     @Override
     protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        // rendering stub
+        // Locked: UV (32,136), unlocked: UV (48,136), 16×16
+        int u = seal.isLocked() ? 32 : 48;
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex,
+                this.getX(), this.getY(), u, 136, 16, 16, 256, 256);
+        if (isHoveredOrFocused()) {
+            var font = net.minecraft.client.Minecraft.getInstance().font;
+            String s = net.minecraft.client.resources.language.I18n.get(seal.isLocked() ? "golem.prop.lock" : "golem.prop.unlock");
+            graphics.text(font, s, this.getX() + 8 - font.width(s) / 2, this.getY() + 17, 0xFFFFFF, false);
+        }
     }
 
     @Override

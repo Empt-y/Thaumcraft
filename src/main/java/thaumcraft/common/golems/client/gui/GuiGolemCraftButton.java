@@ -15,7 +15,13 @@ public class GuiGolemCraftButton extends Button
 
     @Override
     protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        // rendering stub
+        // Craft button: UV (216,64) normal, UV (216,40) disabled, 24×16
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex,
+                this.getX(), this.getY(), 216, 64, 24, 16, 256, 256);
+        if (!this.active) {
+            graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex,
+                    this.getX(), this.getY(), 216, 40, 24, 16, 256, 256);
+        }
     }
 
 }

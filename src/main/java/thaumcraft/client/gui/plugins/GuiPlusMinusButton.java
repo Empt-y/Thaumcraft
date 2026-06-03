@@ -31,7 +31,9 @@ public class GuiPlusMinusButton extends AbstractButton
 
     @Override
     protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
-        // rendering stub
+        // minus=true → left arrow at u=0, plus → right arrow at u=10; both at v=0, 10×10
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex,
+                this.getX(), this.getY(), minus ? 0 : 10, 0, 10, 10, 256, 256);
     }
 
     @Override

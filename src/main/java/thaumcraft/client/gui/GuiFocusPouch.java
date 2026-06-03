@@ -18,11 +18,20 @@ public class GuiFocusPouch extends AbstractContainerScreen<ContainerFocusPouch>
 
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        // rendering stub
+        if (this.minecraft != null && this.minecraft.player != null
+                && this.minecraft.player.getInventory().getSelectedItem().isEmpty()) {
+            this.minecraft.player.closeContainer();
+            return;
+        }
+        int x = (this.width - this.imageWidth) / 2;
+        int y = (this.height - this.imageHeight) / 2;
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, x, y, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        // rendering stub
+        int blockSlot = this.minecraft != null && this.minecraft.player != null
+                ? this.minecraft.player.getInventory().getSelectedSlot() : 0;
+        graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, tex, 8 + blockSlot * 18, 209, 240, 0, 16, 16, 256, 256);
     }
 }
