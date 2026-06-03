@@ -325,13 +325,13 @@ public class GuiResearchPage extends Screen
             int titleWidth = font.width(title);
             int titleX = x - 15 + PAGE_WIDTH / 2 - titleWidth / 2;
             if (titleWidth <= PAGE_WIDTH) {
-                graphics.text(font, title, titleX, y, 0x202020);
+                graphics.text(font, title, titleX, y, 0xFF202020);
             } else {
                 float scale = (float) PAGE_WIDTH / titleWidth;
                 graphics.pose().pushMatrix();
                 graphics.pose().translate(x - 15 + PAGE_WIDTH / 2 - titleWidth / 2 * scale, y + 1.0f * scale);
                 graphics.pose().scale(scale, scale);
-                graphics.text(font, title, 0, 0, 0x202020);
+                graphics.text(font, title, 0, 0, 0xFF202020);
                 graphics.pose().popMatrix();
             }
             y += 28;
@@ -341,7 +341,7 @@ public class GuiResearchPage extends Screen
         for (Object content : pageParm.contents) {
             if (content instanceof String) {
                 String ss = ((String) content).replace("~B", "");
-                graphics.text(font, ss, x - 15 + side * 152, y - 6, 0x202020);
+                graphics.text(font, ss, x - 15 + side * 152, y - 6, 0xFF202020);
                 y += font.lineHeight;
                 if (((String) content).endsWith("~B")) {
                     y += (int)(font.lineHeight * 0.66);
