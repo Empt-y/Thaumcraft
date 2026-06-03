@@ -142,12 +142,29 @@ public class RenderEventHandler
 
     @SubscribeEvent
     public static void renderTick(net.neoforged.neoforge.client.event.ClientTickEvent.Post event) {
-        // TODO: update partial tick state via a render event
+        // sysPartialTicks is updated from renderOverlay which has access to the delta tracker
     }
 
     @SubscribeEvent
     public static void tooltipEvent(net.neoforged.neoforge.event.entity.player.ItemTooltipEvent event) {
-        // TODO: rewrite with modern font/screen API
+        net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+        if (mc.player == null || !(mc.screen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen)) return;
+        boolean hasGoggles = thaumcraft.common.lib.utils.EntityUtils.hasGoggles(mc.player);
+        boolean hasThaumometer = mc.player.getMainHandItem().getItem() instanceof thaumcraft.common.items.tools.ItemThaumometer
+                || mc.player.getOffhandItem().getItem() instanceof thaumcraft.common.items.tools.ItemThaumometer;
+        if (!hasGoggles && !hasThaumometer) return;
+        net.minecraft.world.item.ItemStack stack = event.getItemStack();
+        if (stack.isEmpty()) return;
+        thaumcraft.api.aspects.AspectList tags = thaumcraft.common.lib.crafting.ThaumcraftCraftingManager.getObjectTags(stack);
+        if (tags == null || tags.size() == 0) return;
+        // Add blank lines to expand tooltip height to fit the aspect icons row
+        int iconWidth = tags.size() * 18;
+        int charWidth = (int) Math.ceil(iconWidth / (double) mc.font.width(" "));
+        int lines = (int) Math.ceil(18.0 / mc.font.lineHeight);
+        String padding = " ".repeat(Math.min(120, charWidth));
+        for (int a = 0; a < lines; ++a) {
+            event.getToolTip().add(net.minecraft.network.chat.Component.literal(padding));
+        }
     }
 
     @SubscribeEvent
@@ -186,6 +203,7 @@ public class RenderEventHandler
 
         net.minecraft.client.gui.GuiGraphicsExtractor graphics = event.getGuiGraphics();
         float partialTicks = event.getPartialTick().getRealtimeDeltaTicks();
+        UtilsFX.sysPartialTicks = partialTicks;
         long time = System.nanoTime() / 1000000L;
 
         // Check which items are held and render appropriate HUDs

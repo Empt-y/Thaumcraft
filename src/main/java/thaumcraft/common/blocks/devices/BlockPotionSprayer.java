@@ -20,14 +20,6 @@ public class BlockPotionSprayer extends BlockTCDevice implements IBlockFacing, I
         setSoundType(SoundType.METAL);
     }
 
-    public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (world.isClientSide()) {
-            return true;
-        }
-        // TODO: open GUI id=21
-        return true;
-    }
-
     public int damageDropped(BlockState state) {
         return 0;
     }

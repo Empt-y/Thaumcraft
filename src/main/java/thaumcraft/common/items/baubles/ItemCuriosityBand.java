@@ -35,15 +35,6 @@ public class ItemCuriosityBand extends ItemTCBase
     }
     
     public void onPlayerBaubleRender(ItemStack stack, Player player, float ticks) {
-        {
-            boolean helmetEmpty = !player.getItemBySlot(EquipmentSlot.HEAD).isEmpty();
-            // TODO: renderEngine removed; use modern rendering pipeline
-            /* null call removed */;
-            /* null call removed */;
-            /* null call removed */;
-            /* TODO: use PoseStack */ // RenderSystem.rotate(180.0f, 0.0f, 1.0f, 0.0f);
-            /* TODO: use PoseStack */ // RenderSystem.translate(-0.5, -0.5, armor ? 0.11999999731779099 : 0.0);
-            UtilsFX.renderTextureIn3D(0.0f, 0.0f, 1.0f, 1.0f, 16, 26, 0.1f);
-        }
+        // 3D bauble rendering not yet ported to modern PoseStack/VertexConsumer pipeline
     }
 }

@@ -25,21 +25,21 @@ public class BlockSpa extends BlockTCDevice
         setSoundType(SoundType.STONE);
     }
 
-    public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (world.isClientSide()) {
-            return true;
-        }
-        BlockEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof TileSpa && !player.isShiftKeyDown()) {
-            TileSpa tile = (TileSpa)tileEntity;
-            if (FluidUtil.interactWithFluidHandler(player, hand, tile.tank)) {
-                tile.setChanged();
-                world.sendBlockUpdated(pos, state, state, 3);
-                world.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.33f, 1.0f + (world.getRandom().nextFloat() - world.getRandom().nextFloat()) * 0.3f);
+    @Override
+    protected net.minecraft.world.InteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world, net.minecraft.core.BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        if (!world.isClientSide() && !player.isShiftKeyDown()) {
+            BlockEntity te = world.getBlockEntity(pos);
+            if (te instanceof TileSpa tile) {
+                if (FluidUtil.interactWithFluidHandler(player, hand, tile.tank)) {
+                    tile.setChanged();
+                    world.sendBlockUpdated(pos, state, state, 3);
+                    world.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 0.33f,
+                        1.0f + (world.getRandom().nextFloat() - world.getRandom().nextFloat()) * 0.3f);
+                    return net.minecraft.world.InteractionResult.SUCCESS;
+                }
             }
-            // TODO: open Spa GUI when no fluid interaction (requires MenuProvider migration)
         }
-        return true;
+        return net.minecraft.world.InteractionResult.PASS;
     }
 
     @Override

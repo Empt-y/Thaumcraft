@@ -306,7 +306,25 @@ public class ConfigResearch
                 player.sendOverlayMessage(net.minecraft.network.chat.Component.literal(ChatFormatting.DARK_PURPLE + I18n.get("got.uphigh")));
             }
         }
-        // TODO: player walk/travel stats — getServer()/getPlayerStatsFile removed; port to modern stats API
+        if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+            net.minecraft.stats.ServerStatsCounter sms = sp.getStats();
+            if (!knowledge.isResearchKnown("m_walker") && sms.getValue(net.minecraft.stats.Stats.CUSTOM, net.minecraft.stats.Stats.WALK_ONE_CM) > 160000) {
+                knowledge.addResearch("m_walker");
+                knowledge.sync(sp);
+            }
+            if (!knowledge.isResearchKnown("m_runner") && sms.getValue(net.minecraft.stats.Stats.CUSTOM, net.minecraft.stats.Stats.SPRINT_ONE_CM) > 80000) {
+                knowledge.addResearch("m_runner");
+                knowledge.sync(sp);
+            }
+            if (!knowledge.isResearchKnown("m_jumper") && sms.getValue(net.minecraft.stats.Stats.CUSTOM, net.minecraft.stats.Stats.JUMP) > 500) {
+                knowledge.addResearch("m_jumper");
+                knowledge.sync(sp);
+            }
+            if (!knowledge.isResearchKnown("m_swimmer") && sms.getValue(net.minecraft.stats.Stats.CUSTOM, net.minecraft.stats.Stats.SWIM_ONE_CM) > 8000) {
+                knowledge.addResearch("m_swimmer");
+                knowledge.sync(sp);
+            }
+        }
     }
     
     static {

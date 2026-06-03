@@ -23,10 +23,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
+import thaumcraft.api.entities.EntitiesTC;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
 import thaumcraft.common.entities.monster.cult.EntityCultist;
+import thaumcraft.common.entities.projectile.EntityEldritchOrb;
 import thaumcraft.common.lib.SoundsTC;
 
 
@@ -118,8 +120,21 @@ public class EntityEldritchGuardian extends Monster implements RangedAttackMob, 
 
     @Override
     public void performRangedAttack(LivingEntity target, float f) {
-        // TODO: EntityEldritchOrb / sonic attack
-        if (getRandom().nextFloat() <= 0.15f && getSensing().hasLineOfSight(target)) {
+        if (getRandom().nextFloat() > 0.15f) {
+            EntityEldritchOrb blast = new EntityEldritchOrb(EntitiesTC.ELDRITCH_ORB.get(), level());
+            blast.setOwner(this);
+            lastBlast = !lastBlast;
+            level().broadcastEntityEvent(this, (byte)(lastBlast ? 16 : 15));
+            int rr = lastBlast ? 90 : 180;
+            double xx = net.minecraft.util.Mth.cos((getYRot() + rr) % 360.0f / 180.0f * net.minecraft.util.Mth.PI) * 0.5f;
+            double yy = 0.057777777 * getBbHeight();
+            double zz = net.minecraft.util.Mth.sin((getYRot() + rr) % 360.0f / 180.0f * net.minecraft.util.Mth.PI) * 0.5f;
+            blast.setPos(getX() - xx, getEyeY() - yy, getZ() - zz);
+            net.minecraft.world.phys.Vec3 v = target.position().add(target.getDeltaMovement().scale(10.0)).subtract(position()).normalize();
+            blast.shoot(v.x, v.y, v.z, 1.1f, 2.0f);
+            playSound(SoundsTC.egattack, 2.0f, 1.0f + getRandom().nextFloat() * 0.1f);
+            level().addFreshEntity(blast);
+        } else if (getSensing().hasLineOfSight(target)) {
             try {
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, 400, 0));
             } catch (Exception ignored) {}

@@ -66,7 +66,8 @@ public class SlotCraftingArcaneWorkbench extends Slot
     @Override
     public void onTake(Player thePlayer, ItemStack stack) {
         onCrafting(stack);
-        IArcaneRecipe recipe = null; // TODO: retrieve matched arcane recipe from ThaumcraftCraftingManager once ported
+        IArcaneRecipe recipe = (craftMatrix instanceof net.minecraft.world.inventory.CraftingContainer cc)
+            ? ThaumcraftCraftingManager.findMatchingArcaneRecipe(cc, player) : null;
 
         int vis = 0;
         AspectList crystals = null;

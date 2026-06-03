@@ -3,6 +3,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -16,14 +17,23 @@ public class ContainerTurretAdvanced extends AbstractContainerMenu
     private Player player;
 
     public ContainerTurretAdvanced(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
-        this(inv, inv.player.level(), (EntityTurretCrossbowAdvanced) inv.player.level().getEntity(buf.readInt()));
+        this(TCMenuTypes.TURRET_ADVANCED.get(), id, inv,
+            (EntityTurretCrossbowAdvanced) inv.player.level().getEntity(buf.readInt()));
+    }
+
+    public ContainerTurretAdvanced(int id, Inventory inv, EntityTurretCrossbowAdvanced ent) {
+        this(TCMenuTypes.TURRET_ADVANCED.get(), id, inv, ent);
     }
 
     public ContainerTurretAdvanced(Inventory par1InventoryPlayer, Level par3World, EntityTurretCrossbowAdvanced ent) {
-        super(null, 0);
+        this(TCMenuTypes.TURRET_ADVANCED.get(), 0, par1InventoryPlayer, ent);
+    }
+
+    public ContainerTurretAdvanced(MenuType<ContainerTurretAdvanced> type, int id, Inventory par1InventoryPlayer, EntityTurretCrossbowAdvanced ent) {
+        super(type, id);
         turret = ent;
         player = par1InventoryPlayer.player;
-        addSlot(new SlotTurretBasic(turret, 0, 42, 29));
+        if (turret != null) addSlot(new SlotTurretBasic(turret, 0, 42, 29));
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 addSlot(new Slot(par1InventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));

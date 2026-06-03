@@ -83,14 +83,6 @@ public class BlockHungryChest extends BlockTCTile
         super.destroy(worldIn, pos, state);
     }
 
-    public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (world.isClientSide()) {
-            return true;
-        }
-        // TODO: open chest GUI
-        return true;
-    }
-
     @Override
     protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier applier, boolean fromMovement) {
         BlockEntity te = world.getBlockEntity(pos);

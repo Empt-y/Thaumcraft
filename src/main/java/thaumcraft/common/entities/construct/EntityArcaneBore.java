@@ -162,8 +162,12 @@ public class EntityArcaneBore extends EntityOwnedConstruct
     public int getFortune() {
         int r = 0;
         if (validInventory()) {
-            // TODO: update to new enchantment API when Enchantments.FORTUNE holder is available
-            r = EnumInfusionEnchantment.getInfusionEnchantmentLevel(getMainHandItem(), EnumInfusionEnchantment.SOUNDING);
+            r = level().registryAccess()
+                .lookup(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                .flatMap(reg -> reg.get(net.minecraft.world.item.enchantment.Enchantments.FORTUNE))
+                .map(h -> EnchantmentHelper.getItemEnchantmentLevel(h, getMainHandItem()))
+                .orElse(0);
+            r += EnumInfusionEnchantment.getInfusionEnchantmentLevel(getMainHandItem(), EnumInfusionEnchantment.SOUNDING);
         }
         return r;
     }
@@ -184,8 +188,12 @@ public class EntityArcaneBore extends EntityOwnedConstruct
     }
 
     public boolean hasSilkTouch() {
-        // TODO: update to new enchantment API
-        return false;
+        if (!validInventory()) return false;
+        return level().registryAccess()
+            .lookup(net.minecraft.core.registries.Registries.ENCHANTMENT)
+            .flatMap(reg -> reg.get(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH))
+            .map(h -> EnchantmentHelper.getItemEnchantmentLevel(h, getMainHandItem()) > 0)
+            .orElse(false);
     }
 
     @Override
@@ -228,7 +236,17 @@ public class EntityArcaneBore extends EntityOwnedConstruct
                 player.swing(hand);
                 return InteractionResult.SUCCESS;
             }
-            // TODO: open arcane bore GUI
+            if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                final EntityArcaneBore bore = this;
+                sp.openMenu(new net.minecraft.world.MenuProvider() {
+                    @Override
+                    public net.minecraft.network.chat.Component getDisplayName() { return net.minecraft.network.chat.Component.empty(); }
+                    @Override
+                    public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv, net.minecraft.world.entity.player.Player p) {
+                        return new thaumcraft.common.container.ContainerArcaneBore(id, inv, bore);
+                    }
+                }, buf -> buf.writeInt(getId()));
+            }
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);

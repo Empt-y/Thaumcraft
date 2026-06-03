@@ -26,11 +26,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.level.Level;
+import thaumcraft.api.entities.EntitiesTC;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
 import thaumcraft.common.entities.monster.EntityEldritchGuardian;
 import thaumcraft.common.entities.monster.cult.EntityCultist;
+import thaumcraft.common.entities.projectile.EntityEldritchOrb;
 import thaumcraft.common.lib.SoundsTC;
 
 
@@ -148,11 +150,16 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements Ranged
             float z = (float)(getZ() + (getRandom().nextFloat() - getRandom().nextFloat()) * 0.2f);
             FXDispatcher.INSTANCE.wispFXEG(x, getY() + 0.25 * getBbHeight(), z, this);
         } else {
-            if (!fieldFrenzy) {
-                int i = Mth.floor(getX());
-                int j = Mth.floor(getY());
-                int k = Mth.floor(getZ());
-                // TODO: effectSap block placement
+            if (!fieldFrenzy && thaumcraft.api.blocks.BlocksTC.effectSap != null) {
+                for (int l = 0; l < 4; ++l) {
+                    int ii = Mth.floor(getX() + (l % 2 * 2 - 1) * 0.25f);
+                    int jj = Mth.floor(getY());
+                    int kk = Mth.floor(getZ() + (l / 2 % 2 * 2 - 1) * 0.25f);
+                    net.minecraft.core.BlockPos bpSap = new net.minecraft.core.BlockPos(ii, jj, kk);
+                    if (level().isEmptyBlock(bpSap)) {
+                        level().setBlockAndUpdate(bpSap, thaumcraft.api.blocks.BlocksTC.effectSap.defaultBlockState());
+                    }
+                }
             }
             if (fieldFrenzyCounter > 0) {
                 --fieldFrenzyCounter;
@@ -187,8 +194,28 @@ public class EntityEldritchWarden extends EntityThaumcraftBoss implements Ranged
 
     @Override
     public void performRangedAttack(LivingEntity target, float f) {
-        // TODO: EntityEldritchOrb + sonic attack
-        if (getRandom().nextFloat() <= 0.2f && getSensing().hasLineOfSight(target)) {
+        if (getRandom().nextFloat() > 0.2f) {
+            EntityEldritchOrb blast = new EntityEldritchOrb(EntitiesTC.ELDRITCH_ORB.get(), level());
+            blast.setOwner(this);
+            lastBlast = !lastBlast;
+            level().broadcastEntityEvent(this, (byte)(lastBlast ? 16 : 15));
+            if (lastBlast) armLiftL = 1.0f; else armLiftR = 1.0f;
+            int rr = lastBlast ? 90 : 180;
+            double xx = Mth.cos((getYRot() + rr) % 360.0f / 180.0f * Mth.PI) * 0.5f;
+            double yy = 0.13;
+            double zz = Mth.sin((getYRot() + rr) % 360.0f / 180.0f * Mth.PI) * 0.5f;
+            blast.setPos(getX() - xx, getEyeY() - 0.1 - yy, getZ() - zz);
+            double d0 = target.getX() + target.getDeltaMovement().x - getX();
+            double d2 = target.getY() - getY() - target.getBbHeight() / 2.0f;
+            double d3 = target.getZ() + target.getDeltaMovement().z - getZ();
+            blast.shoot(d0, d2, d3, 1.0f, 2.0f);
+            playSound(SoundsTC.egattack, 2.0f, 1.0f + getRandom().nextFloat() * 0.1f);
+            level().addFreshEntity(blast);
+        } else if (getSensing().hasLineOfSight(target)) {
+            target.push(
+                -Mth.sin(getYRot() * Mth.PI / 180.0f) * 1.5f,
+                0.1,
+                Mth.cos(getYRot() * Mth.PI / 180.0f) * 1.5f);
             try {
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, 400, 0));
                 target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 400, 0));

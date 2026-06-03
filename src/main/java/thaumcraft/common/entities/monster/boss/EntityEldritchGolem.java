@@ -27,7 +27,9 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.level.Level;
 import thaumcraft.api.entities.IEldritchMob;
 import thaumcraft.client.fx.FXDispatcher;
+import thaumcraft.api.entities.EntitiesTC;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
+import thaumcraft.common.entities.projectile.EntityGolemOrb;
 import thaumcraft.common.lib.SoundsTC;
 
 
@@ -137,7 +139,18 @@ public class EntityEldritchGolem extends EntityThaumcraftBoss implements IEldrit
 
     @Override
     public void performRangedAttack(LivingEntity target, float f) {
-        // TODO: EntityGolemOrb spawn
+        if (getSensing().hasLineOfSight(target) && !chargingBeam && beamCharge > 0) {
+            beamCharge -= 15 + getRandom().nextInt(5);
+            Vec3 look = getLookAngle();
+            EntityGolemOrb blast = EntityGolemOrb.create(EntitiesTC.GOLEM_ORB.get(), level(), this, target, false);
+            blast.setPos(blast.getX() + look.x, blast.getY(), blast.getZ() + look.z);
+            double d0 = target.getX() + target.getDeltaMovement().x - getX();
+            double d2 = target.getY() - getY() - target.getBbHeight() / 2.0f;
+            double d3 = target.getZ() + target.getDeltaMovement().z - getZ();
+            blast.shoot(d0, d2, d3, 0.66f, 5.0f);
+            playSound(SoundsTC.egattack, 1.0f, 1.0f + getRandom().nextFloat() * 0.1f);
+            level().addFreshEntity(blast);
+        }
     }
 
     @Override

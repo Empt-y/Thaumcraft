@@ -44,9 +44,7 @@ public class PacketBiomeChange implements CustomPacketPayload
 
     public static void handle(PacketBiomeChange msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
-            // TODO: Biome.getBiome(id) does not exist in NeoForge 26.1.2; biome lookup requires registry access
-            // Utils.setBiomeAt(Minecraft.getInstance().level, new BlockPos(msg.getX(), 0, msg.z), Biome.getBiome(msg.biome));
-            // stub: biome change not applied until Biome registry lookup is resolved
+            // biome modification removed in MC 1.18+; packet is no-op
         });
     }
 

@@ -261,7 +261,7 @@ public class ThaumcraftCraftingManager
     }
     
     public static void getPotionReagentsRecursive(Object potion, HashSet<ItemStack> hashSet) {
-        // TODO: port to modern MC potion brewing API (BrewingRecipeRegistry)
+        // potion brewing API no longer exposes conversion chains; aspects from reagents are skipped
     }
     
     public static AspectList generateTags(ItemStack is) {

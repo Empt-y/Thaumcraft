@@ -46,14 +46,6 @@ public class BlockVoidSiphon extends BlockTCDevice implements IBlockEnabled
         return BlockVoidSiphon.AABB_MAIN;
     }
 
-    public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (world.isClientSide()) {
-            return true;
-        }
-        // TODO: open GUI id=22
-        return true;
-    }
-
     static {
         AABB_MAIN = new AABB(0.1875, 0.0, 0.1875, 0.8125, 1.0, 0.8125);
         AABB_BASE = new AABB(0.1875, 0.0, 0.1875, 0.8125, 0.125, 0.8125);

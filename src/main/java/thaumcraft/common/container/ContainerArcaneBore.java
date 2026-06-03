@@ -3,6 +3,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -17,15 +18,22 @@ public class ContainerArcaneBore extends AbstractContainerMenu
     private Level theWorld;
 
     public ContainerArcaneBore(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
-        this(inv, inv.player.level(), (EntityArcaneBore) inv.player.level().getEntity(buf.readInt()));
+        this(TCMenuTypes.ARCANE_BORE.get(), id, inv,
+            (EntityArcaneBore) inv.player.level().getEntity(buf.readInt()));
     }
 
-    public ContainerArcaneBore(Inventory par1InventoryPlayer, Level par3World, EntityArcaneBore ent) {
-        super(null, 0);
+    public ContainerArcaneBore(int id, Inventory inv, EntityArcaneBore ent) {
+        this(TCMenuTypes.ARCANE_BORE.get(), id, inv, ent);
+    }
+
+    public ContainerArcaneBore(MenuType<ContainerArcaneBore> type, int id, Inventory par1InventoryPlayer, EntityArcaneBore ent) {
+        super(type, id);
         turret = ent;
-        theWorld = par3World;
+        theWorld = par1InventoryPlayer.player.level();
         player = par1InventoryPlayer.player;
-        addSlot(new SlotArcaneBorePickaxe(turret, 0, 80, 29));
+        if (turret != null) {
+            addSlot(new SlotArcaneBorePickaxe(turret, 0, 80, 29));
+        }
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 addSlot(new Slot(par1InventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));

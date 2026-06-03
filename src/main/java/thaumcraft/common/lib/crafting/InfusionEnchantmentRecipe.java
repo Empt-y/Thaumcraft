@@ -52,19 +52,22 @@ public class InfusionEnchantmentRecipe extends InfusionRecipe
             if (central.has(net.minecraft.core.component.DataComponents.WEAPON) && enchantment.toolClasses.contains("weapon")) {
                 cool = true;
             }
-            if (!cool && !central.isEmpty() /* TODO: TieredItem check */) {
-                // TODO: tool class checking via tags
-                Set<String> tcs = new java.util.HashSet<>();
-                for (String tc : tcs) {
-                    if (enchantment.toolClasses.contains(tc)) {
-                        cool = true;
-                        break;
-                    }
-                }
+            if (!cool && !central.isEmpty()) {
+                // Map item tags to legacy tool classes
+                if (enchantment.toolClasses.contains("pickaxe") && central.is(net.minecraft.tags.ItemTags.PICKAXES)) cool = true;
+                else if (enchantment.toolClasses.contains("axe") && central.is(net.minecraft.tags.ItemTags.AXES)) cool = true;
+                else if (enchantment.toolClasses.contains("shovel") && central.is(net.minecraft.tags.ItemTags.SHOVELS)) cool = true;
+                else if (enchantment.toolClasses.contains("hoe") && central.is(net.minecraft.tags.ItemTags.HOES)) cool = true;
+                else if (enchantment.toolClasses.contains("sword") && central.is(net.minecraft.tags.ItemTags.SWORDS)) cool = true;
+                else if (enchantment.toolClasses.contains("tool") && (
+                    central.is(net.minecraft.tags.ItemTags.PICKAXES) || central.is(net.minecraft.tags.ItemTags.AXES) ||
+                    central.is(net.minecraft.tags.ItemTags.SHOVELS) || central.is(net.minecraft.tags.ItemTags.HOES))) cool = true;
             }
             if (!cool && central.has(net.minecraft.core.component.DataComponents.EQUIPPABLE)) {
+                net.minecraft.world.item.equipment.Equippable eq = central.get(net.minecraft.core.component.DataComponents.EQUIPPABLE);
+                net.minecraft.world.entity.EquipmentSlot slot = (eq != null) ? eq.slot() : EquipmentSlot.CHEST;
                 String at = "none";
-                switch (EquipmentSlot.CHEST /* armorType removed */) {
+                switch (slot) {
                     case HEAD: {
                         at = "helm";
                         break;

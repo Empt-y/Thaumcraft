@@ -1,9 +1,12 @@
 package thaumcraft.common.golems.client.gui;
+import net.minecraft.core.Direction;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerListener;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
@@ -13,8 +16,11 @@ import thaumcraft.api.golems.seals.ISealConfigFilter;
 import thaumcraft.api.golems.seals.ISealConfigToggles;
 import thaumcraft.api.golems.seals.ISealEntity;
 import thaumcraft.api.golems.seals.ISealGui;
+import thaumcraft.api.golems.seals.SealPos;
 import thaumcraft.common.container.InventoryFake;
+import thaumcraft.common.container.TCMenuTypes;
 import thaumcraft.common.container.slot.SlotGhost;
+import thaumcraft.common.golems.seals.SealHandler;
 
 
 public class SealBaseContainer extends AbstractContainerMenu
@@ -33,8 +39,28 @@ public class SealBaseContainer extends AbstractContainerMenu
     private int lastAreaY;
     private int lastAreaZ;
 
+    public SealBaseContainer(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.SEAL_BASE.get(), id, inv, inv.player.level(), readSealFromBuf(inv, buf));
+    }
+
+    public SealBaseContainer(int id, Inventory inv, ISealEntity seal) {
+        this(TCMenuTypes.SEAL_BASE.get(), id, inv, inv.player.level(), seal);
+    }
+
     public SealBaseContainer(Inventory iinventory, Level par2World, ISealEntity seal) {
-        super(null, 0);
+        this(TCMenuTypes.SEAL_BASE.get(), 0, iinventory, par2World, seal);
+    }
+
+    private static ISealEntity readSealFromBuf(Inventory inv, RegistryFriendlyByteBuf buf) {
+        BlockPos pos = buf.readBlockPos();
+        Direction face = Direction.values()[buf.readByte()];
+        int dimHash = (inv.player.level() instanceof net.minecraft.server.level.ServerLevel sl)
+            ? sl.dimension().identifier().hashCode() : 0;
+        return SealHandler.getSealEntity(dimHash, new SealPos(pos, face));
+    }
+
+    public SealBaseContainer(MenuType<SealBaseContainer> type, int id, Inventory iinventory, Level par2World, ISealEntity seal) {
+        super(type, id);
         this.seal = null;
         player = null;
         category = -1;
@@ -43,7 +69,7 @@ public class SealBaseContainer extends AbstractContainerMenu
         player = iinventory.player;
         pinv = iinventory;
         this.seal = seal;
-        if (seal.getSeal() instanceof ISealGui) {
+        if (seal != null && seal.getSeal() instanceof ISealGui) {
             categories = ((ISealGui)seal.getSeal()).getGuiCategories();
         }
         else {
@@ -55,20 +81,22 @@ public class SealBaseContainer extends AbstractContainerMenu
     void setupCategories() {
         slots.clear();
         t = 0;
-        if (category < 0) {
+        if (category < 0 && categories.length > 0) {
             category = categories[0];
         }
-        switch (category) {
-            case 1: {
-                setupFilterInventory();
-                break;
+        if (seal != null) {
+            switch (category) {
+                case 1: {
+                    setupFilterInventory();
+                    break;
+                }
             }
         }
         bindPlayerInventory(pinv);
     }
 
     private void setupFilterInventory() {
-        if (seal.getSeal() instanceof ISealConfigFilter) {
+        if (seal != null && seal.getSeal() instanceof ISealConfigFilter) {
             int s = ((ISealConfigFilter) seal.getSeal()).getFilterSize();
             int sx = 16 + (s - 1) % 3 * 12;
             int sy = 16 + (s - 1) / 3 * 12;
@@ -102,6 +130,7 @@ public class SealBaseContainer extends AbstractContainerMenu
 
     @Override
     public boolean clickMenuButton(Player player, int par2) {
+        if (seal == null) return super.clickMenuButton(player, par2);
         if (par2 >= 0 && par2 < categories.length) {
             category = categories[par2];
             setupCategories();
@@ -177,16 +206,15 @@ public class SealBaseContainer extends AbstractContainerMenu
 
     public void addSlotListener(ContainerListener crafting) {
         super.addSlotListener(crafting);
-        crafting.dataChanged(this, 0, seal.getPriority());
-        crafting.dataChanged(this, 4, seal.getColor());
+        if (seal != null) {
+            crafting.dataChanged(this, 0, seal.getPriority());
+            crafting.dataChanged(this, 4, seal.getColor());
+        }
     }
 
     public void broadcastChanges() {
         super.broadcastChanges();
-        // Container data syncing handled by super.broadcastChanges via DataSlot
-        if (lastPriority != seal.getPriority() || lastAreaX != seal.getArea().getX() || lastAreaY != seal.getArea().getY() || lastAreaZ != seal.getArea().getZ() || lastColor != seal.getColor()) {
-            // trigger re-sync via setData which will notify listeners
-        }
+        if (seal == null) return;
         lastPriority = seal.getPriority();
         lastColor = seal.getColor();
         lastAreaX = seal.getArea().getX();
@@ -200,6 +228,7 @@ public class SealBaseContainer extends AbstractContainerMenu
     }
 
     public void updateProgressBar(int par1, int par2) {
+        if (seal == null) return;
         if (par1 == 0) {
             seal.setPriority((byte)par2);
         }

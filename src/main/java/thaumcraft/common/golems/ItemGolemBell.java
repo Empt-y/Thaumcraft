@@ -17,6 +17,8 @@ import thaumcraft.api.golems.ISealDisplayer;
 import thaumcraft.api.golems.seals.ISealEntity;
 import thaumcraft.api.golems.seals.SealPos;
 import thaumcraft.codechicken.lib.raytracer.RayTracer;
+import thaumcraft.common.container.ContainerLogistics;
+import thaumcraft.common.container.TCMenuTypes;
 import thaumcraft.common.golems.seals.SealHandler;
 import thaumcraft.common.items.ItemTCBase;
 import thaumcraft.common.lib.SoundsTC;
@@ -40,13 +42,35 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
                         worldIn.playSound(null, se.getSealPos().pos, SoundsTC.zap, SoundSource.BLOCKS, 0.5f, 1.0f);
                     }
                     else {
-                        /* TODO: port to NetworkHooks.openScreen */ 
+                        if (playerIn instanceof net.minecraft.server.level.ServerPlayer sp) {
+                            final ISealEntity finalSe = se;
+                            sp.openMenu(new net.minecraft.world.MenuProvider() {
+                                @Override
+                                public net.minecraft.network.chat.Component getDisplayName() { return net.minecraft.network.chat.Component.empty(); }
+                                @Override
+                                public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv, net.minecraft.world.entity.player.Player p) {
+                                    return new thaumcraft.common.golems.client.gui.SealBaseContainer(id, inv, finalSe);
+                                }
+                            }, buf -> {
+                                buf.writeBlockPos(finalSe.getSealPos().pos);
+                                buf.writeByte(finalSe.getSealPos().face.ordinal());
+                            });
+                        }
                     }
                 }
                 return InteractionResult.SUCCESS;
             }
             if (playerIn.isCrouching() && ThaumcraftCapabilities.knowsResearch(playerIn, "GOLEMLOGISTICS")) {
-                // TODO: port to NetworkHooks.openScreen
+                if (playerIn instanceof net.minecraft.server.level.ServerPlayer sp) {
+                    sp.openMenu(new net.minecraft.world.MenuProvider() {
+                        @Override
+                        public net.minecraft.network.chat.Component getDisplayName() { return net.minecraft.network.chat.Component.empty(); }
+                        @Override
+                        public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv, net.minecraft.world.entity.player.Player p) {
+                            return new ContainerLogistics(id, inv, p.level());
+                        }
+                    });
+                }
                 return InteractionResult.SUCCESS;
             }
         }
@@ -56,29 +80,53 @@ public class ItemGolemBell extends ItemTCBase implements ISealDisplayer
         return super.use(worldIn, playerIn, hand);
     }
     
-    /* TODO: port to useOn(UseOnContext)
-    public InteractionResult onItemUseFirst_TODO(Player player, Level world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, InteractionHand hand) {
-        player.swing(hand);
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, net.minecraft.world.item.context.UseOnContext context) {
+        Player player = context.getPlayer();
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Direction side = context.getClickedFace();
+        if (player == null) return InteractionResult.PASS;
+        player.swing(context.getHand());
         if (!world.isClientSide()) {
-            ISealEntity se = SealHandler.getSealEntity((world instanceof net.minecraft.server.level.ServerLevel ? ((net.minecraft.server.level.ServerLevel)world).dimension().identifier().hashCode() : 0), new SealPos(pos, side));
+            int dimHash = (world instanceof net.minecraft.server.level.ServerLevel sl) ? sl.dimension().identifier().hashCode() : 0;
+            ISealEntity se = SealHandler.getSealEntity(dimHash, new SealPos(pos, side));
             if (se != null) {
                 if (player.isCrouching()) {
                     SealHandler.removeSealEntity(world, se.getSealPos(), false);
                     world.playSound(null, pos, SoundsTC.zap, SoundSource.BLOCKS, 0.5f, 1.0f);
-                }
-                else {
-                    // TODO: port to NetworkHooks.openScreen
+                } else if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                    final ISealEntity finalSe = se;
+                    sp.openMenu(new net.minecraft.world.MenuProvider() {
+                        @Override
+                        public net.minecraft.network.chat.Component getDisplayName() { return net.minecraft.network.chat.Component.empty(); }
+                        @Override
+                        public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv, net.minecraft.world.entity.player.Player p) {
+                            return new thaumcraft.common.golems.client.gui.SealBaseContainer(id, inv, finalSe);
+                        }
+                    }, buf -> {
+                        buf.writeBlockPos(finalSe.getSealPos().pos);
+                        buf.writeByte(finalSe.getSealPos().face.ordinal());
+                    });
                 }
                 return InteractionResult.SUCCESS;
             }
             if (player.isCrouching() && ThaumcraftCapabilities.knowsResearch(player, "GOLEMLOGISTICS")) {
-                // TODO: port to NetworkHooks.openScreen
+                if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                    sp.openMenu(new net.minecraft.world.MenuProvider() {
+                        @Override
+                        public net.minecraft.network.chat.Component getDisplayName() { return net.minecraft.network.chat.Component.empty(); }
+                        @Override
+                        public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv, net.minecraft.world.entity.player.Player p) {
+                            return new ContainerLogistics(id, inv, p.level());
+                        }
+                    });
+                }
                 return InteractionResult.SUCCESS;
             }
         }
         return InteractionResult.PASS;
     }
-    */
     
     public static ISealEntity getSeal(Player playerIn) {
         float f = playerIn.getXRot();

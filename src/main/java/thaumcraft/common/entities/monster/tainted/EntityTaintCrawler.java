@@ -109,7 +109,6 @@ public class EntityTaintCrawler extends Monster implements ITaintedMob
     public void tick() {
         if (!level().isClientSide() && isAlive() && tickCount % 40 == 0 && !lastPos.equals(blockPosition())) {
             lastPos = blockPosition();
-            // TODO: taint fibre spreading - ThaumcraftMaterials removed
             if (level().isEmptyBlock(blockPosition()) && BlockUtils.isAdjacentToSolidBlock(level(), blockPosition())) {
                 level().setBlock(blockPosition(), BlocksTC.taintFibre.defaultBlockState(), 3);
             }

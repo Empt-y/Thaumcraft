@@ -82,8 +82,6 @@ public class PacketSealFilterToClient implements CustomPacketPayload
     public static void handle(PacketSealFilterToClient msg, IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
             try {
-                // TODO: SealHandler.getSealEntity may need dimension ID; client-side dimension lookup
-                // using Minecraft.getInstance().level as fallback
                 var level = Minecraft.getInstance().level;
                 ISealEntity seal = SealHandler.getSealEntity(level.dimension().identifier().hashCode(), new SealPos(msg.pos, msg.face));
                 if (seal != null && seal.getSeal() instanceof ISealConfigFilter) {

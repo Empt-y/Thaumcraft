@@ -90,7 +90,22 @@ public class EntityCultistPortalGreater extends Monster
                 --stagecounter;
                 if (stagecounter == 160 && stage == 0) {
                     level().broadcastEntityEvent(this, (byte) 16);
-                    // TODO: banner placement and network packets
+                    for (Direction dir : new Direction[] { Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST }) {
+                        BlockPos bp = new BlockPos((int) getX() - dir.getStepX() * 6, (int) getY(), (int) getZ() + dir.getStepZ() * 6);
+                        level().setBlockAndUpdate(bp, BlocksTC.bannerCrimsonCult.defaultBlockState());
+                        BlockEntity te = level().getBlockEntity(bp);
+                        if (te instanceof thaumcraft.common.tiles.misc.TileBanner tb) {
+                            byte face = switch (dir) {
+                                case NORTH -> 8;
+                                case SOUTH -> 0;
+                                case WEST -> 12;
+                                case EAST -> 4;
+                                default -> 0;
+                            };
+                            tb.setBannerFacing(face);
+                        }
+                        playSound(SoundsTC.wandfail, 1.0f, 1.0f);
+                    }
                 }
                 if (stagecounter > 20 && stagecounter < 150 && stage == 0 && stagecounter % 13 == 0) {
                     int a = (int) getX() + getRandom().nextInt(5) - getRandom().nextInt(5);

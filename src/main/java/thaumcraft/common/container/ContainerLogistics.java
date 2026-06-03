@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerListener;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -40,11 +41,19 @@ public class ContainerLogistics extends AbstractContainerMenu
     private final List<ContainerListener> myListeners = new ArrayList<>();
 
     public ContainerLogistics(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
-        this(inv, inv.player.level());
+        this(TCMenuTypes.LOGISTICS.get(), id, inv, inv.player.level());
+    }
+
+    public ContainerLogistics(int id, Inventory inv, Level world) {
+        this(TCMenuTypes.LOGISTICS.get(), id, inv, world);
     }
 
     public ContainerLogistics(Inventory iinventory, Level par2World) {
-        super(null, 0);
+        this(TCMenuTypes.LOGISTICS.get(), 0, iinventory, par2World);
+    }
+
+    public ContainerLogistics(net.minecraft.world.inventory.MenuType<ContainerLogistics> type, int id, Inventory iinventory, Level par2World) {
+        super(type, id);
         player = null;
         input = new InventoryLogistics();
         items = new TreeMap<String, ItemStack>();

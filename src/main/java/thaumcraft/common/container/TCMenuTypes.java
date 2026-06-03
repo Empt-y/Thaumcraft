@@ -61,6 +61,9 @@ public class TCMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<ContainerHandMirror>> HAND_MIRROR =
             MENUS.register("hand_mirror", () -> IMenuTypeExtension.create(ContainerHandMirror::new));
 
+    public static final DeferredHolder<MenuType<?>, MenuType<thaumcraft.common.golems.client.gui.SealBaseContainer>> SEAL_BASE =
+            MENUS.register("seal_base", () -> IMenuTypeExtension.create(thaumcraft.common.golems.client.gui.SealBaseContainer::new));
+
     public static void register(IEventBus bus) {
         MENUS.register(bus);
     }

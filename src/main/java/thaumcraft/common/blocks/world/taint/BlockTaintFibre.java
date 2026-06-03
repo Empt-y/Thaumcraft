@@ -224,8 +224,11 @@ public class BlockTaintFibre extends Block implements ITaintBlock
     protected void spawnAfterBreak(BlockState state, ServerLevel world, BlockPos pos,
             net.minecraft.world.item.ItemStack tool, boolean dropExperience) {
         if (state.getValue(GROWTH3)) {
-            if (world.getRandom().nextInt(5) == 0) {
-                // TODO: drop flux crystal item when available
+            if (world.getRandom().nextInt(5) == 0 && thaumcraft.common.config.ConfigItems.FLUX_CRYSTAL != null) {
+                net.minecraft.world.entity.item.ItemEntity ie = new net.minecraft.world.entity.item.ItemEntity(
+                    world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                    thaumcraft.common.config.ConfigItems.FLUX_CRYSTAL.copy());
+                world.addFreshEntity(ie);
             }
             AuraHelper.polluteAura(world, pos, 1.0f, true);
         }

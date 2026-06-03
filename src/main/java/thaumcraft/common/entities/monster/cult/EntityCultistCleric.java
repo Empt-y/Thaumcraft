@@ -27,7 +27,14 @@ import thaumcraft.api.items.ItemsTC;
 import thaumcraft.common.entities.ai.combat.AICultistHurtByTarget;
 import thaumcraft.common.entities.ai.combat.AILongRangeAttack;
 import thaumcraft.common.entities.ai.misc.AIAltarFocus;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.projectile.hurtingprojectile.SmallFireball;
+import thaumcraft.api.entities.EntitiesTC;
 import thaumcraft.common.entities.monster.EntityEldritchGuardian;
+import thaumcraft.common.entities.projectile.EntityGolemOrb;
 import thaumcraft.common.lib.SoundsTC;
 
 
@@ -82,7 +89,27 @@ public class EntityCultistCleric extends EntityCultist implements RangedAttackMo
 
     @Override
     public void performRangedAttack(LivingEntity target, float f) {
-        // TODO: port ranged attack logic (EntityGolemOrb / SmallFireball spawning)
+        double d0 = target.getX() - getX();
+        double d2 = target.getBoundingBox().minY + target.getBbHeight() / 2.0f - (getY() + getBbHeight() / 2.0f);
+        double d3 = target.getZ() - getZ();
+        swing(InteractionHand.MAIN_HAND);
+        float rf = getRandom().nextFloat();
+        if (rf > 0.66f) {
+            EntityGolemOrb blast = EntityGolemOrb.create(EntitiesTC.GOLEM_ORB.get(), level(), this, target, true);
+            Vec3 v = target.position().add(target.getDeltaMovement().scale(10.0)).subtract(position()).normalize();
+            blast.shoot(v.x, v.y, v.z, 0.66f, 3.0f);
+            playSound(SoundsTC.egattack, 1.0f, 1.0f + getRandom().nextFloat() * 0.1f);
+            level().addFreshEntity(blast);
+        } else {
+            float f2 = Mth.sqrt(f) * 0.5f;
+            level().levelEvent(1009, blockPosition(), 0);
+            for (int i = 0; i < 3; ++i) {
+                SmallFireball fireball = new SmallFireball(level(), this, new Vec3(
+                    d0 + getRandom().nextGaussian() * f2, d2, d3 + getRandom().nextGaussian() * f2));
+                fireball.setPos(fireball.getX(), getY() + getBbHeight() / 2.0f + 0.5, fireball.getZ());
+                level().addFreshEntity(fireball);
+            }
+        }
     }
 
     @Override
@@ -143,7 +170,16 @@ public class EntityCultistCleric extends EntityCultist implements RangedAttackMo
     @Override
     public void handleEntityEvent(byte event) {
         if (event == 19) {
-            // TODO: spawn particles
+            for (int i = 0; i < 3; ++i) {
+                double d0 = getRandom().nextGaussian() * 0.02;
+                double d2 = getRandom().nextGaussian() * 0.02;
+                double d3 = getRandom().nextGaussian() * 0.02;
+                level().addParticle(ParticleTypes.ANGRY_VILLAGER,
+                    getX() + getRandom().nextFloat() * getBbWidth() * 2.0f - getBbWidth(),
+                    getY() + 0.5 + getRandom().nextFloat() * getBbHeight(),
+                    getZ() + getRandom().nextFloat() * getBbWidth() * 2.0f - getBbWidth(),
+                    d0, d2, d3);
+            }
         } else {
             super.handleEntityEvent(event);
         }

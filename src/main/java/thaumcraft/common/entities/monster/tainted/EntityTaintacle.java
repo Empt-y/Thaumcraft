@@ -16,6 +16,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.BlockPos;
+import thaumcraft.api.blocks.BlocksTC;
 import thaumcraft.api.entities.ITaintedMob;
 import thaumcraft.client.fx.FXDispatcher;
 import thaumcraft.common.config.ConfigItems;
@@ -70,7 +72,10 @@ public class EntityTaintacle extends Monster implements ITaintedMob
     public void tick() {
         super.tick();
         if (!level().isClientSide() && tickCount % 20 == 0) {
-            // TODO: taint block check - ThaumcraftMaterials removed
+            boolean onTaint = isTaintBlock(blockPosition()) || isTaintBlock(blockPosition().below());
+            if (!onTaint) {
+                hurt(damageSources().starve(), 1.0f);
+            }
             if (!(this instanceof EntityTaintacleSmall) && tickCount % 40 == 0 && getTarget() != null && distanceToSqr(getTarget()) > 16.0 && distanceToSqr(getTarget()) < 256.0 && getSensing().hasLineOfSight(getTarget())) {
                 spawnTentacles(getTarget());
             }
@@ -130,5 +135,12 @@ public class EntityTaintacle extends Monster implements ITaintedMob
         level().broadcastEntityEvent(this, (byte) 16);
         playSound(SoundsTC.tentacle, getSoundVolume(), getSoundPitch());
         return super.doHurtTarget(sl, target);
+    }
+
+    protected boolean isTaintBlock(BlockPos pos) {
+        net.minecraft.world.level.block.Block b = level().getBlockState(pos).getBlock();
+        return b == BlocksTC.taintCrust || b == BlocksTC.taintSoil || b == BlocksTC.taintRock
+            || b == BlocksTC.taintFibre || b == BlocksTC.taintLog || b == BlocksTC.taintFeature
+            || b == BlocksTC.taintGeyser;
     }
 }

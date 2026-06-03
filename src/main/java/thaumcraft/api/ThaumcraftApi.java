@@ -209,8 +209,7 @@ public class ThaumcraftApi {
 	 * @param recipe
 	 */
 	public static void addArcaneCraftingRecipe(Identifier registry, IArcaneRecipe recipe)
-    {		
-		// TODO: recipe.setRegistryName no longer exists; recipes registered via data-gen or RecipeManager
+    {
 	    getCraftingRecipes().put(registry, recipe);
     }
 	
@@ -288,8 +287,11 @@ public class ThaumcraftApi {
 	 * @return 
 	 */
 	public static boolean exists(ItemStack item) {
-		// TODO: port to modern aspect registry lookup (OreDictionary and ItemStack.serializeNBT removed)
-		return false;
+		if (item == null || item.isEmpty()) return false;
+		int id = thaumcraft.api.internal.CommonInternals.generateUniqueItemstackId(item);
+		if (thaumcraft.api.internal.CommonInternals.objectTags.containsKey(id)) return true;
+		int stripped = thaumcraft.api.internal.CommonInternals.generateUniqueItemstackIdStripped(item);
+		return thaumcraft.api.internal.CommonInternals.objectTags.containsKey(stripped);
 	}
 	
 	/**

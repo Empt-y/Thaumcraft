@@ -184,7 +184,17 @@ public class EntityTurretCrossbow extends EntityOwnedConstruct implements Ranged
                 player.swing(hand);
                 return InteractionResult.SUCCESS;
             }
-            // TODO: open basic turret GUI
+            if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                final EntityTurretCrossbow turret = this;
+                sp.openMenu(new net.minecraft.world.MenuProvider() {
+                    @Override
+                    public net.minecraft.network.chat.Component getDisplayName() { return net.minecraft.network.chat.Component.empty(); }
+                    @Override
+                    public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv, net.minecraft.world.entity.player.Player p) {
+                        return new thaumcraft.common.container.ContainerTurretBasic(id, inv, turret);
+                    }
+                }, buf -> buf.writeInt(getId()));
+            }
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);

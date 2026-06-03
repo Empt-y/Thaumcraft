@@ -146,7 +146,18 @@ public class EntityCultistLeader extends EntityThaumcraftBoss implements RangedA
 
     @Override
     public void performRangedAttack(LivingEntity target, float f) {
-        // TODO: EntityGolemOrb spawn
+        if (getSensing().hasLineOfSight(target)) {
+            swing(net.minecraft.world.InteractionHand.MAIN_HAND);
+            thaumcraft.common.entities.projectile.EntityGolemOrb blast =
+                thaumcraft.common.entities.projectile.EntityGolemOrb.create(
+                    thaumcraft.api.entities.EntitiesTC.GOLEM_ORB.get(), level(), this, target, true);
+            double dx = target.getX() - getX();
+            double dy = target.getBoundingBox().minY + target.getBbHeight() / 2.0f - (getY() + getBbHeight() / 2.0f);
+            double dz = target.getZ() - getZ();
+            blast.shoot(dx, dy + 2.0, dz, 0.66f, 3.0f);
+            playSound(thaumcraft.common.lib.SoundsTC.egattack, 1.0f, 1.0f + getRandom().nextFloat() * 0.1f);
+            level().addFreshEntity(blast);
+        }
     }
 
     public void spawnExplosionParticle() {

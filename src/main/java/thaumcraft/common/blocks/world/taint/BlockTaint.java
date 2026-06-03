@@ -167,7 +167,8 @@ public class BlockTaint extends BlockTC implements ITaintBlock
             int rr = r.nextInt(15);
             if (rr > 13) {
                 List<ItemStack> ret = new ArrayList<>();
-                // TODO: add flux crystal drop when item is available
+                if (thaumcraft.common.config.ConfigItems.FLUX_CRYSTAL != null)
+                    ret.add(thaumcraft.common.config.ConfigItems.FLUX_CRYSTAL.copy());
                 return ret;
             }
         }

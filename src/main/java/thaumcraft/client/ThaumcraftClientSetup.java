@@ -14,6 +14,8 @@ import thaumcraft.common.container.ContainerPech;
 import thaumcraft.common.container.ContainerTurretAdvanced;
 import thaumcraft.common.container.ContainerTurretBasic;
 import thaumcraft.common.container.TCMenuTypes;
+import thaumcraft.common.golems.client.gui.SealBaseContainer;
+import thaumcraft.common.golems.client.gui.SealBaseGUI;
 
 @Mod(value = Thaumcraft.MODID, dist = Dist.CLIENT)
 public class ThaumcraftClientSetup {
@@ -39,5 +41,6 @@ public class ThaumcraftClientSetup {
         event.<ContainerTurretBasic,    GuiTurretBasic>   register(TCMenuTypes.TURRET_BASIC.get(),    GuiTurretBasic::new);
         event.<ContainerTurretAdvanced, GuiTurretAdvanced>register(TCMenuTypes.TURRET_ADVANCED.get(), GuiTurretAdvanced::new);
         event.<ContainerHandMirror,     GuiHandMirror>    register(TCMenuTypes.HAND_MIRROR.get(),     GuiHandMirror::new);
+        event.<SealBaseContainer,       SealBaseGUI>      register(TCMenuTypes.SEAL_BASE.get(),        SealBaseGUI::new);
     }
 }

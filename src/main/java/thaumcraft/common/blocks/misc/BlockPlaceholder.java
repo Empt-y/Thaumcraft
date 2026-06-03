@@ -71,7 +71,11 @@ public class BlockPlaceholder extends BlockTC
                     for (int c = -1; c <= 1; ++c) {
                         BlockState s = world.getBlockState(pos.offset(a, b, c));
                         if (s.getBlock() == BlocksTC.golemBuilder) {
-                            // TODO: open golem builder menu via modern openMenu
+                            net.minecraft.core.BlockPos gbPos = pos.offset(a, b, c);
+                            net.minecraft.world.level.block.entity.BlockEntity te = world.getBlockEntity(gbPos);
+                            if (te instanceof net.minecraft.world.MenuProvider mp && player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                                sp.openMenu(mp, buf -> buf.writeBlockPos(gbPos));
+                            }
                             return InteractionResult.SUCCESS;
                         }
                     }

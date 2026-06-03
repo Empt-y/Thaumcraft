@@ -101,7 +101,20 @@ public class ModConfig
         ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 6);
         ThaumcraftApi.addLootBagItem(s(Items.GOLDEN_APPLE), 9);
         ThaumcraftApi.addLootBagItem(s(Items.BOOK), 10, 0, 1, 2);
-        // TODO: potion loot bag items — iterate BuiltInRegistries.POTION for filled potion stacks
+        net.minecraft.core.registries.BuiltInRegistries.POTION.stream().forEach(potion -> {
+            net.minecraft.core.Holder<net.minecraft.world.item.alchemy.Potion> potionHolder =
+                net.minecraft.core.registries.BuiltInRegistries.POTION.wrapAsHolder(potion);
+            net.minecraft.world.item.ItemStack p  = new net.minecraft.world.item.ItemStack(Items.POTION);
+            net.minecraft.world.item.ItemStack sp = new net.minecraft.world.item.ItemStack(Items.SPLASH_POTION);
+            net.minecraft.world.item.ItemStack lp = new net.minecraft.world.item.ItemStack(Items.LINGERING_POTION);
+            net.minecraft.world.item.alchemy.PotionContents contents = new net.minecraft.world.item.alchemy.PotionContents(potionHolder);
+            p.set(net.minecraft.core.component.DataComponents.POTION_CONTENTS, contents);
+            sp.set(net.minecraft.core.component.DataComponents.POTION_CONTENTS, contents);
+            lp.set(net.minecraft.core.component.DataComponents.POTION_CONTENTS, contents);
+            ThaumcraftApi.addLootBagItem(p,  2, 0, 1, 2);
+            ThaumcraftApi.addLootBagItem(sp, 2, 0, 1, 2);
+            ThaumcraftApi.addLootBagItem(lp, 2, 1, 2);
+        });
         ItemStack[] commonLoot = { s(ItemsTC.lootBag), s(ItemsTC.ingots), s(ItemsTC.amber) };
         ItemStack[] uncommonLoot = { s(ItemsTC.lootBag), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.baubles) };
         ItemStack[] rareLoot = { s(ItemsTC.lootBag), s(ItemsTC.thaumonomicon), s(ItemsTC.thaumiumSword), s(ItemsTC.thaumiumAxe), s(ItemsTC.thaumiumHoe), s(ItemsTC.thaumiumPick), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.baubles), s(ItemsTC.amuletVis) };

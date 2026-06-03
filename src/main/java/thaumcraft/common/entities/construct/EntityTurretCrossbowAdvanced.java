@@ -157,7 +157,17 @@ public class EntityTurretCrossbowAdvanced extends EntityTurretCrossbow
                 player.swing(hand);
                 return InteractionResult.SUCCESS;
             }
-            // TODO: open advanced turret GUI
+            if (player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                final EntityTurretCrossbowAdvanced turret = this;
+                sp.openMenu(new net.minecraft.world.MenuProvider() {
+                    @Override
+                    public net.minecraft.network.chat.Component getDisplayName() { return net.minecraft.network.chat.Component.empty(); }
+                    @Override
+                    public net.minecraft.world.inventory.AbstractContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory inv, net.minecraft.world.entity.player.Player p) {
+                        return new thaumcraft.common.container.ContainerTurretAdvanced(id, inv, turret);
+                    }
+                }, buf -> buf.writeInt(getId()));
+            }
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);

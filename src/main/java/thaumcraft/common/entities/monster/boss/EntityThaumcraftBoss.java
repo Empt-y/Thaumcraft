@@ -164,7 +164,26 @@ public class EntityThaumcraftBoss extends Monster
                 if (newTarget != null && hei != getTarget().getId()) {
                     setTarget((LivingEntity) newTarget);
                 }
-                // TODO: attribute scaling by player count (EntityUtils.HPBUFF/DMGBUFF)
+                int totalPlayers = (int) aggro.keySet().stream()
+                    .map(id -> level().getEntity(id))
+                    .filter(e -> e instanceof Player).count();
+                var hpAttr = getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH);
+                var dmgAttr = getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
+                if (hpAttr != null && dmgAttr != null) {
+                    float om = getMaxHealth();
+                    for (int a = 0; a < 5; ++a) {
+                        hpAttr.removeModifier(thaumcraft.common.lib.utils.EntityUtils.HPBUFF[a].id());
+                        dmgAttr.removeModifier(thaumcraft.common.lib.utils.EntityUtils.DMGBUFF[a].id());
+                    }
+                    for (int a = 0; a < Math.min(5, totalPlayers - 1); ++a) {
+                        hpAttr.addPermanentModifier(thaumcraft.common.lib.utils.EntityUtils.HPBUFF[a]);
+                        dmgAttr.addPermanentModifier(thaumcraft.common.lib.utils.EntityUtils.DMGBUFF[a]);
+                    }
+                    if (om > 0) {
+                        float ratio = getMaxHealth() / om;
+                        setHealth(getHealth() * ratio);
+                    }
+                }
             }
         }
     }

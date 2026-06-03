@@ -5,6 +5,6 @@ import net.minecraft.world.level.Level;
 
 public class WorldGenMound {
     public boolean generate(Level world, Random random, BlockPos pos) {
-        return false; // TODO: port to modern world gen feature
+        return false; // world gen not yet ported to BiomeModifier
     }
 }

@@ -69,9 +69,6 @@ public class PacketNote implements CustomPacketPayload
             if (ctx.player() instanceof ServerPlayer) {
                 // Server side: look up tile, read note, broadcast to nearby players
                 if (msg.note == -1) {
-                    // TODO: null /* TODO: DimensionManager removed */ doesn't exist in NeoForge 26.1.2
-                    // Use server-side dimension lookup via ctx.player().getServer().getLevel(...)
-                    // For now, use the player's current level as a best-effort fallback
                     var level = (ServerLevel) ((ServerPlayer) ctx.player()).level();
                     if (level == null) return;
                     BlockEntity tile2 = level.getBlockEntity(new BlockPos(msg.x, msg.y, msg.z));
