@@ -1,4 +1,5 @@
 package thaumcraft.common.container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +17,10 @@ public class ContainerHandMirror extends AbstractContainerMenu
     public InventoryHandMirror input;
     ItemStack mirror;
     Player player;
+
+    public ContainerHandMirror(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(inv, inv.player.level(), buf.readInt(), buf.readInt(), buf.readInt());
+    }
 
     public ContainerHandMirror(Inventory iinventory, Level par2World, int par3, int par4, int par5) {
         super(null, 0);

@@ -1,4 +1,5 @@
 package thaumcraft.common.container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -11,8 +12,12 @@ import thaumcraft.common.entities.construct.EntityTurretCrossbow;
 
 public class ContainerTurretBasic extends AbstractContainerMenu
 {
-    private EntityTurretCrossbow turret;
+    public EntityTurretCrossbow turret;
     private Player player;
+
+    public ContainerTurretBasic(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(inv, inv.player.level(), (EntityTurretCrossbow) inv.player.level().getEntity(buf.readInt()));
+    }
 
     public ContainerTurretBasic(Inventory par1InventoryPlayer, Level par3World, EntityTurretCrossbow ent) {
         super(null, 0);

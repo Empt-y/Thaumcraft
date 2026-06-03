@@ -46,6 +46,27 @@ public class GuiGolemBuilder extends AbstractContainerScreen<ContainerGolemBuild
     boolean[] owns;
     boolean disableAll;
 
+    public GuiGolemBuilder(ContainerGolemBuilder menu, Inventory inv, Component title) {
+        super(menu, inv, title, 208, 224);
+        this.builder = menu.builder;
+        tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_golembuilder.png");
+        valHeads = new ArrayList<GolemHead>();
+        valMats = new ArrayList<GolemMaterial>();
+        valArms = new ArrayList<GolemArm>();
+        valLegs = new ArrayList<GolemLeg>();
+        valAddons = new ArrayList<GolemAddon>();
+        props = GolemProperties.fromLong(0L);
+        hearts = 0.0f;
+        damage = 0.0f;
+        craftButton = null;
+        matIcon = Identifier.fromNamespaceAndPath("thaumcraft", "textures/items/golem.png");
+        cost = 0;
+        allfound = false;
+        components = null;
+        owns = null;
+        disableAll = false;
+    }
+
     public GuiGolemBuilder(Inventory par1InventoryPlayer, TileGolemBuilder table) {
         super(new ContainerGolemBuilder(par1InventoryPlayer, table), par1InventoryPlayer,
             Component.translatable("gui.golembuilder"), 208, 224);

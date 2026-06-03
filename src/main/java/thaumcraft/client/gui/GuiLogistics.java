@@ -39,6 +39,23 @@ public class GuiLogistics extends AbstractContainerScreen<ContainerLogistics>
     GuiImageButton requestbutton;
     EditBox searchField;
 
+    public GuiLogistics(ContainerLogistics menu, Inventory inv, Component title) {
+        super(menu, inv, title, 215, 215);
+        selectedSlot = -1;
+        con = menu;
+        tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_logistics.png");
+        lu = 0L;
+        lastStackSize = 1;
+        stackSize = 1;
+        stacksizeUpdated = false;
+        selectedStack = null;
+        lastScrollPos = 0;
+        this.world = inv.player.level();
+        this.player = inv.player;
+        this.target = null;
+        this.side = null;
+    }
+
     public GuiLogistics(Inventory par1InventoryPlayer, Level world, BlockPos pos, Direction side) {
         super(new ContainerLogistics(par1InventoryPlayer, world), par1InventoryPlayer,
             Component.translatable("gui.logistics"), 215, 215);

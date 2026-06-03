@@ -2,6 +2,7 @@ package thaumcraft.common.container;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,11 +17,15 @@ import thaumcraft.common.lib.SoundsTC;
 
 public class ContainerPech extends AbstractContainerMenu
 {
-    private EntityPech pech;
+    public EntityPech pech;
     private InventoryPech inventory;
     private Player player;
     private Level theWorld;
-    
+
+    public ContainerPech(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(inv, inv.player.level(), (EntityPech) inv.player.level().getEntity(buf.readInt()));
+    }
+
     public ContainerPech(Inventory par1InventoryPlayer, Level par3World, EntityPech par2IMerchant) {
         super(null, 0);
         pech = par2IMerchant;

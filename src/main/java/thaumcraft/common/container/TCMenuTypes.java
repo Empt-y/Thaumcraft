@@ -40,6 +40,27 @@ public class TCMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<ContainerFocusPouch>> FOCUS_POUCH =
             MENUS.register("focus_pouch", () -> IMenuTypeExtension.create(ContainerFocusPouch::new));
 
+    public static final DeferredHolder<MenuType<?>, MenuType<ContainerGolemBuilder>> GOLEM_BUILDER =
+            MENUS.register("golem_builder", () -> IMenuTypeExtension.create(ContainerGolemBuilder::new));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<ContainerArcaneBore>> ARCANE_BORE =
+            MENUS.register("arcane_bore", () -> IMenuTypeExtension.create(ContainerArcaneBore::new));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<ContainerLogistics>> LOGISTICS =
+            MENUS.register("logistics", () -> IMenuTypeExtension.create(ContainerLogistics::new));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<ContainerPech>> PECH =
+            MENUS.register("pech", () -> IMenuTypeExtension.create(ContainerPech::new));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<ContainerTurretBasic>> TURRET_BASIC =
+            MENUS.register("turret_basic", () -> IMenuTypeExtension.create(ContainerTurretBasic::new));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<ContainerTurretAdvanced>> TURRET_ADVANCED =
+            MENUS.register("turret_advanced", () -> IMenuTypeExtension.create(ContainerTurretAdvanced::new));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<ContainerHandMirror>> HAND_MIRROR =
+            MENUS.register("hand_mirror", () -> IMenuTypeExtension.create(ContainerHandMirror::new));
+
     public static void register(IEventBus bus) {
         MENUS.register(bus);
     }

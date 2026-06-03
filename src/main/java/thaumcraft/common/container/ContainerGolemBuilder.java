@@ -1,8 +1,10 @@
 package thaumcraft.common.container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerListener;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import thaumcraft.common.container.slot.SlotOutput;
@@ -11,16 +13,23 @@ import thaumcraft.common.tiles.crafting.TileGolemBuilder;
 
 public class ContainerGolemBuilder extends AbstractContainerMenu
 {
-    private TileGolemBuilder builder;
+    public TileGolemBuilder builder;
     public static boolean redo;
     private int lastCost;
     private int lastMaxCost;
     private final java.util.List<ContainerListener> myListeners = new java.util.ArrayList<>();
 
-    public ContainerGolemBuilder(Inventory par1InventoryPlayer, TileGolemBuilder tileEntity) {
-        super(null, 0);
+    public ContainerGolemBuilder(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(TCMenuTypes.GOLEM_BUILDER.get(), id, inv,
+            (TileGolemBuilder) inv.player.level().getBlockEntity(buf.readBlockPos()));
+    }
+
+    public ContainerGolemBuilder(MenuType<ContainerGolemBuilder> type, int id, Inventory par1InventoryPlayer, TileGolemBuilder tileEntity) {
+        super(type, id);
         builder = tileEntity;
-        addSlot(new SlotOutput(tileEntity, 0, 160, 104));
+        if (tileEntity != null) {
+            addSlot(new SlotOutput(tileEntity, 0, 160, 104));
+        }
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 addSlot(new Slot(par1InventoryPlayer, j + i * 9 + 9, 24 + j * 18, 142 + i * 18));
@@ -29,6 +38,10 @@ public class ContainerGolemBuilder extends AbstractContainerMenu
         for (int i = 0; i < 9; ++i) {
             addSlot(new Slot(par1InventoryPlayer, i, 24 + i * 18, 200));
         }
+    }
+
+    public ContainerGolemBuilder(Inventory par1InventoryPlayer, TileGolemBuilder tileEntity) {
+        this(TCMenuTypes.GOLEM_BUILDER.get(), 0, par1InventoryPlayer, tileEntity);
     }
 
     @Override

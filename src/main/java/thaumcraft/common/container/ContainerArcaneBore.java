@@ -1,4 +1,5 @@
 package thaumcraft.common.container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -11,9 +12,13 @@ import thaumcraft.common.entities.construct.EntityArcaneBore;
 
 public class ContainerArcaneBore extends AbstractContainerMenu
 {
-    private EntityArcaneBore turret;
+    public EntityArcaneBore turret;
     private Player player;
     private Level theWorld;
+
+    public ContainerArcaneBore(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(inv, inv.player.level(), (EntityArcaneBore) inv.player.level().getEntity(buf.readInt()));
+    }
 
     public ContainerArcaneBore(Inventory par1InventoryPlayer, Level par3World, EntityArcaneBore ent) {
         super(null, 0);

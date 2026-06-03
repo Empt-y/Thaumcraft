@@ -14,6 +14,12 @@ public class GuiArcaneBore extends AbstractContainerScreen<ContainerArcaneBore>
     EntityArcaneBore turret;
     Identifier tex;
 
+    public GuiArcaneBore(ContainerArcaneBore menu, Inventory inv, Component title) {
+        super(menu, inv, title, 175, 232);
+        tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_arcanebore.png");
+        turret = menu.turret;
+    }
+
     public GuiArcaneBore(Inventory par1InventoryPlayer, Level world, EntityArcaneBore t) {
         super(new ContainerArcaneBore(par1InventoryPlayer, world, t), par1InventoryPlayer,
             Component.translatable("gui.arcanebore"), 175, 232);

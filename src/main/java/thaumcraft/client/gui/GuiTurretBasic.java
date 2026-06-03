@@ -14,6 +14,12 @@ public class GuiTurretBasic extends AbstractContainerScreen<ContainerTurretBasic
     EntityTurretCrossbow turret;
     Identifier tex;
 
+    public GuiTurretBasic(ContainerTurretBasic menu, Inventory inv, Component title) {
+        super(menu, inv, title, 175, 232);
+        tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_turret_basic.png");
+        turret = menu.turret;
+    }
+
     public GuiTurretBasic(Inventory par1InventoryPlayer, Level world, EntityTurretCrossbow t) {
         super(new ContainerTurretBasic(par1InventoryPlayer, world, t), par1InventoryPlayer,
             Component.translatable("gui.turretbasic"), 175, 232);

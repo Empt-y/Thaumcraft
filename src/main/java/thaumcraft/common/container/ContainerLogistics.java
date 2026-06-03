@@ -12,6 +12,7 @@ import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.items.IItemHandler;
 import thaumcraft.api.ThaumcraftInvHelper;
@@ -37,6 +38,10 @@ public class ContainerLogistics extends AbstractContainerMenu
     int lastEnd;
     public boolean updated;
     private final List<ContainerListener> myListeners = new ArrayList<>();
+
+    public ContainerLogistics(int id, Inventory inv, RegistryFriendlyByteBuf buf) {
+        this(inv, inv.player.level());
+    }
 
     public ContainerLogistics(Inventory iinventory, Level par2World) {
         super(null, 0);

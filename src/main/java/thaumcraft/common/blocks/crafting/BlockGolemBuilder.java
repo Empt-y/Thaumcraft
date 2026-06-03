@@ -16,12 +16,15 @@ import thaumcraft.common.blocks.BlockTCDevice;
 import thaumcraft.common.blocks.IBlockFacingHorizontal;
 
 
+import thaumcraft.common.tiles.crafting.TileGolemBuilder;
+
+
 public class BlockGolemBuilder extends BlockTCDevice implements IBlockFacingHorizontal
 {
     public static boolean ignore;
 
     public BlockGolemBuilder() {
-        super(null /*  null   Material removed    */, null, "golem_builder", true);
+        super(null /*  null   Material removed    */, TileGolemBuilder.class, "golem_builder", true);
         setSoundType(SoundType.STONE);
     }
 
@@ -89,6 +92,17 @@ public class BlockGolemBuilder extends BlockTCDevice implements IBlockFacingHori
         }
         // TODO: open GUI id=19
         return true;
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world, net.minecraft.core.BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        if (!world.isClientSide() && !player.isShiftKeyDown()) {
+            net.minecraft.world.level.block.entity.BlockEntity te = world.getBlockEntity(pos);
+            if (te instanceof net.minecraft.world.MenuProvider) {
+                ((net.minecraft.server.level.ServerPlayer) player).openMenu((net.minecraft.world.MenuProvider) te, buf -> buf.writeBlockPos(pos));
+            }
+        }
+        return net.minecraft.world.InteractionResult.SUCCESS;
     }
 
     static {

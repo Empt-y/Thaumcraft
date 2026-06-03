@@ -18,6 +18,11 @@ public class GuiTurretAdvanced extends AbstractContainerScreen<ContainerTurretAd
         tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_turret_advanced.png");
     }
 
+    public GuiTurretAdvanced(ContainerTurretAdvanced menu, Inventory inv, Component title) {
+        super(menu, inv, title, 175, 232);
+        turret = menu.turret;
+    }
+
     public GuiTurretAdvanced(Inventory par1InventoryPlayer, Level world, EntityTurretCrossbowAdvanced t) {
         super(new ContainerTurretAdvanced(par1InventoryPlayer, world, t), par1InventoryPlayer,
             Component.translatable("gui.turretadvanced"), 175, 232);

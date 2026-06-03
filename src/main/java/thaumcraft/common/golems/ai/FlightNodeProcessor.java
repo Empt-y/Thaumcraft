@@ -23,7 +23,14 @@ public class FlightNodeProcessor extends NodeEvaluator {
 
     @Override
     public int getNeighbors(Node[] neighbors, Node node) {
-        return 0; // FIXME: stub
+        int count = 0;
+        for (net.minecraft.core.Direction dir : net.minecraft.core.Direction.values()) {
+            Node n = getNode(node.x + dir.getStepX(), node.y + dir.getStepY(), node.z + dir.getStepZ());
+            if (n != null && !n.closed) {
+                neighbors[count++] = n;
+            }
+        }
+        return count;
     }
 
     @Override

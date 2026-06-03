@@ -22,9 +22,14 @@ import thaumcraft.common.golems.ItemGolemPlacer;
 import thaumcraft.common.lib.SoundsTC;
 import thaumcraft.common.lib.utils.InventoryUtils;
 import thaumcraft.common.tiles.TileThaumcraftInventory;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.network.chat.Component;
+import thaumcraft.common.container.TCMenuTypes;
 
 
-public class TileGolemBuilder extends TileThaumcraftInventory implements IEssentiaTransport
+public class TileGolemBuilder extends TileThaumcraftInventory implements IEssentiaTransport, MenuProvider
 {
     public long golem;
     public int cost;
@@ -313,5 +318,15 @@ public class TileGolemBuilder extends TileThaumcraftInventory implements IEssent
 
     public boolean canRenderBreaking() {
         return true;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("gui.golembuilder");
+    }
+
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+        return new ContainerGolemBuilder(TCMenuTypes.GOLEM_BUILDER.get(), id, inv, this);
     }
 }

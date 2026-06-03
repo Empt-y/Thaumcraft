@@ -33,7 +33,36 @@ public class GolemNodeProcessor extends NodeEvaluator {
 
     @Override
     public int getNeighbors(Node[] neighbors, Node node) {
-        return 0; // FIXME: stub
+        int count = 0;
+        // Cardinal directions: check same level, then step-up, then fall
+        int[][] dirs = {{0, 0, 1}, {0, 0, -1}, {1, 0, 0}, {-1, 0, 0}};
+        for (int[] d : dirs) {
+            Node n = findGroundNode(node.x + d[0], node.y, node.z + d[2]);
+            if (n != null && !n.closed) {
+                neighbors[count++] = n;
+            }
+        }
+        return count;
+    }
+
+    private Node findGroundNode(int x, int y, int z) {
+        PathType type = getPathType(currentContext, x, y, z);
+        if (type != PathType.BLOCKED) {
+            return getNode(x, y, z);
+        }
+        // Try stepping up one block
+        type = getPathType(currentContext, x, y + 1, z);
+        if (type != PathType.BLOCKED) {
+            return getNode(x, y + 1, z);
+        }
+        // Try falling up to 4 blocks
+        for (int fallY = y - 1; fallY >= y - 4; fallY--) {
+            type = getPathType(currentContext, x, fallY, z);
+            if (type != PathType.BLOCKED) {
+                return getNode(x, fallY, z);
+            }
+        }
+        return null;
     }
 
     @Override

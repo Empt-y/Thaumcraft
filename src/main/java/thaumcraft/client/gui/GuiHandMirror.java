@@ -13,6 +13,12 @@ public class GuiHandMirror extends AbstractContainerScreen<ContainerHandMirror>
     int ci;
     Identifier tex;
 
+    public GuiHandMirror(ContainerHandMirror menu, Inventory inv, Component title) {
+        super(menu, inv, title);
+        ci = inv.getSelectedSlot();
+        tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_handmirror.png");
+    }
+
     public GuiHandMirror(Inventory par1InventoryPlayer, Level world, int x, int y, int z) {
         super(new ContainerHandMirror(par1InventoryPlayer, world, x, y, z), par1InventoryPlayer,
             Component.translatable("gui.handmirror"));

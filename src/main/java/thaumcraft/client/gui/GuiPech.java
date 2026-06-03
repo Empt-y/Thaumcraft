@@ -14,6 +14,12 @@ public class GuiPech extends AbstractContainerScreen<ContainerPech>
     EntityPech pech;
     Identifier tex;
 
+    public GuiPech(ContainerPech menu, Inventory inv, Component title) {
+        super(menu, inv, title, 175, 232);
+        tex = Identifier.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_pech.png");
+        this.pech = menu.pech;
+    }
+
     public GuiPech(Inventory par1InventoryPlayer, Level world, EntityPech pech) {
         super(new ContainerPech(par1InventoryPlayer, world, pech), par1InventoryPlayer,
             Component.translatable("gui.pech"), 175, 232);
