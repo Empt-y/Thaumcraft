@@ -1,0 +1,13 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": [
+    "thaumcraft:crystal_aer",
+    "thaumcraft:crystal_aqua",
+    "thaumcraft:crystal_ignis",
+    "thaumcraft:crystal_ordo",
+    "thaumcraft:crystal_perditio",
+    "thaumcraft:crystal_terra"
+  ],
+  "step": "underground_ores"
+}
