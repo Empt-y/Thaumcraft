@@ -34,37 +34,15 @@ public class HudHandler
         TAGBACK = Identifier.fromNamespaceAndPath("thaumcraft", "textures/aspects/_back.png");
     }
 
-    void renderHuds(Minecraft mc, float renderTickTime, Player player, long time) {
-        // TODO: rewrite with modern rendering API
-    }
-
-    void renderHudsInGUI(Minecraft mc, float renderTickTime, Player player, long time, int ww, int hh) {
-        // TODO: rewrite with modern rendering API
-    }
-
-    void renderKnowledgeGains(Minecraft mc, float renderTickTime, Player player, long time, int ww, int hh) {
-        // TODO: rewrite with modern rendering API
-    }
-
-    void renderThaumometerHud(Minecraft mc, float partialTicks, Player player, long time, int ww, int hh, int shifty) {
-        // TODO: rewrite with modern rendering API
-    }
-
-    void renderSanityHud(Minecraft mc, Float partialTicks, Player player, long time, int shifty) {
-        // TODO: rewrite with modern rendering API
-    }
-
-    void renderChargeMeters(Minecraft mc, float renderTickTime, Player player, long time, int ww, int hh) {
-        // TODO: rewrite with modern rendering API
-    }
-
-    void renderCastingWandHud(Minecraft mc, float partialTicks, Player player, long time, ItemStack wandstack, int shifty) {
-        // TODO: rewrite with modern rendering API
-    }
-
-    public void renderWandTradeHud(float partialTicks, Player player, long time, ItemStack picked) {
-        // TODO: rewrite with modern rendering API
-    }
+    // Legacy GL11-based HUD methods — superseded by modern RenderEventHandler helpers
+    void renderHuds(Minecraft mc, float renderTickTime, Player player, long time) {}
+    void renderHudsInGUI(Minecraft mc, float renderTickTime, Player player, long time, int ww, int hh) {}
+    void renderKnowledgeGains(Minecraft mc, float renderTickTime, Player player, long time, int ww, int hh) {}
+    void renderThaumometerHud(Minecraft mc, float partialTicks, Player player, long time, int ww, int hh, int shifty) {}
+    void renderSanityHud(Minecraft mc, Float partialTicks, Player player, long time, int shifty) {}
+    void renderChargeMeters(Minecraft mc, float renderTickTime, Player player, long time, int ww, int hh) {}
+    void renderCastingWandHud(Minecraft mc, float partialTicks, Player player, long time, ItemStack wandstack, int shifty) {}
+    public void renderWandTradeHud(float partialTicks, Player player, long time, ItemStack picked) {}
 
     public void renderAspectsInGui(AbstractContainerScreen gui, Player player, ItemStack stack,
                                     int sd, int sx, int sy,

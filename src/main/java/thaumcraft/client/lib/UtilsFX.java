@@ -33,31 +33,49 @@ public class UtilsFX
     public static boolean hideStackOverlay;
 
     public static void renderFacingQuad(double px, double py, double pz, int gridX, int gridY, int frame, float scale, int color, float alpha, int blend, float partialTicks) {
-        // TODO: rewrite — ActiveRenderInfo, lastTickPosX/Y/Z, RenderSystem.pushMatrix removed in modern MC
+        // World-space billboard quad — requires PoseStack/SubmitCustomGeometryEvent in MC 26; not yet ported
     }
 
     public static void drawTexturedQuad(float par1, float par2, float par3, float par4, float par5, float par6, double zLevel) {
-        // TODO: rewrite — tessellator.getBuffer().pos/tex/endVertex removed in modern MC
+        // 2D GUI quad — use GuiGraphicsExtractor.blit() when a graphics context is available
+        net.minecraft.client.gui.GuiGraphicsExtractor gg = currentGuiGraphics;
+        if (gg == null) return;
+        gg.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
+            net.minecraft.resources.Identifier.withDefaultNamespace(""),
+            (int)par1, (int)par2, par3 * 0.00390625f, par4 * 0.00390625f,
+            (int)par5, (int)par6, 256, 256);
     }
 
     public static void drawTexturedQuadF(float par1, float par2, float par3, float par4, float par5, float par6, double zLevel) {
-        // TODO: rewrite with modern rendering API
+        // Identical semantics to drawTexturedQuad with 1/16 UV scale
+        net.minecraft.client.gui.GuiGraphicsExtractor gg = currentGuiGraphics;
+        if (gg == null) return;
+        gg.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
+            net.minecraft.resources.Identifier.withDefaultNamespace(""),
+            (int)par1, (int)par2, par3 * 0.0625f, par4 * 0.0625f,
+            16, 16, 256, 256);
     }
 
     public static void drawTexturedQuadFull(float par1, float par2, double zLevel) {
-        // TODO: rewrite with modern rendering API
+        net.minecraft.client.gui.GuiGraphicsExtractor gg = currentGuiGraphics;
+        if (gg == null) return;
+        gg.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
+            net.minecraft.resources.Identifier.withDefaultNamespace(""),
+            (int)par1, (int)par2, 0, 0, 16, 16, 16, 16);
     }
 
     public static void renderItemInGUI(int x, int y, int z, ItemStack stack) {
-        // TODO: rewrite — RenderHelper, RenderSystem.pushMatrix, getRenderItem removed
+        net.minecraft.client.gui.GuiGraphicsExtractor gg = currentGuiGraphics;
+        if (gg == null || stack.isEmpty()) return;
+        gg.item(stack, x, y);
     }
 
     public static void renderQuadCentered(Identifier texture, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
-        // TODO: rewrite — renderEngine.bindTexture removed
+        renderQuadCentered(texture, 1, 1, 0, scale, red, green, blue, brightness, blend, opacity);
     }
 
     public static void renderQuadCentered(Identifier texture, int gridX, int gridY, int frame, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
-        // TODO: rewrite with modern rendering API
+        // World-space centered quad — requires PoseStack context; not yet ported to MC 26
     }
 
     public static void renderQuadCentered() {
@@ -65,11 +83,11 @@ public class UtilsFX
     }
 
     public static void renderQuadCentered(int gridX, int gridY, int frame, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
-        // TODO: rewrite with modern rendering API
+        // World-space centered quad — requires PoseStack context; not yet ported to MC 26
     }
 
     public static void renderQuadFromIcon(TextureAtlasSprite icon, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
-        // TODO: rewrite — renderEngine.bindTexture, tessellator vertex builder removed
+        // World-space icon quad — requires PoseStack/VertexConsumer; not yet ported to MC 26
     }
 
     public static void drawTag(int x, int y, Aspect aspect, float amount, int bonus, double z, int blend, float alpha) {
@@ -114,37 +132,69 @@ public class UtilsFX
     }
 
     public static void drawCustomTooltip(Screen gui, Font fr, List<String> textList, int x, int y, int subTipColor, boolean ignoremouse) {
-        // TODO: rewrite — ScaledResolution, Mouse, RenderHelper, getRenderItem removed
+        net.minecraft.client.gui.GuiGraphicsExtractor gg = currentGuiGraphics;
+        if (gg == null || textList.isEmpty()) return;
+        int sX = x + 12, sY = y - 12;
+        int widestLineWidth = 0;
+        for (String line : textList) widestLineWidth = Math.max(widestLineWidth, fr.width(line));
+        int totalHeight = -2 + textList.size() * 10 + (textList.size() > 1 ? 2 : 0);
+        int bgColor = 0xF0100010;
+        drawGradientRect(sX - 3, sY - 4, sX + widestLineWidth + 3, sY - 3, bgColor, bgColor);
+        drawGradientRect(sX - 3, sY + totalHeight + 3, sX + widestLineWidth + 3, sY + totalHeight + 4, bgColor, bgColor);
+        drawGradientRect(sX - 3, sY - 3, sX + widestLineWidth + 3, sY + totalHeight + 3, bgColor, bgColor);
+        drawGradientRect(sX - 4, sY - 3, sX - 3, sY + totalHeight + 3, bgColor, bgColor);
+        drawGradientRect(sX + widestLineWidth + 3, sY - 3, sX + widestLineWidth + 4, sY + totalHeight + 3, bgColor, bgColor);
+        int border = 0x505000FF;
+        int borderFade = ((border & 0xFEFEFE) >> 1) | (border & 0xFF000000);
+        drawGradientRect(sX - 3, sY - 3 + 1, sX - 2, sY + totalHeight + 2, border, borderFade);
+        drawGradientRect(sX + widestLineWidth + 2, sY - 3 + 1, sX + widestLineWidth + 3, sY + totalHeight + 2, border, borderFade);
+        drawGradientRect(sX - 3, sY - 3, sX + widestLineWidth + 3, sY - 2, border, border);
+        drawGradientRect(sX - 3, sY + totalHeight + 2, sX + widestLineWidth + 3, sY + totalHeight + 3, borderFade, borderFade);
+        for (int i = 0; i < textList.size(); i++) {
+            String line = textList.get(i);
+            int lineColor = (subTipColor != -99 && i == 0)
+                ? (0xFF000000 | (subTipColor < 16 ? net.minecraft.util.ARGB.colorFromFloat(1, 0, 0, 0) : subTipColor))
+                : 0xFFAAAAAA;
+            if (i == 0 && subTipColor != -99) lineColor = 0xFFFFFF55;
+            gg.text(fr, line, sX, sY, lineColor, true);
+            sY += 10;
+            if (i == 0) sY += 2;
+        }
     }
 
     public static void drawGradientRect(int par1, int par2, int par3, int par4, int par5, int par6) {
-        // TODO: rewrite — tessellator vertex builder removed
+        net.minecraft.client.gui.GuiGraphicsExtractor gg = currentGuiGraphics;
+        if (gg != null) {
+            gg.fillGradient(par1, par2, par3, par4, par5, par6);
+        }
     }
 
     public static void renderBillboardQuad(double scale) {
-        // TODO: rewrite with modern rendering API
+        // World-space billboard — requires PoseStack/VertexConsumer; not yet ported to MC 26
     }
 
     public static void renderBillboardQuad(double scale, int gridX, int gridY, int frame) {
-        // TODO: rewrite with modern rendering API
+        // World-space billboard — requires PoseStack/VertexConsumer; not yet ported to MC 26
     }
 
     public static void renderBillboardQuad(double scale, int gridX, int gridY, int frame, float r, float g, float b, float a, int bright) {
-        // TODO: rewrite with modern rendering API
+        // World-space billboard — requires PoseStack/VertexConsumer; not yet ported to MC 26
     }
 
     public static void rotateToPlayer() {
-        // TODO: rewrite — getRenderManager().playerViewY/X removed
+        // World-space rotation — requires PoseStack in MC 26; no-op
     }
 
     public static boolean renderItemStack(Minecraft mc, ItemStack itm, int x, int y, String txt) {
-        // TODO: rewrite — RenderItem, RenderHelper, OpenGlHelper removed
-        return false;
+        net.minecraft.client.gui.GuiGraphicsExtractor gg = currentGuiGraphics;
+        if (gg == null || itm == null || itm.isEmpty()) return false;
+        gg.item(itm, x, y);
+        if (!hideStackOverlay) gg.itemDecorations(mc.font, itm, x, y);
+        return true;
     }
 
     public static boolean renderItemStackShaded(Minecraft mc, ItemStack itm, int x, int y, String txt, float shade) {
-        // TODO: rewrite with modern rendering API
-        return false;
+        return renderItemStack(mc, itm, x, y, txt);
     }
 
     public static void drawBeam(Vector S, Vector E, Vector P, float width, int bright) {
@@ -152,11 +202,11 @@ public class UtilsFX
     }
 
     public static void drawBeam(Vector S, Vector E, Vector P, float width, int bright, float r, float g, float b, float a) {
-        // TODO: rewrite — tessellator vertex builder removed
+        // World-space beam quad — requires PoseStack/VertexConsumer; not yet ported to MC 26
     }
 
     public static void drawQuad(Tesselator tessellator, Vector p1, Vector p2, Vector p3, Vector p4, int bright, float r, float g, float b, float a) {
-        // TODO: rewrite — tessellator.getBuffer().pos/tex/lightmap/endVertex removed
+        // World-space quad — requires PoseStack/VertexConsumer; not yet ported to MC 26
     }
 
     private static Vector Cross(Vector a, Vector b) {
@@ -179,15 +229,15 @@ public class UtilsFX
     }
 
     public static void renderItemIn2D(String sprite, float thickness) {
-        // TODO: rewrite — getTextureMapBlocks removed
+        // 2D item-icon render in world space — requires VertexConsumer/PoseStack; not yet ported to MC 26
     }
 
     public static void renderItemIn2D(TextureAtlasSprite icon, float thickness) {
-        // TODO: rewrite — renderEngine.bindTexture removed
+        // 2D item-icon render in world space — requires VertexConsumer/PoseStack; not yet ported to MC 26
     }
 
     public static void renderTextureIn3D(float maxu, float maxv, float minu, float minv, int width, int height, float thickness) {
-        // TODO: rewrite — tessellator vertex builder removed
+        // 3D texture slab render — requires VertexConsumer/PoseStack; not yet ported to MC 26
     }
 
     static {

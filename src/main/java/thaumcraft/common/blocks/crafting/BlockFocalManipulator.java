@@ -26,14 +26,6 @@ public class BlockFocalManipulator extends BlockTCDevice
         return false;
     }
 
-    public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (world.isClientSide()) {
-            return true;
-        }
-        // TODO: open GUI id=7
-        return true;
-    }
-
     @Override
     protected net.minecraft.world.InteractionResult useWithoutItem(net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level world, net.minecraft.core.BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
         if (!world.isClientSide() && !player.isShiftKeyDown()) {

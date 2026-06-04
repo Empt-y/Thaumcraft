@@ -41,14 +41,6 @@ public class BlockResearchTable extends BlockTCDevice implements IBlockFacingHor
         return false;
     }
 
-    public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (world.isClientSide()) {
-            return true;
-        }
-        // TODO: open GUI id=10
-        return true;
-    }
-
     @Override
     public BlockState getStateForPlacement(Level worldIn, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer) {
         BlockState bs = defaultBlockState();

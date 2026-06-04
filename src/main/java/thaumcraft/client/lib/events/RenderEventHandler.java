@@ -1,12 +1,18 @@
 package thaumcraft.client.lib.events;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.Entity;
@@ -22,6 +28,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.client.event.ExtractBlockOutlineRenderStateEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
@@ -33,7 +40,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.api.distmarker.Dist;
-import org.lwjgl.opengl.GL11;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectHelper;
@@ -221,6 +227,20 @@ public class RenderEventHandler
 
         // Knowledge gain notifications
         renderKnowledgeGainsModern(mc, graphics);
+
+        // Warp vignette (pulses when ShaderHandler.warpVignette > 0)
+        if (RenderEventHandler.prevVignetteBrightness > 0.0f || ShaderHandler.warpVignette > 0) {
+            float brightness = 1.0f - RenderEventHandler.targetBrightness;
+            RenderEventHandler.prevVignetteBrightness += (brightness - RenderEventHandler.prevVignetteBrightness) * 0.01f;
+            if (RenderEventHandler.prevVignetteBrightness > 0.001f) {
+                float b = RenderEventHandler.prevVignetteBrightness * (1.0f + Mth.sin(mc.player.tickCount / 2.0f) * 0.1f);
+                int alpha = (int)(b * 255) & 0xFF;
+                int color = (alpha << 24) | 0x000000; // black vignette
+                int w = mc.getWindow().getGuiScaledWidth(), h = mc.getWindow().getGuiScaledHeight();
+                graphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
+                    RenderEventHandler.vignetteTexPath, 0, 0, 0, 0, w, h, w, h);
+            }
+        }
     }
 
     private static void renderKnowledgeGainsModern(net.minecraft.client.Minecraft mc,
@@ -302,7 +322,7 @@ public class RenderEventHandler
 
     @SubscribeEvent
     public static void renderShaders(net.neoforged.neoforge.client.event.RenderGuiLayerEvent.Pre event) {
-        // TODO: rewrite with modern shader API (OpenGlHelper/ShaderGroup removed)
+        // ShaderGroup API removed in MC 26; modern post-processing uses RenderPipelines — skip
     }
 
     @SubscribeEvent
@@ -310,39 +330,185 @@ public class RenderEventHandler
         if (RenderEventHandler.tagscale > 0.0f) {
             RenderEventHandler.tagscale -= 0.005f;
         }
-        // TODO: rewrite remainder with modern rendering API (getRenderViewEntity removed)
+        // Entity-aspect display (thaumTarget) requires SubmitCustomGeometryEvent for MC 26 — not yet ported
+        // Seal rendering requires SubmitCustomGeometryEvent for MC 26 — not yet ported
     }
 
     @SubscribeEvent
     public static void fogDensityEvent(net.neoforged.neoforge.client.event.ViewportEvent.RenderFog event) {
-        // TODO: rewrite — GL11 fog API removed in modern OpenGL
+        if (RenderEventHandler.fogFiddled && RenderEventHandler.fogTarget > 0.0f) {
+            // Approximate exponential fog: GL_EXP with density d ≈ linear far-plane at 4.6/d
+            float approxFar = 4.6f / RenderEventHandler.fogTarget;
+            event.setFarPlaneDistance(Math.min(event.getFarPlaneDistance(), approxFar));
+            event.setNearPlaneDistance(0.0f);
+        }
+    }
+
+    @SubscribeEvent
+    public static void extractBlockOutline(ExtractBlockOutlineRenderStateEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) return;
+        boolean hasGoggles = EntityUtils.hasGoggles(mc.player);
+        if (!hasGoggles) return;
+
+        net.minecraft.core.BlockPos pos = event.getBlockPos();
+        BlockEntity te = event.getLevel().getBlockEntity(pos);
+
+        // Aspect container display
+        if (te instanceof IAspectContainer) {
+            AspectList tags = ((IAspectContainer) te).getAspects();
+            if (tags != null && tags.size() > 0) {
+                // Copy aspects so renderer doesn't hold a reference to mutable BE state
+                AspectList captured = new AspectList();
+                for (Aspect a : tags.getAspects()) captured.add(a, tags.getAmount(a));
+                boolean spaceAbove = event.getLevel().isEmptyBlock(pos.above());
+                Direction dir = spaceAbove ? Direction.UP : event.getHitResult().getDirection();
+                if (tagscale < 0.3f) tagscale += 0.031f - tagscale / 10.0f;
+                float ts = tagscale;
+                double wx = pos.getX(), wy = pos.getY() + (spaceAbove ? 0.4 : 0.0), wz = pos.getZ();
+                Camera cam = event.getCamera();
+                event.addCustomRenderer((renderState, buffer, poseStack, translucentPass, levelRenderState) -> {
+                    if (!translucentPass) {
+                        drawTagsOnContainerModern(wx, wy, wz, captured, 220, dir, poseStack, buffer, cam, ts);
+                    }
+                    return false;
+                });
+            }
+        }
+
+        // Goggles text display (IGogglesDisplayExtended)
+        Block b = event.getLevel().getBlockState(pos).getBlock();
+        IGogglesDisplayExtended ige = te instanceof IGogglesDisplayExtended ? (IGogglesDisplayExtended) te
+                : (b instanceof IGogglesDisplayExtended ? (IGogglesDisplayExtended) b : null);
+        if (ige != null) {
+            Vec3 v = ige.getIGogglesTextOffset();
+            String[] lines = ige.getIGogglesText();
+            boolean fromBlock = !(te instanceof IGogglesDisplayExtended);
+            Camera cam = event.getCamera();
+            event.addCustomRenderer((renderState, buffer, poseStack, translucentPass, levelRenderState) -> {
+                if (!translucentPass) {
+                    for (int i = 0; i < lines.length; i++) {
+                        float yo = (float)((i - lines.length / 2.0f) / 5.5f) * (fromBlock ? -1 : 1);
+                        drawTextInAirModern(pos.getX() + v.x, pos.getY() + v.y + yo, pos.getZ() + v.z, lines[i], poseStack, buffer, cam);
+                    }
+                }
+                return false;
+            });
+        }
     }
 
     @SubscribeEvent
     public static void livingTick(net.neoforged.neoforge.event.tick.EntityTickEvent.Post event) {
-        // TODO: rewrite — getEntityAttribute removed
+        if (!(event.getEntity().level().isClientSide())) return;
+        if (!(event.getEntity() instanceof net.minecraft.world.entity.PathfinderMob mob)) return;
+        var ai = mob.getAttribute(net.minecraft.core.Holder.direct(thaumcraft.api.ThaumcraftApiHelper.CHAMPION_MOD));
+        if (ai == null || ai.getValue() < 0) return;
+        int t = (int) ai.getValue();
+        if (t >= 0 && t < thaumcraft.common.entities.monster.mods.ChampionModifier.mods.length) {
+            thaumcraft.common.entities.monster.mods.ChampionModifier.mods[t].effect.showFX(mob);
+        }
     }
 
     @SubscribeEvent
-    public static void renderLivingPre(RenderLivingEvent.Pre event) {
-        // TODO: rewrite — getEntityAttribute removed
+    public static void renderLivingPre(RenderLivingEvent.Pre<?, ?, ?> event) {
+        // RenderLivingEvent.Pre uses render states in MC 26, not entity directly
+        // Champion pre-render effects not currently accessible without entity reference
     }
 
     public static void drawTagsOnContainer(double x, double y, double z, AspectList tags, int bright, Direction dir, float partialTicks) {
-        // TODO: rewrite with modern rendering API (fontRenderer removed)
+        // Legacy signature — use extractBlockOutline handler for world-space rendering in MC 26
     }
 
     public static void drawTextInAir(double x, double y, double z, float partialTicks, String text) {
-        // TODO: rewrite with modern rendering API (fontRenderer removed)
+        // Legacy signature — use extractBlockOutline handler for world-space rendering in MC 26
     }
 
     protected static void renderVignette(float brightness, double sw, double sh) {
-        // TODO: rewrite with modern rendering API (old tessellator/OpenGlHelper removed)
+        // Called from renderOverlay with GuiGraphicsExtractor — implemented inline there
+    }
+
+    private static void drawTagsOnContainerModern(double wx, double wy, double wz,
+            AspectList tags, int bright, Direction dir,
+            PoseStack poseStack, MultiBufferSource.BufferSource buffer, Camera camera, float ts) {
+        if (tags == null || tags.size() == 0 || ts <= 0) return;
+        int fox = 0, foy = 0, foz = 0;
+        if (dir != null) { fox = dir.getStepX(); foy = dir.getStepY(); foz = dir.getStepZ(); }
+        else { wx -= 0.5; wz -= 0.5; }
+        Font font = Minecraft.getInstance().font;
+        Vec3 cam = camera.position();
+        int rowsize = 5, current = 0, left = tags.size();
+        float shifty = 0.0f;
+        for (Aspect tag : tags.getAspects()) {
+            int div = Math.min(left, rowsize);
+            if (current >= rowsize) {
+                current = 0;
+                shifty -= ts * 1.05f;
+                left -= rowsize;
+                if (left < rowsize) div = left % rowsize;
+            }
+            float shift = (current - div / 2.0f + 0.5f) * ts * 4.0f * ts;
+            Color color = new Color(tag.getColor());
+            float r = color.getRed() / 255.0f, g = color.getGreen() / 255.0f, b = color.getBlue() / 255.0f;
+            poseStack.pushPose();
+            poseStack.translate(wx + 0.5 + ts * 2.0 * fox - cam.x,
+                                wy - shifty + 0.5 + ts * 2.0 * foy - cam.y,
+                                wz + 0.5 + ts * 2.0 * foz - cam.z);
+            float xd = (float)(cam.x - (wx + 0.5)), zd = (float)(cam.z - (wz + 0.5));
+            float rotYaw = (float)(Math.atan2(xd, zd) * 180.0 / Math.PI);
+            poseStack.mulPose(new org.joml.Quaternionf().rotateY((float)Math.toRadians(rotYaw + 180)));
+            poseStack.translate(shift, 0.0, 0.0);
+            poseStack.mulPose(new org.joml.Quaternionf().rotateZ((float)Math.toRadians(90)));
+            poseStack.scale(ts, ts, ts);
+            Identifier img = tag.getImage();
+            if (img != null) {
+                com.mojang.blaze3d.vertex.VertexConsumer vc = buffer.getBuffer(RenderTypes.entityTranslucent(img));
+                vc.addVertex(poseStack.last(), -0.5f,  0.5f, 0).setColor(r, g, b, 0.75f).setUv(0, 0).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+                vc.addVertex(poseStack.last(),  0.5f,  0.5f, 0).setColor(r, g, b, 0.75f).setUv(1, 0).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+                vc.addVertex(poseStack.last(),  0.5f, -0.5f, 0).setColor(r, g, b, 0.75f).setUv(1, 1).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+                vc.addVertex(poseStack.last(), -0.5f, -0.5f, 0).setColor(r, g, b, 0.75f).setUv(0, 1).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+            }
+            int amt = tags.getAmount(tag);
+            if (amt >= 0) {
+                buffer.endBatch();
+                poseStack.mulPose(new org.joml.Quaternionf().rotateZ((float)Math.toRadians(90)));
+                poseStack.scale(0.04f / ts, 0.04f / ts, 0.04f / ts);
+                poseStack.translate(0.0, 6.0, -0.1);
+                String am = String.valueOf(amt);
+                int sw = font.width(am);
+                font.drawInBatch(am, 14 - sw, 1, 0x111111, false, poseStack.last().pose(), buffer, Font.DisplayMode.NORMAL, 0, 0xF000F0);
+                poseStack.translate(0.0, 0.0, -0.1);
+                font.drawInBatch(am, 13 - sw, 0, 0xFFFFFF, false, poseStack.last().pose(), buffer, Font.DisplayMode.NORMAL, 0, 0xF000F0);
+            }
+            poseStack.popPose();
+            current++;
+        }
+        buffer.endBatch();
+    }
+
+    private static void drawTextInAirModern(double wx, double wy, double wz, String text,
+            PoseStack poseStack, MultiBufferSource.BufferSource buffer, Camera camera) {
+        Font font = Minecraft.getInstance().font;
+        Vec3 cam = camera.position();
+        poseStack.pushPose();
+        poseStack.translate(wx + 0.5 - cam.x, wy + 0.5 - cam.y, wz + 0.5 - cam.z);
+        float xd = (float)(cam.x - (wx + 0.5)), zd = (float)(cam.z - (wz + 0.5));
+        float rotYaw = (float)(Math.atan2(xd, zd) * 180.0 / Math.PI);
+        poseStack.mulPose(new org.joml.Quaternionf().rotateY((float)Math.toRadians(rotYaw + 180)));
+        poseStack.mulPose(new org.joml.Quaternionf().rotateZ((float)Math.toRadians(180)));
+        poseStack.scale(0.0125f, 0.0125f, 0.0125f);
+        int sw = font.width(text);
+        font.drawInBatch(text, (float)(1 - sw / 2), 1.0f, 0x111111, false, poseStack.last().pose(), buffer, Font.DisplayMode.NORMAL, 0, 0xF000F0);
+        poseStack.translate(0, 0, -0.1);
+        font.drawInBatch(text, (float)(-sw / 2), 0.0f, 0xFFFFFF, true, poseStack.last().pose(), buffer, Font.DisplayMode.NORMAL, 0, 0xF000F0);
+        buffer.endBatch();
+        poseStack.popPose();
     }
 
     @SubscribeEvent
-    public static void textureStitchEventPre(net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent event) {
-        // TODO: rewrite — TextureAtlasStitchedEvent.addSprite API may have changed
+    public static void textureStitchedEvent(net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent event) {
+        if (event.getAtlas().location().equals(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_PARTICLES)) {
+            thaumcraft.client.fx.ParticleEngine.loadParticleSprites(event.getAtlas());
+        }
     }
 
     static {

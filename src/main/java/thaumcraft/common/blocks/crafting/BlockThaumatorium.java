@@ -46,16 +46,6 @@ public class BlockThaumatorium extends BlockTCDevice implements IBlockFacingHori
         return top ? RenderShape.INVISIBLE : RenderShape.MODEL;
     }
 
-    public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (!world.isClientSide() && !player.isCrouching()) {
-            if (!top) {
-                } else {
-                // TODO: open GUI id=3 at pos.below()
-            }
-        }
-        return true;
-    }
-
     public int damageDropped(BlockState state) {
         return 0;
     }

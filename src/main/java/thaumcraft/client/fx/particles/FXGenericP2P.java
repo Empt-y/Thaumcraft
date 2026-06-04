@@ -27,7 +27,7 @@ public class FXGenericP2P extends FXGeneric
         xd = (float) random.nextGaussian() * f3;
         yd = (float) random.nextGaussian() * f3;
         zd = (float) random.nextGaussian() * f3;
-        particleGravity = 0.2f;
+        gravity = 0.2f;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FXGenericP2P extends FXGeneric
         double d13 = 0.3;
         double d14 = Math.sqrt(dx * dx + dy * dy + dz * dz);
         if (d14 < 4.0) {
-            particleScale *= 0.9f;
+            quadSize *= 0.9f;
             d13 = 0.6;
         }
         dx /= d14;

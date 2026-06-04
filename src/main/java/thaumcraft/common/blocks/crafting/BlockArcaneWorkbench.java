@@ -28,14 +28,6 @@ public class BlockArcaneWorkbench extends BlockTCDevice
         return false;
     }
 
-    public boolean onBlockActivated(Level world, BlockPos pos, BlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (world.isClientSide()) {
-            return true;
-        }
-        // TODO: open GUI id=13
-        return true;
-    }
-
     @Override
     public void destroy(LevelAccessor worldIn, BlockPos pos, BlockState state) {
         if (worldIn instanceof Level level) {
