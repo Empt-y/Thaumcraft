@@ -1,7 +1,14 @@
 package thaumcraft.client.lib.events;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.minecraft.core.Holder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
+import thaumcraft.common.lib.potions.PotionDeathGaze;
+import thaumcraft.common.lib.potions.PotionBlurredVision;
+import thaumcraft.common.lib.potions.PotionUnnaturalHunger;
+import thaumcraft.common.lib.potions.PotionSunScorned;
 
 
 public class ShaderHandler
@@ -14,7 +21,15 @@ public class ShaderHandler
     public static Identifier[] shader_resources;
 
     protected void checkShaders(net.neoforged.neoforge.event.tick.PlayerTickEvent event, Minecraft mc) {
-        // TODO: rewrite with modern effect/shader API (isPotionActive, ShaderGroup all removed)
+        // ShaderGroup removed in MC 26; update warpVignette from player effects only
+        Player player = mc.player;
+        if (player == null) return;
+
+        if (PotionDeathGaze.instance != null && player.hasEffect(Holder.direct(PotionDeathGaze.instance))) {
+            ShaderHandler.warpVignette = 10;
+        }
+        // SHADER_BLUR, SHADER_HUNGER, SHADER_SUNSCORNED — post-process shaders not available in MC 26
+        // (ShaderGroup API removed; these would require modern PostChain/RenderPipeline setup)
     }
 
     void setShader(Object target, int shaderId) {

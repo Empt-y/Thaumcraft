@@ -7,15 +7,19 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 
 import com.mojang.blaze3d.vertex.Tesselator;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
-import org.lwjgl.opengl.GL11;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.client.fx.ParticleEngine;
 import thaumcraft.common.config.ModConfig;
@@ -31,6 +35,11 @@ public class UtilsFX
     public static float sysPartialTicks;
     static DecimalFormat myFormatter;
     public static boolean hideStackOverlay;
+
+    // World-space rendering context — set by tile renderers / event handlers before calling render helpers
+    public static SubmitNodeCollector currentCollector = null;
+    public static PoseStack currentPoseStack = null;
+    public static Identifier currentTexture = null;
 
     public static void renderFacingQuad(double px, double py, double pz, int gridX, int gridY, int frame, float scale, int color, float alpha, int blend, float partialTicks) {
         // World-space billboard quad — requires PoseStack/SubmitCustomGeometryEvent in MC 26; not yet ported
@@ -75,7 +84,8 @@ public class UtilsFX
     }
 
     public static void renderQuadCentered(Identifier texture, int gridX, int gridY, int frame, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
-        // World-space centered quad — requires PoseStack context; not yet ported to MC 26
+        currentTexture = texture;
+        renderQuadCentered(gridX, gridY, frame, scale, red, green, blue, brightness, blend, opacity);
     }
 
     public static void renderQuadCentered() {
@@ -83,11 +93,37 @@ public class UtilsFX
     }
 
     public static void renderQuadCentered(int gridX, int gridY, int frame, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
-        // World-space centered quad — requires PoseStack context; not yet ported to MC 26
+        if (currentCollector == null || currentPoseStack == null || currentTexture == null) return;
+        int xm = frame % gridX;
+        int ym = frame / gridY;
+        final float f1 = xm / (float)gridX;
+        final float f2 = f1 + 1f / gridX;
+        final float f3 = ym / (float)gridY;
+        final float f4 = f3 + 1f / gridY;
+        final float s = scale * 0.5f;
+        final float r = red, g = green, b = blue, a = opacity;
+        final int bright = brightness;
+        currentCollector.submitCustomGeometry(currentPoseStack, RenderTypes.entityTranslucent(currentTexture), (pose, buf) -> {
+            buf.addVertex(pose, -s,  s, 0).setColor(r, g, b, a).setUv(f2, f4).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+            buf.addVertex(pose,  s,  s, 0).setColor(r, g, b, a).setUv(f2, f3).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+            buf.addVertex(pose,  s, -s, 0).setColor(r, g, b, a).setUv(f1, f3).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+            buf.addVertex(pose, -s, -s, 0).setColor(r, g, b, a).setUv(f1, f4).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+        });
     }
 
     public static void renderQuadFromIcon(TextureAtlasSprite icon, float scale, float red, float green, float blue, int brightness, int blend, float opacity) {
-        // World-space icon quad — requires PoseStack/VertexConsumer; not yet ported to MC 26
+        if (currentCollector == null || currentPoseStack == null) return;
+        Identifier texAtlas = icon.atlasLocation();
+        final float u0 = icon.getU0(), u1 = icon.getU1(), v0 = icon.getV0(), v1 = icon.getV1();
+        final float s = scale * 0.5f;
+        final float r = red, g = green, b = blue, a = opacity;
+        final int bright = brightness;
+        currentCollector.submitCustomGeometry(currentPoseStack, RenderTypes.entityTranslucent(texAtlas), (pose, buf) -> {
+            buf.addVertex(pose, -s, -s, 0).setColor(r, g, b, a).setUv(u0, v1).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+            buf.addVertex(pose,  s, -s, 0).setColor(r, g, b, a).setUv(u1, v1).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+            buf.addVertex(pose,  s,  s, 0).setColor(r, g, b, a).setUv(u1, v0).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+            buf.addVertex(pose, -s,  s, 0).setColor(r, g, b, a).setUv(u0, v0).setOverlay(0).setLight(bright).setNormal(0, 0, 1);
+        });
     }
 
     public static void drawTag(int x, int y, Aspect aspect, float amount, int bonus, double z, int blend, float alpha) {
@@ -170,19 +206,38 @@ public class UtilsFX
     }
 
     public static void renderBillboardQuad(double scale) {
-        // World-space billboard — requires PoseStack/VertexConsumer; not yet ported to MC 26
+        if (currentCollector == null || currentPoseStack == null || currentTexture == null) return;
+        renderBillboardQuad(scale, 1, 1, 0, 1f, 1f, 1f, 1f, 0xF000F0);
     }
 
     public static void renderBillboardQuad(double scale, int gridX, int gridY, int frame) {
-        // World-space billboard — requires PoseStack/VertexConsumer; not yet ported to MC 26
+        if (currentCollector == null || currentPoseStack == null || currentTexture == null) return;
+        renderBillboardQuad(scale, gridX, gridY, frame, 1f, 1f, 1f, 1f, 0xF000F0);
     }
 
     public static void renderBillboardQuad(double scale, int gridX, int gridY, int frame, float r, float g, float b, float a, int bright) {
-        // World-space billboard — requires PoseStack/VertexConsumer; not yet ported to MC 26
+        if (currentCollector == null || currentPoseStack == null || currentTexture == null) return;
+        int xm = frame % gridX;
+        int ym = frame / gridY;
+        final float f1 = xm / (float)gridX;
+        final float f2 = f1 + 1f / gridX;
+        final float f3 = ym / (float)gridY;
+        final float f4 = f3 + 1f / gridY;
+        final float s = (float)scale * 0.5f;
+        final int brt = bright;
+        currentCollector.submitCustomGeometry(currentPoseStack, RenderTypes.entityTranslucent(currentTexture), (pose, buf) -> {
+            buf.addVertex(pose, -s, -s, 0).setColor(r, g, b, a).setUv(f1, f4).setOverlay(0).setLight(brt).setNormal(0, 0, 1);
+            buf.addVertex(pose,  s, -s, 0).setColor(r, g, b, a).setUv(f2, f4).setOverlay(0).setLight(brt).setNormal(0, 0, 1);
+            buf.addVertex(pose,  s,  s, 0).setColor(r, g, b, a).setUv(f2, f3).setOverlay(0).setLight(brt).setNormal(0, 0, 1);
+            buf.addVertex(pose, -s,  s, 0).setColor(r, g, b, a).setUv(f1, f3).setOverlay(0).setLight(brt).setNormal(0, 0, 1);
+        });
     }
 
     public static void rotateToPlayer() {
-        // World-space rotation — requires PoseStack in MC 26; no-op
+        if (currentPoseStack == null) return;
+        // Apply camera rotation to billboard-face the player
+        org.joml.Quaternionf camRot = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
+        currentPoseStack.mulPose(camRot);
     }
 
     public static boolean renderItemStack(Minecraft mc, ItemStack itm, int x, int y, String txt) {
@@ -202,11 +257,30 @@ public class UtilsFX
     }
 
     public static void drawBeam(Vector S, Vector E, Vector P, float width, int bright, float r, float g, float b, float a) {
-        // World-space beam quad — requires PoseStack/VertexConsumer; not yet ported to MC 26
+        if (currentCollector == null || currentPoseStack == null) return;
+        // Compute cross product of beam direction with camera-to-mid vector to get perpendicular
+        Vector dir = Sub(E, S);
+        Vector perp = Cross(dir, Sub(P, S));
+        if (perp.norm() < 1e-6f) return;
+        perp = Mul(perp.normalize(), width * 0.5f);
+        Vector p1 = Add(S, perp);
+        Vector p2 = Add(E, perp);
+        Vector p3 = Sub(E, perp);
+        Vector p4 = Sub(S, perp);
+        drawQuad(null, p1, p2, p3, p4, bright, r, g, b, a);
     }
 
     public static void drawQuad(Tesselator tessellator, Vector p1, Vector p2, Vector p3, Vector p4, int bright, float r, float g, float b, float a) {
-        // World-space quad — requires PoseStack/VertexConsumer; not yet ported to MC 26
+        if (currentCollector == null || currentPoseStack == null) return;
+        Identifier tex = currentTexture != null ? currentTexture : nodeTexture;
+        if (tex == null) return;
+        final int brt = bright;
+        currentCollector.submitCustomGeometry(currentPoseStack, RenderTypes.entityTranslucent(tex), (pose, buf) -> {
+            buf.addVertex(pose, p1.x, p1.y, p1.z).setColor(r, g, b, a).setUv(0, 0).setOverlay(0).setLight(brt).setNormal(0, 1, 0);
+            buf.addVertex(pose, p2.x, p2.y, p2.z).setColor(r, g, b, a).setUv(1, 0).setOverlay(0).setLight(brt).setNormal(0, 1, 0);
+            buf.addVertex(pose, p3.x, p3.y, p3.z).setColor(r, g, b, a).setUv(1, 1).setOverlay(0).setLight(brt).setNormal(0, 1, 0);
+            buf.addVertex(pose, p4.x, p4.y, p4.z).setColor(r, g, b, a).setUv(0, 1).setOverlay(0).setLight(brt).setNormal(0, 1, 0);
+        });
     }
 
     private static Vector Cross(Vector a, Vector b) {
@@ -229,15 +303,30 @@ public class UtilsFX
     }
 
     public static void renderItemIn2D(String sprite, float thickness) {
-        // 2D item-icon render in world space — requires VertexConsumer/PoseStack; not yet ported to MC 26
+        // 2D item-icon render in world space — sprite lookup not yet ported
     }
 
     public static void renderItemIn2D(TextureAtlasSprite icon, float thickness) {
-        // 2D item-icon render in world space — requires VertexConsumer/PoseStack; not yet ported to MC 26
+        if (currentCollector == null || currentPoseStack == null) return;
+        // Render a simplified flat face using the atlas sprite UVs
+        renderTextureIn3D(icon.getU1(), icon.getV0(), icon.getU0(), icon.getV1(), 16, 16, thickness);
     }
 
     public static void renderTextureIn3D(float maxu, float maxv, float minu, float minv, int width, int height, float thickness) {
-        // 3D texture slab render — requires VertexConsumer/PoseStack; not yet ported to MC 26
+        if (currentCollector == null || currentPoseStack == null || currentTexture == null) return;
+        // Front face (z=0) and back face (z=-thickness); skip edge slivers
+        currentCollector.submitCustomGeometry(currentPoseStack, RenderTypes.entityTranslucent(currentTexture), (pose, buf) -> {
+            // Front face
+            buf.addVertex(pose, 0, 0, 0).setColor(1f,1f,1f,1f).setUv(minu, maxv).setOverlay(0).setLight(0xF000F0).setNormal(0, 0, 1);
+            buf.addVertex(pose, 1, 0, 0).setColor(1f,1f,1f,1f).setUv(maxu, maxv).setOverlay(0).setLight(0xF000F0).setNormal(0, 0, 1);
+            buf.addVertex(pose, 1, 1, 0).setColor(1f,1f,1f,1f).setUv(maxu, minv).setOverlay(0).setLight(0xF000F0).setNormal(0, 0, 1);
+            buf.addVertex(pose, 0, 1, 0).setColor(1f,1f,1f,1f).setUv(minu, minv).setOverlay(0).setLight(0xF000F0).setNormal(0, 0, 1);
+            // Back face (reverse winding)
+            buf.addVertex(pose, 0, 1, -thickness).setColor(1f,1f,1f,1f).setUv(minu, minv).setOverlay(0).setLight(0xF000F0).setNormal(0, 0, -1);
+            buf.addVertex(pose, 1, 1, -thickness).setColor(1f,1f,1f,1f).setUv(maxu, minv).setOverlay(0).setLight(0xF000F0).setNormal(0, 0, -1);
+            buf.addVertex(pose, 1, 0, -thickness).setColor(1f,1f,1f,1f).setUv(maxu, maxv).setOverlay(0).setLight(0xF000F0).setNormal(0, 0, -1);
+            buf.addVertex(pose, 0, 0, -thickness).setColor(1f,1f,1f,1f).setUv(minu, maxv).setOverlay(0).setLight(0xF000F0).setNormal(0, 0, -1);
+        });
     }
 
     static {

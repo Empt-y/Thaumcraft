@@ -10,9 +10,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.minecraft.client.Minecraft;
 import com.mojang.blaze3d.vertex.Tesselator;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
+import thaumcraft.client.lib.UtilsFX;
 
 
 public class WavefrontObject implements IModelCustom
@@ -139,32 +141,35 @@ public class WavefrontObject implements IModelCustom
     
     @Override
     public void renderAll() {
-        // TODO: rewrite with modern rendering API (tessellator.getBuffer() / draw() removed)
+        renderAll(UtilsFX.currentTexture != null ? UtilsFX.currentTexture : UtilsFX.nodeTexture);
+    }
+
+    public void renderAll(Identifier texture) {
+        if (UtilsFX.currentCollector == null || UtilsFX.currentPoseStack == null || texture == null) return;
+        for (GroupObject groupObject : groupObjects) {
+            if (groupObject != null) groupObject.render(texture);
+        }
     }
 
     public void tessellateAll(Tesselator tessellator) {
-        // TODO: rewrite with modern rendering API
+        renderAll();
     }
     
     @Override
     public void renderOnly(String... groupNames) {
+        Identifier tex = UtilsFX.currentTexture != null ? UtilsFX.currentTexture : UtilsFX.nodeTexture;
         for (GroupObject groupObject : groupObjects) {
+            if (groupObject == null) continue;
             for (String groupName : groupNames) {
                 if (groupName.equalsIgnoreCase(groupObject.name)) {
-                    groupObject.render();
+                    if (tex != null) groupObject.render(tex);
                 }
             }
         }
     }
     
     public void tessellateOnly(Tesselator tessellator, String... groupNames) {
-        for (GroupObject groupObject : groupObjects) {
-            for (String groupName : groupNames) {
-                if (groupName.equalsIgnoreCase(groupObject.name)) {
-                    groupObject.render(tessellator);
-                }
-            }
-        }
+        renderOnly(groupNames);
     }
     
     @Override
@@ -178,48 +183,42 @@ public class WavefrontObject implements IModelCustom
     
     @Override
     public void renderPart(String partName) {
+        renderPart(partName, UtilsFX.currentTexture != null ? UtilsFX.currentTexture : UtilsFX.nodeTexture);
+    }
+
+    public void renderPart(String partName, Identifier texture) {
+        if (texture == null) return;
         for (GroupObject groupObject : groupObjects) {
-            if (partName.equalsIgnoreCase(groupObject.name)) {
-                groupObject.render();
+            if (groupObject != null && partName.equalsIgnoreCase(groupObject.name)) {
+                groupObject.render(texture);
             }
         }
     }
-    
+
     public void tessellatePart(Tesselator tessellator, String partName) {
-        for (GroupObject groupObject : groupObjects) {
-            if (partName.equalsIgnoreCase(groupObject.name)) {
-                groupObject.render(tessellator);
-            }
-        }
+        renderPart(partName);
     }
     
     @Override
     public void renderAllExcept(String... excludedGroupNames) {
+        Identifier tex = UtilsFX.currentTexture != null ? UtilsFX.currentTexture : UtilsFX.nodeTexture;
         for (GroupObject groupObject : groupObjects) {
+            if (groupObject == null) continue;
             boolean skipPart = false;
             for (String excludedGroupName : excludedGroupNames) {
                 if (excludedGroupName.equalsIgnoreCase(groupObject.name)) {
                     skipPart = true;
+                    break;
                 }
             }
-            if (!skipPart) {
-                groupObject.render();
+            if (!skipPart && tex != null) {
+                groupObject.render(tex);
             }
         }
     }
     
     public void tessellateAllExcept(Tesselator tessellator, String... excludedGroupNames) {
-        for (GroupObject groupObject : groupObjects) {
-            boolean exclude = false;
-            for (String excludedGroupName : excludedGroupNames) {
-                if (excludedGroupName.equalsIgnoreCase(groupObject.name)) {
-                    exclude = true;
-                }
-            }
-            if (!exclude) {
-                groupObject.render(tessellator);
-            }
-        }
+        renderAllExcept(excludedGroupNames);
     }
     
     private Vertex parseVertex(String line, int lineCount) throws ModelFormatException {
@@ -475,9 +474,35 @@ public class WavefrontObject implements IModelCustom
         public void addFaceForRender(Tesselator tessellator) {
             addFaceForRender(tessellator, 5.0E-4f);
         }
-        
+
         public void addFaceForRender(Tesselator tessellator, float textureOffset) {
-            // TODO: rewrite with modern rendering API (tessellator.getBuffer().pos/tex/normal/endVertex removed)
+            // Delegated through GroupObject.render(texture) which calls Face.submitGeometry
+        }
+
+        /**
+         * Submit this face's geometry to the provided VertexConsumer using the given pose.
+         */
+        public void submitGeometry(com.mojang.blaze3d.vertex.PoseStack.Pose pose, com.mojang.blaze3d.vertex.VertexConsumer buf) {
+            if (vertices == null || vertices.length < 3) return;
+            Vertex normal = faceNormal != null ? faceNormal : new Vertex(0, 1, 0);
+            // Emit as individual triangles (or quads if 4 verts)
+            int count = vertices.length;
+            for (int i = 0; i < count; i++) {
+                Vertex v = vertices[i];
+                float u = 0, vv = 0;
+                if (textureCoordinates != null && textureCoordinates.length > i && textureCoordinates[i] != null) {
+                    u = textureCoordinates[i].u;
+                    vv = textureCoordinates[i].v;
+                }
+                float nx = normal.x, ny = normal.y, nz = normal.z;
+                if (vertexNormals != null && vertexNormals.length > i && vertexNormals[i] != null) {
+                    nx = vertexNormals[i].x; ny = vertexNormals[i].y; nz = vertexNormals[i].z;
+                }
+                buf.addVertex(pose, v.x, v.y, v.z)
+                   .setColor(1f, 1f, 1f, 1f)
+                   .setUv(u, vv)
+                   .setOverlay(0).setLight(0xF000F0).setNormal(nx, ny, nz);
+            }
         }
         
         public Vertex calculateFaceNormal() {
@@ -511,11 +536,26 @@ public class WavefrontObject implements IModelCustom
 
 
         public void render() {
-            // TODO: rewrite with modern rendering API
+            Identifier tex = UtilsFX.currentTexture != null ? UtilsFX.currentTexture : UtilsFX.nodeTexture;
+            if (tex != null) render(tex);
         }
 
         public void render(Tesselator tessellator) {
-            // TODO: rewrite with modern rendering API
+            render();
+        }
+
+        public void render(Identifier texture) {
+            if (UtilsFX.currentCollector == null || UtilsFX.currentPoseStack == null) return;
+            if (faces.isEmpty()) return;
+            UtilsFX.currentCollector.submitCustomGeometry(
+                UtilsFX.currentPoseStack,
+                RenderTypes.entityTranslucent(texture),
+                (pose, buf) -> {
+                    for (Face face : faces) {
+                        face.submitGeometry(pose, buf);
+                    }
+                }
+            );
         }
     }
     
