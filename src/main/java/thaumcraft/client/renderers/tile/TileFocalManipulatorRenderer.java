@@ -1,4 +1,26 @@
 package thaumcraft.client.renderers.tile;
-// TODO: Rewrite for MC 1.21.5 (BlockEntitySpecialRenderer removed)
-public class TileFocalManipulatorRenderer {
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.world.phys.Vec3;
+import thaumcraft.common.tiles.crafting.TileFocalManipulator;
+
+public class TileFocalManipulatorRenderer implements BlockEntityRenderer<TileFocalManipulator, TileFocalManipulatorRenderer.State> {
+    @Override
+    public State createRenderState() { return new State(); }
+
+    @Override
+    public void extractRenderState(TileFocalManipulator be, State state, float pt, Vec3 cam,
+            ModelFeatureRenderer.CrumblingOverlay bp) {
+        BlockEntityRenderState.extractBase(be, state, bp);
+    }
+
+    @Override
+    public void submit(State state, PoseStack ps, SubmitNodeCollector c, CameraRenderState cam) {}
+
+    public static class State extends BlockEntityRenderState {}
 }
