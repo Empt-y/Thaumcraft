@@ -29,7 +29,11 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.event.ExtractBlockOutlineRenderStateEvent;
+import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
+import net.neoforged.neoforge.client.event.SubmitCustomGeometryEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.util.context.ContextKey;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.client.event.RenderLivingEvent;
@@ -94,6 +98,19 @@ public class RenderEventHandler
     public static float prevVignetteBrightness;
     public static float targetBrightness;
     protected static Identifier vignetteTexPath;
+
+    // ContextKey for seal + thaumTarget data stored in LevelRenderState
+    private static final ContextKey<List<SealEntry>> SEAL_KEY =
+        new ContextKey<>(net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", "seals"));
+    private static final ContextKey<ThaumTargetEntry> THAUM_TARGET_KEY =
+        new ContextKey<>(net.minecraft.resources.Identifier.fromNamespaceAndPath("thaumcraft", "thaum_target"));
+
+    /** Extracted seal data safe to read on the render thread. */
+    record SealEntry(double wx, double wy, double wz, Direction face, Identifier icon,
+                     float alpha, float r, float g, float b, boolean stopped) {}
+
+    /** Extracted thaumTarget data safe to read on the render thread. */
+    record ThaumTargetEntry(double wx, double wy, double wz, AspectList aspects) {}
 
     public RenderEventHandler() {
         random = new java.util.Random();
@@ -330,8 +347,123 @@ public class RenderEventHandler
         if (RenderEventHandler.tagscale > 0.0f) {
             RenderEventHandler.tagscale -= 0.005f;
         }
-        // Entity-aspect display (thaumTarget) requires SubmitCustomGeometryEvent for MC 26 — not yet ported
-        // Seal rendering requires SubmitCustomGeometryEvent for MC 26 — not yet ported
+    }
+
+    @SubscribeEvent
+    public static void extractLevelRenderState(ExtractLevelRenderStateEvent event) {
+        net.minecraft.client.multiplayer.ClientLevel level = event.getLevel();
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        // --- Seal extraction ---
+        // ClientLevel doesn't have an identifier() method — use 0 (same as in SealHandler for non-ServerLevel)
+        int dimHash = 0;
+        java.util.concurrent.ConcurrentHashMap<SealPos, SealEntity> seals =
+            SealHandler.sealEntities.get(dimHash);
+        if (seals != null && !seals.isEmpty()) {
+            List<SealEntry> entries = new ArrayList<>();
+            for (java.util.Map.Entry<SealPos, SealEntity> e : seals.entrySet()) {
+                SealPos sp = e.getKey();
+                if (sp == null) continue;
+                ISealEntity se = e.getValue();
+                if (se == null || se.getSeal() == null) continue;
+                double dist = player.distanceToSqr(sp.pos.getX() + 0.5, sp.pos.getY() + 0.5, sp.pos.getZ() + 0.5);
+                if (dist > 256.0) continue;
+                float alpha = 1.0f - (float)(dist / 256.0);
+                boolean stopped = se.isStoppedByRedstone(level);
+                Identifier icon = se.getSeal().getSealIcon();
+                float r, g, b;
+                int color = se.getColor();
+                if (color > 0) {
+                    java.awt.Color c = new java.awt.Color(net.minecraft.world.item.DyeColor.byId(color - 1).getTextureDiffuseColor());
+                    r = c.getRed() / 255.0f; g = c.getGreen() / 255.0f; b = c.getBlue() / 255.0f;
+                } else {
+                    float t = (player.tickCount * 0.05f);
+                    r = 0.7f + Mth.sin(t + sp.pos.getX() / 4.0f) * 0.1f;
+                    g = 0.7f + Mth.sin(t + sp.pos.getY() / 5.0f) * 0.1f;
+                    b = 0.7f + Mth.sin(t + sp.pos.getZ() / 6.0f) * 0.1f;
+                }
+                entries.add(new SealEntry(sp.pos.getX(), sp.pos.getY(), sp.pos.getZ(),
+                    sp.face, icon, alpha, r, g, b, stopped));
+            }
+            event.getRenderState().setRenderData(SEAL_KEY, entries);
+        }
+
+        // --- ThaumTarget extraction ---
+        if (RenderEventHandler.thaumTarget != null && RenderEventHandler.thaumTarget.isAlive()) {
+            Entity target = RenderEventHandler.thaumTarget;
+            AspectList aspects = AspectHelper.getEntityAspects(target);
+            if (aspects != null && !aspects.aspects.isEmpty()) {
+                AspectList copy = aspects.copy();
+                if (RenderEventHandler.tagscale < 0.5f) {
+                    RenderEventHandler.tagscale += 0.031f - RenderEventHandler.tagscale / 10.0f;
+                }
+                event.getRenderState().setRenderData(THAUM_TARGET_KEY,
+                    new ThaumTargetEntry(target.getX(), target.getY() + target.getBbHeight(), target.getZ(), copy));
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void submitCustomGeometry(SubmitCustomGeometryEvent event) {
+        Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
+        if (camera == null) return;
+        Vec3 cam = camera.position();
+        SubmitNodeCollector collector = event.getSubmitNodeCollector();
+        PoseStack ps = event.getPoseStack();
+
+        // --- Render seals ---
+        List<SealEntry> seals = event.getLevelRenderState().getRenderData(SEAL_KEY);
+        if (seals != null) {
+            for (SealEntry se : seals) {
+                if (se.icon() == null) continue;
+                renderSealModern(se, ps, collector, cam);
+            }
+        }
+
+        // --- Render thaumTarget aspects ---
+        ThaumTargetEntry tte = event.getLevelRenderState().getRenderData(THAUM_TARGET_KEY);
+        if (tte != null) {
+            drawTagsOnContainerModern(tte.wx(), tte.wy(), tte.wz(), tte.aspects(), 220, null,
+                ps, null, camera, tagscale);
+        }
+    }
+
+    private static void renderSealModern(SealEntry se, PoseStack ps, SubmitNodeCollector collector, Vec3 cam) {
+        float mod = se.stopped() ? 0.5f : 1.0f;
+        final float r = se.r() * mod, g = se.g() * mod, b = se.b() * mod, a = se.alpha();
+        final Identifier icon = se.icon();
+        ps.pushPose();
+        // Translate to seal face position (camera-relative)
+        applySealTransform(ps, (float)(se.wx() - cam.x), (float)(se.wy() - cam.y), (float)(se.wz() - cam.z), se.face(), -0.05f);
+        ps.scale(0.5f, 0.5f, 0.5f);
+        // Render a flat square icon
+        UtilsFX.currentCollector = collector;
+        UtilsFX.currentPoseStack = ps;
+        UtilsFX.currentTexture = icon;
+        UtilsFX.renderQuadCentered(icon, 1.0f, r, g, b, 200, 771, a);
+        UtilsFX.currentCollector = null;
+        UtilsFX.currentPoseStack = null;
+        UtilsFX.currentTexture = null;
+        ps.popPose();
+    }
+
+    private static void applySealTransform(PoseStack ps, float rx, float ry, float rz, Direction face, float off) {
+        // Port of translateSeal from SOURCE — translates to face position then rotates
+        switch (face) {
+            case UP    -> { ps.translate(rx + 0.25f, ry + 1.0f, rz + 0.75f);
+                            ps.mulPose(new org.joml.Quaternionf().rotateX((float)Math.toRadians(-90))); }
+            case DOWN  -> { ps.translate(rx + 0.25f, ry,        rz + 0.25f);
+                            ps.mulPose(new org.joml.Quaternionf().rotateX((float)Math.toRadians(90))); }
+            case SOUTH -> { ps.translate(rx + 0.25f, ry + 0.25f, rz + 1.0f); }
+            case NORTH -> { ps.translate(rx + 0.75f, ry + 0.25f, rz);
+                            ps.mulPose(new org.joml.Quaternionf().rotateY((float)Math.toRadians(180))); }
+            case EAST  -> { ps.translate(rx + 1.0f, ry + 0.25f, rz + 0.75f);
+                            ps.mulPose(new org.joml.Quaternionf().rotateY((float)Math.toRadians(90))); }
+            case WEST  -> { ps.translate(rx,         ry + 0.25f, rz + 0.25f);
+                            ps.mulPose(new org.joml.Quaternionf().rotateY((float)Math.toRadians(-90))); }
+        }
+        ps.translate(0, 0, -off);
     }
 
     @SubscribeEvent
