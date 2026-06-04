@@ -9,6 +9,40 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.entities.EntitiesTC;
 import thaumcraft.client.gui.*;
+import thaumcraft.client.renderers.entity.RenderFallingTaint;
+import thaumcraft.client.renderers.entity.RenderFluxRift;
+import thaumcraft.client.renderers.entity.RenderSpecialItem;
+import thaumcraft.client.renderers.entity.construct.RenderArcaneBore;
+import thaumcraft.client.renderers.entity.construct.RenderCultistPortalGreater;
+import thaumcraft.client.renderers.entity.construct.RenderCultistPortalLesser;
+import thaumcraft.client.renderers.entity.construct.RenderTurretCrossbow;
+import thaumcraft.client.renderers.entity.construct.RenderTurretCrossbowAdvanced;
+import thaumcraft.client.renderers.entity.mob.RenderBrainyZombie;
+import thaumcraft.client.renderers.entity.mob.RenderCultist;
+import thaumcraft.client.renderers.entity.mob.RenderCultistLeader;
+import thaumcraft.client.renderers.entity.mob.RenderEldritchCrab;
+import thaumcraft.client.renderers.entity.mob.RenderEldritchGolem;
+import thaumcraft.client.renderers.entity.mob.RenderEldritchGuardian;
+import thaumcraft.client.renderers.entity.mob.RenderFireBat;
+import thaumcraft.client.renderers.entity.mob.RenderInhabitedZombie;
+import thaumcraft.client.renderers.entity.mob.RenderMindSpider;
+import thaumcraft.client.renderers.entity.mob.RenderPech;
+import thaumcraft.client.renderers.entity.mob.RenderSpellBat;
+import thaumcraft.client.renderers.entity.mob.RenderTaintCrawler;
+import thaumcraft.client.renderers.entity.mob.RenderTaintSeed;
+import thaumcraft.client.renderers.entity.mob.RenderTaintSwarm;
+import thaumcraft.client.renderers.entity.mob.RenderTaintacle;
+import thaumcraft.client.renderers.entity.mob.RenderThaumicSlime;
+import thaumcraft.client.renderers.entity.mob.RenderWisp;
+import thaumcraft.client.renderers.entity.projectile.RenderDart;
+import thaumcraft.client.renderers.entity.projectile.RenderEldritchOrb;
+import thaumcraft.client.renderers.entity.projectile.RenderElectricOrb;
+import thaumcraft.client.renderers.entity.projectile.RenderFocusCloud;
+import thaumcraft.client.renderers.entity.projectile.RenderFocusMine;
+import thaumcraft.client.renderers.entity.projectile.RenderGrapple;
+import thaumcraft.client.renderers.entity.projectile.RenderHomingShard;
+import thaumcraft.client.renderers.entity.projectile.RenderNoProjectile;
+import thaumcraft.client.renderers.entity.projectile.RenderRiftBlast;
 import thaumcraft.client.renderers.tile.*;
 import thaumcraft.common.config.TCBlockEntityTypes;
 import thaumcraft.common.container.ContainerArcaneBore;
@@ -31,52 +65,75 @@ public class ThaumcraftClientSetup {
     }
 
     private void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        // Entity renderers — NoopRenderer for all entities (invisible but won't crash)
-        event.registerEntityRenderer(EntitiesTC.CULTIST_PORTAL_GREATER.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.CULTIST_PORTAL_LESSER.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.FLUX_RIFT.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.SPECIAL_ITEM.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.FOLLOWING_ITEM.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.FALLING_TAINT.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.ALUMENTUM.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.GOLEM_DART.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.ELDRITCH_ORB.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.BOTTLE_TAINT.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.GOLEM_ORB.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.GRAPPLE.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.CAUSALITY_COLLAPSER.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.FOCUS_PROJECTILE.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.FOCUS_CLOUD.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.FOCUS_MINE.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.RIFT_BLAST.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.HOMING_SHARD.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TURRET_CROSSBOW.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TURRET_CROSSBOW_ADVANCED.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.ARCANE_BORE.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.GOLEM.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.ELDRITCH_WARDEN.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.ELDRITCH_GOLEM.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.CULTIST_LEADER.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TAINTACLE_GIANT.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.BRAINY_ZOMBIE.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.GIANT_BRAINY_ZOMBIE.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.WISP.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.FIRE_BAT.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.SPELL_BAT.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.PECH.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.MIND_SPIDER.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.ELDRITCH_GUARDIAN.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.CULTIST_KNIGHT.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.CULTIST_CLERIC.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.ELDRITCH_CRAB.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.INHABITED_ZOMBIE.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TAUMIC_SLIME.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TAINT_CRAWLER.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TAINT_SEED.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TAINT_SEED_PRIME.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TAINT_SWARM.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TAINTACLE.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntitiesTC.TAINTACLE_SMALL.get(), NoopRenderer::new);
+        // === Construct / portal entities ===
+        event.registerEntityRenderer(EntitiesTC.CULTIST_PORTAL_GREATER.get(), RenderCultistPortalGreater::new);
+        event.registerEntityRenderer(EntitiesTC.CULTIST_PORTAL_LESSER.get(), RenderCultistPortalLesser::new);
+        event.registerEntityRenderer(EntitiesTC.ARCANE_BORE.get(), RenderArcaneBore::new);
+        event.registerEntityRenderer(EntitiesTC.TURRET_CROSSBOW.get(), RenderTurretCrossbow::new);
+        event.registerEntityRenderer(EntitiesTC.TURRET_CROSSBOW_ADVANCED.get(), RenderTurretCrossbowAdvanced::new);
+
+        // === Special / misc entities ===
+        event.registerEntityRenderer(EntitiesTC.FLUX_RIFT.get(), RenderFluxRift::new);
+        event.registerEntityRenderer(EntitiesTC.SPECIAL_ITEM.get(), RenderSpecialItem::new);
+        event.registerEntityRenderer(EntitiesTC.FOLLOWING_ITEM.get(), RenderSpecialItem::new);
+        event.registerEntityRenderer(EntitiesTC.FALLING_TAINT.get(), RenderFallingTaint::new);
+        event.registerEntityRenderer(EntitiesTC.GOLEM.get(), NoopRenderer::new); // complex custom model
+
+        // === Projectiles ===
+        event.registerEntityRenderer(EntitiesTC.ALUMENTUM.get(), RenderNoProjectile::new);
+        event.registerEntityRenderer(EntitiesTC.BOTTLE_TAINT.get(), RenderNoProjectile::new);
+        event.registerEntityRenderer(EntitiesTC.GOLEM_DART.get(), RenderDart::new);
+        event.registerEntityRenderer(EntitiesTC.ELDRITCH_ORB.get(), RenderEldritchOrb::new);
+        event.registerEntityRenderer(EntitiesTC.GOLEM_ORB.get(), RenderEldritchOrb::new);
+        event.registerEntityRenderer(EntitiesTC.GRAPPLE.get(), RenderGrapple::new);
+        event.registerEntityRenderer(EntitiesTC.CAUSALITY_COLLAPSER.get(), RenderElectricOrb::new);
+        event.registerEntityRenderer(EntitiesTC.FOCUS_PROJECTILE.get(), RenderEldritchOrb::new);
+        event.registerEntityRenderer(EntitiesTC.FOCUS_CLOUD.get(), RenderFocusCloud::new);
+        event.registerEntityRenderer(EntitiesTC.FOCUS_MINE.get(), RenderFocusMine::new);
+        event.registerEntityRenderer(EntitiesTC.RIFT_BLAST.get(), RenderRiftBlast::new);
+        event.registerEntityRenderer(EntitiesTC.HOMING_SHARD.get(), RenderHomingShard::new);
+
+        // === Zombie-based mobs (extend Zombie) ===
+        event.registerEntityRenderer(EntitiesTC.BRAINY_ZOMBIE.get(), RenderBrainyZombie::new);
+        event.registerEntityRenderer(EntitiesTC.GIANT_BRAINY_ZOMBIE.get(), RenderBrainyZombie::new);
+        event.registerEntityRenderer(EntitiesTC.INHABITED_ZOMBIE.get(), RenderInhabitedZombie::new);
+
+        // === Spider-based mob ===
+        event.registerEntityRenderer(EntitiesTC.MIND_SPIDER.get(), RenderMindSpider::new);
+
+        // === Slime-based mob ===
+        event.registerEntityRenderer(EntitiesTC.TAUMIC_SLIME.get(), RenderThaumicSlime::new);
+
+        // === Floating mob (placeholder slime model) ===
+        event.registerEntityRenderer(EntitiesTC.WISP.get(), RenderWisp::new);
+
+        // === Bat-like mobs (placeholder models) ===
+        event.registerEntityRenderer(EntitiesTC.FIRE_BAT.get(), RenderFireBat::new);
+        event.registerEntityRenderer(EntitiesTC.SPELL_BAT.get(), RenderSpellBat::new);
+
+        // === Humanoid mobs (placeholder zombie model) ===
+        event.registerEntityRenderer(EntitiesTC.PECH.get(), RenderPech::new);
+        event.registerEntityRenderer(EntitiesTC.ELDRITCH_GUARDIAN.get(), RenderEldritchGuardian::new);
+        event.registerEntityRenderer(EntitiesTC.ELDRITCH_GOLEM.get(), RenderEldritchGolem::new);
+        event.registerEntityRenderer(EntitiesTC.ELDRITCH_WARDEN.get(), RenderEldritchGolem::new);
+        event.registerEntityRenderer(EntitiesTC.CULTIST_LEADER.get(), RenderCultistLeader::new);
+        // EntityCultistKnight and EntityCultistCleric extend EntityCultist extends Monster
+        event.registerEntityRenderer(EntitiesTC.CULTIST_KNIGHT.get(), RenderCultist::new);
+        event.registerEntityRenderer(EntitiesTC.CULTIST_CLERIC.get(), RenderCultist::new);
+
+        // === Spider/multi-leg mobs (placeholder spider model) ===
+        event.registerEntityRenderer(EntitiesTC.ELDRITCH_CRAB.get(), RenderEldritchCrab::new);
+        event.registerEntityRenderer(EntitiesTC.TAINT_CRAWLER.get(), RenderTaintCrawler::new);
+
+        // === Tainted blob mobs (placeholder slime model) ===
+        event.registerEntityRenderer(EntitiesTC.TAINT_SEED.get(), RenderTaintSeed::new);
+        event.registerEntityRenderer(EntitiesTC.TAINT_SEED_PRIME.get(), RenderTaintSeed::new);
+        event.registerEntityRenderer(EntitiesTC.TAINT_SWARM.get(), RenderTaintSwarm::new);
+
+        // === Tentacle mobs (complex custom model needed — NoopRenderer via RenderTaintacle) ===
+        event.registerEntityRenderer(EntitiesTC.TAINTACLE.get(), RenderTaintacle::new);
+        event.registerEntityRenderer(EntitiesTC.TAINTACLE_SMALL.get(), RenderTaintacle::new);
+        event.registerEntityRenderer(EntitiesTC.TAINTACLE_GIANT.get(), RenderTaintacle::new);
 
         // Block entity renderers
         event.registerBlockEntityRenderer(TCBlockEntityTypes.JAR_FILLABLE.get(), ctx -> new TileJarRenderer());

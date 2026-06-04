@@ -1,4 +1,16 @@
 package thaumcraft.client.renderers.entity.construct;
-// TODO: Rewrite for MC 1.21.5 EntityRenderer system
-public class RenderTurretCrossbowAdvanced {
+
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.NoopRenderer;
+import net.minecraft.world.entity.Entity;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
+/**
+ * Placeholder renderer for EntityTurretCrossbowAdvanced.
+ * Using NoopRenderer as placeholder; proper block-entity style model needed.
+ */
+@OnlyIn(Dist.CLIENT)
+public class RenderTurretCrossbowAdvanced extends NoopRenderer<Entity> {
+    public RenderTurretCrossbowAdvanced(EntityRendererProvider.Context ctx) { super(ctx); }
 }

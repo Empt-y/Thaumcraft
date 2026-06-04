@@ -1,4 +1,13 @@
 package thaumcraft.client.renderers.entity.projectile;
-// TODO: Rewrite for MC 1.21.5 (old Forge rendering API removed)
-public class RenderFocusMine {
+
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.NoopRenderer;
+import net.minecraft.world.entity.Entity;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
+/** Placeholder renderer for FocusMine proximity mine entity. */
+@OnlyIn(Dist.CLIENT)
+public class RenderFocusMine extends NoopRenderer<Entity> {
+    public RenderFocusMine(EntityRendererProvider.Context ctx) { super(ctx); }
 }

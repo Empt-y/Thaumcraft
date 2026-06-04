@@ -1,4 +1,16 @@
 package thaumcraft.client.renderers.entity.projectile;
-// TODO: Rewrite for MC 1.21.5 (old Forge rendering API removed)
-public class RenderNoProjectile {
+
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.NoopRenderer;
+import net.minecraft.world.entity.Entity;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
+/**
+ * Intentionally invisible renderer for projectiles that should have no visual
+ * (BottleTaint, Alumentum use particle effects instead of entity geometry).
+ */
+@OnlyIn(Dist.CLIENT)
+public class RenderNoProjectile extends NoopRenderer<Entity> {
+    public RenderNoProjectile(EntityRendererProvider.Context ctx) { super(ctx); }
 }
