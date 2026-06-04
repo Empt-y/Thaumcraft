@@ -33,9 +33,16 @@ public class WandRenderingHandler
     HashMap<String, Float> fociScale;
     long lastTime;
     boolean lastState;
+    int lastArcHash;
+    ArrayList<BlockPos> architectBlocks;
+    HashMap<BlockPos, boolean[]> bmCache;
 
     static final Identifier R1 = Identifier.fromNamespaceAndPath("thaumcraft", "textures/misc/radial.png");
     static final Identifier R2 = Identifier.fromNamespaceAndPath("thaumcraft", "textures/misc/radial2.png");
+    static final Identifier CFRAME = Identifier.fromNamespaceAndPath("thaumcraft", "textures/misc/frame_corner.png");
+    static final Identifier SFRAME = Identifier.fromNamespaceAndPath("thaumcraft", "textures/misc/frame_side.png");
+    static final int[][] mos = {{ 4, 5, 6, 7 }, { 0, 1, 2, 3 }, { 0, 1, 4, 5 }, { 2, 3, 6, 7 }, { 0, 2, 4, 6 }, { 1, 3, 5, 7 }};
+    static final int[][] rotmat = {{ 0, 90, 270, 180 }, { 270, 180, 0, 90 }, { 180, 90, 270, 0 }, { 0, 270, 90, 180 }, { 270, 180, 0, 90 }, { 180, 270, 90, 0 }};
 
     public WandRenderingHandler() {
         foci = new TreeMap<String, Integer>();
@@ -44,6 +51,9 @@ public class WandRenderingHandler
         fociScale = new HashMap<String, Float>();
         lastTime = 0L;
         lastState = false;
+        lastArcHash = 0;
+        architectBlocks = new ArrayList<>();
+        bmCache = new HashMap<>();
     }
 
     public void handleFociRadial(Minecraft mc, long time, net.neoforged.neoforge.client.event.RenderGuiLayerEvent event) {
@@ -222,16 +232,95 @@ public class WandRenderingHandler
         }
     }
 
+    // Tracks the last architect target for use in SubmitCustomGeometryEvent
+    BlockPos lastArchitectTarget = null;
+
     public boolean handleArchitectOverlay(ItemStack stack, Player player, float partialTicks, int playerticks, HitResult target) {
-        return false; // TODO: rewrite with modern rendering API
+        if (target == null || !(target instanceof net.minecraft.world.phys.BlockHitResult bhr)) return false;
+        Minecraft mc = Minecraft.getInstance();
+        if (!(stack.getItem() instanceof IArchitect af)) return false;
+        BlockPos targetPos = bhr.getBlockPos();
+        net.minecraft.core.Direction sideHit = bhr.getDirection();
+        String h = targetPos.getX() + "" + targetPos.getY() + "" + targetPos.getZ() + "" + sideHit + "" + playerticks / 5;
+        int hc = h.hashCode();
+        if (hc != lastArcHash) {
+            lastArcHash = hc;
+            bmCache.clear();
+            architectBlocks = af.getArchitectBlocks(stack, mc.level, targetPos, sideHit, player);
+        }
+        lastArchitectTarget = targetPos;
+        if (architectBlocks == null || architectBlocks.isEmpty()) return false;
+        return true; // actual rendering done in SubmitCustomGeometryEvent
     }
 
-    public void drawOverlayBlock(BlockPos pos, int ticks, Minecraft mc, float partialTicks) {
-        // World-space rendering — requires SubmitCustomGeometryEvent; not yet ported
+    /** Called from SubmitCustomGeometryEvent to render architect overlay when blocks are selected. */
+    public void submitArchitectOverlay(net.minecraft.client.renderer.SubmitNodeCollector collector,
+            com.mojang.blaze3d.vertex.PoseStack ps, net.minecraft.world.phys.Vec3 cam, Player player) {
+        if (architectBlocks == null || architectBlocks.isEmpty()) return;
+        UtilsFX.currentCollector = collector;
+        UtilsFX.currentPoseStack = ps;
+        for (BlockPos pos : architectBlocks) {
+            drawOverlayBlock(pos, ps, cam, player);
+        }
+        UtilsFX.currentCollector = null;
+        UtilsFX.currentPoseStack = null;
+    }
+
+    private boolean isConnectedBlock(BlockPos pos) {
+        return architectBlocks != null && architectBlocks.contains(pos);
+    }
+
+    private void drawOverlayBlock(BlockPos pos, com.mojang.blaze3d.vertex.PoseStack ps, net.minecraft.world.phys.Vec3 cam, Player player) {
+        ps.pushPose();
+        ps.translate(pos.getX() + 0.5 - cam.x, pos.getY() + 0.5 - cam.y, pos.getZ() + 0.5 - cam.z);
+        for (Direction face : Direction.values()) {
+            if (!isConnectedBlock(pos.relative(face))) {
+                ps.pushPose();
+                // Rotate to face direction
+                ps.mulPose(new org.joml.Quaternionf().rotateAxis(
+                    (float)Math.toRadians(90),
+                    -face.getStepY(), face.getStepX(), -face.getStepZ()));
+                float zoff = face.getStepZ() < 0 ? -0.5f : 0.5f;
+                ps.translate(0, 0, zoff);
+                ps.mulPose(new org.joml.Quaternionf().rotateZ((float)Math.toRadians(90)));
+                // Face overlay
+                UtilsFX.currentTexture = SFRAME;
+                UtilsFX.renderQuadCentered(SFRAME, 1, 1, 0, 1.0f, 1.0f, 1.0f, 1.0f, 200, 1, 0.1f);
+                // Corner frames
+                boolean[] bits = getConnectedCorners(pos, face);
+                for (int a = 0; a < 4; ++a) {
+                    if (bits[a]) {
+                        ps.pushPose();
+                        ps.mulPose(new org.joml.Quaternionf().rotateZ((float)Math.toRadians(rotmat[face.ordinal()][a])));
+                        UtilsFX.currentTexture = CFRAME;
+                        UtilsFX.renderQuadCentered(CFRAME, 1, 1, 0, 1.0f, 1.0f, 1.0f, 1.0f, 200, 1, 0.66f);
+                        ps.popPose();
+                    }
+                }
+                ps.popPose();
+            }
+        }
+        ps.popPose();
+    }
+
+    private boolean[] getConnectedCorners(BlockPos pos, Direction face) {
+        if (bmCache.containsKey(pos)) return bmCache.get(pos);
+        // 4 corners for this face: top-left, top-right, bottom-left, bottom-right
+        boolean[] b = new boolean[8];
+        b[0] = !isConnectedBlock(pos.offset(-1, 0, 0)) && !isConnectedBlock(pos.offset(0, 0, -1)) && !isConnectedBlock(pos.offset(0, 1, 0));
+        b[1] = !isConnectedBlock(pos.offset(1, 0, 0)) && !isConnectedBlock(pos.offset(0, 0, -1)) && !isConnectedBlock(pos.offset(0, 1, 0));
+        b[2] = !isConnectedBlock(pos.offset(-1, 0, 0)) && !isConnectedBlock(pos.offset(0, 0, 1)) && !isConnectedBlock(pos.offset(0, 1, 0));
+        b[3] = !isConnectedBlock(pos.offset(1, 0, 0)) && !isConnectedBlock(pos.offset(0, 0, 1)) && !isConnectedBlock(pos.offset(0, 1, 0));
+        b[4] = !isConnectedBlock(pos.offset(-1, 0, 0)) && !isConnectedBlock(pos.offset(0, 0, -1)) && !isConnectedBlock(pos.offset(0, -1, 0));
+        b[5] = !isConnectedBlock(pos.offset(1, 0, 0)) && !isConnectedBlock(pos.offset(0, 0, -1)) && !isConnectedBlock(pos.offset(0, -1, 0));
+        b[6] = !isConnectedBlock(pos.offset(-1, 0, 0)) && !isConnectedBlock(pos.offset(0, 0, 1)) && !isConnectedBlock(pos.offset(0, -1, 0));
+        b[7] = !isConnectedBlock(pos.offset(1, 0, 0)) && !isConnectedBlock(pos.offset(0, 0, 1)) && !isConnectedBlock(pos.offset(0, -1, 0));
+        bmCache.put(pos, b);
+        return b;
     }
 
     public void drawArchitectAxis(BlockPos pos, float partialTicks, boolean dx, boolean dy, boolean dz) {
-        // World-space rendering — requires SubmitCustomGeometryEvent; not yet ported
+        // Axis arrows are world-space rendering; submitted via SubmitCustomGeometryEvent — rendered in submitArchitectOverlay
     }
 
     static {

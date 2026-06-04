@@ -389,6 +389,22 @@ public class RenderEventHandler
             event.getRenderState().setRenderData(SEAL_KEY, entries);
         }
 
+        // --- Architect wand overlay extraction ---
+        Player player2 = Minecraft.getInstance().player;
+        if (player2 != null) {
+            net.minecraft.world.item.ItemStack mainHand = player2.getMainHandItem();
+            net.minecraft.world.item.ItemStack offHand  = player2.getOffhandItem();
+            for (net.minecraft.world.item.ItemStack held : new net.minecraft.world.item.ItemStack[]{mainHand, offHand}) {
+                if (!held.isEmpty() && held.getItem() instanceof IArchitect) {
+                    net.minecraft.world.phys.HitResult target = ((IArchitect)held.getItem()).getArchitectMOP(
+                        held, level, player2);
+                    wandHandler.handleArchitectOverlay(held, player2, event.getDeltaTracker().getGameTimeDeltaPartialTick(false),
+                        player2.tickCount, target);
+                    break;
+                }
+            }
+        }
+
         // --- ThaumTarget extraction ---
         if (RenderEventHandler.thaumTarget != null && RenderEventHandler.thaumTarget.isAlive()) {
             Entity target = RenderEventHandler.thaumTarget;
@@ -426,6 +442,12 @@ public class RenderEventHandler
         if (tte != null) {
             drawTagsOnContainerModern(tte.wx(), tte.wy(), tte.wz(), tte.aspects(), 220, null,
                 ps, null, camera, tagscale);
+        }
+
+        // --- Render architect wand overlay ---
+        Player wandPlayer = Minecraft.getInstance().player;
+        if (wandPlayer != null) {
+            wandHandler.submitArchitectOverlay(collector, ps, cam, wandPlayer);
         }
     }
 
